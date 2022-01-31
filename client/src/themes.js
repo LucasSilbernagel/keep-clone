@@ -1,6 +1,5 @@
 import { red, amber, grey } from '@mui/material/colors'
 import { createTheme, responsiveFontSizes } from '@mui/material/styles'
-import Fonts from './Assets/fonts'
 
 const fontFamilyRoboto = {
   fontFamily: [
@@ -44,7 +43,7 @@ const lightMuiTheme = createTheme({
     },
   },
   typography: {
-    ...fontFamilyRoboto,
+    fontFamily: fontFamilyRoboto.fontFamily,
     overline: {
       fontWeight: 500,
       fontSize: '0.7rem',
@@ -60,26 +59,6 @@ const lightMuiTheme = createTheme({
   mixins: {
     drawer: {
       minWidth: 280,
-    },
-  },
-  overrides: {
-    MuiCssBaseline: {
-      '@global': {
-        '@font-face': [
-          Fonts.MetropolisRegular,
-          Fonts.MetropolisBold,
-          Fonts.RobotoRegular,
-          Fonts.RobotoMedium,
-          Fonts.RobotoBold,
-        ],
-      },
-    },
-    MuiListItemText: {
-      primary: {
-        ...fontFamilyMetropolis,
-        fontWeight: 500,
-        fontSize: '0.87rem',
-      },
     },
   },
   custom: {
@@ -136,7 +115,7 @@ const darkMuiTheme = createTheme({
     },
   },
   typography: {
-    ...fontFamilyRoboto,
+    fontFamily: fontFamilyRoboto.fontFamily,
     overline: {
       fontWeight: 500,
       fontSize: '0.7rem',
@@ -152,26 +131,6 @@ const darkMuiTheme = createTheme({
   mixins: {
     drawer: {
       minWidth: 280,
-    },
-  },
-  overrides: {
-    MuiCssBaseline: {
-      '@global': {
-        '@font-face': [
-          Fonts.MetropolisRegular,
-          Fonts.MetropolisBold,
-          Fonts.RobotoRegular,
-          Fonts.RobotoMedium,
-          Fonts.RobotoBold,
-        ],
-      },
-    },
-    MuiListItemText: {
-      primary: {
-        ...fontFamilyMetropolis,
-        fontWeight: 500,
-        fontSize: '0.87rem',
-      },
     },
   },
   custom: {
