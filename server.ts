@@ -11,8 +11,8 @@ let database: mongoose.Connection
 
 /** Connect to the database */
 const connectToDatabase = () => {
-  const uri: any = process.env.DB
-  const options: any = {
+  const uri: string = process.env.DB ?? ''
+  const options: object = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
