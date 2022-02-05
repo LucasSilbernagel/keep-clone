@@ -4,22 +4,33 @@ import mongoose from 'mongoose'
 import {noteRouter} from './endpoints'
 import path from 'path'
 require('dotenv').config()
+
 const app: Express = express()
 const port: string | number = process.env.PORT || 5001
-
-const uri: any = process.env.DB
-const options: any = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
-  useCreateIndex: true,
-}
+let database: mongoose.Connection
 
 /** Connect to the database */
-mongoose
-  .connect(uri, options)
-  // .then(() => console.log(`Database connected successfully`))
-  // .catch((err: any) => console.log(err))
+const connectToDatabase = () => {
+  const uri: any = process.env.DB
+  const options: any = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
+  }
+  if (database) {
+    return
+  }
+  mongoose.connect(uri, options)
+  database = mongoose.connection
+  database.once('open', async () => {
+    console.log('Database connected successfully')
+  })
+  database.on('error', () => {
+    console.log('Error connecting to database')
+  })
+}
+connectToDatabase()
 
 mongoose.Promise = global.Promise
 app.use((req: Request, res: Response, next) => {
