@@ -1,4 +1,3 @@
-import React from 'react'
 import { Grid, Typography, IconButton, TextField, Paper } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -40,7 +39,7 @@ const NoteContent = (props) => {
           <Grid container>
             <Grid item>
               <TextField
-                color="secondary"
+                color="info"
                 multiline
                 variant="outlined"
                 defaultValue={note.text}
