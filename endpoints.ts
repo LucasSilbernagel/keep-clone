@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express'
 const router = express.Router()
-import Note from './models/note'
+import Note from './models/Note'
 
 /** Return all notes */
 router.get('/notes', (req: Request, res: Response, next) => {
@@ -32,4 +32,4 @@ router.delete('/notes/:id', (req: Request, res: Response, next) => {
     .catch(next)
 })
 
-export {router as noteRouter}
+export { router as noteRouter }

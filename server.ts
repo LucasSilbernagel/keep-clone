@@ -1,7 +1,7 @@
 import express, { Express, Request, Response } from 'express'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
-import {noteRouter} from './endpoints'
+import { noteRouter } from './endpoints'
 import path from 'path'
 require('dotenv').config()
 
