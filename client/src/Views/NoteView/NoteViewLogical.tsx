@@ -1,16 +1,22 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect, BaseSyntheticEvent } from 'react'
 import axios from 'axios'
 import NoteViewPresentational from './NoteViewPresentational'
+import { ENote } from '../../Constants'
+
+interface INote {
+  _id: string
+  text: string
+}
 
 const NoteViewLogical = () => {
   /** Saved notes */
-  const [notes, setNotes] = useState([])
+  const [notes, setNotes] = useState<INote[]>([])
   /** The ID of the note that is being edited */
   const [editingID, setEditingID] = useState('')
   /** The note that is being edited */
-  const [noteBeingEdited, setNoteBeingEdited] = useState({})
+  const [noteBeingEdited, setNoteBeingEdited] = useState<INote>(ENote)
   /** A new note */
-  const [newNote, setNewNote] = useState({ text: '' })
+  const [newNote, setNewNote] = useState(ENote)
 
   /** Returns all saved notes */
   const getNotes = () => {
@@ -30,7 +36,7 @@ const NoteViewLogical = () => {
   }, [])
 
   /** Delete a note with a specific ID */
-  const deleteNote = (id) => {
+  const deleteNote = (id: string) => {
     axios
       .delete(`/api/notes/${id}`)
       .then((res) => {
@@ -42,13 +48,13 @@ const NoteViewLogical = () => {
   }
 
   /** Edit a note with a specific ID */
-  const editNote = (id) => {
+  const editNote = (id: string) => {
     setEditingID(id)
-    setNoteBeingEdited(notes.find((note) => note._id === id))
+    setNoteBeingEdited(notes.find((note) => note._id === id) ?? ENote)
   }
 
   /** Change the text of a note as the user types into the editing field */
-  const handleNoteTextChange = (e) => {
+  const handleNoteTextChange = (e: BaseSyntheticEvent) => {
     setNoteBeingEdited((prevNote) => {
       const newNote = { ...prevNote }
       newNote.text = e.target.value
@@ -59,7 +65,7 @@ const NoteViewLogical = () => {
   /** Cancel editing a note */
   const cancelEdit = () => {
     setEditingID('')
-    setNoteBeingEdited({})
+    setNoteBeingEdited(ENote)
   }
 
   /** Save an edited note to the database */
@@ -74,8 +80,8 @@ const NoteViewLogical = () => {
         })
         .then(() => {
           setEditingID('')
-          setNoteBeingEdited({})
-          setNewNote({ text: '' })
+          setNoteBeingEdited(ENote)
+          setNewNote(ENote)
         })
         .catch((err) => console.log(err))
     }

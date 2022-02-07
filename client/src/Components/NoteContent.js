@@ -3,7 +3,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import SaveIcon from '@mui/icons-material/Save'
 import CancelIcon from '@mui/icons-material/Cancel'
-import { disableNonEditingButtons } from '../LogicHelpers/LogicHelpers'
+import { disableNonEditingButtons } from '../LogicHelpers'
 
 const NoteContent = (props) => {
   const {
