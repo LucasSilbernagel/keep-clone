@@ -1,12 +1,8 @@
 import { useState, useEffect, BaseSyntheticEvent } from 'react'
 import axios from 'axios'
 import NoteViewPresentational from './NoteViewPresentational'
-import { ENote } from '../../Constants'
-
-interface INote {
-  _id: string
-  text: string
-}
+import { ENote } from '../../Enums'
+import { INote } from '../../Interfaces'
 
 const NoteViewLogical = () => {
   /** Saved notes */
@@ -16,7 +12,7 @@ const NoteViewLogical = () => {
   /** The note that is being edited */
   const [noteBeingEdited, setNoteBeingEdited] = useState<INote>(ENote)
   /** A new note */
-  const [newNote, setNewNote] = useState(ENote)
+  const [newNote, setNewNote] = useState<INote>(ENote)
 
   /** Returns all saved notes */
   const getNotes = () => {
