@@ -1,6 +1,15 @@
+import { ChangeEventHandler, FormEvent } from 'react'
 import { TextField, Button, Paper, Grid } from '@mui/material'
+import { INote } from '../../Interfaces'
 
-const NoteFormPresentational = (props) => {
+interface IComponentProps {
+  saveNewNote: (e: FormEvent<HTMLFormElement>) => void
+  handleChange: ChangeEventHandler<HTMLInputElement>
+  newNote: INote
+  editingID: string
+}
+
+const NoteFormPresentational = (props: IComponentProps) => {
   const { saveNewNote, handleChange, newNote, editingID } = props
 
   return (
@@ -44,10 +53,9 @@ const NoteFormPresentational = (props) => {
             <Grid item>
               <Button
                 type="submit"
-                disabled={editingID.length > 0 || !newNote.text.length > 0}
+                disabled={editingID.length > 0}
                 variant="contained"
                 color="info"
-                elevation={3}
               >
                 Save note
               </Button>

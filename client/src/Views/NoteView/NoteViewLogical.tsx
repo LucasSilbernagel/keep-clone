@@ -1,4 +1,4 @@
-import { useState, useEffect, BaseSyntheticEvent } from 'react'
+import { useState, useEffect, ChangeEvent } from 'react'
 import axios from 'axios'
 import NoteViewPresentational from './NoteViewPresentational'
 import { ENote } from '../../Enums'
@@ -50,7 +50,7 @@ const NoteViewLogical = () => {
   }
 
   /** Change the text of a note as the user types into the editing field */
-  const handleNoteTextChange = (e: BaseSyntheticEvent) => {
+  const handleNoteTextChange = (e: ChangeEvent<HTMLInputElement>) => {
     setNoteBeingEdited((prevNote) => {
       const newNote = { ...prevNote }
       newNote.text = e.target.value

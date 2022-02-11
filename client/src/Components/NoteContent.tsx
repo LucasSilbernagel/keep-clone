@@ -1,11 +1,25 @@
+import { ChangeEvent } from 'react'
 import { Grid, Typography, IconButton, TextField, Paper } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import SaveIcon from '@mui/icons-material/Save'
 import CancelIcon from '@mui/icons-material/Cancel'
 import { disableNonEditingButtons } from '../LogicHelpers'
+import { INote } from '../Interfaces'
 
-const NoteContent = (props) => {
+interface IComponentProps {
+  note: INote
+  notes: Array<INote>
+  deleteNote: (id: string) => void
+  editNote: (id: string) => void
+  editingID: string
+  saveNote: () => void
+  cancelEdit: () => void
+  handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
+  noteBeingEdited: INote
+}
+
+const NoteContent = (props: IComponentProps) => {
   const {
     note,
     notes,
@@ -67,7 +81,7 @@ const NoteContent = (props) => {
               <Grid item>
                 <IconButton
                   onClick={saveNote}
-                  disabled={!noteBeingEdited.text.length > 0}
+                  disabled={!noteBeingEdited.text.length}
                   color="inherit"
                 >
                   <SaveIcon />

@@ -1,9 +1,21 @@
-import React from 'react'
+import { ChangeEvent } from 'react'
 import { Grid } from '@mui/material'
 import Masonry from '@mui/lab/Masonry'
 import NoteContent from './NoteContent'
+import { INote } from '../Interfaces'
 
-const NoteList = (props) => {
+interface IComponentProps {
+  notes: Array<INote>
+  deleteNote: (id: string) => void
+  editNote: (id: string) => void
+  editingID: string
+  saveNote: () => void
+  cancelEdit: () => void
+  handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
+  noteBeingEdited: INote
+}
+
+const NoteList = (props: IComponentProps) => {
   const {
     notes,
     deleteNote,
