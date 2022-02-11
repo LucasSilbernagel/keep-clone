@@ -2,20 +2,20 @@ import { ChangeEvent, Dispatch, SetStateAction } from 'react'
 import { Grid } from '@mui/material'
 import NoteFormLogical from '../../Components/NoteForm/NoteFormLogical'
 import NoteList from '../../Components/NoteList'
-import { INote } from '../../Interfaces'
+import { IExistingNote, INewNote } from '../../Interfaces'
 
 interface IComponentProps {
   getNotes: () => void
-  notes: Array<INote>
+  notes: Array<IExistingNote>
   deleteNote: (id: string) => void
   editNote: (id: string) => void
   editingID: string
   saveNote: () => void
   cancelEdit: () => void
   handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
-  newNote: INote
-  setNewNote: Dispatch<SetStateAction<INote>>
-  noteBeingEdited: INote
+  newNote: INewNote
+  setNewNote: Dispatch<SetStateAction<INewNote>>
+  noteBeingEdited: IExistingNote
 }
 
 const NoteViewPresentational = (props: IComponentProps): JSX.Element => {

@@ -1,11 +1,11 @@
 import { ChangeEventHandler, FormEvent } from 'react'
 import { TextField, Button, Paper, Grid } from '@mui/material'
-import { INote } from '../../Interfaces'
+import { INewNote } from '../../Interfaces'
 
 interface IComponentProps {
   saveNewNote: (e: FormEvent<HTMLFormElement>) => void
   handleChange: ChangeEventHandler<HTMLInputElement>
-  newNote: INote
+  newNote: INewNote
   editingID: string
 }
 

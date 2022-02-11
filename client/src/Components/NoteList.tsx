@@ -2,17 +2,17 @@ import { ChangeEvent } from 'react'
 import { Grid } from '@mui/material'
 import Masonry from '@mui/lab/Masonry'
 import NoteContent from './NoteContent'
-import { INote } from '../Interfaces'
+import { IExistingNote } from '../Interfaces'
 
 interface IComponentProps {
-  notes: Array<INote>
+  notes: Array<IExistingNote>
   deleteNote: (id: string) => void
   editNote: (id: string) => void
   editingID: string
   saveNote: () => void
   cancelEdit: () => void
   handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
-  noteBeingEdited: INote
+  noteBeingEdited: IExistingNote
 }
 
 const NoteList = (props: IComponentProps) => {

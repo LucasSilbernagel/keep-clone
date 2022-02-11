@@ -1,13 +1,13 @@
 import { Dispatch, SetStateAction, ChangeEvent, FormEvent } from 'react'
 import axios from 'axios'
 import NoteFormPresentational from './NoteFormPresentational'
-import { INote } from '../../Interfaces'
+import { INewNote } from '../../Interfaces'
 
 interface IComponentProps {
   getNotes: () => void
   editingID: string
-  newNote: INote
-  setNewNote: Dispatch<SetStateAction<INote>>
+  newNote: INewNote
+  setNewNote: Dispatch<SetStateAction<INewNote>>
 }
 
 const NoteFormLogical = (props: IComponentProps) => {
@@ -17,7 +17,6 @@ const NoteFormLogical = (props: IComponentProps) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setNewNote({
       text: e.target.value,
-      _id: '',
     })
   }
 
@@ -30,7 +29,7 @@ const NoteFormLogical = (props: IComponentProps) => {
         .then((res) => {
           if (res.data) {
             getNotes()
-            setNewNote({ text: '', _id: '' })
+            setNewNote({ text: '' })
           }
         })
         .catch((err) => console.log(err))

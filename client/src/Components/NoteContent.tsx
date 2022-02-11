@@ -5,18 +5,18 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import SaveIcon from '@mui/icons-material/Save'
 import CancelIcon from '@mui/icons-material/Cancel'
 import { disableNonEditingButtons } from '../LogicHelpers'
-import { INote } from '../Interfaces'
+import { IExistingNote } from '../Interfaces'
 
 interface IComponentProps {
-  note: INote
-  notes: Array<INote>
+  note: IExistingNote
+  notes: Array<IExistingNote>
   deleteNote: (id: string) => void
   editNote: (id: string) => void
   editingID: string
   saveNote: () => void
   cancelEdit: () => void
   handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
-  noteBeingEdited: INote
+  noteBeingEdited: IExistingNote
 }
 
 const NoteContent = (props: IComponentProps) => {

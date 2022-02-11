@@ -2,17 +2,17 @@ import { useState, useEffect, ChangeEvent } from 'react'
 import axios from 'axios'
 import NoteViewPresentational from './NoteViewPresentational'
 import { ENote } from '../../Enums'
-import { INote } from '../../Interfaces'
+import { IExistingNote, INewNote } from '../../Interfaces'
 
 const NoteViewLogical = () => {
   /** Saved notes */
-  const [notes, setNotes] = useState<INote[]>([])
+  const [notes, setNotes] = useState<IExistingNote[]>([])
   /** The ID of the note that is being edited */
   const [editingID, setEditingID] = useState('')
   /** The note that is being edited */
-  const [noteBeingEdited, setNoteBeingEdited] = useState<INote>(ENote)
+  const [noteBeingEdited, setNoteBeingEdited] = useState<IExistingNote>(ENote)
   /** A new note */
-  const [newNote, setNewNote] = useState<INote>(ENote)
+  const [newNote, setNewNote] = useState<INewNote>(ENote)
 
   /** Returns all saved notes */
   const getNotes = () => {

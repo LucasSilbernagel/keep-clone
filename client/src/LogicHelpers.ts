@@ -1,4 +1,4 @@
-import {INote} from './Interfaces'
+import { IExistingNote } from './Interfaces'
 
 /** Disables the buttons of notes that are not being edited
  * @param {Array} notesArray - Array of notes
@@ -7,8 +7,8 @@ import {INote} from './Interfaces'
  * @returns {Bool} - Whether or not the buttons of a particular note should be disabled
  */
 export const disableNonEditingButtons = (
-  notesArray: Array<INote>,
-  nonEditedNote: INote,
+  notesArray: Array<IExistingNote>,
+  nonEditedNote: IExistingNote,
   editingID: String
 ) => {
   return (
