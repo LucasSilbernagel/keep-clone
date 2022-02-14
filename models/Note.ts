@@ -5,6 +5,7 @@ const NoteSchema = new Schema({
   text: {
     type: String,
   },
+  createdAt: { type: Date, expires: '10m', default: Date.now },
 })
 
 const Note = model('Note', NoteSchema)
