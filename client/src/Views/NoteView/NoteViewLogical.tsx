@@ -3,6 +3,7 @@ import axios from 'axios'
 import NoteViewPresentational from './NoteViewPresentational'
 import { ENote } from '../../Enums'
 import { IExistingNote, INewNote } from '../../Interfaces'
+import Login from '../../Components/Login'
 
 const NoteViewLogical = () => {
   /** Saved notes */
@@ -13,6 +14,21 @@ const NoteViewLogical = () => {
   const [noteBeingEdited, setNoteBeingEdited] = useState<IExistingNote>(ENote)
   /** A new note */
   const [newNote, setNewNote] = useState<INewNote>(ENote)
+  /** Whether the user has authenticated */
+  const [authenticated, setAuthenticated] = useState(false)
+
+  /** Keep user logged in on their device by default */
+  useEffect(() => {
+    if (window.localStorage.userProfile.length > 0) {
+      setAuthenticated(true)
+    }
+  }, [])
+
+  /** Log out of the app */
+  const logOut = () => {
+    localStorage.setItem('userProfile', '')
+    setAuthenticated(false)
+  }
 
   /** Returns all saved notes */
   const getNotes = () => {
@@ -83,21 +99,24 @@ const NoteViewLogical = () => {
     }
   }
 
-  return (
-    <NoteViewPresentational
-      getNotes={getNotes}
-      notes={notes}
-      deleteNote={deleteNote}
-      editNote={editNote}
-      editingID={editingID}
-      saveNote={saveNote}
-      cancelEdit={cancelEdit}
-      handleNoteTextChange={handleNoteTextChange}
-      newNote={newNote}
-      setNewNote={setNewNote}
-      noteBeingEdited={noteBeingEdited}
-    />
-  )
+  if (authenticated) {
+    return (
+      <NoteViewPresentational
+        getNotes={getNotes}
+        notes={notes}
+        deleteNote={deleteNote}
+        editNote={editNote}
+        editingID={editingID}
+        saveNote={saveNote}
+        cancelEdit={cancelEdit}
+        handleNoteTextChange={handleNoteTextChange}
+        newNote={newNote}
+        setNewNote={setNewNote}
+        noteBeingEdited={noteBeingEdited}
+        logOut={logOut}
+      />
+    )
+  } else return <Login setAuthenticated={setAuthenticated} />
 }
 
 export default NoteViewLogical
