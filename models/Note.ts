@@ -5,7 +5,15 @@ const NoteSchema = new Schema({
   text: {
     type: String,
   },
-  createdAt: { type: Date, expires: '10m', default: Date.now },
+  userGoogleId: {
+    type: String,
+    required: true,
+  },
+  expireAt: {
+    type: Date,
+    default: Date.now,
+    expires: 600, // 600 seconds = 10 minutes
+  },
 })
 
 const Note = model('Note', NoteSchema)

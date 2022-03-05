@@ -6,10 +6,11 @@ import GoogleLogin, {
 
 interface IComponentProps {
   setAuthenticated: Dispatch<SetStateAction<boolean>>
+  getNotes: () => void
 }
 
 const Login = (props: IComponentProps): JSX.Element => {
-  const { setAuthenticated } = props
+  const { setAuthenticated, getNotes } = props
 
   const googleSuccess = async (
     res: GoogleLoginResponse | GoogleLoginResponseOffline
@@ -19,6 +20,7 @@ const Login = (props: IComponentProps): JSX.Element => {
       try {
         localStorage.setItem('userProfile', JSON.stringify(googleProfile))
         setAuthenticated(true)
+        getNotes()
       } catch (error) {
         console.error(error)
       }

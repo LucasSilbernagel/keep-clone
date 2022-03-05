@@ -17,6 +17,7 @@ const NoteFormLogical = (props: IComponentProps) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setNewNote({
       text: e.target.value,
+      userGoogleId: JSON.parse(window.localStorage.userProfile).googleId,
     })
   }
 
@@ -29,7 +30,7 @@ const NoteFormLogical = (props: IComponentProps) => {
         .then((res) => {
           if (res.data) {
             getNotes()
-            setNewNote({ text: '' })
+            setNewNote({ text: '', userGoogleId: '' })
           }
         })
         .catch((err) => console.log(err))

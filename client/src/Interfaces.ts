@@ -5,4 +5,5 @@ export interface IExistingNote {
 
 export interface INewNote {
   text: string
+  userGoogleId: string
 }

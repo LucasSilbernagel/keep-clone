@@ -4,7 +4,7 @@ import Note from './models/Note'
 
 /** Return all notes */
 router.get('/notes', (req: Request, res: Response, next) => {
-  Note.find({}, 'text')
+  Note.find({ userGoogleId: req.query.userGoogleId })
     .then((data: any) => res.json(data))
     .catch(next)
 })

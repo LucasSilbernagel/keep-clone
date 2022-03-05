@@ -28,12 +28,17 @@ const NoteViewLogical = () => {
   const logOut = () => {
     localStorage.setItem('userProfile', '')
     setAuthenticated(false)
+    setNotes([])
   }
 
   /** Returns all saved notes */
   const getNotes = () => {
     axios
-      .get('/api/notes')
+      .get('/api/notes', {
+        params: {
+          userGoogleId: JSON.parse(window.localStorage.userProfile).googleId,
+        },
+      })
       .then((res) => {
         if (res.data) {
           setNotes(res.data)
@@ -116,7 +121,8 @@ const NoteViewLogical = () => {
         logOut={logOut}
       />
     )
-  } else return <Login setAuthenticated={setAuthenticated} />
+  } else
+    return <Login setAuthenticated={setAuthenticated} getNotes={getNotes} />
 }
 
 export default NoteViewLogical
