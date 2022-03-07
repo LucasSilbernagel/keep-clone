@@ -47,11 +47,6 @@ const NoteViewLogical = () => {
       .catch((err) => console.log(err))
   }
 
-  /** Display all saved notes when the page first loads */
-  useEffect(() => {
-    getNotes()
-  }, [])
-
   /** Delete a note with a specific ID */
   const deleteNote = (id: string) => {
     axios

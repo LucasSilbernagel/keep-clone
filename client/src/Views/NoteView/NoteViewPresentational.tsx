@@ -3,6 +3,7 @@ import { Grid, Button } from '@mui/material'
 import NoteFormLogical from '../../Components/NoteForm/NoteFormLogical'
 import NoteList from '../../Components/NoteList'
 import { IExistingNote, INewNote } from '../../Interfaces'
+import { useEffect } from 'react'
 
 interface IComponentProps {
   getNotes: () => void
@@ -34,6 +35,12 @@ const NoteViewPresentational = (props: IComponentProps): JSX.Element => {
     noteBeingEdited,
     logOut,
   } = props
+
+  /** Display all saved notes when the page first loads */
+  useEffect(() => {
+    getNotes()
+    // eslint-disable-next-line
+  }, [])
 
   return (
     <>
