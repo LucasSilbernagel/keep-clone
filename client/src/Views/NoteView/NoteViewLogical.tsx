@@ -16,6 +16,11 @@ const NoteViewLogical = () => {
   const [newNote, setNewNote] = useState<INewNote>(ENote)
   /** Whether the user has authenticated */
   const [authenticated, setAuthenticated] = useState(false)
+  /** Whether there was an issue with user authentication */
+  const [authenticationFailed, setAuthenticationFailed] = useState(false)
+  /** Error message to display when user authentication fails */
+  const [authenticationFailedMessage, setAuthenticationFailedMessage] =
+    useState('Google sign in was unsuccessful.')
 
   /** Keep user logged in on their device by default */
   useEffect(() => {
@@ -117,7 +122,16 @@ const NoteViewLogical = () => {
       />
     )
   } else
-    return <Login setAuthenticated={setAuthenticated} getNotes={getNotes} />
+    return (
+      <Login
+        setAuthenticated={setAuthenticated}
+        getNotes={getNotes}
+        authenticationFailed={authenticationFailed}
+        setAuthenticationFailed={setAuthenticationFailed}
+        authenticationFailedMessage={authenticationFailedMessage}
+        setAuthenticationFailedMessage={setAuthenticationFailedMessage}
+      />
+    )
 }
 
 export default NoteViewLogical

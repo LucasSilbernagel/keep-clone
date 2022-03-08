@@ -9,10 +9,21 @@ import keep_icon from '../assets/keep_icon.png'
 interface IComponentProps {
   setAuthenticated: Dispatch<SetStateAction<boolean>>
   getNotes: () => void
+  authenticationFailed: boolean
+  setAuthenticationFailed: Dispatch<SetStateAction<boolean>>
+  authenticationFailedMessage: string
+  setAuthenticationFailedMessage: Dispatch<SetStateAction<string>>
 }
 
 const Login = (props: IComponentProps): JSX.Element => {
-  const { setAuthenticated, getNotes } = props
+  const {
+    setAuthenticated,
+    getNotes,
+    authenticationFailed,
+    setAuthenticationFailed,
+    authenticationFailedMessage,
+    setAuthenticationFailedMessage,
+  } = props
 
   const theme = useTheme()
 
@@ -25,14 +36,18 @@ const Login = (props: IComponentProps): JSX.Element => {
         localStorage.setItem('userProfile', JSON.stringify(googleProfile))
         setAuthenticated(true)
         getNotes()
+        setAuthenticationFailed(false)
       } catch (error) {
-        console.error(error)
+        setAuthenticationFailed(true)
+        setAuthenticationFailedMessage(
+          `Google sign in was unsuccessful. ${error}.`
+        )
       }
     }
   }
 
   const googleFailure = () => {
-    console.error('Google sign in was unsuccessful')
+    setAuthenticationFailed(true)
   }
 
   return (
@@ -104,6 +119,13 @@ const Login = (props: IComponentProps): JSX.Element => {
                 cookiePolicy="single_host_origin"
               />
             </Grid>
+            {authenticationFailed ? (
+              <Grid item>
+                <Typography sx={{ color: '#D83628' }}>
+                  {authenticationFailedMessage}
+                </Typography>
+              </Grid>
+            ) : null}
           </Grid>
         </Paper>
       </Grid>
@@ -112,7 +134,7 @@ const Login = (props: IComponentProps): JSX.Element => {
         container
         direction="column"
         alignItems="center"
-        sx={{ marginTop: '4em' }}
+        sx={{ marginTop: '2em' }}
         spacing={2}
       >
         <Grid item>
