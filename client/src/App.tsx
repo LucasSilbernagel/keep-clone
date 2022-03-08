@@ -1,5 +1,5 @@
 import { ThemeProvider } from '@mui/material/styles'
-import NoteViewLogical from './Views/NoteView/NoteViewLogical'
+import NoteViewLogical from './Views/Home'
 import { Grid } from '@mui/material'
 import { lightTheme } from './themes'
 

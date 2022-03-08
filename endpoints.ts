@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express'
 const router = express.Router()
 import Note from './models/Note'
 
-/** Return all notes */
+/** Return all notes for the authenticated user */
 router.get('/notes', (req: Request, res: Response, next) => {
   Note.find({ userGoogleId: req.query.userGoogleId })
     .then((data: any) => res.json(data))

@@ -1,8 +1,8 @@
 import { ChangeEvent, Dispatch, SetStateAction } from 'react'
 import { Grid, Button } from '@mui/material'
-import NoteFormLogical from '../../Components/NoteForm/NoteFormLogical'
-import NoteList from '../../Components/NoteList'
-import { IExistingNote, INewNote } from '../../Interfaces'
+import NoteFormLogical from '../Components/NoteForm/NoteFormLogical'
+import NoteList from '../Components/NoteList'
+import { IExistingNote, INewNote } from '../Interfaces'
 import { useEffect } from 'react'
 
 interface IComponentProps {
@@ -20,7 +20,7 @@ interface IComponentProps {
   logOut: () => void
 }
 
-const NoteViewPresentational = (props: IComponentProps): JSX.Element => {
+const NoteView = (props: IComponentProps): JSX.Element => {
   const {
     getNotes,
     notes,
@@ -73,4 +73,4 @@ const NoteViewPresentational = (props: IComponentProps): JSX.Element => {
   )
 }
 
-export default NoteViewPresentational
+export default NoteView

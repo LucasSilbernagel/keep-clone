@@ -1,11 +1,11 @@
 import { useState, useEffect, ChangeEvent } from 'react'
 import axios from 'axios'
-import NoteViewPresentational from './NoteViewPresentational'
-import { ENote } from '../../Enums'
-import { IExistingNote, INewNote } from '../../Interfaces'
-import Login from '../../Components/Login'
+import NoteViewPresentational from './NoteView'
+import { ENote } from '../Enums'
+import { IExistingNote, INewNote } from '../Interfaces'
+import Login from './Login'
 
-const NoteViewLogical = () => {
+const Home = () => {
   /** Saved notes */
   const [notes, setNotes] = useState<IExistingNote[]>([])
   /** The ID of the note that is being edited */
@@ -134,4 +134,4 @@ const NoteViewLogical = () => {
     )
 }
 
-export default NoteViewLogical
+export default Home
