@@ -1,6 +1,6 @@
 import { useState, useEffect, ChangeEvent } from 'react'
 import axios from 'axios'
-import NoteViewPresentational from './NoteView'
+import NoteView from './NoteView'
 import { ENote } from '../Enums'
 import { IExistingNote, INewNote } from '../Interfaces'
 import Login from './Login'
@@ -106,7 +106,7 @@ const Home = () => {
 
   if (authenticated) {
     return (
-      <NoteViewPresentational
+      <NoteView
         getNotes={getNotes}
         notes={notes}
         deleteNote={deleteNote}
