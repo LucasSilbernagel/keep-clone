@@ -55,6 +55,12 @@ In the root folder of your app, create a new file called `.env` and save your co
 
 There should be no quotation marks or brackets in this file.
 
+Users will log into the app using their Google account. For the authentication to work, you need to [create a Google client ID and client secret](https://developers.google.com/adwords/api/docs/guides/authentication). Then in the client folder of the app, create another `.env` file. In this file, put your Google client ID with a key of `REACT_APP_GOOGLE_CLIENT_ID`. The file should now look something like this:
+
+`REACT_APP_GOOGLE_CLIENT_ID = XXXXXXXXXXX-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.apps.googleusercontent.com`
+
+There should be no quotation marks or brackets in this file.
+
 Next, install all of the required dependencies for both the root folder and the client folder. `cd` into the client folder and run `npm install` Then return to the root folder and run `npm install` again.
 
 To start up the app, make sure you are in the root folder and then run `npm run dev` in your terminal. This should start both your app's server and front end in a single terminal window, and launch the app in a new browser tab. You are now running the app locally!
