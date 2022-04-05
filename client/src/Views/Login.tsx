@@ -5,6 +5,7 @@ import GoogleLogin, {
 } from 'react-google-login'
 import { Grid, Typography, Paper, useTheme } from '@mui/material'
 import keep_icon from '../assets/keep_icon.png'
+import GitHubIcon from '@mui/icons-material/GitHub'
 
 interface IComponentProps {
   setAuthenticated: Dispatch<SetStateAction<boolean>>
@@ -53,7 +54,12 @@ const Login = (props: IComponentProps): JSX.Element => {
   return (
     <Grid container>
       <Grid container item direction="column" alignItems="center" lg={12}>
-        <Grid item sx={{ marginBottom: '1em' }}>
+        <Grid
+          item
+          sx={{
+            margin: '1em 0 1em 0',
+          }}
+        >
           <Typography variant="h1">Keep Clone</Typography>
         </Grid>
         <Grid item sx={{ marginBottom: '1em' }}>
@@ -137,24 +143,44 @@ const Login = (props: IComponentProps): JSX.Element => {
         sx={{ marginTop: '2em' }}
         spacing={2}
       >
-        <Grid item>
-          <Typography>
-            <a
-              href="https://github.com/LucasSilbernagel/keep-clone"
-              style={{ color: theme.palette.secondary.main }}
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              GitHub
-            </a>
-          </Typography>
+        <Grid
+          item
+          sx={{
+            '& a': {
+              color: theme.palette.secondary.main,
+              textDecoration: 'none',
+              '&:hover, &:focus': {
+                textDecoration: 'underline',
+              },
+            },
+          }}
+        >
+          <a
+            href="https://github.com/LucasSilbernagel/keep-clone"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            <Grid container spacing={1}>
+              <Grid item>
+                <GitHubIcon />
+              </Grid>
+              <Grid item>
+                <Typography>GitHub</Typography>
+              </Grid>
+            </Grid>
+          </a>
         </Grid>
         <Grid item>
-          <Typography>
+          <Typography
+            sx={{
+              '& a': {
+                color: theme.palette.secondary.main,
+              },
+            }}
+          >
             Built by{' '}
             <a
               href="https://lucassilbernagel.com/"
-              style={{ color: theme.palette.secondary.main }}
               target="_blank"
               rel="noreferrer noopener"
             >
