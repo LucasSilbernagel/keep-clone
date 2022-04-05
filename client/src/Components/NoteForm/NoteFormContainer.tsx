@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, ChangeEvent, FormEvent } from 'react'
 import axios from 'axios'
-import NoteFormPresentational from './NoteFormPresentational'
+import NoteForm from './NoteForm'
 import { INewNote } from '../../Interfaces'
 
 interface IComponentProps {
@@ -10,7 +10,7 @@ interface IComponentProps {
   setNewNote: Dispatch<SetStateAction<INewNote>>
 }
 
-const NoteFormLogical = (props: IComponentProps) => {
+const NoteFormContainer = (props: IComponentProps) => {
   const { getNotes, editingID, newNote, setNewNote } = props
 
   /** Keep track of the new note text as the user types in the text field */
@@ -38,7 +38,7 @@ const NoteFormLogical = (props: IComponentProps) => {
   }
 
   return (
-    <NoteFormPresentational
+    <NoteForm
       saveNewNote={saveNewNote}
       handleChange={handleChange}
       newNote={newNote}
@@ -47,4 +47,4 @@ const NoteFormLogical = (props: IComponentProps) => {
   )
 }
 
-export default NoteFormLogical
+export default NoteFormContainer

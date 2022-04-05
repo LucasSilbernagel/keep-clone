@@ -1,6 +1,6 @@
 import { ChangeEvent, Dispatch, SetStateAction } from 'react'
 import { Grid } from '@mui/material'
-import NoteFormLogical from '../Components/NoteForm/NoteFormLogical'
+import NoteFormContainer from '../Components/NoteForm/NoteFormContainer'
 import NoteList from '../Components/NoteList'
 import { IExistingNote, INewNote } from '../Interfaces'
 import { useEffect } from 'react'
@@ -48,7 +48,7 @@ const NoteView = (props: IComponentProps): JSX.Element => {
       <MainAppBar logOut={logOut} />
       <Grid container item>
         <Grid container item lg={12} justifyContent="center">
-          <NoteFormLogical
+          <NoteFormContainer
             getNotes={getNotes}
             editingID={editingID}
             newNote={newNote}

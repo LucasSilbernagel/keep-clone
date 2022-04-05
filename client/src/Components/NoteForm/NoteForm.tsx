@@ -9,7 +9,7 @@ interface IComponentProps {
   editingID: string
 }
 
-const NoteFormPresentational = (props: IComponentProps) => {
+const NoteForm = (props: IComponentProps) => {
   const { saveNewNote, handleChange, newNote, editingID } = props
 
   return (
@@ -75,4 +75,4 @@ const NoteFormPresentational = (props: IComponentProps) => {
   )
 }
 
-export default NoteFormPresentational
+export default NoteForm
