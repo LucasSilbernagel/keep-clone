@@ -1,5 +1,5 @@
 import { useState, MouseEvent } from 'react'
-import { styled, alpha } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 import {
   AppBar,
   Box,
@@ -261,6 +261,7 @@ const MainAppBar = (props: IComponentProps): JSX.Element => {
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
               color="inherit"
+              sx={{ marginLeft: '1em' }}
             >
               {userProfile.imageUrl.length > 0 ? (
                 <Avatar
