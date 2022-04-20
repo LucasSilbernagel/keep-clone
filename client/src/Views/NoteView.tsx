@@ -4,7 +4,10 @@ import NoteFormContainer from '../Components/NoteForm/NoteFormContainer'
 import NoteList from '../Components/NoteList'
 import { IExistingNote, INewNote } from '../Interfaces'
 import { useEffect } from 'react'
-import MainAppBar from '../Components/MainAppBar'
+import DesktopAppBar from '../Components/AppBar/DesktopAppBar'
+import MobileAppBar from '../Components/AppBar/MobileAppBar'
+import { atomViewportWidth } from '../atoms'
+import { useRecoilValue } from 'recoil'
 
 interface IComponentProps {
   getNotes: () => void
@@ -37,6 +40,9 @@ const NoteView = (props: IComponentProps): JSX.Element => {
     logOut,
   } = props
 
+  /** The width of the viewport/window, in pixels */
+  const viewportWidth = useRecoilValue(atomViewportWidth)
+
   /** Display all saved notes when the page first loads */
   useEffect(() => {
     getNotes()
@@ -45,7 +51,11 @@ const NoteView = (props: IComponentProps): JSX.Element => {
 
   return (
     <>
-      <MainAppBar logOut={logOut} />
+      {viewportWidth > 1011 ? (
+        <DesktopAppBar logOut={logOut} />
+      ) : (
+        <MobileAppBar logOut={logOut} />
+      )}
       <Grid container item>
         <Grid container item lg={12} justifyContent="center">
           <NoteFormContainer

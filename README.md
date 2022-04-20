@@ -24,6 +24,10 @@ A clone of Google Keep.
 - [TypeScript](https://www.typescriptlang.org/)
 - [MUI](https://mui.com/)
 
+### State Management
+
+- [Recoil](https://recoiljs.org/)
+
 ### Authentication
 
 - [react-google-login](https://www.npmjs.com/package/react-google-login)

@@ -4,6 +4,8 @@ import NoteView from './NoteView'
 import { ENote } from '../Enums'
 import { IExistingNote, INewNote } from '../Interfaces'
 import Login from './Login'
+import { useSetRecoilState } from 'recoil'
+import { atomViewportWidth } from '../atoms'
 
 const Home = () => {
   /** Saved notes */
@@ -21,6 +23,18 @@ const Home = () => {
   /** Error message to display when user authentication fails */
   const [authenticationFailedMessage, setAuthenticationFailedMessage] =
     useState('Google sign in was unsuccessful.')
+  /** State setter to update the width of the viewport/window, in pixels */
+  const setViewportWidth = useSetRecoilState(atomViewportWidth)
+
+  /** Keep track of the viewport/window width */
+  useEffect(() => {
+    setViewportWidth(window.innerWidth)
+    const handleResizeWindow = () => setViewportWidth(window.innerWidth)
+    window.addEventListener('resize', handleResizeWindow)
+    return () => {
+      window.removeEventListener('resize', handleResizeWindow)
+    }
+  }, [setViewportWidth])
 
   /** Keep user logged in on their device by default */
   useEffect(() => {
