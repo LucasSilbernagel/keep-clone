@@ -1,5 +1,5 @@
 import { ThemeProvider } from '@mui/material/styles'
-import NoteViewLogical from './Views/Home'
+import Home from './Views/Home'
 import { Grid, CssBaseline } from '@mui/material'
 import { lightTheme } from './themes'
 import { RecoilRoot } from 'recoil'
@@ -10,7 +10,7 @@ const App = () => {
       <ThemeProvider theme={lightTheme}>
         <CssBaseline />
         <Grid container>
-          <NoteViewLogical />
+          <Home />
         </Grid>
       </ThemeProvider>
     </RecoilRoot>
