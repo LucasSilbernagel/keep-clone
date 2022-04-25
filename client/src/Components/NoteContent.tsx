@@ -114,7 +114,14 @@ const NoteContent = (props: IComponentProps) => {
           },
         }}
       >
-        <Paper elevation={2}>
+        <Paper
+          elevation={2}
+          sx={{
+            ':hover': {
+              boxShadow: 4,
+            },
+          }}
+        >
           <Grid item container>
             <Grid item>
               <Typography

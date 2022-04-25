@@ -35,7 +35,9 @@ const NoteList = (props: IComponentProps) => {
           container
           item
           lg={8}
-          md={10}
+          md={9}
+          sm={10}
+          xs={10}
           sx={{
             margin: '0 auto',
           }}
@@ -66,8 +68,9 @@ const NoteList = (props: IComponentProps) => {
           container
           item
           lg={8}
+          md={9}
           sm={10}
-          xs={12}
+          xs={10}
           sx={{
             margin: '0 auto',
           }}

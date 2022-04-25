@@ -66,7 +66,7 @@ const MobileAppBar = (props: IComponentProps): JSX.Element => {
                   sx={{
                     textTransform: 'initial',
                     width: '100%',
-                    justifyContent: 'flex-start',
+                    justifyContent: 'center',
                   }}
                 >
                   Search your notes
@@ -76,17 +76,17 @@ const MobileAppBar = (props: IComponentProps): JSX.Element => {
             <Grid
               item
               container
-              sm={3}
+              sm={2}
               xs={4}
               justifyContent="flex-end"
               alignItems="center"
             >
-              <Grid item>
+              <Grid item xs={6}>
                 <IconButton size="large" color="inherit">
                   <SplitscreenIcon />
                 </IconButton>
               </Grid>
-              <Grid item>
+              <Grid item xs={6}>
                 <IconButton
                   size="large"
                   edge="end"
