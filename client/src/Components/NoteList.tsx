@@ -1,4 +1,3 @@
-import { ChangeEvent } from 'react'
 import { Grid } from '@mui/material'
 import Masonry from '@mui/lab/Masonry'
 import NoteContent from './NoteContent'
@@ -7,25 +6,11 @@ import { IExistingNote } from '../Interfaces'
 interface IComponentProps {
   notes: Array<IExistingNote>
   deleteNote: (id: string) => void
-  editNote: (id: string) => void
-  editingID: string
-  saveNote: () => void
-  cancelEdit: () => void
-  handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
-  noteBeingEdited: IExistingNote
+  getNotes: () => void
 }
 
 const NoteList = (props: IComponentProps) => {
-  const {
-    notes,
-    deleteNote,
-    editNote,
-    editingID,
-    saveNote,
-    cancelEdit,
-    handleNoteTextChange,
-    noteBeingEdited,
-  } = props
+  const { notes, deleteNote, getNotes } = props
 
   /** Display notes if there are any saved */
   if (notes.length > 0) {
@@ -48,14 +33,8 @@ const NoteList = (props: IComponentProps) => {
                 <NoteContent
                   key={note._id}
                   note={note}
-                  notes={notes}
-                  editingID={editingID}
-                  handleNoteTextChange={handleNoteTextChange}
-                  saveNote={saveNote}
-                  noteBeingEdited={noteBeingEdited}
-                  cancelEdit={cancelEdit}
                   deleteNote={deleteNote}
-                  editNote={editNote}
+                  getNotes={getNotes}
                 />
               )
             })}
@@ -81,14 +60,8 @@ const NoteList = (props: IComponentProps) => {
                 <NoteContent
                   key={note._id}
                   note={note}
-                  notes={notes}
-                  editingID={editingID}
-                  handleNoteTextChange={handleNoteTextChange}
-                  saveNote={saveNote}
-                  noteBeingEdited={noteBeingEdited}
-                  cancelEdit={cancelEdit}
                   deleteNote={deleteNote}
-                  editNote={editNote}
+                  getNotes={getNotes}
                 />
               )
             })}

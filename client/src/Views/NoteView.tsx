@@ -66,16 +66,7 @@ const NoteView = (props: IComponentProps): JSX.Element => {
           />
         </Grid>
         <Grid item container>
-          <NoteList
-            notes={notes}
-            deleteNote={deleteNote}
-            editNote={editNote}
-            editingID={editingID}
-            saveNote={saveNote}
-            cancelEdit={cancelEdit}
-            handleNoteTextChange={handleNoteTextChange}
-            noteBeingEdited={noteBeingEdited}
-          />
+          <NoteList notes={notes} deleteNote={deleteNote} getNotes={getNotes} />
         </Grid>
       </Grid>
     </>
