@@ -53,10 +53,6 @@ const NoteContent = (props: IComponentProps) => {
           xs: '180px',
           sm: '250px',
         },
-        maxWidth: {
-          xs: '180px',
-          sm: '250px',
-        },
       }}
     >
       <Paper
@@ -90,8 +86,9 @@ const NoteContent = (props: IComponentProps) => {
             <Typography
               sx={{
                 maxHeight: '180px',
-                padding: '1em 1.6em 1em 0.9em',
+                padding: '1em 1.6em 0 0.9em',
                 overflow: 'hidden',
+                fontSize: { xs: '0.9rem', sm: '1rem' },
               }}
             >
               {note.text}
