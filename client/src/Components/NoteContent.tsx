@@ -67,6 +67,7 @@ const NoteContent = (props: IComponentProps) => {
                 '& .moreButton': {
                   display: 'flex',
                 },
+                zIndex: 0,
               }
             : {
                 paddingBottom: '2.5em',
@@ -78,6 +79,7 @@ const NoteContent = (props: IComponentProps) => {
                     display: 'flex',
                   },
                 },
+                zIndex: 0,
               }
         }
       >

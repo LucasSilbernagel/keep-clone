@@ -1,77 +1,57 @@
-import { ChangeEventHandler, FormEvent } from 'react'
-import { TextField, Button, Paper, Grid } from '@mui/material'
+import { ChangeEventHandler } from 'react'
+import { TextField, Grid, Button } from '@mui/material'
 import { INewNote } from '../../Interfaces'
 
 interface IComponentProps {
-  saveNewNote: (e: FormEvent<HTMLFormElement>) => void
   handleChange: ChangeEventHandler<HTMLInputElement>
   newNote: INewNote
-  editingID: string
+  finishCreatingNote: () => void
 }
 
 const NoteForm = (props: IComponentProps) => {
-  const { saveNewNote, handleChange, newNote, editingID } = props
+  const { handleChange, newNote, finishCreatingNote } = props
 
   return (
-    <form
-      onSubmit={saveNewNote}
-      style={{
-        padding: '40px 0',
-      }}
-    >
-      <Grid container direction="column" alignItems="center" spacing={2}>
-        <Grid item>
-          <Paper elevation={2}>
-            <TextField
-              sx={
-                newNote.text.length > 100
-                  ? {
-                      width: '400px',
-                      maxHeight: '100px',
-                      overflowY: 'auto',
-                    }
-                  : {
-                      width: {
-                        xs: '250px',
-                        sm: '400px',
-                      },
-                    }
-              }
-              color="info"
-              multiline
-              label="Take a note..."
-              size="small"
-              onChange={handleChange}
-              value={newNote.text}
-              variant="outlined"
-              disabled={editingID.length > 0}
-            />
-          </Paper>
-        </Grid>
-        {newNote.text.length > 0 ? (
-          <Grid container item justifyContent="center">
-            <Grid item>
-              <Button
-                type="submit"
-                disabled={editingID.length > 0}
-                variant="contained"
-                color="info"
-              >
-                Save note
-              </Button>
-            </Grid>
-          </Grid>
-        ) : (
-          <Grid
-            container
-            item
-            sx={{
-              height: '3.3em',
-            }}
-          ></Grid>
-        )}
+    <Grid container sx={{ padding: '0.5em' }}>
+      <Grid item xs={12}>
+        <TextField
+          autoFocus
+          multiline
+          placeholder="Take a note..."
+          size="small"
+          onChange={handleChange}
+          value={newNote.text}
+          variant="outlined"
+          sx={{
+            width: '100%',
+            maxHeight: '50vh',
+            overflowY: 'auto',
+            '& .MuiOutlinedInput-root': {
+              '& fieldset': {
+                borderColor: 'transparent',
+              },
+              '&:hover fieldset': {
+                borderColor: 'transparent',
+              },
+              '&.Mui-focused fieldset': {
+                borderColor: 'transparent',
+              },
+            },
+          }}
+        />
       </Grid>
-    </form>
+      <Grid item container xs={12} justifyContent="flex-end">
+        <Grid item>
+          <Button
+            onClick={finishCreatingNote}
+            color="inherit"
+            sx={{ textTransform: 'initial' }}
+          >
+            Close
+          </Button>
+        </Grid>
+      </Grid>
+    </Grid>
   )
 }
 
