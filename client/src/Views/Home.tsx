@@ -5,7 +5,7 @@ import { ENote } from '../Enums'
 import { IExistingNote, INewNote } from '../Interfaces'
 import Login from './Login'
 import { useSetRecoilState } from 'recoil'
-import { atomViewportWidth } from '../atoms'
+import { atomNewNote, atomViewportWidth } from '../atoms'
 
 const Home = () => {
   /** Saved notes */
@@ -14,8 +14,6 @@ const Home = () => {
   const [editingID, setEditingID] = useState('')
   /** The note that is being edited */
   const [noteBeingEdited, setNoteBeingEdited] = useState<IExistingNote>(ENote)
-  /** A new note */
-  const [newNote, setNewNote] = useState<INewNote>(ENote)
   /** Whether the user has authenticated */
   const [authenticated, setAuthenticated] = useState(false)
   /** Whether there was an issue with user authentication */
@@ -25,6 +23,8 @@ const Home = () => {
     useState('Google sign in was unsuccessful.')
   /** State setter to update the width of the viewport/window, in pixels */
   const setViewportWidth = useSetRecoilState(atomViewportWidth)
+  /** State setter to update new note */
+  const setNewNote = useSetRecoilState(atomNewNote)
 
   /** Keep track of the viewport/window width */
   useEffect(() => {
@@ -61,18 +61,6 @@ const Home = () => {
       .then((res) => {
         if (res.data) {
           setNotes(res.data)
-        }
-      })
-      .catch((err) => console.log(err))
-  }
-
-  /** Delete a note with a specific ID */
-  const deleteNote = (id: string) => {
-    axios
-      .delete(`/api/notes/${id}`)
-      .then((res) => {
-        if (res.data) {
-          getNotes()
         }
       })
       .catch((err) => console.log(err))
@@ -123,14 +111,11 @@ const Home = () => {
       <NoteView
         getNotes={getNotes}
         notes={notes}
-        deleteNote={deleteNote}
         editNote={editNote}
         editingID={editingID}
         saveNote={saveNote}
         cancelEdit={cancelEdit}
         handleNoteTextChange={handleNoteTextChange}
-        newNote={newNote}
-        setNewNote={setNewNote}
         noteBeingEdited={noteBeingEdited}
         logOut={logOut}
       />

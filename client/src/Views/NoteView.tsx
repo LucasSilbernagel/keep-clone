@@ -1,26 +1,23 @@
-import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react'
-import { Grid } from '@mui/material'
+import { ChangeEvent, useState } from 'react'
+import { Grid, useTheme, Paper, Button } from '@mui/material'
 import NoteList from '../Components/NoteList'
-import { IExistingNote, INewNote } from '../Interfaces'
+import { IExistingNote } from '../Interfaces'
 import { useEffect } from 'react'
 import DesktopAppBar from '../Components/AppBar/DesktopAppBar'
 import MobileAppBar from '../Components/AppBar/MobileAppBar'
-import { atomViewportWidth } from '../atoms'
-import { useRecoilValue } from 'recoil'
-import NoteCreator from '../Components/NoteCreator'
+import { atomNewNote, atomViewportWidth } from '../atoms'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import axios from 'axios'
+import NoteFormContainer from '../Components/NoteForm/NoteFormContainer'
 
 interface IComponentProps {
   getNotes: () => void
   notes: Array<IExistingNote>
-  deleteNote: (id: string) => void
   editNote: (id: string) => void
   editingID: string
   saveNote: () => void
   cancelEdit: () => void
   handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
-  newNote: INewNote
-  setNewNote: Dispatch<SetStateAction<INewNote>>
   noteBeingEdited: IExistingNote
   logOut: () => void
 }
@@ -29,14 +26,11 @@ const NoteView = (props: IComponentProps): JSX.Element => {
   const {
     getNotes,
     notes,
-    deleteNote,
     editNote,
     editingID,
     saveNote,
     cancelEdit,
     handleNoteTextChange,
-    newNote,
-    setNewNote,
     noteBeingEdited,
     logOut,
   } = props
@@ -46,11 +40,19 @@ const NoteView = (props: IComponentProps): JSX.Element => {
 
   const [creatingNote, setCreatingNote] = useState(false)
 
+  const theme = useTheme()
+
+  const [newNote, setNewNote] = useRecoilState(atomNewNote)
+
   /** Display all saved notes when the page first loads */
   useEffect(() => {
     getNotes()
     // eslint-disable-next-line
   }, [])
+
+  const createNote = () => {
+    setCreatingNote(true)
+  }
 
   /** Save the new note to the database */
   const saveNewNote = () => {
@@ -95,16 +97,46 @@ const NoteView = (props: IComponentProps): JSX.Element => {
       )}
       <Grid container item>
         <Grid container item lg={12} justifyContent="center">
-          <NoteCreator
-            newNote={newNote}
-            setNewNote={setNewNote}
-            creatingNote={creatingNote}
-            setCreatingNote={setCreatingNote}
-            finishCreatingNote={finishCreatingNote}
-          />
+          <Grid
+            item
+            xs={10}
+            sm={8}
+            md={6}
+            lg={4}
+            sx={{ marginBottom: '2em', zIndex: 30 }}
+          >
+            <Paper elevation={3} sx={{ width: '100%', marginTop: '2em' }}>
+              {creatingNote ? (
+                <NoteFormContainer finishCreatingNote={finishCreatingNote} />
+              ) : (
+                <Button
+                  onClick={createNote}
+                  disableRipple
+                  sx={{
+                    textTransform: 'initial',
+                    color: theme.palette.secondary.light,
+                    fontWeight: 'bold',
+                    fontSize: '1rem',
+                    width: '100%',
+                    cursor: 'text',
+                    padding: '0.5em 0.5em 0.5em 1em',
+                    justifyContent: 'flex-start',
+                    '&.MuiButtonBase-root:hover': {
+                      bgcolor: 'transparent',
+                    },
+                    '&:focus': {
+                      boxShadow: 4,
+                    },
+                  }}
+                >
+                  Take a note...
+                </Button>
+              )}
+            </Paper>
+          </Grid>
         </Grid>
         <Grid item container>
-          <NoteList notes={notes} deleteNote={deleteNote} getNotes={getNotes} />
+          <NoteList notes={notes} getNotes={getNotes} />
         </Grid>
       </Grid>
     </>

@@ -1,15 +1,18 @@
 import { ChangeEventHandler } from 'react'
 import { TextField, Grid, Button } from '@mui/material'
 import { INewNote } from '../../Interfaces'
+import { useRecoilValue } from 'recoil'
+import { atomNewNote } from '../../atoms'
 
 interface IComponentProps {
-  handleChange: ChangeEventHandler<HTMLInputElement>
-  newNote: INewNote
+  handleNoteTextChange: ChangeEventHandler<HTMLInputElement>
   finishCreatingNote: () => void
 }
 
-const NoteForm = (props: IComponentProps) => {
-  const { handleChange, newNote, finishCreatingNote } = props
+const NoteFormDesktop = (props: IComponentProps) => {
+  const { handleNoteTextChange, finishCreatingNote } = props
+
+  const newNote = useRecoilValue(atomNewNote)
 
   return (
     <Grid container sx={{ padding: '0.5em' }}>
@@ -19,7 +22,7 @@ const NoteForm = (props: IComponentProps) => {
           multiline
           placeholder="Take a note..."
           size="small"
-          onChange={handleChange}
+          onChange={handleNoteTextChange}
           value={newNote.text}
           variant="outlined"
           sx={{
@@ -55,4 +58,4 @@ const NoteForm = (props: IComponentProps) => {
   )
 }
 
-export default NoteForm
+export default NoteFormDesktop

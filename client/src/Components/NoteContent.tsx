@@ -14,12 +14,11 @@ import axios from 'axios'
 
 interface IComponentProps {
   note: IExistingNote
-  deleteNote: (id: string) => void
   getNotes: () => void
 }
 
 const NoteContent = (props: IComponentProps) => {
-  const { note, deleteNote, getNotes } = props
+  const { note, getNotes } = props
 
   /** Anchor for the "more" menu */
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -42,6 +41,18 @@ const NoteContent = (props: IComponentProps) => {
         }
       })
       .catch((err) => console.error(err))
+  }
+
+  /** Delete a note with a specific ID */
+  const deleteNote = (id: string) => {
+    axios
+      .delete(`/api/notes/${id}`)
+      .then((res) => {
+        if (res.data) {
+          getNotes()
+        }
+      })
+      .catch((err) => console.log(err))
   }
 
   return (

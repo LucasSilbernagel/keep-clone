@@ -7,12 +7,11 @@ import { atomViewportWidth } from '../atoms'
 
 interface IComponentProps {
   notes: Array<IExistingNote>
-  deleteNote: (id: string) => void
   getNotes: () => void
 }
 
 const NoteList = (props: IComponentProps) => {
-  const { notes, deleteNote, getNotes } = props
+  const { notes, getNotes } = props
 
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
@@ -33,12 +32,7 @@ const NoteList = (props: IComponentProps) => {
           <Grid container item spacing={2}>
             {notes.map((note) => {
               return (
-                <NoteContent
-                  key={note._id}
-                  note={note}
-                  deleteNote={deleteNote}
-                  getNotes={getNotes}
-                />
+                <NoteContent key={note._id} note={note} getNotes={getNotes} />
               )
             })}
           </Grid>
@@ -58,12 +52,7 @@ const NoteList = (props: IComponentProps) => {
           <Masonry spacing={2} columns={{ lg: 3, md: 3, sm: 2, xs: 2 }}>
             {notes.map((note) => {
               return (
-                <NoteContent
-                  key={note._id}
-                  note={note}
-                  deleteNote={deleteNote}
-                  getNotes={getNotes}
-                />
+                <NoteContent key={note._id} note={note} getNotes={getNotes} />
               )
             })}
           </Masonry>
@@ -82,12 +71,7 @@ const NoteList = (props: IComponentProps) => {
           <Masonry spacing={2} columns={{ lg: 4 }}>
             {notes.map((note) => {
               return (
-                <NoteContent
-                  key={note._id}
-                  note={note}
-                  deleteNote={deleteNote}
-                  getNotes={getNotes}
-                />
+                <NoteContent key={note._id} note={note} getNotes={getNotes} />
               )
             })}
           </Masonry>
@@ -110,12 +94,7 @@ const NoteList = (props: IComponentProps) => {
           <Masonry spacing={2} columns={{ xs: 2, sm: 2, md: 3, lg: 4, xl: 5 }}>
             {notes.map((note) => {
               return (
-                <NoteContent
-                  key={note._id}
-                  note={note}
-                  deleteNote={deleteNote}
-                  getNotes={getNotes}
-                />
+                <NoteContent key={note._id} note={note} getNotes={getNotes} />
               )
             })}
           </Masonry>
