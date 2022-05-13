@@ -1,14 +1,13 @@
-import { ChangeEvent, useState } from 'react'
-import { Grid, useTheme, Paper, Button } from '@mui/material'
+import { ChangeEvent, useState, useEffect } from 'react'
+import { Grid } from '@mui/material'
 import NoteList from '../Components/NoteList'
 import { IExistingNote } from '../Interfaces'
-import { useEffect } from 'react'
 import DesktopAppBar from '../Components/AppBar/DesktopAppBar'
 import MobileAppBar from '../Components/AppBar/MobileAppBar'
 import { atomNewNote, atomViewportWidth } from '../atoms'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import axios from 'axios'
-import NoteFormContainer from '../Components/NoteForm/NoteFormContainer'
+import NoteCreator from '../Components/NoteCreator'
 
 interface IComponentProps {
   getNotes: () => void
@@ -40,8 +39,6 @@ const NoteView = (props: IComponentProps): JSX.Element => {
 
   const [creatingNote, setCreatingNote] = useState(false)
 
-  const theme = useTheme()
-
   const [newNote, setNewNote] = useRecoilState(atomNewNote)
 
   /** Display all saved notes when the page first loads */
@@ -49,10 +46,6 @@ const NoteView = (props: IComponentProps): JSX.Element => {
     getNotes()
     // eslint-disable-next-line
   }, [])
-
-  const createNote = () => {
-    setCreatingNote(true)
-  }
 
   /** Save the new note to the database */
   const saveNewNote = () => {
@@ -105,37 +98,14 @@ const NoteView = (props: IComponentProps): JSX.Element => {
             lg={4}
             sx={{ marginBottom: '2em', zIndex: 30 }}
           >
-            <Paper elevation={3} sx={{ width: '100%', marginTop: '2em' }}>
-              {creatingNote ? (
-                <NoteFormContainer finishCreatingNote={finishCreatingNote} />
-              ) : (
-                <Button
-                  onClick={createNote}
-                  disableRipple
-                  sx={{
-                    textTransform: 'initial',
-                    color: theme.palette.secondary.light,
-                    fontWeight: 'bold',
-                    fontSize: '1rem',
-                    width: '100%',
-                    cursor: 'text',
-                    padding: '0.5em 0.5em 0.5em 1em',
-                    justifyContent: 'flex-start',
-                    '&.MuiButtonBase-root:hover': {
-                      bgcolor: 'transparent',
-                    },
-                    '&:focus': {
-                      boxShadow: 4,
-                    },
-                  }}
-                >
-                  Take a note...
-                </Button>
-              )}
-            </Paper>
+            <NoteCreator getNotes={getNotes} />
           </Grid>
         </Grid>
-        <Grid item container>
+        <Grid
+          item
+          container
+          sx={viewportWidth > 1011 ? {} : { paddingBottom: '100px' }}
+        >
           <NoteList notes={notes} getNotes={getNotes} />
         </Grid>
       </Grid>
