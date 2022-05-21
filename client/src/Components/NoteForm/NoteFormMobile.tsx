@@ -1,15 +1,14 @@
 import { ChangeEventHandler } from 'react'
-import { TextField, Grid, Button } from '@mui/material'
+import { TextField, Grid } from '@mui/material'
 import { useRecoilValue } from 'recoil'
 import { atomNewNote } from '../../atoms'
 
 interface IComponentProps {
   handleNoteTextChange: ChangeEventHandler<HTMLInputElement>
-  finishCreatingNote: () => void
 }
 
-const NoteFormDesktop = (props: IComponentProps) => {
-  const { handleNoteTextChange, finishCreatingNote } = props
+const NoteFormMobile = (props: IComponentProps) => {
+  const { handleNoteTextChange } = props
 
   const newNote = useRecoilValue(atomNewNote)
 
@@ -19,14 +18,14 @@ const NoteFormDesktop = (props: IComponentProps) => {
         <TextField
           autoFocus
           multiline
-          placeholder="Take a note..."
+          placeholder="Note"
           size="small"
           onChange={handleNoteTextChange}
           value={newNote.text}
           variant="outlined"
           sx={{
             width: '100%',
-            maxHeight: '50vh',
+            maxHeight: '80vh',
             overflowY: 'auto',
             '& .MuiOutlinedInput-root': {
               '& fieldset': {
@@ -42,19 +41,8 @@ const NoteFormDesktop = (props: IComponentProps) => {
           }}
         />
       </Grid>
-      <Grid item container xs={12} justifyContent="flex-end">
-        <Grid item>
-          <Button
-            onClick={finishCreatingNote}
-            color="inherit"
-            sx={{ textTransform: 'initial' }}
-          >
-            Close
-          </Button>
-        </Grid>
-      </Grid>
     </Grid>
   )
 }
 
-export default NoteFormDesktop
+export default NoteFormMobile

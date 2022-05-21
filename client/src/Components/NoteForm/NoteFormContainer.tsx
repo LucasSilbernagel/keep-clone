@@ -1,7 +1,8 @@
 import { ChangeEvent } from 'react'
 import NoteFormDesktop from './NoteFormDesktop'
-import { useSetRecoilState } from 'recoil'
-import { atomNewNote } from '../../atoms'
+import NoteFormMobile from './NoteFormMobile'
+import { useSetRecoilState, useRecoilValue } from 'recoil'
+import { atomNewNote, atomViewportWidth } from '../../atoms'
 
 interface IComponentProps {
   finishCreatingNote: () => void
@@ -9,6 +10,9 @@ interface IComponentProps {
 
 const NoteFormContainer = (props: IComponentProps) => {
   const { finishCreatingNote } = props
+
+  /** The width of the viewport/window, in pixels */
+  const viewportWidth = useRecoilValue(atomViewportWidth)
 
   const setNewNote = useSetRecoilState(atomNewNote)
 
@@ -20,12 +24,16 @@ const NoteFormContainer = (props: IComponentProps) => {
     })
   }
 
-  return (
-    <NoteFormDesktop
-      handleNoteTextChange={handleNoteTextChange}
-      finishCreatingNote={finishCreatingNote}
-    />
-  )
+  if (viewportWidth > 1011) {
+    return (
+      <NoteFormDesktop
+        handleNoteTextChange={handleNoteTextChange}
+        finishCreatingNote={finishCreatingNote}
+      />
+    )
+  } else {
+    return <NoteFormMobile handleNoteTextChange={handleNoteTextChange} />
+  }
 }
 
 export default NoteFormContainer

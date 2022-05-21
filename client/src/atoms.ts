@@ -13,3 +13,9 @@ export const atomNewNote = atom<INewNote>({
   key: 'atomNewNote',
   default: ENote,
 })
+
+/** Boolean to determine whether the note modal is open */
+export const atomIsModalOpen = atom<boolean>({
+  key: 'atomIsModalOpen',
+  default: false,
+})

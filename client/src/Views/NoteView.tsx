@@ -8,6 +8,7 @@ import { atomNewNote, atomViewportWidth } from '../atoms'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import axios from 'axios'
 import NoteCreator from '../Components/NoteCreator'
+import NoteModal from '../Components/NoteModal'
 
 interface IComponentProps {
   getNotes: () => void
@@ -69,6 +70,12 @@ const NoteView = (props: IComponentProps): JSX.Element => {
 
   return (
     <>
+      <NoteModal
+        finishCreatingNote={finishCreatingNote}
+        getNotes={getNotes}
+        note={noteBeingEdited}
+        saveNewNote={saveNewNote}
+      />
       {creatingNote ? (
         <div
           style={{
@@ -96,9 +103,11 @@ const NoteView = (props: IComponentProps): JSX.Element => {
             sm={8}
             md={6}
             lg={4}
-            sx={{ marginBottom: '2em', zIndex: 30 }}
+            sx={{
+              marginBottom: '2em',
+            }}
           >
-            <NoteCreator getNotes={getNotes} />
+            <NoteCreator finishCreatingNote={finishCreatingNote} />
           </Grid>
         </Grid>
         <Grid

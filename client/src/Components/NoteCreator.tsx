@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { useTheme, Paper, Button, IconButton, Box } from '@mui/material'
-import { atomNewNote, atomViewportWidth } from '../atoms'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import axios from 'axios'
+import { atomViewportWidth, atomIsModalOpen } from '../atoms'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import NoteFormContainer from '../Components/NoteForm/NoteFormContainer'
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined'
 import BrushOutlinedIcon from '@mui/icons-material/BrushOutlined'
@@ -11,11 +10,11 @@ import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined'
 import AddBoxIcon from '@mui/icons-material/AddBox'
 
 interface IComponentProps {
-  getNotes: () => void
+  finishCreatingNote: () => void
 }
 
-const NoteView = (props: IComponentProps): JSX.Element => {
-  const { getNotes } = props
+const NoteCreator = (props: IComponentProps): JSX.Element => {
+  const { finishCreatingNote } = props
 
   const [creatingNote, setCreatingNote] = useState(false)
 
@@ -24,31 +23,13 @@ const NoteView = (props: IComponentProps): JSX.Element => {
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
 
-  const [newNote, setNewNote] = useRecoilState(atomNewNote)
+  const setIsModalOpen = useSetRecoilState(atomIsModalOpen)
 
   const createNote = () => {
     setCreatingNote(true)
   }
 
-  /** Save the new note to the database */
-  const saveNewNote = () => {
-    axios
-      .post('/api/notes', newNote)
-      .then((res) => {
-        if (res.data) {
-          getNotes()
-          setNewNote({ text: '', userGoogleId: '' })
-        }
-      })
-      .catch((err) => console.log(err))
-  }
-
-  const finishCreatingNote = () => {
-    setCreatingNote(false)
-    if (newNote.text.length > 0) {
-      saveNewNote()
-    }
-  }
+  const openModal = () => setIsModalOpen(true)
 
   if (viewportWidth > 1011) {
     return (
@@ -112,6 +93,7 @@ const NoteView = (props: IComponentProps): JSX.Element => {
                 aria-label="new note"
                 color="info"
                 sx={{ position: 'absolute', right: '-11px', bottom: '-35px' }}
+                onClick={openModal}
               >
                 <AddBoxIcon sx={{ fontSize: '76px' }} />
               </IconButton>
@@ -135,4 +117,4 @@ const NoteView = (props: IComponentProps): JSX.Element => {
   }
 }
 
-export default NoteView
+export default NoteCreator
