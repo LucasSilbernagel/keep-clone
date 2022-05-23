@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { ChangeEvent, Dispatch, SetStateAction } from 'react'
 import { useTheme, Paper, Button, IconButton, Box } from '@mui/material'
 import { atomViewportWidth, atomIsModalOpen } from '../atoms'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
@@ -8,15 +8,24 @@ import BrushOutlinedIcon from '@mui/icons-material/BrushOutlined'
 import MicNoneOutlinedIcon from '@mui/icons-material/MicNoneOutlined'
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined'
 import AddBoxIcon from '@mui/icons-material/AddBox'
+import { IExistingNote } from '../Interfaces'
 
 interface IComponentProps {
-  finishCreatingNote: () => void
+  noteBeingEdited: IExistingNote
+  editingID: string
+  handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
+  creatingNote: boolean
+  setCreatingNote: Dispatch<SetStateAction<boolean>>
 }
 
 const NoteCreator = (props: IComponentProps): JSX.Element => {
-  const { finishCreatingNote } = props
-
-  const [creatingNote, setCreatingNote] = useState(false)
+  const {
+    noteBeingEdited,
+    editingID,
+    handleNoteTextChange,
+    creatingNote,
+    setCreatingNote,
+  } = props
 
   const theme = useTheme()
 
@@ -35,7 +44,11 @@ const NoteCreator = (props: IComponentProps): JSX.Element => {
     return (
       <Paper elevation={3} sx={{ width: '100%', marginTop: '2em' }}>
         {creatingNote ? (
-          <NoteFormContainer finishCreatingNote={finishCreatingNote} />
+          <NoteFormContainer
+            noteBeingEdited={noteBeingEdited}
+            editingID={editingID}
+            handleNoteTextChange={handleNoteTextChange}
+          />
         ) : (
           <Button
             onClick={createNote}

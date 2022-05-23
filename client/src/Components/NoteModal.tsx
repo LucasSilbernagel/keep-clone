@@ -1,25 +1,12 @@
-import { useState, MouseEvent, forwardRef, useEffect } from 'react'
-import {
-  Dialog,
-  Typography,
-  Grid,
-  IconButton,
-  Tooltip,
-  Menu,
-  MenuItem,
-  Slide,
-} from '@mui/material'
-import { atomIsModalOpen, atomNewNote } from '../atoms'
-import { useRecoilState } from 'recoil'
+import { forwardRef, ChangeEvent } from 'react'
+import { Dialog, Grid, IconButton, Slide } from '@mui/material'
+import { atomIsModalOpen, atomNewNote, atomViewportWidth } from '../atoms'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import NoteFormContainer from '../Components/NoteForm/NoteFormContainer'
-import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined'
-import PaletteOutlinedIcon from '@mui/icons-material/PaletteOutlined'
-import MoreVertIcon from '@mui/icons-material/MoreVert'
-import axios from 'axios'
-import { IExistingNote, INewNote } from '../Interfaces'
+import { IExistingNote } from '../Interfaces'
 import { TransitionProps } from '@mui/material/transitions'
-import { ENote } from '../Enums'
+import NoteModalFooter from './NoteModalFooter'
 
 /** Transition for the note modal */
 const Transition = forwardRef(function Transition(
@@ -32,81 +19,46 @@ const Transition = forwardRef(function Transition(
 })
 
 interface IComponentProps {
-  finishCreatingNote: () => void
   getNotes: () => void
   note: IExistingNote
   saveNewNote: () => void
+  noteBeingEdited: IExistingNote
+  editingID: string
+  saveNote: () => void
+  handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
 const NoteModal = (props: IComponentProps): JSX.Element => {
-  const { finishCreatingNote, getNotes, note, saveNewNote } = props
+  const {
+    getNotes,
+    note,
+    saveNewNote,
+    noteBeingEdited,
+    editingID,
+    saveNote,
+    handleNoteTextChange,
+  } = props
+
+  /** The width of the viewport/window, in pixels */
+  const viewportWidth = useRecoilValue(atomViewportWidth)
 
   const [isModalOpen, setIsModalOpen] = useRecoilState(atomIsModalOpen)
 
-  const [newNote, setNewNote] = useRecoilState(atomNewNote)
-
-  const [noteCopy, setNoteCopy] = useState<INewNote>(ENote)
-
-  /** Anchor for the "more" menu */
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const open = Boolean(anchorEl)
-
-  useEffect(() => {
-    setNoteCopy(newNote)
-  }, [newNote])
-
-  const handleClickMore = (event: MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
-
-  const handleCloseMenu = () => {
-    setAnchorEl(null)
-  }
+  const newNote = useRecoilValue(atomNewNote)
 
   const handleCloseModal = () => {
-    setIsModalOpen(false)
-  }
-
-  /** Post the duplicate note to the database */
-  const saveNoteCopy = () => {
-    axios
-      .post('/api/notes', noteCopy)
-      .then((res) => {
-        if (res.data) {
-          getNotes()
-          setNoteCopy({ text: '', userGoogleId: '' })
-        }
-      })
-      .catch((err) => console.log(err))
-  }
-
-  const copyNote = (note: IExistingNote) => {
-    if (newNote.text) {
-      saveNoteCopy()
+    if (editingID) {
+      saveNote()
+    } else {
       saveNewNote()
     }
-    handleCloseModal()
-    setAnchorEl(null)
-  }
-
-  const deleteNote = (id: string) => {
-    setNewNote({ text: '', userGoogleId: '' })
-    handleCloseModal()
-    setAnchorEl(null)
-    // axios
-    //   .delete(`/api/notes/${id}`)
-    //   .then((res) => {
-    //     if (res.data) {
-    //       getNotes()
-    //     }
-    //   })
-    //   .catch((err) => console.log(err))
+    setIsModalOpen(false)
   }
 
   /** Function called when the "back" button is clicked in the modal */
   const handleBack = () => {
     if (newNote.text) {
-      saveNewNote()
+      saveNote()
       handleCloseModal()
     } else {
       handleCloseModal()
@@ -117,73 +69,36 @@ const NoteModal = (props: IComponentProps): JSX.Element => {
     <Dialog
       onClose={handleCloseModal}
       open={isModalOpen}
-      fullScreen
+      fullScreen={viewportWidth < 1011}
+      fullWidth={viewportWidth > 1011}
       TransitionComponent={Transition}
     >
       <Grid container>
-        <Grid item xs={12}>
-          <IconButton
-            aria-label="Save or cancel"
-            color="secondary"
-            onClick={handleBack}
-          >
-            <ArrowBackIcon />
-          </IconButton>
-        </Grid>
-        <NoteFormContainer finishCreatingNote={finishCreatingNote} />
-      </Grid>
-      <Grid
-        container
-        justifyContent="space-between"
-        sx={{ position: 'fixed', bottom: 0 }}
-      >
-        <Grid item container xs={4}>
-          <Grid item>
-            <IconButton aria-label="more" color="secondary">
-              <AddBoxOutlinedIcon />
-            </IconButton>
-          </Grid>
-          <Grid item>
-            <IconButton aria-label="more" color="secondary">
-              <PaletteOutlinedIcon />
-            </IconButton>
-          </Grid>
-        </Grid>
-        <Grid item container xs={5} justifyContent="center" alignItems="center">
-          <Typography>Edited 9:13 p.m.</Typography>
-        </Grid>
-        <Grid item xs={1}>
-          <Menu
-            id="more-menu"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleCloseMenu}
-            MenuListProps={{
-              'aria-labelledby': 'more-button',
-            }}
-          >
-            <MenuItem onClick={() => deleteNote(note._id)}>
-              Delete note
-            </MenuItem>
-            <MenuItem onClick={() => copyNote(note)}>Make a copy</MenuItem>
-          </Menu>
-        </Grid>
-        <Grid item>
-          <Tooltip title="More">
+        {viewportWidth < 1011 ? (
+          <Grid item xs={12}>
             <IconButton
-              id="more-button"
-              aria-controls={open ? 'more-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? 'true' : undefined}
-              onClick={handleClickMore}
+              aria-label="Save or cancel"
               color="secondary"
-              className="moreButton"
+              onClick={handleBack}
             >
-              <MoreVertIcon />
+              <ArrowBackIcon />
             </IconButton>
-          </Tooltip>
-        </Grid>
+          </Grid>
+        ) : null}
+        <NoteFormContainer
+          noteBeingEdited={noteBeingEdited}
+          editingID={editingID}
+          handleNoteTextChange={handleNoteTextChange}
+        />
       </Grid>
+      <NoteModalFooter
+        getNotes={getNotes}
+        note={note}
+        handleCloseModal={handleCloseModal}
+        editingID={editingID}
+        noteBeingEdited={noteBeingEdited}
+        saveNote={saveNote}
+      />
     </Dialog>
   )
 }

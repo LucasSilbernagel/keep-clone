@@ -1,38 +1,38 @@
 import { ChangeEvent } from 'react'
 import NoteFormDesktop from './NoteFormDesktop'
 import NoteFormMobile from './NoteFormMobile'
-import { useSetRecoilState, useRecoilValue } from 'recoil'
-import { atomNewNote, atomViewportWidth } from '../../atoms'
+import { useRecoilValue } from 'recoil'
+import { atomViewportWidth } from '../../atoms'
+import { IExistingNote } from '../../Interfaces'
 
 interface IComponentProps {
-  finishCreatingNote: () => void
+  noteBeingEdited: IExistingNote
+  editingID: string
+  handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
 const NoteFormContainer = (props: IComponentProps) => {
-  const { finishCreatingNote } = props
+  const { noteBeingEdited, editingID, handleNoteTextChange } = props
 
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
-
-  const setNewNote = useSetRecoilState(atomNewNote)
-
-  /** Keep track of the new note text as the user types in the text field */
-  const handleNoteTextChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setNewNote({
-      text: e.target.value,
-      userGoogleId: JSON.parse(window.localStorage.userProfile).googleId,
-    })
-  }
 
   if (viewportWidth > 1011) {
     return (
       <NoteFormDesktop
         handleNoteTextChange={handleNoteTextChange}
-        finishCreatingNote={finishCreatingNote}
+        noteBeingEdited={noteBeingEdited}
+        editingID={editingID}
       />
     )
   } else {
-    return <NoteFormMobile handleNoteTextChange={handleNoteTextChange} />
+    return (
+      <NoteFormMobile
+        handleNoteTextChange={handleNoteTextChange}
+        noteBeingEdited={noteBeingEdited}
+        editingID={editingID}
+      />
+    )
   }
 }
 

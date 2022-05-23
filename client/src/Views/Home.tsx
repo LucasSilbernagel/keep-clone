@@ -2,7 +2,7 @@ import { useState, useEffect, ChangeEvent } from 'react'
 import axios from 'axios'
 import NoteView from './NoteView'
 import { ENote } from '../Enums'
-import { IExistingNote, INewNote } from '../Interfaces'
+import { IExistingNote } from '../Interfaces'
 import Login from './Login'
 import { useSetRecoilState } from 'recoil'
 import { atomNewNote, atomViewportWidth } from '../atoms'
@@ -63,7 +63,7 @@ const Home = () => {
           setNotes(res.data)
         }
       })
-      .catch((err) => console.log(err))
+      .catch((err) => console.error(err))
   }
 
   /** Edit a note with a specific ID */
@@ -74,17 +74,18 @@ const Home = () => {
 
   /** Change the text of a note as the user types into the editing field */
   const handleNoteTextChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setNoteBeingEdited((prevNote) => {
-      const newNote = { ...prevNote }
-      newNote.text = e.target.value
-      return newNote
-    })
-  }
-
-  /** Cancel editing a note */
-  const cancelEdit = () => {
-    setEditingID('')
-    setNoteBeingEdited(ENote)
+    if (editingID) {
+      setNoteBeingEdited((prevNote) => {
+        const editedNote = { ...prevNote }
+        editedNote.text = e.target.value
+        return editedNote
+      })
+    } else {
+      setNewNote({
+        text: e.target.value,
+        userGoogleId: JSON.parse(window.localStorage.userProfile).googleId,
+      })
+    }
   }
 
   /** Save an edited note to the database */
@@ -102,7 +103,7 @@ const Home = () => {
           setNoteBeingEdited(ENote)
           setNewNote(ENote)
         })
-        .catch((err) => console.log(err))
+        .catch((err) => console.error(err))
     }
   }
 
@@ -114,7 +115,6 @@ const Home = () => {
         editNote={editNote}
         editingID={editingID}
         saveNote={saveNote}
-        cancelEdit={cancelEdit}
         handleNoteTextChange={handleNoteTextChange}
         noteBeingEdited={noteBeingEdited}
         logOut={logOut}

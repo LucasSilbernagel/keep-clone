@@ -11,14 +11,22 @@ import {
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { IExistingNote } from '../Interfaces'
 import axios from 'axios'
+import { atomIsModalOpen, atomViewportWidth } from '../atoms'
+import { useSetRecoilState, useRecoilValue } from 'recoil'
 
 interface IComponentProps {
   note: IExistingNote
   getNotes: () => void
+  editNote: (id: string) => void
 }
 
 const NoteContent = (props: IComponentProps) => {
-  const { note, getNotes } = props
+  const { note, getNotes, editNote } = props
+
+  /** The width of the viewport/window, in pixels */
+  const viewportWidth = useRecoilValue(atomViewportWidth)
+
+  const setIsModalOpen = useSetRecoilState(atomIsModalOpen)
 
   /** Anchor for the "more" menu */
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -52,7 +60,12 @@ const NoteContent = (props: IComponentProps) => {
           getNotes()
         }
       })
-      .catch((err) => console.log(err))
+      .catch((err) => console.error(err))
+  }
+
+  const startEditingNote = (id: string) => {
+    editNote(id)
+    setIsModalOpen(true)
   }
 
   return (
@@ -74,17 +87,15 @@ const NoteContent = (props: IComponentProps) => {
             ? {
                 boxShadow: 4,
                 paddingBottom: 'unset',
-                cursor: 'pointer',
                 '& .moreButton': {
                   display: 'flex',
                 },
                 zIndex: 0,
               }
             : {
-                paddingBottom: '2.5em',
+                paddingBottom: viewportWidth > 1011 ? '2.5em' : 'unset',
                 '&:hover, &:focus': {
                   boxShadow: 4,
-                  cursor: 'pointer',
                   paddingBottom: 'unset',
                   '& .moreButton': {
                     display: 'flex',
@@ -95,50 +106,65 @@ const NoteContent = (props: IComponentProps) => {
         }
       >
         <Grid item container>
-          <Grid item>
-            <Typography
-              sx={{
-                maxHeight: '180px',
-                padding: '1em 1.6em 0 0.9em',
-                overflow: 'hidden',
-                fontSize: { xs: '0.9rem', sm: '1rem' },
+          <Grid item xs={12}>
+            <button
+              style={{
+                background: 'inherit',
+                border: 'none',
+                textAlign: 'left',
+                paddingBottom: viewportWidth < 1011 ? '1em' : 'unset',
+                width: '100%',
               }}
+              onClick={() => startEditingNote(note._id)}
             >
-              {note.text}
-            </Typography>
-          </Grid>
-          <Grid item container justifyContent="flex-end">
-            <Grid item>
-              <Menu
-                id="more-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleCloseMenu}
-                MenuListProps={{
-                  'aria-labelledby': 'more-button',
+              <Typography
+                sx={{
+                  maxHeight: '180px',
+                  padding: '1em 1.6em 0 0.9em',
+                  overflow: 'hidden',
+                  fontSize: { xs: '0.9rem', sm: '1rem' },
                 }}
               >
-                <MenuItem onClick={() => deleteNote(note._id)}>
-                  Delete note
-                </MenuItem>
-                <MenuItem onClick={() => copyNote(note)}>Make a copy</MenuItem>
-              </Menu>
-              <Tooltip title="More">
-                <IconButton
-                  id="more-button"
-                  aria-controls={open ? 'more-menu' : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? 'true' : undefined}
-                  onClick={handleClickMore}
-                  color="inherit"
-                  className="moreButton"
-                  sx={open ? { display: 'flex' } : { display: 'none' }}
-                >
-                  <MoreVertIcon />
-                </IconButton>
-              </Tooltip>
-            </Grid>
+                {note.text}
+              </Typography>
+            </button>
           </Grid>
+          {viewportWidth > 1011 ? (
+            <Grid item container justifyContent="flex-end">
+              <Grid item>
+                <Menu
+                  id="more-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleCloseMenu}
+                  MenuListProps={{
+                    'aria-labelledby': 'more-button',
+                  }}
+                >
+                  <MenuItem onClick={() => deleteNote(note._id)}>
+                    Delete note
+                  </MenuItem>
+                  <MenuItem onClick={() => copyNote(note)}>
+                    Make a copy
+                  </MenuItem>
+                </Menu>
+                <Tooltip title="More">
+                  <IconButton
+                    id="more-button"
+                    aria-controls={open ? 'more-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? 'true' : undefined}
+                    onClick={handleClickMore}
+                    color="inherit"
+                    className="moreButton"
+                    sx={open ? { display: 'flex' } : { display: 'none' }}
+                  >
+                    <MoreVertIcon />
+                  </IconButton>
+                </Tooltip>
+              </Grid>
+            </Grid>
+          ) : null}
         </Grid>
       </Paper>
     </Grid>

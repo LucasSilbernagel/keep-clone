@@ -48,7 +48,7 @@ app.get('*', (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname + '/client/build/index.html'))
 })
 app.use((err: string, req: Request, res: Response, next: () => void) => {
-  console.log(err)
+  console.error(err)
   next()
 })
 app.listen(port, () => {

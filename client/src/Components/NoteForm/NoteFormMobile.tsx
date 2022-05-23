@@ -2,13 +2,16 @@ import { ChangeEventHandler } from 'react'
 import { TextField, Grid } from '@mui/material'
 import { useRecoilValue } from 'recoil'
 import { atomNewNote } from '../../atoms'
+import { IExistingNote } from '../../Interfaces'
 
 interface IComponentProps {
   handleNoteTextChange: ChangeEventHandler<HTMLInputElement>
+  noteBeingEdited: IExistingNote
+  editingID: string
 }
 
 const NoteFormMobile = (props: IComponentProps) => {
-  const { handleNoteTextChange } = props
+  const { handleNoteTextChange, noteBeingEdited, editingID } = props
 
   const newNote = useRecoilValue(atomNewNote)
 
@@ -21,7 +24,7 @@ const NoteFormMobile = (props: IComponentProps) => {
           placeholder="Note"
           size="small"
           onChange={handleNoteTextChange}
-          value={newNote.text}
+          value={editingID ? noteBeingEdited.text : newNote.text}
           variant="outlined"
           sx={{
             width: '100%',

@@ -16,7 +16,6 @@ interface IComponentProps {
   editNote: (id: string) => void
   editingID: string
   saveNote: () => void
-  cancelEdit: () => void
   handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
   noteBeingEdited: IExistingNote
   logOut: () => void
@@ -29,7 +28,6 @@ const NoteView = (props: IComponentProps): JSX.Element => {
     editNote,
     editingID,
     saveNote,
-    cancelEdit,
     handleNoteTextChange,
     noteBeingEdited,
     logOut,
@@ -58,23 +56,26 @@ const NoteView = (props: IComponentProps): JSX.Element => {
           setNewNote({ text: '', userGoogleId: '' })
         }
       })
-      .catch((err) => console.log(err))
+      .catch((err) => console.error(err))
   }
 
   const finishCreatingNote = () => {
-    setCreatingNote(false)
-    if (newNote.text.length > 0) {
+    if (newNote.text) {
       saveNewNote()
     }
+    setCreatingNote(false)
   }
 
   return (
     <>
       <NoteModal
-        finishCreatingNote={finishCreatingNote}
         getNotes={getNotes}
         note={noteBeingEdited}
         saveNewNote={saveNewNote}
+        noteBeingEdited={noteBeingEdited}
+        editingID={editingID}
+        saveNote={saveNote}
+        handleNoteTextChange={handleNoteTextChange}
       />
       {creatingNote ? (
         <div
@@ -107,7 +108,13 @@ const NoteView = (props: IComponentProps): JSX.Element => {
               marginBottom: '2em',
             }}
           >
-            <NoteCreator finishCreatingNote={finishCreatingNote} />
+            <NoteCreator
+              noteBeingEdited={noteBeingEdited}
+              editingID={editingID}
+              handleNoteTextChange={handleNoteTextChange}
+              creatingNote={creatingNote}
+              setCreatingNote={setCreatingNote}
+            />
           </Grid>
         </Grid>
         <Grid
@@ -115,7 +122,7 @@ const NoteView = (props: IComponentProps): JSX.Element => {
           container
           sx={viewportWidth > 1011 ? {} : { paddingBottom: '100px' }}
         >
-          <NoteList notes={notes} getNotes={getNotes} />
+          <NoteList notes={notes} getNotes={getNotes} editNote={editNote} />
         </Grid>
       </Grid>
     </>
