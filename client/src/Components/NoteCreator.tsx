@@ -1,5 +1,5 @@
 import { ChangeEvent, Dispatch, SetStateAction } from 'react'
-import { useTheme, Paper, Button, IconButton, Box } from '@mui/material'
+import { useTheme, Paper, Button, IconButton, Box, Grid } from '@mui/material'
 import { atomViewportWidth, atomIsModalOpen } from '../atoms'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import NoteFormContainer from '../Components/NoteForm/NoteFormContainer'
@@ -16,6 +16,7 @@ interface IComponentProps {
   handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
   creatingNote: boolean
   setCreatingNote: Dispatch<SetStateAction<boolean>>
+  finishCreatingNote: () => void
 }
 
 const NoteCreator = (props: IComponentProps): JSX.Element => {
@@ -25,6 +26,7 @@ const NoteCreator = (props: IComponentProps): JSX.Element => {
     handleNoteTextChange,
     creatingNote,
     setCreatingNote,
+    finishCreatingNote,
   } = props
 
   const theme = useTheme()
@@ -44,34 +46,64 @@ const NoteCreator = (props: IComponentProps): JSX.Element => {
     return (
       <Paper elevation={3} sx={{ width: '100%', marginTop: '2em' }}>
         {creatingNote ? (
-          <NoteFormContainer
-            noteBeingEdited={noteBeingEdited}
-            editingID={editingID}
-            handleNoteTextChange={handleNoteTextChange}
-          />
+          <>
+            <NoteFormContainer
+              noteBeingEdited={noteBeingEdited}
+              editingID={editingID}
+              handleNoteTextChange={handleNoteTextChange}
+            />
+            <Grid
+              item
+              container
+              xs={12}
+              justifyContent="flex-end"
+              sx={{ paddingBottom: '0.5em', paddingRight: '1em' }}
+            >
+              <Button
+                onClick={finishCreatingNote}
+                color="inherit"
+                sx={{ textTransform: 'initial', fontWeight: 'bold' }}
+              >
+                Close
+              </Button>
+            </Grid>
+          </>
         ) : (
-          <Button
-            onClick={createNote}
-            disableRipple
-            sx={{
-              textTransform: 'initial',
-              color: theme.palette.secondary.light,
-              fontWeight: 'bold',
-              fontSize: '1rem',
-              width: '100%',
-              cursor: 'text',
-              padding: '0.5em 0.5em 0.5em 1em',
-              justifyContent: 'flex-start',
-              '&.MuiButtonBase-root:hover': {
-                bgcolor: 'transparent',
-              },
-              '&:focus': {
-                boxShadow: 4,
-              },
-            }}
-          >
-            Take a note...
-          </Button>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Button
+              onClick={createNote}
+              disableRipple
+              sx={{
+                textTransform: 'initial',
+                color: theme.palette.secondary.light,
+                fontWeight: 'bold',
+                fontSize: '1rem',
+                width: '75%',
+                cursor: 'text',
+                padding: '0.5em 0.5em 0.5em 1em',
+                justifyContent: 'flex-start',
+                '&.MuiButtonBase-root:hover': {
+                  bgcolor: 'transparent',
+                },
+                '&:focus': {
+                  boxShadow: 4,
+                },
+              }}
+            >
+              Take a note...
+            </Button>
+            <Box>
+              <IconButton aria-label="new checklist">
+                <CheckBoxOutlinedIcon />
+              </IconButton>
+              <IconButton aria-label="new drawing">
+                <BrushOutlinedIcon />
+              </IconButton>
+              <IconButton aria-label="new photo">
+                <InsertPhotoOutlinedIcon />
+              </IconButton>
+            </Box>
+          </Box>
         )}
       </Paper>
     )

@@ -80,7 +80,6 @@ const NoteView = (props: IComponentProps): JSX.Element => {
       {creatingNote ? (
         <div
           style={{
-            background: 'transparent',
             width: '100%',
             height: '100%',
             top: 0,
@@ -102,10 +101,12 @@ const NoteView = (props: IComponentProps): JSX.Element => {
             item
             xs={10}
             sm={8}
-            md={6}
-            lg={4}
+            md={7}
+            lg={5}
+            xl={4}
             sx={{
               marginBottom: '2em',
+              zIndex: 20,
             }}
           >
             <NoteCreator
@@ -114,6 +115,7 @@ const NoteView = (props: IComponentProps): JSX.Element => {
               handleNoteTextChange={handleNoteTextChange}
               creatingNote={creatingNote}
               setCreatingNote={setCreatingNote}
+              finishCreatingNote={finishCreatingNote}
             />
           </Grid>
         </Grid>

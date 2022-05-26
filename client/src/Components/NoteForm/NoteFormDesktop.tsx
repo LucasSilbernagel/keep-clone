@@ -16,7 +16,7 @@ const NoteFormDesktop = (props: IComponentProps) => {
   const newNote = useRecoilValue(atomNewNote)
 
   return (
-    <Grid container sx={{ padding: '0.5em' }}>
+    <Grid container>
       <Grid item xs={12}>
         <TextField
           autoFocus
@@ -28,6 +28,7 @@ const NoteFormDesktop = (props: IComponentProps) => {
           variant="outlined"
           sx={{
             width: '100%',
+            paddingLeft: '0.2em',
             maxHeight: '50vh',
             overflowY: 'auto',
             '& .MuiOutlinedInput-root': {
