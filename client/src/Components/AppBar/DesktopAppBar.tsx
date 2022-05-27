@@ -8,8 +8,8 @@ import {
   Typography,
   InputBase,
   Avatar,
+  Grid,
 } from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu'
 import SettingsIcon from '@mui/icons-material/Settings'
 import SplitscreenIcon from '@mui/icons-material/Splitscreen'
 import RefreshIcon from '@mui/icons-material/Refresh'
@@ -80,15 +80,7 @@ const DesktopAppBar = (props: IComponentProps): JSX.Element => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
+          <Grid item sx={{ mr: 6.5 }}></Grid>
           <Avatar
             alt="Google Keep"
             src={GoogleKeepLogo}

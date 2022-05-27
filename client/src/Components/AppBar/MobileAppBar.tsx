@@ -66,7 +66,8 @@ const MobileAppBar = (props: IComponentProps): JSX.Element => {
                   sx={{
                     textTransform: 'initial',
                     width: '100%',
-                    justifyContent: 'center',
+                    justifyContent: 'flex-start',
+                    paddingLeft: '1em',
                   }}
                 >
                   Search your notes

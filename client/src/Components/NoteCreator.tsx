@@ -78,7 +78,7 @@ const NoteCreator = (props: IComponentProps): JSX.Element => {
                 color: theme.palette.secondary.light,
                 fontWeight: 'bold',
                 fontSize: '1rem',
-                width: '75%',
+                width: '68%',
                 cursor: 'text',
                 padding: '0.5em 0.5em 0.5em 1em',
                 justifyContent: 'flex-start',
@@ -98,6 +98,9 @@ const NoteCreator = (props: IComponentProps): JSX.Element => {
               </IconButton>
               <IconButton aria-label="new drawing">
                 <BrushOutlinedIcon />
+              </IconButton>
+              <IconButton aria-label="new voice note">
+                <MicNoneOutlinedIcon />
               </IconButton>
               <IconButton aria-label="new photo">
                 <InsertPhotoOutlinedIcon />

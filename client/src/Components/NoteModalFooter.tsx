@@ -121,7 +121,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
           </Grid>
         </Grid>
         <Grid item container xs={5} justifyContent="center" alignItems="center">
-          <Typography>Edited 9:13 p.m.</Typography>
+          <Typography sx={{ fontSize: '0.9rem' }}>Edited 9:13 p.m.</Typography>
         </Grid>
         <Grid item xs={1}>
           <Menu
