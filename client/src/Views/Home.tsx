@@ -94,12 +94,14 @@ const Home = () => {
       setNoteBeingEdited((prevNote) => {
         const editedNote = { ...prevNote }
         editedNote.text = e.target.value
+        editedNote.lastEdited = Date.now()
         return editedNote
       })
     } else {
       setNewNote({
         text: e.target.value,
         userGoogleId: JSON.parse(window.localStorage.userProfile).googleId,
+        lastEdited: Date.now(),
       })
     }
   }

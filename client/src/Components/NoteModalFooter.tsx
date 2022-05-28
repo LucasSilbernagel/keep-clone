@@ -17,6 +17,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 import axios from 'axios'
 import { IExistingNote, INewNote } from '../Interfaces'
 import { ENote } from '../Enums'
+import ReactTimeAgo from 'react-time-ago'
 
 interface IComponentProps {
   getNotes: () => void
@@ -74,7 +75,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
       .then((res) => {
         if (res.data) {
           getNotes()
-          setNoteCopy({ text: '', userGoogleId: '' })
+          setNoteCopy({ text: '', userGoogleId: '', lastEdited: 0 })
         }
       })
       .catch((err) => console.error(err))
@@ -88,7 +89,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
   }
 
   const deleteNote = (id: string) => {
-    setNewNote({ text: '', userGoogleId: '' })
+    setNewNote({ text: '', userGoogleId: '', lastEdited: 0 })
     handleCloseModal()
     setAnchorEl(null)
     axios
@@ -120,9 +121,24 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
             </IconButton>
           </Grid>
         </Grid>
-        <Grid item container xs={5} justifyContent="center" alignItems="center">
-          <Typography sx={{ fontSize: '0.9rem' }}>Edited 9:13 p.m.</Typography>
-        </Grid>
+        {note.lastEdited === 0 ? null : (
+          <Grid
+            item
+            container
+            xs={5}
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Typography sx={{ fontSize: '0.9rem' }}>
+              Edited{' '}
+              <ReactTimeAgo
+                date={note.lastEdited}
+                locale="en-US"
+                timeStyle="round-minute"
+              />
+            </Typography>
+          </Grid>
+        )}
         <Grid item xs={1}>
           <Menu
             id="more-menu"
@@ -159,15 +175,24 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
   } else {
     return (
       <>
-        <Grid
-          item
-          container
-          xs={12}
-          justifyContent="flex-end"
-          sx={{ padding: '0.5em' }}
-        >
-          <Typography sx={{ fontSize: '0.9rem' }}>Edited 9:13 p.m.</Typography>
-        </Grid>
+        {note.lastEdited === 0 ? null : (
+          <Grid
+            item
+            container
+            xs={12}
+            justifyContent="flex-end"
+            sx={{ padding: '0.5em' }}
+          >
+            <Typography sx={{ fontSize: '0.9rem' }}>
+              Edited{' '}
+              <ReactTimeAgo
+                date={note.lastEdited}
+                locale="en-US"
+                timeStyle="round-minute"
+              />
+            </Typography>
+          </Grid>
+        )}
         <Grid container justifyContent="space-between">
           <Grid item container xs={2}>
             <Grid item container xs={4}>

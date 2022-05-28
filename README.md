@@ -23,6 +23,9 @@ A clone of Google Keep.
 - [React](https://reactjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [MUI](https://mui.com/)
+- [Axios](https://www.npmjs.com/package/axios)
+- [javascript-time-ago](https://www.npmjs.com/package/javascript-time-ago)
+- [react-time-ago](https://www.npmjs.com/package/react-time-ago)
 
 ### State Management
 

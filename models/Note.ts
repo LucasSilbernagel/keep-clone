@@ -9,6 +9,10 @@ const NoteSchema = new Schema({
     type: String,
     required: true,
   },
+  lastEdited: {
+    type: Number,
+    required: true,
+  },
   // expireAt: {
   //   type: Date,
   //   default: Date.now,

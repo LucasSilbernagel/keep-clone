@@ -62,7 +62,7 @@ const NoteView = (props: IComponentProps): JSX.Element => {
       .then((res) => {
         if (res.data) {
           getNotes()
-          setNewNote({ text: '', userGoogleId: '' })
+          setNewNote({ text: '', userGoogleId: '', lastEdited: 0 })
         }
       })
       .catch((err) => console.error(err))
