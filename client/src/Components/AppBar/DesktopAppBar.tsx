@@ -1,66 +1,29 @@
-import { useState, MouseEvent } from 'react'
-import { styled } from '@mui/material/styles'
+import { useState, MouseEvent, ChangeEvent } from 'react'
 import {
   AppBar,
   Box,
   Toolbar,
   IconButton,
   Typography,
-  InputBase,
   Avatar,
   Grid,
 } from '@mui/material'
 import SettingsIcon from '@mui/icons-material/Settings'
 import SplitscreenIcon from '@mui/icons-material/Splitscreen'
 import RefreshIcon from '@mui/icons-material/Refresh'
-import SearchIcon from '@mui/icons-material/Search'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import GoogleKeepLogo from '../../assets/keep_icon.png'
 import ProfileMenu from '../ProfileMenu/ProfileMenu'
-
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(10),
-    width: 'auto',
-  },
-  background: theme.palette.primary.dark,
-}))
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}))
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: theme.palette.secondary.dark,
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '50ch',
-    },
-  },
-}))
+import DesktopSearch from '../Search/DesktopSearch'
 
 interface IComponentProps {
   logOut: () => void
+  handleSearch: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  clearSearch: () => void
 }
 
 const DesktopAppBar = (props: IComponentProps): JSX.Element => {
-  const { logOut } = props
+  const { logOut, handleSearch, clearSearch } = props
   const userProfile = JSON.parse(window.localStorage.userProfile)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
@@ -94,15 +57,10 @@ const DesktopAppBar = (props: IComponentProps): JSX.Element => {
           >
             Keep
           </Typography>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon color="secondary" />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search"
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
+          <DesktopSearch
+            handleSearch={handleSearch}
+            clearSearch={clearSearch}
+          />
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton size="large" color="inherit">

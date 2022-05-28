@@ -19,3 +19,15 @@ export const atomIsModalOpen = atom<boolean>({
   key: 'atomIsModalOpen',
   default: false,
 })
+
+/** Boolean to determine whether the search form is being used */
+export const atomIsSearching = atom<boolean>({
+  key: 'atomIsSearching',
+  default: false,
+})
+
+/** The text that is typed into the search bar */
+export const atomSearchValue = atom<string>({
+  key: 'atomSearchValue',
+  default: '',
+})

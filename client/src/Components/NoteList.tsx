@@ -6,20 +6,20 @@ import { useRecoilValue } from 'recoil'
 import { atomViewportWidth } from '../atoms'
 
 interface IComponentProps {
-  notes: Array<IExistingNote>
+  filteredNotes: Array<IExistingNote>
   getNotes: () => void
   editNote: (id: string) => void
 }
 
 const NoteList = (props: IComponentProps) => {
-  const { notes, getNotes, editNote } = props
+  const { filteredNotes, getNotes, editNote } = props
 
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
 
-  /** Display notes if there are any saved */
-  if (notes.length > 0) {
-    if (notes.length < 3 && viewportWidth > 700) {
+  /** Display filteredNotes if there are any saved */
+  if (filteredNotes.length > 0) {
+    if (filteredNotes.length < 3 && viewportWidth > 700) {
       return (
         <Grid
           container
@@ -31,7 +31,7 @@ const NoteList = (props: IComponentProps) => {
           }}
         >
           <Grid container item spacing={2}>
-            {notes.map((note) => {
+            {filteredNotes.map((note) => {
               return (
                 <NoteContent
                   key={note._id}
@@ -44,7 +44,7 @@ const NoteList = (props: IComponentProps) => {
           </Grid>
         </Grid>
       )
-    } else if (notes.length === 3) {
+    } else if (filteredNotes.length === 3) {
       return (
         <Grid
           container
@@ -56,7 +56,7 @@ const NoteList = (props: IComponentProps) => {
           }}
         >
           <Masonry spacing={2} columns={{ lg: 3, md: 3, sm: 2, xs: 2 }}>
-            {notes.map((note) => {
+            {filteredNotes.map((note) => {
               return (
                 <NoteContent
                   key={note._id}
@@ -69,7 +69,7 @@ const NoteList = (props: IComponentProps) => {
           </Masonry>
         </Grid>
       )
-    } else if (viewportWidth >= 1536 && notes.length === 4) {
+    } else if (viewportWidth >= 1536 && filteredNotes.length === 4) {
       return (
         <Grid
           container
@@ -80,7 +80,7 @@ const NoteList = (props: IComponentProps) => {
           }}
         >
           <Masonry spacing={2} columns={{ lg: 4 }}>
-            {notes.map((note) => {
+            {filteredNotes.map((note) => {
               return (
                 <NoteContent
                   key={note._id}
@@ -108,7 +108,7 @@ const NoteList = (props: IComponentProps) => {
           }}
         >
           <Masonry spacing={2} columns={{ xs: 2, sm: 2, md: 3, lg: 4, xl: 5 }}>
-            {notes.map((note) => {
+            {filteredNotes.map((note) => {
               return (
                 <NoteContent
                   key={note._id}

@@ -4,12 +4,14 @@ import NoteView from './NoteView'
 import { ENote } from '../Enums'
 import { IExistingNote } from '../Interfaces'
 import Login from './Login'
-import { useSetRecoilState } from 'recoil'
-import { atomNewNote, atomViewportWidth } from '../atoms'
+import { useSetRecoilState, useRecoilValue } from 'recoil'
+import { atomNewNote, atomViewportWidth, atomSearchValue } from '../atoms'
 
 const Home = () => {
   /** Saved notes */
   const [notes, setNotes] = useState<IExistingNote[]>([])
+  /** Filtered saved notes */
+  const [filteredNotes, setFilteredNotes] = useState<IExistingNote[]>([])
   /** The ID of the note that is being edited */
   const [editingID, setEditingID] = useState('')
   /** The note that is being edited */
@@ -25,6 +27,8 @@ const Home = () => {
   const setViewportWidth = useSetRecoilState(atomViewportWidth)
   /** State setter to update new note */
   const setNewNote = useSetRecoilState(atomNewNote)
+
+  const searchValue = useRecoilValue(atomSearchValue)
 
   /** Keep track of the viewport/window width */
   useEffect(() => {
@@ -42,6 +46,18 @@ const Home = () => {
       setAuthenticated(true)
     }
   }, [])
+
+  /** Filter notes */
+  useEffect(() => {
+    setFilteredNotes(notes)
+    if (searchValue) {
+      setTimeout(() => {
+        setFilteredNotes((notes) =>
+          notes.filter((note) => JSON.stringify(note).includes(searchValue))
+        )
+      }, 500)
+    }
+  }, [notes, searchValue])
 
   /** Log out of the app */
   const logOut = () => {
@@ -69,7 +85,7 @@ const Home = () => {
   /** Edit a note with a specific ID */
   const editNote = (id: string) => {
     setEditingID(id)
-    setNoteBeingEdited(notes.find((note) => note._id === id) ?? ENote)
+    setNoteBeingEdited(filteredNotes.find((note) => note._id === id) ?? ENote)
   }
 
   /** Change the text of a note as the user types into the editing field */
@@ -111,7 +127,7 @@ const Home = () => {
     return (
       <NoteView
         getNotes={getNotes}
-        notes={notes}
+        filteredNotes={filteredNotes}
         editNote={editNote}
         editingID={editingID}
         saveNote={saveNote}

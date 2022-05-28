@@ -4,15 +4,20 @@ import NoteList from '../Components/NoteList'
 import { IExistingNote } from '../Interfaces'
 import DesktopAppBar from '../Components/AppBar/DesktopAppBar'
 import MobileAppBar from '../Components/AppBar/MobileAppBar'
-import { atomNewNote, atomViewportWidth } from '../atoms'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import {
+  atomNewNote,
+  atomViewportWidth,
+  atomSearchValue,
+  atomIsSearching,
+} from '../atoms'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import axios from 'axios'
 import NoteCreator from '../Components/NoteCreator'
 import NoteModal from '../Components/NoteModal'
 
 interface IComponentProps {
   getNotes: () => void
-  notes: Array<IExistingNote>
+  filteredNotes: Array<IExistingNote>
   editNote: (id: string) => void
   editingID: string
   saveNote: () => void
@@ -24,7 +29,7 @@ interface IComponentProps {
 const NoteView = (props: IComponentProps): JSX.Element => {
   const {
     getNotes,
-    notes,
+    filteredNotes,
     editNote,
     editingID,
     saveNote,
@@ -35,6 +40,10 @@ const NoteView = (props: IComponentProps): JSX.Element => {
 
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
+
+  const setSearchValue = useSetRecoilState(atomSearchValue)
+
+  const setIsSearching = useSetRecoilState(atomIsSearching)
 
   const [creatingNote, setCreatingNote] = useState(false)
 
@@ -66,6 +75,17 @@ const NoteView = (props: IComponentProps): JSX.Element => {
     setCreatingNote(false)
   }
 
+  const handleSearch = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setSearchValue(e.target.value)
+  }
+
+  const clearSearch = () => {
+    setIsSearching(false)
+    setSearchValue('')
+  }
+
   return (
     <>
       <NoteModal
@@ -91,9 +111,17 @@ const NoteView = (props: IComponentProps): JSX.Element => {
         ></div>
       ) : null}
       {viewportWidth > 1011 ? (
-        <DesktopAppBar logOut={logOut} />
+        <DesktopAppBar
+          logOut={logOut}
+          handleSearch={handleSearch}
+          clearSearch={clearSearch}
+        />
       ) : (
-        <MobileAppBar logOut={logOut} />
+        <MobileAppBar
+          logOut={logOut}
+          handleSearch={handleSearch}
+          clearSearch={clearSearch}
+        />
       )}
       <Grid container item>
         <Grid container item lg={12} justifyContent="center">
@@ -124,7 +152,11 @@ const NoteView = (props: IComponentProps): JSX.Element => {
           container
           sx={viewportWidth > 1011 ? {} : { paddingBottom: '100px' }}
         >
-          <NoteList notes={notes} getNotes={getNotes} editNote={editNote} />
+          <NoteList
+            filteredNotes={filteredNotes}
+            getNotes={getNotes}
+            editNote={editNote}
+          />
         </Grid>
       </Grid>
     </>
