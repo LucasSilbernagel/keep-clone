@@ -57,15 +57,17 @@ const NoteView = (props: IComponentProps): JSX.Element => {
 
   /** Save the new note to the database */
   const saveNewNote = () => {
-    axios
-      .post('/api/notes', newNote)
-      .then((res) => {
-        if (res.data) {
-          getNotes()
-          setNewNote({ text: '', userGoogleId: '', lastEdited: 0 })
-        }
-      })
-      .catch((err) => console.error(err))
+    if (newNote.text) {
+      axios
+        .post('/api/notes', newNote)
+        .then((res) => {
+          if (res.data) {
+            getNotes()
+            setNewNote({ text: '', userGoogleId: '', lastEdited: 0 })
+          }
+        })
+        .catch((err) => console.error(err))
+    }
   }
 
   const finishCreatingNote = () => {
