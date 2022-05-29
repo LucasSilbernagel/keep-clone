@@ -5,7 +5,12 @@ import { ENote } from '../Enums'
 import { IExistingNote } from '../Interfaces'
 import Login from './Login'
 import { useSetRecoilState, useRecoilValue } from 'recoil'
-import { atomNewNote, atomViewportWidth, atomSearchValue } from '../atoms'
+import {
+  atomNewNote,
+  atomViewportWidth,
+  atomSearchValue,
+  atomIsLoading,
+} from '../atoms'
 
 const Home = () => {
   /** Saved notes */
@@ -29,6 +34,8 @@ const Home = () => {
   const setNewNote = useSetRecoilState(atomNewNote)
 
   const searchValue = useRecoilValue(atomSearchValue)
+
+  const setIsLoading = useSetRecoilState(atomIsLoading)
 
   /** Keep track of the viewport/window width */
   useEffect(() => {
@@ -68,18 +75,22 @@ const Home = () => {
 
   /** Returns all saved notes */
   const getNotes = () => {
-    axios
-      .get('/api/notes', {
-        params: {
-          userGoogleId: JSON.parse(window.localStorage.userProfile).googleId,
-        },
-      })
-      .then((res) => {
-        if (res.data) {
-          setNotes(res.data)
-        }
-      })
-      .catch((err) => console.error(err))
+    setIsLoading(true)
+    setTimeout(() => {
+      axios
+        .get('/api/notes', {
+          params: {
+            userGoogleId: JSON.parse(window.localStorage.userProfile).googleId,
+          },
+        })
+        .then((res) => {
+          if (res.data) {
+            setNotes(res.data)
+            setIsLoading(false)
+          }
+        })
+        .catch((err) => console.error(err))
+    }, 1000)
   }
 
   /** Edit a note with a specific ID */

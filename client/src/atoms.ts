@@ -31,3 +31,9 @@ export const atomSearchValue = atom<string>({
   key: 'atomSearchValue',
   default: '',
 })
+
+/** Boolean to determine whether notes are loading from the back end */
+export const atomIsLoading = atom<boolean>({
+  key: 'atomIsLoading',
+  default: false,
+})

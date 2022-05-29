@@ -62,7 +62,7 @@ const MobileSearch = (props: IComponentProps): JSX.Element => {
   return (
     <Search>
       <BackIconWrapper>
-        <IconButton onClick={clearSearch}>
+        <IconButton onClick={clearSearch} aria-label="back">
           <ArrowBackIcon color="secondary" />
         </IconButton>
       </BackIconWrapper>
@@ -76,7 +76,11 @@ const MobileSearch = (props: IComponentProps): JSX.Element => {
       />
       <CloseIconWrapper>
         {isSearching ? (
-          <IconButton color="inherit" onClick={clearSearch}>
+          <IconButton
+            color="inherit"
+            onClick={clearSearch}
+            aria-label="clear search"
+          >
             <CloseIcon />
           </IconButton>
         ) : null}

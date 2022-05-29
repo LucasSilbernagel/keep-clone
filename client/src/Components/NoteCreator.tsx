@@ -1,5 +1,13 @@
 import { ChangeEvent, Dispatch, SetStateAction } from 'react'
-import { useTheme, Paper, Button, IconButton, Box, Grid } from '@mui/material'
+import {
+  useTheme,
+  Paper,
+  Button,
+  IconButton,
+  Box,
+  Grid,
+  Tooltip,
+} from '@mui/material'
 import { atomViewportWidth, atomIsModalOpen } from '../atoms'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import NoteFormContainer from '../Components/NoteForm/NoteFormContainer'
@@ -93,18 +101,26 @@ const NoteCreator = (props: IComponentProps): JSX.Element => {
               Take a note...
             </Button>
             <Box>
-              <IconButton aria-label="new checklist">
-                <CheckBoxOutlinedIcon />
-              </IconButton>
-              <IconButton aria-label="new drawing">
-                <BrushOutlinedIcon />
-              </IconButton>
-              <IconButton aria-label="new voice note">
-                <MicNoneOutlinedIcon />
-              </IconButton>
-              <IconButton aria-label="new photo">
-                <InsertPhotoOutlinedIcon />
-              </IconButton>
+              <Tooltip title="New checklist">
+                <IconButton aria-label="new checklist">
+                  <CheckBoxOutlinedIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="New drawing">
+                <IconButton aria-label="new drawing">
+                  <BrushOutlinedIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="New voice note">
+                <IconButton aria-label="new voice note">
+                  <MicNoneOutlinedIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="New image">
+                <IconButton aria-label="new image">
+                  <InsertPhotoOutlinedIcon />
+                </IconButton>
+              </Tooltip>
             </Box>
           </Box>
         )}
@@ -156,7 +172,7 @@ const NoteCreator = (props: IComponentProps): JSX.Element => {
           <IconButton aria-label="new voice note">
             <MicNoneOutlinedIcon />
           </IconButton>
-          <IconButton aria-label="new photo">
+          <IconButton aria-label="new image">
             <InsertPhotoOutlinedIcon />
           </IconButton>
         </Box>

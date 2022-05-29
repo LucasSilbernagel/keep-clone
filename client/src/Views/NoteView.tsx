@@ -117,6 +117,7 @@ const NoteView = (props: IComponentProps): JSX.Element => {
           logOut={logOut}
           handleSearch={handleSearch}
           clearSearch={clearSearch}
+          getNotes={getNotes}
         />
       ) : (
         <MobileAppBar

@@ -1,6 +1,6 @@
 import { ChangeEvent } from 'react'
 import { styled } from '@mui/material/styles'
-import { IconButton, InputBase } from '@mui/material'
+import { IconButton, InputBase, Tooltip } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import { atomIsSearching, atomSearchValue } from '../../atoms'
 import { useRecoilState, useRecoilValue } from 'recoil'
@@ -80,9 +80,15 @@ const DesktopSearch = (props: IComponentProps): JSX.Element => {
       />
       <CloseIconWrapper>
         {isSearching ? (
-          <IconButton color="inherit" onClick={clearSearch}>
-            <CloseIcon />
-          </IconButton>
+          <Tooltip title="Clear search">
+            <IconButton
+              color="inherit"
+              onClick={clearSearch}
+              aria-label="clear search"
+            >
+              <CloseIcon />
+            </IconButton>
+          </Tooltip>
         ) : null}
       </CloseIconWrapper>
     </Search>

@@ -10,8 +10,6 @@ import {
 } from '@mui/material'
 import { atomNewNote, atomViewportWidth } from '../atoms'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined'
-import PaletteOutlinedIcon from '@mui/icons-material/PaletteOutlined'
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import axios from 'axios'
@@ -109,18 +107,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
         justifyContent="space-between"
         sx={{ position: 'fixed', bottom: 0 }}
       >
-        <Grid item container xs={4}>
-          <Grid item>
-            <IconButton aria-label="more" color="secondary">
-              <AddBoxOutlinedIcon />
-            </IconButton>
-          </Grid>
-          <Grid item>
-            <IconButton aria-label="more" color="secondary">
-              <PaletteOutlinedIcon />
-            </IconButton>
-          </Grid>
-        </Grid>
+        <Grid item container xs={4}></Grid>
         {note.lastEdited === 0 ? null : (
           <Grid
             item

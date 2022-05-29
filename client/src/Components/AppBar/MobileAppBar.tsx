@@ -62,7 +62,7 @@ const MobileAppBar = (props: IComponentProps): JSX.Element => {
                     size="large"
                     edge="start"
                     color="inherit"
-                    aria-label="open drawer"
+                    aria-label="open menu"
                     sx={{ mr: 1 }}
                   >
                     <MenuIcon />
@@ -92,7 +92,11 @@ const MobileAppBar = (props: IComponentProps): JSX.Element => {
                 alignItems="center"
               >
                 <Grid item xs={6}>
-                  <IconButton size="large" color="inherit">
+                  <IconButton
+                    size="large"
+                    color="inherit"
+                    aria-label="list view"
+                  >
                     <SplitscreenIcon />
                   </IconButton>
                 </Grid>
@@ -100,7 +104,7 @@ const MobileAppBar = (props: IComponentProps): JSX.Element => {
                   <IconButton
                     size="large"
                     edge="end"
-                    aria-label="account of current user"
+                    aria-label="account"
                     aria-controls={menuId}
                     aria-haspopup="true"
                     onClick={handleProfileMenuOpen}

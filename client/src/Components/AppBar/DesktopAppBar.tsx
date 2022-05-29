@@ -7,6 +7,8 @@ import {
   Typography,
   Avatar,
   Grid,
+  CircularProgress,
+  Tooltip,
 } from '@mui/material'
 import SettingsIcon from '@mui/icons-material/Settings'
 import SplitscreenIcon from '@mui/icons-material/Splitscreen'
@@ -15,17 +17,21 @@ import AccountCircle from '@mui/icons-material/AccountCircle'
 import GoogleKeepLogo from '../../assets/keep_icon.png'
 import ProfileMenu from '../ProfileMenu/ProfileMenu'
 import DesktopSearch from '../Search/DesktopSearch'
+import { atomIsLoading } from '../../atoms'
+import { useRecoilValue } from 'recoil'
 
 interface IComponentProps {
   logOut: () => void
   handleSearch: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   clearSearch: () => void
+  getNotes: () => void
 }
 
 const DesktopAppBar = (props: IComponentProps): JSX.Element => {
-  const { logOut, handleSearch, clearSearch } = props
+  const { logOut, handleSearch, clearSearch, getNotes } = props
   const userProfile = JSON.parse(window.localStorage.userProfile)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const isLoading = useRecoilValue(atomIsLoading)
 
   const isMenuOpen = Boolean(anchorEl)
 
@@ -63,15 +69,38 @@ const DesktopAppBar = (props: IComponentProps): JSX.Element => {
           />
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" color="inherit">
-              <RefreshIcon />
-            </IconButton>
-            <IconButton size="large" color="inherit">
-              <SplitscreenIcon />
-            </IconButton>
-            <IconButton size="large" color="inherit">
-              <SettingsIcon />
-            </IconButton>
+            {isLoading ? (
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  paddingRight: '1em',
+                }}
+              >
+                <CircularProgress color="inherit" size={18} />
+              </Box>
+            ) : (
+              <Tooltip title="Refresh">
+                <IconButton
+                  size="large"
+                  color="inherit"
+                  onClick={getNotes}
+                  aria-label="Refresh"
+                >
+                  <RefreshIcon />
+                </IconButton>
+              </Tooltip>
+            )}
+            <Tooltip title="List view">
+              <IconButton size="large" color="inherit" aria-label="List view">
+                <SplitscreenIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="settings">
+              <IconButton size="large" color="inherit" aria-label="Settings">
+                <SettingsIcon />
+              </IconButton>
+            </Tooltip>
             <IconButton
               size="large"
               edge="end"
