@@ -9,7 +9,7 @@ import {
   Grid,
   Button,
 } from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu'
+import SettingsIcon from '@mui/icons-material/Settings'
 import SplitscreenIcon from '@mui/icons-material/Splitscreen'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import ProfileMenu from '../ProfileMenu/ProfileMenu'
@@ -18,6 +18,7 @@ import MobileSearch from '../Search/MobileSearch'
 import { atomIsGridView } from '../../atoms'
 import { useRecoilState } from 'recoil'
 import GridViewIcon from '@mui/icons-material/GridView'
+import SettingsMenu from '../SettingsMenu'
 
 interface IComponentProps {
   logOut: () => void
@@ -29,23 +30,40 @@ const MobileAppBar = (props: IComponentProps): JSX.Element => {
   const { logOut, handleSearch, clearSearch } = props
   const theme = useTheme()
   const userProfile = JSON.parse(window.localStorage.userProfile)
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const [profileAnchorEl, setProfileAnchorEl] = useState<null | HTMLElement>(
+    null
+  )
+  const [settingsAnchorEl, setSettingsAnchorEl] = useState<null | HTMLElement>(
+    null
+  )
 
   const [isSearching, setIsSearching] = useRecoilState(atomIsSearching)
 
   const [isGridView, setIsGridView] = useRecoilState(atomIsGridView)
 
-  const isMenuOpen = Boolean(anchorEl)
+  const isProfileMenuOpen = Boolean(profileAnchorEl)
 
   const handleProfileMenuOpen = (event: MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget)
+    setProfileAnchorEl(event.currentTarget)
   }
 
-  const handleMenuClose = () => {
-    setAnchorEl(null)
+  const handleProfileMenuClose = () => {
+    setProfileAnchorEl(null)
   }
 
-  const menuId = 'account-menu'
+  const profileMenuId = 'account-menu'
+
+  const isSettingsMenuOpen = Boolean(settingsAnchorEl)
+
+  const handleSettingsMenuOpen = (event: MouseEvent<HTMLElement>) => {
+    setSettingsAnchorEl(event.currentTarget)
+  }
+
+  const handleSettingsMenuClose = () => {
+    setSettingsAnchorEl(null)
+  }
+
+  const settingsMenuId = 'settings-menu'
 
   if (!isSearching) {
     return (
@@ -66,10 +84,13 @@ const MobileAppBar = (props: IComponentProps): JSX.Element => {
                     size="large"
                     edge="start"
                     color="inherit"
-                    aria-label="open menu"
+                    aria-label="Settings"
                     sx={{ mr: 1 }}
+                    aria-controls={settingsMenuId}
+                    aria-haspopup="true"
+                    onClick={handleSettingsMenuOpen}
                   >
-                    <MenuIcon />
+                    <SettingsIcon />
                   </IconButton>
                 </Grid>
                 <Grid item xs={11}>
@@ -121,7 +142,7 @@ const MobileAppBar = (props: IComponentProps): JSX.Element => {
                     size="large"
                     edge="end"
                     aria-label="account"
-                    aria-controls={menuId}
+                    aria-controls={profileMenuId}
                     aria-haspopup="true"
                     onClick={handleProfileMenuOpen}
                     color="inherit"
@@ -142,11 +163,17 @@ const MobileAppBar = (props: IComponentProps): JSX.Element => {
           </Toolbar>
         </AppBar>
         <ProfileMenu
-          anchorEl={anchorEl}
-          menuId={menuId}
-          isMenuOpen={isMenuOpen}
-          handleMenuClose={handleMenuClose}
+          profileAnchorEl={profileAnchorEl}
+          profileMenuId={profileMenuId}
+          isProfileMenuOpen={isProfileMenuOpen}
+          handleProfileMenuClose={handleProfileMenuClose}
           logOut={logOut}
+        />
+        <SettingsMenu
+          settingsAnchorEl={settingsAnchorEl}
+          settingsMenuId={settingsMenuId}
+          isSettingsMenuOpen={isSettingsMenuOpen}
+          handleSettingsMenuClose={handleSettingsMenuClose}
         />
       </Box>
     )

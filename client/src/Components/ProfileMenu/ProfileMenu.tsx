@@ -9,15 +9,21 @@ import {
 import AccountCircle from '@mui/icons-material/AccountCircle'
 
 interface IComponentProps {
-  anchorEl: null | HTMLElement
-  menuId: string
-  isMenuOpen: boolean
-  handleMenuClose: () => void
+  profileAnchorEl: null | HTMLElement
+  profileMenuId: string
+  isProfileMenuOpen: boolean
+  handleProfileMenuClose: () => void
   logOut: () => void
 }
 
 const ProfileMenu = (props: IComponentProps): JSX.Element => {
-  const { anchorEl, menuId, isMenuOpen, handleMenuClose, logOut } = props
+  const {
+    profileAnchorEl,
+    profileMenuId,
+    isProfileMenuOpen,
+    handleProfileMenuClose,
+    logOut,
+  } = props
 
   const userProfile = JSON.parse(window.localStorage.userProfile)
 
@@ -29,19 +35,19 @@ const ProfileMenu = (props: IComponentProps): JSX.Element => {
           paddingTop: 10,
         },
       }}
-      anchorEl={anchorEl}
+      anchorEl={profileAnchorEl}
       anchorOrigin={{
         vertical: 'bottom',
         horizontal: 'right',
       }}
-      id={menuId}
+      id={profileMenuId}
       keepMounted
       transformOrigin={{
         vertical: 'top',
         horizontal: 'right',
       }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
+      open={isProfileMenuOpen}
+      onClose={handleProfileMenuClose}
     >
       <Grid
         container

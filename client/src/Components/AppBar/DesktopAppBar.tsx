@@ -20,6 +20,7 @@ import DesktopSearch from '../Search/DesktopSearch'
 import { atomIsLoading, atomIsGridView } from '../../atoms'
 import { useRecoilValue, useRecoilState } from 'recoil'
 import GridViewIcon from '@mui/icons-material/GridView'
+import SettingsMenu from '../SettingsMenu'
 
 interface IComponentProps {
   logOut: () => void
@@ -31,21 +32,37 @@ interface IComponentProps {
 const DesktopAppBar = (props: IComponentProps): JSX.Element => {
   const { logOut, handleSearch, clearSearch, getNotes } = props
   const userProfile = JSON.parse(window.localStorage.userProfile)
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const [profileAnchorEl, setProfileAnchorEl] = useState<null | HTMLElement>(
+    null
+  )
+  const [settingsAnchorEl, setSettingsAnchorEl] = useState<null | HTMLElement>(
+    null
+  )
   const isLoading = useRecoilValue(atomIsLoading)
   const [isGridView, setIsGridView] = useRecoilState(atomIsGridView)
 
-  const isMenuOpen = Boolean(anchorEl)
+  const isProfileMenuOpen = Boolean(profileAnchorEl)
+  const isSettingsMenuOpen = Boolean(settingsAnchorEl)
 
   const handleProfileMenuOpen = (event: MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget)
+    setProfileAnchorEl(event.currentTarget)
   }
 
-  const handleMenuClose = () => {
-    setAnchorEl(null)
+  const handleProfileMenuClose = () => {
+    setProfileAnchorEl(null)
   }
 
-  const menuId = 'account-menu'
+  const profileMenuId = 'account-menu'
+
+  const handleSettingsMenuOpen = (event: MouseEvent<HTMLElement>) => {
+    setSettingsAnchorEl(event.currentTarget)
+  }
+
+  const handleSettingsMenuClose = () => {
+    setSettingsAnchorEl(null)
+  }
+
+  const settingsMenuId = 'settings-menu'
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -117,15 +134,22 @@ const DesktopAppBar = (props: IComponentProps): JSX.Element => {
               </Tooltip>
             )}
             <Tooltip title="Settings">
-              <IconButton size="large" color="inherit" aria-label="Settings">
+              <IconButton
+                size="large"
+                color="inherit"
+                aria-label="Settings"
+                aria-controls={settingsMenuId}
+                aria-haspopup="true"
+                onClick={handleSettingsMenuOpen}
+              >
                 <SettingsIcon />
               </IconButton>
             </Tooltip>
             <IconButton
               size="large"
               edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
+              aria-label="account"
+              aria-controls={profileMenuId}
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
               color="inherit"
@@ -145,11 +169,17 @@ const DesktopAppBar = (props: IComponentProps): JSX.Element => {
         </Toolbar>
       </AppBar>
       <ProfileMenu
-        anchorEl={anchorEl}
-        menuId={menuId}
-        isMenuOpen={isMenuOpen}
-        handleMenuClose={handleMenuClose}
+        profileAnchorEl={profileAnchorEl}
+        profileMenuId={profileMenuId}
+        isProfileMenuOpen={isProfileMenuOpen}
+        handleProfileMenuClose={handleProfileMenuClose}
         logOut={logOut}
+      />
+      <SettingsMenu
+        settingsAnchorEl={settingsAnchorEl}
+        settingsMenuId={settingsMenuId}
+        isSettingsMenuOpen={isSettingsMenuOpen}
+        handleSettingsMenuClose={handleSettingsMenuClose}
       />
     </Box>
   )
