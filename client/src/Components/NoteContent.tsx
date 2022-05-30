@@ -11,7 +11,7 @@ import {
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { IExistingNote } from '../Interfaces'
 import axios from 'axios'
-import { atomIsModalOpen, atomViewportWidth } from '../atoms'
+import { atomIsModalOpen, atomViewportWidth, atomIsGridView } from '../atoms'
 import { useSetRecoilState, useRecoilValue } from 'recoil'
 
 interface IComponentProps {
@@ -27,6 +27,8 @@ const NoteContent = (props: IComponentProps) => {
   const viewportWidth = useRecoilValue(atomViewportWidth)
 
   const setIsModalOpen = useSetRecoilState(atomIsModalOpen)
+
+  const isGridView = useRecoilValue(atomIsGridView)
 
   /** Anchor for the "more" menu */
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -72,12 +74,19 @@ const NoteContent = (props: IComponentProps) => {
     <Grid
       item
       key={note._id}
-      sx={{
-        width: {
-          xs: '180px',
-          sm: '250px',
-        },
-      }}
+      sx={
+        isGridView
+          ? {
+              width: {
+                xs: '180px',
+                sm: '250px',
+              },
+            }
+          : {
+              width: '100%',
+              marginBottom: '1em',
+            }
+      }
     >
       <Paper
         tabIndex={0}

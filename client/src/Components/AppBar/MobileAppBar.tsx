@@ -13,9 +13,11 @@ import MenuIcon from '@mui/icons-material/Menu'
 import SplitscreenIcon from '@mui/icons-material/Splitscreen'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import ProfileMenu from '../ProfileMenu/ProfileMenu'
-import { useRecoilState } from 'recoil'
 import { atomIsSearching } from '../../atoms'
 import MobileSearch from '../Search/MobileSearch'
+import { atomIsGridView } from '../../atoms'
+import { useRecoilState } from 'recoil'
+import GridViewIcon from '@mui/icons-material/GridView'
 
 interface IComponentProps {
   logOut: () => void
@@ -30,6 +32,8 @@ const MobileAppBar = (props: IComponentProps): JSX.Element => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
   const [isSearching, setIsSearching] = useRecoilState(atomIsSearching)
+
+  const [isGridView, setIsGridView] = useRecoilState(atomIsGridView)
 
   const isMenuOpen = Boolean(anchorEl)
 
@@ -92,13 +96,25 @@ const MobileAppBar = (props: IComponentProps): JSX.Element => {
                 alignItems="center"
               >
                 <Grid item xs={6}>
-                  <IconButton
-                    size="large"
-                    color="inherit"
-                    aria-label="list view"
-                  >
-                    <SplitscreenIcon />
-                  </IconButton>
+                  {isGridView ? (
+                    <IconButton
+                      size="large"
+                      color="inherit"
+                      aria-label="list view"
+                      onClick={() => setIsGridView(false)}
+                    >
+                      <SplitscreenIcon />
+                    </IconButton>
+                  ) : (
+                    <IconButton
+                      size="large"
+                      color="inherit"
+                      aria-label="grid view"
+                      onClick={() => setIsGridView(true)}
+                    >
+                      <GridViewIcon />
+                    </IconButton>
+                  )}
                 </Grid>
                 <Grid item xs={6}>
                   <IconButton

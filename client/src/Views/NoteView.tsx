@@ -1,5 +1,6 @@
 import { ChangeEvent, useState, useEffect } from 'react'
 import { Grid } from '@mui/material'
+import NoteGrid from '../Components/NoteGrid'
 import NoteList from '../Components/NoteList'
 import { IExistingNote } from '../Interfaces'
 import DesktopAppBar from '../Components/AppBar/DesktopAppBar'
@@ -9,6 +10,7 @@ import {
   atomViewportWidth,
   atomSearchValue,
   atomIsSearching,
+  atomIsGridView,
 } from '../atoms'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import axios from 'axios'
@@ -48,6 +50,8 @@ const NoteView = (props: IComponentProps): JSX.Element => {
   const [creatingNote, setCreatingNote] = useState(false)
 
   const [newNote, setNewNote] = useRecoilState(atomNewNote)
+
+  const isGridView = useRecoilValue(atomIsGridView)
 
   /** Display all saved notes when the page first loads */
   useEffect(() => {
@@ -155,11 +159,19 @@ const NoteView = (props: IComponentProps): JSX.Element => {
           container
           sx={viewportWidth > 1011 ? {} : { paddingBottom: '100px' }}
         >
-          <NoteList
-            filteredNotes={filteredNotes}
-            getNotes={getNotes}
-            editNote={editNote}
-          />
+          {isGridView ? (
+            <NoteGrid
+              filteredNotes={filteredNotes}
+              getNotes={getNotes}
+              editNote={editNote}
+            />
+          ) : (
+            <NoteList
+              filteredNotes={filteredNotes}
+              getNotes={getNotes}
+              editNote={editNote}
+            />
+          )}
         </Grid>
       </Grid>
     </>

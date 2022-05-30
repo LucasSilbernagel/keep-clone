@@ -10,7 +10,6 @@ import {
 } from '@mui/material'
 import { atomNewNote, atomViewportWidth } from '../atoms'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import axios from 'axios'
 import { IExistingNote, INewNote } from '../Interfaces'
@@ -182,15 +181,6 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
         )}
         <Grid container justifyContent="space-between">
           <Grid item container xs={2}>
-            <Grid item container xs={4}>
-              <Grid item>
-                <Tooltip title="Add image">
-                  <IconButton aria-label="add image" color="secondary">
-                    <ImageOutlinedIcon />
-                  </IconButton>
-                </Tooltip>
-              </Grid>
-            </Grid>
             <Grid item>
               <Menu
                 id="more-menu"

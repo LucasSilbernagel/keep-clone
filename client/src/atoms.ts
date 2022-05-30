@@ -37,3 +37,9 @@ export const atomIsLoading = atom<boolean>({
   key: 'atomIsLoading',
   default: false,
 })
+
+/** Boolean to determine whether notes are displayed in a grid */
+export const atomIsGridView = atom<boolean>({
+  key: 'atomIsGridView',
+  default: true,
+})

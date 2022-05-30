@@ -17,8 +17,9 @@ import AccountCircle from '@mui/icons-material/AccountCircle'
 import GoogleKeepLogo from '../../assets/keep_icon.png'
 import ProfileMenu from '../ProfileMenu/ProfileMenu'
 import DesktopSearch from '../Search/DesktopSearch'
-import { atomIsLoading } from '../../atoms'
-import { useRecoilValue } from 'recoil'
+import { atomIsLoading, atomIsGridView } from '../../atoms'
+import { useRecoilValue, useRecoilState } from 'recoil'
+import GridViewIcon from '@mui/icons-material/GridView'
 
 interface IComponentProps {
   logOut: () => void
@@ -32,6 +33,7 @@ const DesktopAppBar = (props: IComponentProps): JSX.Element => {
   const userProfile = JSON.parse(window.localStorage.userProfile)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const isLoading = useRecoilValue(atomIsLoading)
+  const [isGridView, setIsGridView] = useRecoilState(atomIsGridView)
 
   const isMenuOpen = Boolean(anchorEl)
 
@@ -91,12 +93,30 @@ const DesktopAppBar = (props: IComponentProps): JSX.Element => {
                 </IconButton>
               </Tooltip>
             )}
-            <Tooltip title="List view">
-              <IconButton size="large" color="inherit" aria-label="List view">
-                <SplitscreenIcon />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="settings">
+            {isGridView ? (
+              <Tooltip title="List view">
+                <IconButton
+                  size="large"
+                  color="inherit"
+                  aria-label="List view"
+                  onClick={() => setIsGridView(false)}
+                >
+                  <SplitscreenIcon />
+                </IconButton>
+              </Tooltip>
+            ) : (
+              <Tooltip title="Grid view">
+                <IconButton
+                  size="large"
+                  color="inherit"
+                  aria-label="Grid view"
+                  onClick={() => setIsGridView(true)}
+                >
+                  <GridViewIcon />
+                </IconButton>
+              </Tooltip>
+            )}
+            <Tooltip title="Settings">
               <IconButton size="large" color="inherit" aria-label="Settings">
                 <SettingsIcon />
               </IconButton>
