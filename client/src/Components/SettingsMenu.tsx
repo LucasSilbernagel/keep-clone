@@ -1,4 +1,6 @@
 import { MenuItem, Menu, ListItemText } from '@mui/material'
+import { atomIsDarkTheme } from '../atoms'
+import { useRecoilState } from 'recoil'
 
 interface IComponentProps {
   settingsAnchorEl: null | HTMLElement
@@ -14,6 +16,8 @@ const SettingsMenu = (props: IComponentProps): JSX.Element => {
     isSettingsMenuOpen,
     handleSettingsMenuClose,
   } = props
+
+  const [isDarkTheme, setIsDarkTheme] = useRecoilState(atomIsDarkTheme)
 
   return (
     <Menu
@@ -31,11 +35,19 @@ const SettingsMenu = (props: IComponentProps): JSX.Element => {
       open={isSettingsMenuOpen}
       onClose={handleSettingsMenuClose}
     >
-      <MenuItem>
-        <ListItemText sx={{ textAlign: 'center' }}>
-          Enable dark theme
-        </ListItemText>
-      </MenuItem>
+      {isDarkTheme ? (
+        <MenuItem onClick={() => setIsDarkTheme(false)}>
+          <ListItemText sx={{ textAlign: 'center' }}>
+            Disable dark theme
+          </ListItemText>
+        </MenuItem>
+      ) : (
+        <MenuItem onClick={() => setIsDarkTheme(true)}>
+          <ListItemText sx={{ textAlign: 'center' }}>
+            Enable dark theme
+          </ListItemText>
+        </MenuItem>
+      )}
     </Menu>
   )
 }

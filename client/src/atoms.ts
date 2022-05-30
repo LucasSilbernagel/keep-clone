@@ -43,3 +43,9 @@ export const atomIsGridView = atom<boolean>({
   key: 'atomIsGridView',
   default: true,
 })
+
+/** Boolean to determine whether the dark theme is being used */
+export const atomIsDarkTheme = atom<boolean>({
+  key: 'atomIsDarkTheme',
+  default: false,
+})
