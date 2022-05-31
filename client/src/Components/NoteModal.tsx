@@ -1,6 +1,11 @@
 import { forwardRef, ChangeEvent } from 'react'
-import { Dialog, Grid, IconButton, Slide } from '@mui/material'
-import { atomIsModalOpen, atomNewNote, atomViewportWidth } from '../atoms'
+import { Dialog, Grid, IconButton, Slide, Box, useTheme } from '@mui/material'
+import {
+  atomIsModalOpen,
+  atomNewNote,
+  atomViewportWidth,
+  atomIsDarkTheme,
+} from '../atoms'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import NoteFormContainer from '../Components/NoteForm/NoteFormContainer'
@@ -39,6 +44,10 @@ const NoteModal = (props: IComponentProps): JSX.Element => {
     handleNoteTextChange,
   } = props
 
+  const theme = useTheme()
+
+  const isDarkTheme = useRecoilValue(atomIsDarkTheme)
+
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
 
@@ -73,32 +82,43 @@ const NoteModal = (props: IComponentProps): JSX.Element => {
       fullWidth={viewportWidth > 1011}
       TransitionComponent={Transition}
     >
-      <Grid container>
-        {viewportWidth < 1011 ? (
-          <Grid item xs={12}>
-            <IconButton
-              aria-label="Save or cancel"
-              color="secondary"
-              onClick={handleBack}
-            >
-              <ArrowBackIcon />
-            </IconButton>
-          </Grid>
-        ) : null}
-        <NoteFormContainer
-          noteBeingEdited={noteBeingEdited}
+      <Box
+        sx={
+          isDarkTheme
+            ? {
+                backgroundColor: theme.palette.background.default,
+                border: '1px solid #525355',
+              }
+            : {}
+        }
+      >
+        <Grid container>
+          {viewportWidth < 1011 ? (
+            <Grid item xs={12}>
+              <IconButton
+                aria-label="Save or cancel"
+                color="secondary"
+                onClick={handleBack}
+              >
+                <ArrowBackIcon />
+              </IconButton>
+            </Grid>
+          ) : null}
+          <NoteFormContainer
+            noteBeingEdited={noteBeingEdited}
+            editingID={editingID}
+            handleNoteTextChange={handleNoteTextChange}
+          />
+        </Grid>
+        <NoteModalFooter
+          getNotes={getNotes}
+          note={note}
+          handleCloseModal={handleCloseModal}
           editingID={editingID}
-          handleNoteTextChange={handleNoteTextChange}
+          noteBeingEdited={noteBeingEdited}
+          saveNote={saveNote}
         />
-      </Grid>
-      <NoteModalFooter
-        getNotes={getNotes}
-        note={note}
-        handleCloseModal={handleCloseModal}
-        editingID={editingID}
-        noteBeingEdited={noteBeingEdited}
-        saveNote={saveNote}
-      />
+      </Box>
     </Dialog>
   )
 }

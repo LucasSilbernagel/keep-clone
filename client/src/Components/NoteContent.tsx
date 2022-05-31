@@ -7,12 +7,19 @@ import {
   Tooltip,
   Menu,
   MenuItem,
+  useTheme,
 } from '@mui/material'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { IExistingNote } from '../Interfaces'
 import axios from 'axios'
-import { atomIsModalOpen, atomViewportWidth, atomIsGridView } from '../atoms'
+import {
+  atomIsModalOpen,
+  atomViewportWidth,
+  atomIsGridView,
+  atomIsDarkTheme,
+} from '../atoms'
 import { useSetRecoilState, useRecoilValue } from 'recoil'
+import { noteContentStyles } from '../LogicHelpers'
 
 interface IComponentProps {
   note: IExistingNote
@@ -23,12 +30,16 @@ interface IComponentProps {
 const NoteContent = (props: IComponentProps) => {
   const { note, getNotes, editNote } = props
 
+  const theme = useTheme()
+
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
 
   const setIsModalOpen = useSetRecoilState(atomIsModalOpen)
 
   const isGridView = useRecoilValue(atomIsGridView)
+
+  const isDarkTheme = useRecoilValue(atomIsDarkTheme)
 
   /** Anchor for the "more" menu */
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -91,39 +102,29 @@ const NoteContent = (props: IComponentProps) => {
       <Paper
         tabIndex={0}
         elevation={2}
-        sx={
-          open
-            ? {
-                boxShadow: 4,
-                paddingBottom: 'unset',
-                '& .moreButton': {
-                  display: 'flex',
-                },
-                zIndex: 0,
-              }
-            : {
-                paddingBottom: viewportWidth > 1011 ? '2.5em' : 'unset',
-                '&:hover, &:focus': {
-                  boxShadow: 4,
-                  paddingBottom: 'unset',
-                  '& .moreButton': {
-                    display: 'flex',
-                  },
-                },
-                zIndex: 0,
-              }
-        }
+        sx={noteContentStyles(open, isDarkTheme, theme, viewportWidth)}
       >
         <Grid item container>
           <Grid item xs={12}>
             <button
-              style={{
-                background: 'inherit',
-                border: 'none',
-                textAlign: 'left',
-                paddingBottom: viewportWidth < 1011 ? '1em' : 'unset',
-                width: '100%',
-              }}
+              style={
+                isDarkTheme
+                  ? {
+                      background: 'inherit',
+                      border: 'none',
+                      textAlign: 'left',
+                      paddingBottom: viewportWidth < 1011 ? '1em' : 'unset',
+                      width: '100%',
+                      color: '#FFFFFF',
+                    }
+                  : {
+                      background: 'inherit',
+                      border: 'none',
+                      textAlign: 'left',
+                      paddingBottom: viewportWidth < 1011 ? '1em' : 'unset',
+                      width: '100%',
+                    }
+              }
               onClick={() => startEditingNote(note._id)}
             >
               <Typography

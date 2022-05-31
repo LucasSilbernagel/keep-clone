@@ -1,6 +1,6 @@
 import { MenuItem, Menu, ListItemText } from '@mui/material'
 import { atomIsDarkTheme } from '../atoms'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState } from 'recoil'
 
 interface IComponentProps {
   settingsAnchorEl: null | HTMLElement
@@ -17,7 +17,17 @@ const SettingsMenu = (props: IComponentProps): JSX.Element => {
     handleSettingsMenuClose,
   } = props
 
-  const isDarkTheme = useRecoilValue(atomIsDarkTheme)
+  const [isDarkTheme, setIsDarkTheme] = useRecoilState(atomIsDarkTheme)
+
+  const turnOffDarkTheme = () => {
+    window.localStorage.setItem('keepCloneDarkTheme', 'false')
+    setIsDarkTheme(false)
+  }
+
+  const turnOnDarkTheme = () => {
+    window.localStorage.setItem('keepCloneDarkTheme', 'true')
+    setIsDarkTheme(true)
+  }
 
   return (
     <Menu
@@ -36,21 +46,13 @@ const SettingsMenu = (props: IComponentProps): JSX.Element => {
       onClose={handleSettingsMenuClose}
     >
       {isDarkTheme ? (
-        <MenuItem
-          onClick={() =>
-            window.localStorage.setItem('keepCloneDarkTheme', 'false')
-          }
-        >
+        <MenuItem onClick={turnOffDarkTheme}>
           <ListItemText sx={{ textAlign: 'center' }}>
             Disable dark theme
           </ListItemText>
         </MenuItem>
       ) : (
-        <MenuItem
-          onClick={() =>
-            window.localStorage.setItem('keepCloneDarkTheme', 'true')
-          }
-        >
+        <MenuItem onClick={turnOnDarkTheme}>
           <ListItemText sx={{ textAlign: 'center' }}>
             Enable dark theme
           </ListItemText>

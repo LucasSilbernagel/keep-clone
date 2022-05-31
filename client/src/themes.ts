@@ -28,7 +28,7 @@ const lightMuiTheme = createTheme({
       main: '#202124', // Dark text
       light: '#606368', // Light text
       dark: '#000000', // Black
-      contrastText: '#FFFFFF' // White
+      contrastText: '#FFFFFF', // White
     },
     info: {
       main: '#FABD06', // Medium accent (yellow)
@@ -55,6 +55,9 @@ const lightMuiTheme = createTheme({
 const darkMuiTheme = createTheme({
   palette: {
     mode: 'dark',
+    background: {
+      default: '#202123',
+    },
     common: {
       black: '#000000',
       white: '#FFFFFF',
@@ -69,7 +72,7 @@ const darkMuiTheme = createTheme({
       main: '#E8EAED', // Dark text
       light: '#9AA0A6', // Light text
       dark: '#FFFFFF', // White
-      contrastText: '#FFFFFF' // White
+      contrastText: '#FFFFFF', // White
     },
     info: {
       main: '#FABD06', // Medium accent (yellow)

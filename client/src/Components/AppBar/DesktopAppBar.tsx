@@ -17,7 +17,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle'
 import GoogleKeepLogo from '../../assets/keep_icon.png'
 import ProfileMenu from '../ProfileMenu/ProfileMenu'
 import DesktopSearch from '../Search/DesktopSearch'
-import { atomIsLoading, atomIsGridView } from '../../atoms'
+import { atomIsLoading, atomIsGridView, atomIsDarkTheme } from '../../atoms'
 import { useRecoilValue, useRecoilState } from 'recoil'
 import GridViewIcon from '@mui/icons-material/GridView'
 import SettingsMenu from '../SettingsMenu'
@@ -35,6 +35,7 @@ const DesktopAppBar = (props: IComponentProps): JSX.Element => {
   const [profileAnchorEl, setProfileAnchorEl] = useState<null | HTMLElement>(
     null
   )
+  const isDarkTheme = useRecoilValue(atomIsDarkTheme)
   const [settingsAnchorEl, setSettingsAnchorEl] = useState<null | HTMLElement>(
     null
   )
@@ -67,7 +68,16 @@ const DesktopAppBar = (props: IComponentProps): JSX.Element => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar
+          sx={
+            isDarkTheme
+              ? {
+                  backgroundColor: '#202123',
+                  borderBottom: '1px solid #525355',
+                }
+              : {}
+          }
+        >
           <Grid item sx={{ mr: 6.5 }}></Grid>
           <Avatar
             alt="Google Keep"

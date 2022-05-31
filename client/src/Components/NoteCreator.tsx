@@ -8,7 +8,7 @@ import {
   Grid,
   Tooltip,
 } from '@mui/material'
-import { atomViewportWidth, atomIsModalOpen } from '../atoms'
+import { atomViewportWidth, atomIsModalOpen, atomIsDarkTheme } from '../atoms'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import NoteFormContainer from '../Components/NoteForm/NoteFormContainer'
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined'
@@ -42,6 +42,8 @@ const NoteCreator = (props: IComponentProps): JSX.Element => {
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
 
+  const isDarkTheme = useRecoilValue(atomIsDarkTheme)
+
   const setIsModalOpen = useSetRecoilState(atomIsModalOpen)
 
   const createNote = () => {
@@ -54,7 +56,17 @@ const NoteCreator = (props: IComponentProps): JSX.Element => {
     return (
       <Paper elevation={3} sx={{ width: '100%', marginTop: '2em' }}>
         {creatingNote ? (
-          <>
+          <Box
+            sx={
+              isDarkTheme
+                ? {
+                    backgroundColor: '#202123',
+                    border: '1px solid #525355',
+                    borderRadius: '10px',
+                  }
+                : {}
+            }
+          >
             <NoteFormContainer
               noteBeingEdited={noteBeingEdited}
               editingID={editingID}
@@ -75,9 +87,24 @@ const NoteCreator = (props: IComponentProps): JSX.Element => {
                 Close
               </Button>
             </Grid>
-          </>
+          </Box>
         ) : (
-          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Box
+            sx={
+              isDarkTheme
+                ? {
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    backgroundColor: '#202123',
+                    border: '1px solid #525355',
+                    borderRadius: '10px',
+                  }
+                : {
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                  }
+            }
+          >
             <Button
               onClick={createNote}
               disableRipple
