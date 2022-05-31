@@ -10,6 +10,7 @@ import {
   atomViewportWidth,
   atomSearchValue,
   atomIsLoading,
+  atomIsDarkTheme,
 } from '../atoms'
 
 const Home = () => {
@@ -37,6 +38,9 @@ const Home = () => {
 
   const setIsLoading = useSetRecoilState(atomIsLoading)
 
+  let isDarkTheme = window.localStorage.getItem('keepCloneDarkTheme')
+  const setIsDarkTheme = useSetRecoilState(atomIsDarkTheme)
+
   /** Keep track of the viewport/window width */
   useEffect(() => {
     setViewportWidth(window.innerWidth)
@@ -53,6 +57,15 @@ const Home = () => {
       setAuthenticated(true)
     }
   }, [])
+
+  /** Remember user preference for dark or light theme */
+  useEffect(() => {
+    if (isDarkTheme === 'true') {
+      setIsDarkTheme(true)
+    } else {
+      setIsDarkTheme(false)
+    }
+  }, [isDarkTheme, setIsDarkTheme])
 
   /** Filter notes */
   useEffect(() => {
