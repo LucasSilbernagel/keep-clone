@@ -155,26 +155,28 @@ const DesktopAppBar = (props: IComponentProps): JSX.Element => {
                 <SettingsIcon />
               </IconButton>
             </Tooltip>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account"
-              aria-controls={profileMenuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-              sx={{ marginLeft: '1em' }}
-            >
-              {userProfile.imageUrl.length > 0 ? (
-                <Avatar
-                  alt={userProfile.name}
-                  src={userProfile.imageUrl}
-                  sx={{ width: '35px', height: '35px' }}
-                />
-              ) : (
-                <AccountCircle fontSize="large" />
-              )}
-            </IconButton>
+            <Tooltip title="Account">
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account"
+                aria-controls={profileMenuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+                sx={{ marginLeft: '1em' }}
+              >
+                {userProfile.imageUrl.length > 0 ? (
+                  <Avatar
+                    alt={userProfile.name}
+                    src={userProfile.imageUrl}
+                    sx={{ width: '35px', height: '35px' }}
+                  />
+                ) : (
+                  <AccountCircle fontSize="large" />
+                )}
+              </IconButton>
+            </Tooltip>
           </Box>
         </Toolbar>
       </AppBar>
