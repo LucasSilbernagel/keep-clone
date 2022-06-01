@@ -8,7 +8,7 @@ import {
   Button,
   Tooltip,
 } from '@mui/material'
-import { atomNewNote, atomViewportWidth } from '../atoms'
+import { atomNewNote, atomViewportWidth, atomIsDarkTheme } from '../atoms'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import axios from 'axios'
@@ -34,6 +34,8 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
     editingID,
     saveNote,
   } = props
+
+  const isDarkTheme = useRecoilValue(atomIsDarkTheme)
 
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
@@ -68,6 +70,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
       .post('/api/notes', {
         text: noteCopy.text,
         userGoogleId: noteCopy.userGoogleId,
+        lastEdited: Date.now(),
       })
       .then((res) => {
         if (res.data) {
@@ -104,7 +107,11 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
       <Grid
         container
         justifyContent="space-between"
-        sx={{ position: 'fixed', bottom: 0 }}
+        sx={{
+          position: 'fixed',
+          bottom: 0,
+          backgroundColor: isDarkTheme ? 'inherit' : '#FFFFFF',
+        }}
       >
         <Grid item container xs={4}></Grid>
         {note.lastEdited === 0 ? null : (

@@ -87,7 +87,8 @@ const NoteModal = (props: IComponentProps): JSX.Element => {
           isDarkTheme
             ? {
                 backgroundColor: theme.palette.background.default,
-                border: '1px solid #525355',
+                border: viewportWidth > 1011 ? '1px solid #525355' : '',
+                height: '100%',
               }
             : {}
         }

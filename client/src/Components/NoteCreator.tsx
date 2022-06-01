@@ -15,8 +15,8 @@ import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined'
 import BrushOutlinedIcon from '@mui/icons-material/BrushOutlined'
 import MicNoneOutlinedIcon from '@mui/icons-material/MicNoneOutlined'
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined'
-import AddBoxIcon from '@mui/icons-material/AddBox'
 import { IExistingNote } from '../Interfaces'
+import CrosshairButton from '../Components/CrosshairButton'
 
 interface IComponentProps {
   noteBeingEdited: IExistingNote
@@ -176,18 +176,15 @@ const NoteCreator = (props: IComponentProps): JSX.Element => {
               transform: 'translateX(-50%)',
               borderBottomLeftRadius: '20px',
               borderBottomRightRadius: '20px',
-              background: theme.palette.common.white,
+              background: isDarkTheme ? '#202123' : theme.palette.common.white,
             }}
           >
             <Box sx={{ position: 'relative' }}>
-              <IconButton
-                aria-label="new note"
-                color="info"
+              <Box
                 sx={{ position: 'absolute', right: '-11px', bottom: '-35px' }}
-                onClick={openModal}
               >
-                <AddBoxIcon sx={{ fontSize: '76px' }} />
-              </IconButton>
+                <CrosshairButton />
+              </Box>
             </Box>
           </Box>
           <IconButton aria-label="new checklist">
