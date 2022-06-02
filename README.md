@@ -33,7 +33,7 @@ A clone of Google Keep.
 
 ### Authentication
 
-- [react-google-login](https://www.npmjs.com/package/react-google-login)
+- [@react-oauth/google](https://www.npmjs.com/package/@react-oauth/google)
 
 ## Run Locally
 
@@ -62,7 +62,7 @@ In the root folder of your app, create a new file called `.env` and save your co
 
 There should be no quotation marks or brackets in this file.
 
-Users will log into the app using their Google account. For the authentication to work, you need to [create a Google client ID and client secret](https://developers.google.com/adwords/api/docs/guides/authentication). Then in the client folder of the app, create another `.env` file. In this file, put your Google client ID with a key of `REACT_APP_GOOGLE_CLIENT_ID`. The file should now look something like this:
+Users will log into the app using their Google account. For the authentication to work, you need to [get a Google API client ID](https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid). Then in the client folder of the app, create another `.env` file. In this file, put your Google client ID with a key of `REACT_APP_GOOGLE_CLIENT_ID`. The file should now look something like this:
 
 `REACT_APP_GOOGLE_CLIENT_ID = XXXXXXXXXXX-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.apps.googleusercontent.com`
 

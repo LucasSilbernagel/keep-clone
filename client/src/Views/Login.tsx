@@ -1,11 +1,8 @@
 import { Dispatch, SetStateAction } from 'react'
-import GoogleLogin, {
-  GoogleLoginResponse,
-  GoogleLoginResponseOffline,
-} from 'react-google-login'
 import { Grid, Typography, Paper, useTheme } from '@mui/material'
 import keep_icon from '../assets/keep_icon.png'
 import GitHubIcon from '@mui/icons-material/GitHub'
+import { CredentialResponse, GoogleLogin } from '@react-oauth/google'
 
 interface IComponentProps {
   setAuthenticated: Dispatch<SetStateAction<boolean>>
@@ -28,27 +25,33 @@ const Login = (props: IComponentProps): JSX.Element => {
 
   const theme = useTheme()
 
-  const googleSuccess = async (
-    res: GoogleLoginResponse | GoogleLoginResponseOffline
-  ) => {
-    if ('profileObj' in res) {
-      const googleProfile = res.profileObj
-      try {
+  const googleSuccess = async (res: CredentialResponse) => {
+    fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${res.credential}`)
+      .then((res) => res.json())
+      .then((response) => {
+        const googleProfile = {
+          imageUrl: response.picture,
+          name: response.name,
+          email: response.email,
+          googleId: response.sub,
+        }
         localStorage.setItem('userProfile', JSON.stringify(googleProfile))
         setAuthenticated(true)
         getNotes()
         setAuthenticationFailed(false)
-      } catch (error) {
+      })
+      .catch((error) => {
         setAuthenticationFailed(true)
         setAuthenticationFailedMessage(
-          `Google sign in was unsuccessful. ${error}.`
+          `Google sign in was unsuccessful. ${error}`
         )
-      }
-    }
+        console.error(error)
+      })
   }
-
-  const googleFailure = () => {
+  const googleError = (error: Error) => {
     setAuthenticationFailed(true)
+    setAuthenticationFailedMessage(`Google sign in was unsuccessful. ${error}`)
+    console.error('Google authentication failed', error)
   }
 
   return (
@@ -118,11 +121,8 @@ const Login = (props: IComponentProps): JSX.Element => {
             </Grid>
             <Grid item>
               <GoogleLogin
-                clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID as string}
-                buttonText="Login"
                 onSuccess={googleSuccess}
-                onFailure={googleFailure}
-                cookiePolicy="single_host_origin"
+                onError={() => googleError(new Error())}
               />
             </Grid>
             {authenticationFailed ? (

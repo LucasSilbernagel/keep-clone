@@ -8,8 +8,8 @@ import {
   Grid,
   Tooltip,
 } from '@mui/material'
-import { atomViewportWidth, atomIsModalOpen, atomIsDarkTheme } from '../atoms'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { atomViewportWidth, atomIsDarkTheme } from '../atoms'
+import { useRecoilValue } from 'recoil'
 import NoteFormContainer from '../Components/NoteForm/NoteFormContainer'
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined'
 import BrushOutlinedIcon from '@mui/icons-material/BrushOutlined'
@@ -44,13 +44,9 @@ const NoteCreator = (props: IComponentProps): JSX.Element => {
 
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)
 
-  const setIsModalOpen = useSetRecoilState(atomIsModalOpen)
-
   const createNote = () => {
     setCreatingNote(true)
   }
-
-  const openModal = () => setIsModalOpen(true)
 
   if (viewportWidth > 1011) {
     return (
