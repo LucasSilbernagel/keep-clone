@@ -32,7 +32,6 @@ const NoteFormDesktop = (props: IComponentProps) => {
           variant="outlined"
           sx={{
             width: '100%',
-            marginBottom: '0.5em',
             paddingLeft: '0.2em',
             maxHeight: '50vh',
             overflowY: 'auto',
