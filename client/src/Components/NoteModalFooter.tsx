@@ -13,7 +13,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import axios from 'axios'
 import { IExistingNote, INewNote } from '../Interfaces'
-import { ENote } from '../Enums'
+import { BLANK_NEW_NOTE } from '../Constants'
 import ReactTimeAgo from 'react-time-ago'
 
 interface IComponentProps {
@@ -42,7 +42,9 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
 
   const [newNote, setNewNote] = useRecoilState(atomNewNote)
 
-  const [noteCopy, setNoteCopy] = useState<IExistingNote | INewNote>(ENote)
+  const [noteCopy, setNoteCopy] = useState<IExistingNote | INewNote>(
+    BLANK_NEW_NOTE
+  )
 
   /** Anchor for the "more" menu */
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -69,13 +71,14 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
     axios
       .post('/api/notes', {
         text: noteCopy.text,
+        title: noteCopy.title,
         userGoogleId: noteCopy.userGoogleId,
         lastEdited: Date.now(),
       })
       .then((res) => {
         if (res.data) {
           getNotes()
-          setNoteCopy({ text: '', userGoogleId: '', lastEdited: 0 })
+          setNoteCopy({ text: '', title: '', userGoogleId: '', lastEdited: 0 })
         }
       })
       .catch((err) => console.error(err))
@@ -89,7 +92,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
   }
 
   const deleteNote = (id: string) => {
-    setNewNote({ text: '', userGoogleId: '', lastEdited: 0 })
+    setNewNote({ text: '', title: '', userGoogleId: '', lastEdited: 0 })
     handleCloseModal()
     setAnchorEl(null)
     axios
@@ -113,12 +116,12 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
           backgroundColor: isDarkTheme ? 'inherit' : '#FFFFFF',
         }}
       >
-        <Grid item container xs={4}></Grid>
+        <Grid item container xs={3}></Grid>
         {note.lastEdited === 0 ? null : (
           <Grid
             item
             container
-            xs={5}
+            xs={6}
             justifyContent="center"
             alignItems="center"
           >

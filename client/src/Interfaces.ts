@@ -1,12 +1,14 @@
 export interface IExistingNote {
   _id: string
-  text: string
+  text?: string
+  title?: string
   userGoogleId?: string
   lastEdited: number
 }
 
 export interface INewNote {
-  text: string
+  text?: string
+  title?: string
   userGoogleId: string
   lastEdited: number
 }

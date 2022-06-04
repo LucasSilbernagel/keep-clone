@@ -59,7 +59,7 @@ const CrosshairButton = (): JSX.Element => {
           position: 'absolute',
           height: '15px',
           width: '15px',
-          backgroundColor: 'black',
+          backgroundColor: '#525355',
           zIndex: -25,
           left: '35px',
         }}

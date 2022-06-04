@@ -75,9 +75,9 @@ const darkMuiTheme = createTheme({
       contrastText: '#FFFFFF', // White
     },
     info: {
-      main: '#FABD06', // Medium accent (yellow)
-      light: '#42341C', // Light accent (yellow)
-      dark: '#F19900', // Dark accent (yellow)
+      main: '#525355',
+      light: '#525355',
+      dark: '#525355',
       contrastText: '#FFFFFF', // White
     },
     success: {

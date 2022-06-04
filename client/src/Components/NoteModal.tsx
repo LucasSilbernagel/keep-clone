@@ -31,6 +31,7 @@ interface IComponentProps {
   editingID: string
   saveNote: () => void
   handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
+  handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
 const NoteModal = (props: IComponentProps): JSX.Element => {
@@ -42,6 +43,7 @@ const NoteModal = (props: IComponentProps): JSX.Element => {
     editingID,
     saveNote,
     handleNoteTextChange,
+    handleNoteTitleChange,
   } = props
 
   const theme = useTheme()
@@ -66,7 +68,7 @@ const NoteModal = (props: IComponentProps): JSX.Element => {
 
   /** Function called when the "back" button is clicked in the modal */
   const handleBack = () => {
-    if (newNote.text) {
+    if (newNote.text || note.title) {
       saveNote()
       handleCloseModal()
     } else {
@@ -109,6 +111,7 @@ const NoteModal = (props: IComponentProps): JSX.Element => {
             noteBeingEdited={noteBeingEdited}
             editingID={editingID}
             handleNoteTextChange={handleNoteTextChange}
+            handleNoteTitleChange={handleNoteTitleChange}
           />
         </Grid>
         <NoteModalFooter

@@ -24,6 +24,7 @@ interface IComponentProps {
   editingID: string
   saveNote: () => void
   handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
+  handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
   noteBeingEdited: IExistingNote
   logOut: () => void
 }
@@ -36,6 +37,7 @@ const NoteView = (props: IComponentProps): JSX.Element => {
     editingID,
     saveNote,
     handleNoteTextChange,
+    handleNoteTitleChange,
     noteBeingEdited,
     logOut,
   } = props
@@ -61,13 +63,13 @@ const NoteView = (props: IComponentProps): JSX.Element => {
 
   /** Save the new note to the database */
   const saveNewNote = () => {
-    if (newNote.text) {
+    if (newNote.text || newNote.title) {
       axios
         .post('/api/notes', newNote)
         .then((res) => {
           if (res.data) {
             getNotes()
-            setNewNote({ text: '', userGoogleId: '', lastEdited: 0 })
+            setNewNote({ text: '', title: '', userGoogleId: '', lastEdited: 0 })
           }
         })
         .catch((err) => console.error(err))
@@ -75,7 +77,7 @@ const NoteView = (props: IComponentProps): JSX.Element => {
   }
 
   const finishCreatingNote = () => {
-    if (newNote.text) {
+    if (newNote.text || newNote.title) {
       saveNewNote()
     }
     setCreatingNote(false)
@@ -102,6 +104,7 @@ const NoteView = (props: IComponentProps): JSX.Element => {
         editingID={editingID}
         saveNote={saveNote}
         handleNoteTextChange={handleNoteTextChange}
+        handleNoteTitleChange={handleNoteTitleChange}
       />
       {creatingNote ? (
         <div
@@ -148,6 +151,7 @@ const NoteView = (props: IComponentProps): JSX.Element => {
               noteBeingEdited={noteBeingEdited}
               editingID={editingID}
               handleNoteTextChange={handleNoteTextChange}
+              handleNoteTitleChange={handleNoteTitleChange}
               creatingNote={creatingNote}
               setCreatingNote={setCreatingNote}
               finishCreatingNote={finishCreatingNote}

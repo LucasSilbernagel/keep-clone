@@ -5,6 +5,9 @@ const NoteSchema = new Schema({
   text: {
     type: String,
   },
+  title: {
+    type: String,
+  },
   userGoogleId: {
     type: String,
     required: true,

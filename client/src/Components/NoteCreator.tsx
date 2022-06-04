@@ -22,6 +22,7 @@ interface IComponentProps {
   noteBeingEdited: IExistingNote
   editingID: string
   handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
+  handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
   creatingNote: boolean
   setCreatingNote: Dispatch<SetStateAction<boolean>>
   finishCreatingNote: () => void
@@ -32,6 +33,7 @@ const NoteCreator = (props: IComponentProps): JSX.Element => {
     noteBeingEdited,
     editingID,
     handleNoteTextChange,
+    handleNoteTitleChange,
     creatingNote,
     setCreatingNote,
     finishCreatingNote,
@@ -67,6 +69,7 @@ const NoteCreator = (props: IComponentProps): JSX.Element => {
               noteBeingEdited={noteBeingEdited}
               editingID={editingID}
               handleNoteTextChange={handleNoteTextChange}
+              handleNoteTitleChange={handleNoteTitleChange}
             />
             <Grid
               item

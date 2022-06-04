@@ -53,7 +53,12 @@ const NoteContent = (props: IComponentProps) => {
 
   const copyNote = (note: IExistingNote) => {
     setAnchorEl(null)
-    const newNote = { text: note.text, userGoogleId: note.userGoogleId }
+    const newNote = {
+      text: note.text,
+      title: note.title,
+      userGoogleId: note.userGoogleId,
+      lastEdited: Date.now(),
+    }
     axios
       .post('/api/notes', newNote)
       .then((res) => {
@@ -127,16 +132,31 @@ const NoteContent = (props: IComponentProps) => {
               }
               onClick={() => startEditingNote(note._id)}
             >
-              <Typography
-                sx={{
-                  maxHeight: '180px',
-                  padding: '1em 1.6em 0 0.9em',
-                  overflow: 'hidden',
-                  fontSize: { xs: '0.9rem', sm: '1rem' },
-                }}
-              >
-                {note.text}
-              </Typography>
+              {note.title && (
+                <Typography
+                  sx={{
+                    maxHeight: '180px',
+                    padding: '1em 1.6em 0 0.9em',
+                    overflow: 'hidden',
+                    fontSize: { xs: '0.9rem', sm: '1rem' },
+                    fontWeight: 'bold',
+                  }}
+                >
+                  {note.title}
+                </Typography>
+              )}
+              {note.text && (
+                <Typography
+                  sx={{
+                    maxHeight: '180px',
+                    padding: '1em 1.6em 0 0.9em',
+                    overflow: 'hidden',
+                    fontSize: { xs: '0.9rem', sm: '1rem' },
+                  }}
+                >
+                  {note.text}
+                </Typography>
+              )}
             </button>
           </Grid>
           {viewportWidth > 1011 ? (
