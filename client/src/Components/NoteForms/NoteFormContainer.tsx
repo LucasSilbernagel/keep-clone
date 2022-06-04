@@ -1,10 +1,10 @@
 import { ChangeEvent } from 'react'
-import TextFormMobile from './TextFormMobile'
+import TextFormMobile from './TextForm/TextFormMobile'
 import { useRecoilValue } from 'recoil'
 import { atomViewportWidth, atomIsDarkTheme } from '../../atoms'
 import { IExistingNote } from '../../types'
 import { Box, Grid, Button } from '@mui/material'
-import RenderNoteFormDesktop from '../RenderNoteFormDesktop'
+import RenderNoteFormDesktop from '../RenderNoteForms/RenderNoteFormDesktop'
 
 interface IComponentProps {
   noteBeingEdited: IExistingNote

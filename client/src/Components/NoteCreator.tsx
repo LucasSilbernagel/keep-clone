@@ -9,13 +9,13 @@ import {
 } from '@mui/material'
 import { atomViewportWidth, atomIsDarkTheme, atomNoteType } from '../atoms'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
-import NoteFormContainer from '../Components/NoteForm/NoteFormContainer'
+import NoteFormContainer from './NoteForms/NoteFormContainer'
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined'
 import BrushOutlinedIcon from '@mui/icons-material/BrushOutlined'
 import MicNoneOutlinedIcon from '@mui/icons-material/MicNoneOutlined'
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined'
 import { IExistingNote } from '../types'
-import CrosshairButton from '../Components/CrosshairButton'
+import CrosshairButton from './PlusButton'
 
 interface IComponentProps {
   noteBeingEdited: IExistingNote

@@ -1,23 +1,17 @@
-import { ChangeEvent, ChangeEventHandler } from 'react'
+import { ChangeEvent } from 'react'
 import { TextField, Grid } from '@mui/material'
 import { useRecoilValue } from 'recoil'
-import { atomNewNote } from '../../atoms'
-import { IExistingNote } from '../../types'
+import { atomNewNote } from '../../../atoms'
+import { IExistingNote } from '../../../types'
 
 interface IComponentProps {
-  handleNoteTextChange: ChangeEventHandler<HTMLInputElement>
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
   noteBeingEdited: IExistingNote
   editingID: string
 }
 
-const TextFormDesktop = (props: IComponentProps) => {
-  const {
-    handleNoteTextChange,
-    handleNoteTitleChange,
-    noteBeingEdited,
-    editingID,
-  } = props
+const ChecklistFormDesktop = (props: IComponentProps) => {
+  const { handleNoteTitleChange, noteBeingEdited, editingID } = props
 
   const newNote = useRecoilValue(atomNewNote)
 
@@ -51,36 +45,8 @@ const TextFormDesktop = (props: IComponentProps) => {
           InputLabelProps={{ style: { fontSize: '1.2rem' } }}
         />
       </Grid>
-      <Grid item xs={12}>
-        <TextField
-          autoFocus
-          multiline
-          placeholder="Take a note..."
-          size="small"
-          onChange={handleNoteTextChange}
-          value={editingID ? noteBeingEdited.text : newNote.text}
-          variant="outlined"
-          sx={{
-            width: '100%',
-            paddingLeft: '0.2em',
-            maxHeight: '50vh',
-            overflowY: 'auto',
-            '& .MuiOutlinedInput-root': {
-              '& fieldset': {
-                borderColor: 'transparent',
-              },
-              '&:hover fieldset': {
-                borderColor: 'transparent',
-              },
-              '&.Mui-focused fieldset': {
-                borderColor: 'transparent',
-              },
-            },
-          }}
-        />
-      </Grid>
     </Grid>
   )
 }
 
-export default TextFormDesktop
+export default ChecklistFormDesktop

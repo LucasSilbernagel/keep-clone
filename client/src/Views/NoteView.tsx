@@ -15,7 +15,7 @@ import {
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import axios from 'axios'
 import NoteCreator from '../Components/NoteCreator'
-import NoteModal from '../Components/NoteModal'
+import NoteModal from '../Components/NoteModal/NoteModal'
 
 interface IComponentProps {
   getNotes: () => void

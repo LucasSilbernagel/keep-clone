@@ -5,11 +5,11 @@ import {
   atomNewNote,
   atomViewportWidth,
   atomIsDarkTheme,
-} from '../atoms'
+} from '../../atoms'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import NoteFormContainer from '../Components/NoteForm/NoteFormContainer'
-import { IExistingNote } from '../types'
+import NoteFormContainer from '../NoteForms/NoteFormContainer'
+import { IExistingNote } from '../../types'
 import { TransitionProps } from '@mui/material/transitions'
 import NoteModalFooter from './NoteModalFooter'
 

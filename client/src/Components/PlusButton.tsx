@@ -3,7 +3,7 @@ import { atomIsModalOpen } from '../atoms'
 import { useSetRecoilState } from 'recoil'
 import AddBoxIcon from '@mui/icons-material/AddBox'
 
-const CrosshairButton = (): JSX.Element => {
+const PlusButton = (): JSX.Element => {
   const setIsModalOpen = useSetRecoilState(atomIsModalOpen)
   const openModal = () => setIsModalOpen(true)
 
@@ -69,4 +69,4 @@ const CrosshairButton = (): JSX.Element => {
   )
 }
 
-export default CrosshairButton
+export default PlusButton

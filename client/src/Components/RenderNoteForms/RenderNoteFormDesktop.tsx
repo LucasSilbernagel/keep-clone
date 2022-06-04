@@ -1,9 +1,9 @@
 import { ChangeEvent } from 'react'
-import TextFormDesktop from '../Components/NoteForm/TextFormDesktop'
+import TextFormDesktop from '../NoteForms/TextForm/TextFormDesktop'
 import { useRecoilValue } from 'recoil'
-import { atomNoteType } from '../atoms'
-import { IExistingNote } from '../types'
-import ChecklistFormDesktop from '../Components/NoteForm/ChecklistFormDesktop'
+import { atomNoteType } from '../../atoms'
+import { IExistingNote } from '../../types'
+import ChecklistFormDesktop from '../NoteForms/ChecklistForm/ChecklistFormDesktop'
 
 interface IComponentProps {
   noteBeingEdited: IExistingNote
