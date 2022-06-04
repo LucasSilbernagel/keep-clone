@@ -2,7 +2,7 @@ import { ChangeEvent, useState, useEffect } from 'react'
 import { Grid } from '@mui/material'
 import NoteGrid from '../Components/NoteGrid'
 import NoteList from '../Components/NoteList'
-import { IExistingNote } from '../Interfaces'
+import { IExistingNote } from '../types'
 import DesktopAppBar from '../Components/AppBar/DesktopAppBar'
 import MobileAppBar from '../Components/AppBar/MobileAppBar'
 import {
@@ -105,6 +105,7 @@ const NoteView = (props: IComponentProps): JSX.Element => {
         saveNote={saveNote}
         handleNoteTextChange={handleNoteTextChange}
         handleNoteTitleChange={handleNoteTitleChange}
+        finishCreatingNote={finishCreatingNote}
       />
       {creatingNote ? (
         <div

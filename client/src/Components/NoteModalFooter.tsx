@@ -12,7 +12,7 @@ import { atomNewNote, atomViewportWidth, atomIsDarkTheme } from '../atoms'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import axios from 'axios'
-import { IExistingNote, INewNote } from '../Interfaces'
+import { IExistingNote, INewNote } from '../types'
 import { BLANK_NEW_NOTE } from '../Constants'
 import ReactTimeAgo from 'react-time-ago'
 

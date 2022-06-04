@@ -9,7 +9,7 @@ import {
 import { useRecoilState, useRecoilValue } from 'recoil'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import NoteFormContainer from '../Components/NoteForm/NoteFormContainer'
-import { IExistingNote } from '../Interfaces'
+import { IExistingNote } from '../types'
 import { TransitionProps } from '@mui/material/transitions'
 import NoteModalFooter from './NoteModalFooter'
 
@@ -32,6 +32,7 @@ interface IComponentProps {
   saveNote: () => void
   handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
+  finishCreatingNote: () => void
 }
 
 const NoteModal = (props: IComponentProps): JSX.Element => {
@@ -44,6 +45,7 @@ const NoteModal = (props: IComponentProps): JSX.Element => {
     saveNote,
     handleNoteTextChange,
     handleNoteTitleChange,
+    finishCreatingNote,
   } = props
 
   const theme = useTheme()
@@ -112,6 +114,7 @@ const NoteModal = (props: IComponentProps): JSX.Element => {
             editingID={editingID}
             handleNoteTextChange={handleNoteTextChange}
             handleNoteTitleChange={handleNoteTitleChange}
+            finishCreatingNote={finishCreatingNote}
           />
         </Grid>
         <NoteModalFooter

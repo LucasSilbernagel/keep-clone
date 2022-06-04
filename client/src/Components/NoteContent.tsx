@@ -10,7 +10,7 @@ import {
   useTheme,
 } from '@mui/material'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
-import { IExistingNote } from '../Interfaces'
+import { IExistingNote } from '../types'
 import axios from 'axios'
 import {
   atomIsModalOpen,

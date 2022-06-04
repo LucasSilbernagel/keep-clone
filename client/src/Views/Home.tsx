@@ -2,7 +2,7 @@ import { useState, useEffect, ChangeEvent } from 'react'
 import axios from 'axios'
 import NoteView from './NoteView'
 import { BLANK_EXISTING_NOTE, BLANK_NEW_NOTE } from '../Constants'
-import { IExistingNote } from '../Interfaces'
+import { IExistingNote } from '../types'
 import Login from './Login'
 import { useSetRecoilState, useRecoilValue } from 'recoil'
 import {

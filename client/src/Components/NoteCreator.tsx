@@ -5,17 +5,16 @@ import {
   Button,
   IconButton,
   Box,
-  Grid,
   Tooltip,
 } from '@mui/material'
-import { atomViewportWidth, atomIsDarkTheme } from '../atoms'
-import { useRecoilValue } from 'recoil'
+import { atomViewportWidth, atomIsDarkTheme, atomNoteType } from '../atoms'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import NoteFormContainer from '../Components/NoteForm/NoteFormContainer'
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined'
 import BrushOutlinedIcon from '@mui/icons-material/BrushOutlined'
 import MicNoneOutlinedIcon from '@mui/icons-material/MicNoneOutlined'
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined'
-import { IExistingNote } from '../Interfaces'
+import { IExistingNote } from '../types'
 import CrosshairButton from '../Components/CrosshairButton'
 
 interface IComponentProps {
@@ -46,7 +45,15 @@ const NoteCreator = (props: IComponentProps): JSX.Element => {
 
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)
 
-  const createNote = () => {
+  const setNoteType = useSetRecoilState(atomNoteType)
+
+  const createTextNote = () => {
+    setNoteType('text')
+    setCreatingNote(true)
+  }
+
+  const createChecklist = () => {
+    setNoteType('checklist')
     setCreatingNote(true)
   }
 
@@ -54,39 +61,13 @@ const NoteCreator = (props: IComponentProps): JSX.Element => {
     return (
       <Paper elevation={3} sx={{ width: '100%', marginTop: '2em' }}>
         {creatingNote ? (
-          <Box
-            sx={
-              isDarkTheme
-                ? {
-                    backgroundColor: '#202123',
-                    border: '1px solid #525355',
-                    borderRadius: '10px',
-                  }
-                : {}
-            }
-          >
-            <NoteFormContainer
-              noteBeingEdited={noteBeingEdited}
-              editingID={editingID}
-              handleNoteTextChange={handleNoteTextChange}
-              handleNoteTitleChange={handleNoteTitleChange}
-            />
-            <Grid
-              item
-              container
-              xs={12}
-              justifyContent="flex-end"
-              sx={{ paddingBottom: '0.5em', paddingRight: '1em' }}
-            >
-              <Button
-                onClick={finishCreatingNote}
-                color="inherit"
-                sx={{ textTransform: 'initial', fontWeight: 'bold' }}
-              >
-                Close
-              </Button>
-            </Grid>
-          </Box>
+          <NoteFormContainer
+            noteBeingEdited={noteBeingEdited}
+            editingID={editingID}
+            handleNoteTextChange={handleNoteTextChange}
+            handleNoteTitleChange={handleNoteTitleChange}
+            finishCreatingNote={finishCreatingNote}
+          />
         ) : (
           <Box
             sx={
@@ -105,7 +86,7 @@ const NoteCreator = (props: IComponentProps): JSX.Element => {
             }
           >
             <Button
-              onClick={createNote}
+              onClick={createTextNote}
               disableRipple
               sx={{
                 textTransform: 'initial',
@@ -128,7 +109,10 @@ const NoteCreator = (props: IComponentProps): JSX.Element => {
             </Button>
             <Box>
               <Tooltip title="New checklist">
-                <IconButton aria-label="new checklist">
+                <IconButton
+                  aria-label="new checklist"
+                  onClick={createChecklist}
+                >
                   <CheckBoxOutlinedIcon />
                 </IconButton>
               </Tooltip>
@@ -137,8 +121,8 @@ const NoteCreator = (props: IComponentProps): JSX.Element => {
                   <BrushOutlinedIcon />
                 </IconButton>
               </Tooltip>
-              <Tooltip title="New voice note">
-                <IconButton aria-label="new voice note">
+              <Tooltip title="New recording">
+                <IconButton aria-label="new recording">
                   <MicNoneOutlinedIcon />
                 </IconButton>
               </Tooltip>
@@ -192,7 +176,7 @@ const NoteCreator = (props: IComponentProps): JSX.Element => {
           <IconButton aria-label="new drawing">
             <BrushOutlinedIcon />
           </IconButton>
-          <IconButton aria-label="new voice note">
+          <IconButton aria-label="new recording">
             <MicNoneOutlinedIcon />
           </IconButton>
           <IconButton aria-label="new image">

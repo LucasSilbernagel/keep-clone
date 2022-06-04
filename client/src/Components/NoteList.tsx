@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material'
 import NoteContent from './NoteContent'
-import { IExistingNote } from '../Interfaces'
+import { IExistingNote } from '../types'
 
 interface IComponentProps {
   filteredNotes: Array<IExistingNote>

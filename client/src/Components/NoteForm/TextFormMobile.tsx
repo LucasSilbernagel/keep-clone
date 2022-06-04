@@ -1,17 +1,17 @@
-import { ChangeEvent, ChangeEventHandler } from 'react'
+import { ChangeEventHandler } from 'react'
 import { TextField, Grid } from '@mui/material'
 import { useRecoilValue } from 'recoil'
 import { atomNewNote } from '../../atoms'
-import { IExistingNote } from '../../Interfaces'
+import { IExistingNote } from '../../types'
 
 interface IComponentProps {
   handleNoteTextChange: ChangeEventHandler<HTMLInputElement>
-  handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
+  handleNoteTitleChange: ChangeEventHandler<HTMLInputElement>
   noteBeingEdited: IExistingNote
   editingID: string
 }
 
-const NoteFormDesktop = (props: IComponentProps) => {
+const TextFormMobile = (props: IComponentProps) => {
   const {
     handleNoteTextChange,
     handleNoteTitleChange,
@@ -22,7 +22,7 @@ const NoteFormDesktop = (props: IComponentProps) => {
   const newNote = useRecoilValue(atomNewNote)
 
   return (
-    <Grid container>
+    <Grid container sx={{ padding: '0.5em' }}>
       <Grid item xs={12}>
         <TextField
           multiline
@@ -32,7 +32,6 @@ const NoteFormDesktop = (props: IComponentProps) => {
           variant="outlined"
           sx={{
             width: '100%',
-            paddingLeft: '0.2em',
             maxHeight: '50vh',
             overflowY: 'auto',
             '& .MuiOutlinedInput-root': {
@@ -55,15 +54,14 @@ const NoteFormDesktop = (props: IComponentProps) => {
         <TextField
           autoFocus
           multiline
-          placeholder="Take a note..."
+          placeholder="Note"
           size="small"
           onChange={handleNoteTextChange}
           value={editingID ? noteBeingEdited.text : newNote.text}
           variant="outlined"
           sx={{
             width: '100%',
-            paddingLeft: '0.2em',
-            maxHeight: '50vh',
+            maxHeight: '80vh',
             overflowY: 'auto',
             '& .MuiOutlinedInput-root': {
               '& fieldset': {
@@ -83,4 +81,4 @@ const NoteFormDesktop = (props: IComponentProps) => {
   )
 }
 
-export default NoteFormDesktop
+export default TextFormMobile

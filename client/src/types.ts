@@ -12,3 +12,5 @@ export interface INewNote {
   userGoogleId: string
   lastEdited: number
 }
+
+export type NoteType = 'text' | 'checklist' | 'drawing' | 'recording' | 'image'
