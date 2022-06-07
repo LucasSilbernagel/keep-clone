@@ -1,6 +1,6 @@
 import { atom } from 'recoil'
-import { BLANK_NEW_NOTE } from './Constants'
-import { INewNote, NoteType } from './types'
+import { BLANK_NEW_NOTE, BLANK_EXISTING_NOTE } from './Constants'
+import { INewNote, NoteType, IListItem, IExistingNote } from './types'
 
 /** The width of the viewport/window, in pixels */
 export const atomViewportWidth = atom<number>({
@@ -54,4 +54,16 @@ export const atomIsDarkTheme = atom<boolean>({
 export const atomNoteType = atom<NoteType>({
   key: 'atomNoteType',
   default: 'text',
+})
+
+/** Array of checklist items for a note */
+export const atomNoteList = atom<Array<IListItem>>({
+  key: 'atomNoteList',
+  default: [{ text: '', done: false }],
+})
+
+/** The note that is being edited */
+export const atomNoteBeingEdited = atom<IExistingNote>({
+  key: 'atomNoteBeingEdited',
+  default: BLANK_EXISTING_NOTE,
 })

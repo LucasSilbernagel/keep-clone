@@ -14,11 +14,9 @@ import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined'
 import BrushOutlinedIcon from '@mui/icons-material/BrushOutlined'
 import MicNoneOutlinedIcon from '@mui/icons-material/MicNoneOutlined'
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined'
-import { IExistingNote } from '../types'
 import CrosshairButton from './PlusButton'
 
 interface IComponentProps {
-  noteBeingEdited: IExistingNote
   editingID: string
   handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
@@ -29,7 +27,6 @@ interface IComponentProps {
 
 const NoteCreator = (props: IComponentProps): JSX.Element => {
   const {
-    noteBeingEdited,
     editingID,
     handleNoteTextChange,
     handleNoteTitleChange,
@@ -59,15 +56,32 @@ const NoteCreator = (props: IComponentProps): JSX.Element => {
 
   if (viewportWidth > 1011) {
     return (
-      <Paper elevation={3} sx={{ width: '100%', marginTop: '2em' }}>
+      <Paper
+        elevation={3}
+        sx={
+          isDarkTheme
+            ? {
+                backgroundColor: '#202123',
+                borderRadius: '10px',
+                width: '100%',
+                marginTop: '2em',
+              }
+            : {
+                width: '100%',
+                marginTop: '2em',
+              }
+        }
+      >
         {creatingNote ? (
-          <NoteFormContainer
-            noteBeingEdited={noteBeingEdited}
-            editingID={editingID}
-            handleNoteTextChange={handleNoteTextChange}
-            handleNoteTitleChange={handleNoteTitleChange}
-            finishCreatingNote={finishCreatingNote}
-          />
+          <>
+            <NoteFormContainer
+              editingID={editingID}
+              handleNoteTextChange={handleNoteTextChange}
+              handleNoteTitleChange={handleNoteTitleChange}
+              finishCreatingNote={finishCreatingNote}
+              inModal={false}
+            />
+          </>
         ) : (
           <Box
             sx={

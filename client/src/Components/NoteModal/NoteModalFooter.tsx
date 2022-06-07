@@ -8,7 +8,12 @@ import {
   Button,
   Tooltip,
 } from '@mui/material'
-import { atomNewNote, atomViewportWidth, atomIsDarkTheme } from '../../atoms'
+import {
+  atomNewNote,
+  atomViewportWidth,
+  atomIsDarkTheme,
+  atomNoteBeingEdited,
+} from '../../atoms'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import axios from 'axios'
@@ -18,22 +23,13 @@ import ReactTimeAgo from 'react-time-ago'
 
 interface IComponentProps {
   getNotes: () => void
-  note: IExistingNote
   handleCloseModal: () => void
-  noteBeingEdited: IExistingNote
   editingID: string
   saveNote: () => void
 }
 
 const NoteModalFooter = (props: IComponentProps): JSX.Element => {
-  const {
-    getNotes,
-    note,
-    handleCloseModal,
-    noteBeingEdited,
-    editingID,
-    saveNote,
-  } = props
+  const { getNotes, handleCloseModal, editingID, saveNote } = props
 
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)
 
@@ -41,6 +37,8 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
   const viewportWidth = useRecoilValue(atomViewportWidth)
 
   const [newNote, setNewNote] = useRecoilState(atomNewNote)
+
+  const noteBeingEdited = useRecoilValue(atomNoteBeingEdited)
 
   const [noteCopy, setNoteCopy] = useState<IExistingNote | INewNote>(
     BLANK_NEW_NOTE
@@ -117,7 +115,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
         }}
       >
         <Grid item container xs={3}></Grid>
-        {note.lastEdited === 0 ? null : (
+        {noteBeingEdited.lastEdited === 0 ? null : (
           <Grid
             item
             container
@@ -128,7 +126,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
             <Typography sx={{ fontSize: '0.9rem' }}>
               Edited{' '}
               <ReactTimeAgo
-                date={note.lastEdited}
+                date={noteBeingEdited.lastEdited}
                 locale="en-US"
                 timeStyle="round-minute"
               />
@@ -145,7 +143,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
               'aria-labelledby': 'more-button',
             }}
           >
-            <MenuItem onClick={() => deleteNote(note._id)}>
+            <MenuItem onClick={() => deleteNote(noteBeingEdited._id)}>
               Delete note
             </MenuItem>
             <MenuItem onClick={() => copyNote()}>Make a copy</MenuItem>
@@ -171,7 +169,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
   } else {
     return (
       <>
-        {note.lastEdited === 0 ? null : (
+        {noteBeingEdited.lastEdited === 0 ? null : (
           <Grid
             item
             container
@@ -182,7 +180,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
             <Typography sx={{ fontSize: '0.9rem' }}>
               Edited{' '}
               <ReactTimeAgo
-                date={note.lastEdited}
+                date={noteBeingEdited.lastEdited}
                 locale="en-US"
                 timeStyle="round-minute"
               />
@@ -201,7 +199,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
                   'aria-labelledby': 'more-button',
                 }}
               >
-                <MenuItem onClick={() => deleteNote(note._id)}>
+                <MenuItem onClick={() => deleteNote(noteBeingEdited._id)}>
                   Delete note
                 </MenuItem>
                 <MenuItem onClick={() => copyNote()}>Make a copy</MenuItem>

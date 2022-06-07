@@ -25,7 +25,6 @@ interface IComponentProps {
   saveNote: () => void
   handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
-  noteBeingEdited: IExistingNote
   logOut: () => void
 }
 
@@ -38,7 +37,6 @@ const NoteView = (props: IComponentProps): JSX.Element => {
     saveNote,
     handleNoteTextChange,
     handleNoteTitleChange,
-    noteBeingEdited,
     logOut,
   } = props
 
@@ -98,9 +96,7 @@ const NoteView = (props: IComponentProps): JSX.Element => {
     <>
       <NoteModal
         getNotes={getNotes}
-        note={noteBeingEdited}
         saveNewNote={saveNewNote}
-        noteBeingEdited={noteBeingEdited}
         editingID={editingID}
         saveNote={saveNote}
         handleNoteTextChange={handleNoteTextChange}
@@ -149,7 +145,6 @@ const NoteView = (props: IComponentProps): JSX.Element => {
             }}
           >
             <NoteCreator
-              noteBeingEdited={noteBeingEdited}
               editingID={editingID}
               handleNoteTextChange={handleNoteTextChange}
               handleNoteTitleChange={handleNoteTitleChange}

@@ -4,13 +4,14 @@ import NoteView from './NoteView'
 import { BLANK_EXISTING_NOTE, BLANK_NEW_NOTE } from '../Constants'
 import { IExistingNote } from '../types'
 import Login from './Login'
-import { useSetRecoilState, useRecoilValue } from 'recoil'
+import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil'
 import {
   atomNewNote,
   atomViewportWidth,
   atomSearchValue,
   atomIsLoading,
   atomIsDarkTheme,
+  atomNoteBeingEdited,
 } from '../atoms'
 
 const Home = () => {
@@ -22,7 +23,7 @@ const Home = () => {
   const [editingID, setEditingID] = useState('')
   /** The note that is being edited */
   const [noteBeingEdited, setNoteBeingEdited] =
-    useState<IExistingNote>(BLANK_EXISTING_NOTE)
+    useRecoilState(atomNoteBeingEdited)
   /** Whether the user has authenticated */
   const [authenticated, setAuthenticated] = useState(false)
   /** Whether there was an issue with user authentication */
@@ -193,7 +194,6 @@ const Home = () => {
         saveNote={saveNote}
         handleNoteTextChange={handleNoteTextChange}
         handleNoteTitleChange={handleNoteTitleChange}
-        noteBeingEdited={noteBeingEdited}
         logOut={logOut}
       />
     )

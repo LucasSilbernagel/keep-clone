@@ -2,23 +2,16 @@ import { ChangeEvent } from 'react'
 import TextFormDesktop from '../NoteForms/TextForm/TextFormDesktop'
 import { useRecoilValue } from 'recoil'
 import { atomNoteType } from '../../atoms'
-import { IExistingNote } from '../../types'
 import ChecklistFormDesktop from '../NoteForms/ChecklistForm/ChecklistFormDesktop'
 
 interface IComponentProps {
-  noteBeingEdited: IExistingNote
   editingID: string
   handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
 const RenderNoteFormDesktop = (props: IComponentProps) => {
-  const {
-    noteBeingEdited,
-    editingID,
-    handleNoteTextChange,
-    handleNoteTitleChange,
-  } = props
+  const { editingID, handleNoteTextChange, handleNoteTitleChange } = props
 
   const noteType = useRecoilValue(atomNoteType)
 
@@ -27,7 +20,6 @@ const RenderNoteFormDesktop = (props: IComponentProps) => {
       <TextFormDesktop
         handleNoteTextChange={handleNoteTextChange}
         handleNoteTitleChange={handleNoteTitleChange}
-        noteBeingEdited={noteBeingEdited}
         editingID={editingID}
       />
     )
@@ -35,7 +27,6 @@ const RenderNoteFormDesktop = (props: IComponentProps) => {
     return (
       <ChecklistFormDesktop
         handleNoteTitleChange={handleNoteTitleChange}
-        noteBeingEdited={noteBeingEdited}
         editingID={editingID}
       />
     )
