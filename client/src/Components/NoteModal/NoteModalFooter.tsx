@@ -70,13 +70,20 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
       .post('/api/notes', {
         text: noteCopy.text,
         title: noteCopy.title,
+        list: noteCopy.list,
         userGoogleId: noteCopy.userGoogleId,
         lastEdited: Date.now(),
       })
       .then((res) => {
         if (res.data) {
           getNotes()
-          setNoteCopy({ text: '', title: '', userGoogleId: '', lastEdited: 0 })
+          setNoteCopy({
+            text: '',
+            title: '',
+            list: [{ text: '', done: false }],
+            userGoogleId: '',
+            lastEdited: 0,
+          })
         }
       })
       .catch((err) => console.error(err))
@@ -90,7 +97,13 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
   }
 
   const deleteNote = (id: string) => {
-    setNewNote({ text: '', title: '', userGoogleId: '', lastEdited: 0 })
+    setNewNote({
+      text: '',
+      title: '',
+      list: [{ text: '', done: false }],
+      userGoogleId: '',
+      lastEdited: 0,
+    })
     handleCloseModal()
     setAnchorEl(null)
     axios

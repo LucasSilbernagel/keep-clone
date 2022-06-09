@@ -56,6 +56,7 @@ const NoteContent = (props: IComponentProps) => {
     const newNote = {
       text: note.text,
       title: note.title,
+      list: note.list,
       userGoogleId: note.userGoogleId,
       lastEdited: Date.now(),
     }
@@ -156,6 +157,9 @@ const NoteContent = (props: IComponentProps) => {
                 >
                   {note.text}
                 </Typography>
+              )}
+              {note.list.some((item) => item.text.length > 0) && (
+                <Typography>List here</Typography>
               )}
             </button>
           </Grid>

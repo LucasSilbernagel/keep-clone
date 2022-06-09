@@ -14,3 +14,5 @@ export const BLANK_NEW_NOTE = {
   userGoogleId: '',
   lastEdited: 0,
 }
+
+export const BLANK_LIST_ITEM = { text: '', done: false }

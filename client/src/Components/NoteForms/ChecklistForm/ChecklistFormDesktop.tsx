@@ -1,9 +1,20 @@
-import { ChangeEvent } from 'react'
-import { TextField, Grid, Divider, List, ListItem } from '@mui/material'
-import { useRecoilValue, useRecoilState } from 'recoil'
+import { ChangeEvent, useEffect } from 'react'
+import {
+  TextField,
+  Grid,
+  Divider,
+  List,
+  ListItem,
+  Checkbox,
+  IconButton,
+  Tooltip,
+} from '@mui/material'
+import { useRecoilState } from 'recoil'
 import { atomNewNote, atomNoteList, atomNoteBeingEdited } from '../../../atoms'
 import AddIcon from '@mui/icons-material/Add'
-import { handleChecklistTextChange } from '../../../LogicHelpers'
+import cloneDeep from 'lodash.clonedeep'
+import { BLANK_LIST_ITEM } from '../../../Constants'
+import ClearIcon from '@mui/icons-material/Clear'
 
 interface IComponentProps {
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
@@ -15,10 +26,74 @@ const ChecklistFormDesktop = (props: IComponentProps) => {
 
   const [newNote, setNewNote] = useRecoilState(atomNewNote)
 
-  const noteList = useRecoilValue(atomNoteList)
+  const [noteList, setNoteList] = useRecoilState(atomNoteList)
 
   const [noteBeingEdited, setNoteBeingEdited] =
     useRecoilState(atomNoteBeingEdited)
+
+  useEffect(() => {
+    const noteListCopy = cloneDeep(noteList)
+    if (noteList.every((listItem) => listItem.text.length > 0)) {
+      noteListCopy.push(BLANK_LIST_ITEM)
+      setNoteList(noteListCopy)
+    }
+  }, [noteList, setNoteList])
+
+  useEffect(() => {
+    if (editingID) {
+      setNoteBeingEdited((prevNote) => {
+        const editedNote = { ...prevNote }
+        editedNote.list = noteList
+        return editedNote
+      })
+    } else {
+      setNewNote((prevNote) => {
+        const editedNote = { ...prevNote }
+        editedNote.list = noteList
+        return editedNote
+      })
+    }
+  }, [editingID, noteList, setNewNote, setNoteBeingEdited])
+
+  const handleListTextChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    index: number
+  ) => {
+    setNoteList((prevList) => {
+      const newList = [...prevList]
+      newList[index] = {
+        done: noteList[index].done,
+        text: e.target.value,
+      }
+      return newList
+    })
+  }
+
+  const handleListCheckboxChange = (index: number) => {
+    setNoteList((prevList) => {
+      const newList = [...prevList]
+      newList[index] = {
+        done: !noteList[index].done,
+        text: noteList[index].text,
+      }
+      return newList
+    })
+  }
+
+  const handleDelete = (index: number) => {
+    setNoteList((prevList) => {
+      const newList = [...prevList]
+      if (newList.length > 1) {
+        return newList.filter((item) => newList.indexOf(item) !== index)
+      } else {
+        newList[index] = {
+          done: noteList[index].done,
+          text: '',
+        }
+        return newList
+      }
+    })
+  }
 
   return (
     <Grid container>
@@ -63,27 +138,24 @@ const ChecklistFormDesktop = (props: IComponentProps) => {
                   justifyContent="center"
                   xs={1}
                 >
-                  <Grid item>
-                    <AddIcon />
+                  <Grid padding="checkbox" item>
+                    {listItem.text ? (
+                      <Checkbox
+                        checked={listItem.done}
+                        onClick={() => handleListCheckboxChange(index)}
+                      />
+                    ) : (
+                      <AddIcon />
+                    )}
                   </Grid>
                 </Grid>
-                <Grid item xs={11}>
+                <Grid item xs={10}>
                   <TextField
-                    autoFocus
+                    autoFocus={index === 0}
                     multiline
                     placeholder="List item"
                     size="small"
-                    onChange={(e) =>
-                      handleChecklistTextChange(
-                        e,
-                        index,
-                        editingID,
-                        noteBeingEdited,
-                        setNoteBeingEdited,
-                        newNote,
-                        setNewNote
-                      )
-                    }
+                    onChange={(e) => handleListTextChange(e, index)}
                     value={listItem.text}
                     variant="outlined"
                     sx={{
@@ -104,6 +176,18 @@ const ChecklistFormDesktop = (props: IComponentProps) => {
                       },
                     }}
                   />
+                </Grid>
+                <Grid item xs={1}>
+                  {listItem.text.length > 0 && (
+                    <Tooltip title="Delete">
+                      <IconButton
+                        onClick={() => handleDelete(index)}
+                        aria-label="delete"
+                      >
+                        <ClearIcon />
+                      </IconButton>
+                    </Tooltip>
+                  )}
                 </Grid>
               </ListItem>
             )

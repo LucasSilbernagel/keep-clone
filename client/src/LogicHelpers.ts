@@ -1,7 +1,4 @@
 import { Theme } from '@mui/material'
-import { ChangeEvent } from 'react'
-import cloneDeep from 'lodash.clonedeep'
-import { IExistingNote, INewNote } from './types'
 
 /** Returns the styles for the Paper element of the note content
  * @param {Boolean} open - Whether or not the note menu is open
@@ -88,59 +85,5 @@ export const noteFormStyles = (inModal: boolean, isDarkTheme: boolean) => {
     return {
       width: '100%',
     }
-  }
-}
-
-/** Change the text of a note's checklist item as the user types into the editing field */
-export const handleChecklistTextChange = (
-  e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  index: number,
-  editingID: string,
-  noteBeingEdited: IExistingNote,
-  setNoteBeingEdited: (note: IExistingNote) => void,
-  newNote: INewNote,
-  setNewNote: (note: INewNote) => void
-) => {
-  if (editingID) {
-    const editedNote = cloneDeep(noteBeingEdited)
-    if (editedNote.list) {
-      editedNote.list[index].text = e.target.value
-    }
-    editedNote.lastEdited = Date.now()
-    setNoteBeingEdited(editedNote)
-    // setNoteBeingEdited((prevNote) => {
-    //   const editedNote = { ...prevNote }
-    //   if (editedNote.list) {
-    //     editedNote.list[index].text = e.target.value
-    //   }
-    //   editedNote.lastEdited = Date.now()
-    //   return editedNote
-    // })
-  } else {
-    const editedNote = cloneDeep(newNote)
-    if (editedNote.list) {
-      // editedNote.list[index].text = e.target.value
-      console.log(e.target.value)
-    }
-    editedNote.title = newNote.title
-    editedNote.text = newNote.text
-    editedNote.lastEdited = Date.now()
-    editedNote.userGoogleId = JSON.parse(
-      window.localStorage.userProfile
-    ).googleId
-    setNewNote(editedNote)
-    // setNewNote((prevNote) => {
-    //   const editedNote = { ...prevNote }
-    //   if (editedNote.list) {
-    //     editedNote.list[index].text = e.target.value
-    //   }
-    //   editedNote.title = prevNote.title
-    //   editedNote.text = prevNote.text
-    //   editedNote.lastEdited = Date.now()
-    //   editedNote.userGoogleId = JSON.parse(
-    //     window.localStorage.userProfile
-    //   ).googleId
-    //   return editedNote
-    // })
   }
 }
