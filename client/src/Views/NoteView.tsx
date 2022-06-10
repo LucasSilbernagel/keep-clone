@@ -11,11 +11,13 @@ import {
   atomSearchValue,
   atomIsSearching,
   atomIsGridView,
+  atomNoteList,
 } from '../atoms'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import axios from 'axios'
 import NoteCreator from '../Components/NoteCreator'
 import NoteModal from '../Components/NoteModal/NoteModal'
+import { BLANK_LIST_ITEM } from '../Constants'
 
 interface IComponentProps {
   getNotes: () => void
@@ -53,6 +55,8 @@ const NoteView = (props: IComponentProps): JSX.Element => {
 
   const isGridView = useRecoilValue(atomIsGridView)
 
+  const setNoteList = useSetRecoilState(atomNoteList)
+
   /** Display all saved notes when the page first loads */
   useEffect(() => {
     getNotes()
@@ -74,6 +78,7 @@ const NoteView = (props: IComponentProps): JSX.Element => {
               userGoogleId: '',
               lastEdited: 0,
             })
+            setNoteList([BLANK_LIST_ITEM])
           }
         })
         .catch((err) => console.error(err))

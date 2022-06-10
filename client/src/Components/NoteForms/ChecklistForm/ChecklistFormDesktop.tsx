@@ -55,6 +55,13 @@ const ChecklistFormDesktop = (props: IComponentProps) => {
     }
   }, [editingID, noteList, setNewNote, setNoteBeingEdited])
 
+  useEffect(() => {
+    if (editingID) {
+      setNoteList(noteBeingEdited.list)
+    }
+    // eslint-disable-next-line
+  }, [editingID])
+
   const handleListTextChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     index: number
