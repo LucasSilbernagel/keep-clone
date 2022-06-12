@@ -2,7 +2,7 @@ import { ChangeEvent } from 'react'
 import TextFormDesktop from '../NoteForms/TextForm/TextFormDesktop'
 import { useRecoilValue } from 'recoil'
 import { atomNoteType } from '../../atoms'
-import ChecklistFormDesktop from '../NoteForms/ChecklistForm/ChecklistFormDesktop'
+import ChecklistForm from '../NoteForms/ChecklistForm/ChecklistForm'
 
 interface IComponentProps {
   editingID: string
@@ -25,7 +25,7 @@ const RenderNoteFormDesktop = (props: IComponentProps) => {
     )
   } else if (noteType === 'checklist') {
     return (
-      <ChecklistFormDesktop
+      <ChecklistForm
         handleNoteTitleChange={handleNoteTitleChange}
         editingID={editingID}
       />

@@ -8,6 +8,7 @@ import {
   Checkbox,
   IconButton,
   Tooltip,
+  Typography,
 } from '@mui/material'
 import { useRecoilState } from 'recoil'
 import { atomNewNote, atomNoteList, atomNoteBeingEdited } from '../../../atoms'
@@ -15,13 +16,14 @@ import AddIcon from '@mui/icons-material/Add'
 import cloneDeep from 'lodash.clonedeep'
 import { BLANK_LIST_ITEM } from '../../../Constants'
 import ClearIcon from '@mui/icons-material/Clear'
+import CompletedItems from './CompletedItems'
 
 interface IComponentProps {
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
   editingID: string
 }
 
-const ChecklistFormDesktop = (props: IComponentProps) => {
+const ChecklistForm = (props: IComponentProps) => {
   const { handleNoteTitleChange, editingID } = props
 
   const [newNote, setNewNote] = useRecoilState(atomNewNote)
@@ -90,15 +92,11 @@ const ChecklistFormDesktop = (props: IComponentProps) => {
   const handleDelete = (index: number) => {
     setNoteList((prevList) => {
       const newList = [...prevList]
-      if (newList.length > 1) {
-        return newList.filter((item) => newList.indexOf(item) !== index)
-      } else {
-        newList[index] = {
-          done: noteList[index].done,
-          text: '',
-        }
-        return newList
+      newList[index] = {
+        done: noteList[index].done,
+        text: '',
       }
+      return newList
     })
   }
 
@@ -135,74 +133,80 @@ const ChecklistFormDesktop = (props: IComponentProps) => {
       <Grid item container xs={12}>
         <List sx={{ width: '100%' }} dense>
           <Divider />
-          {noteList.map((listItem, index) => {
-            return (
-              <ListItem key={index} divider>
-                <Grid
-                  item
-                  container
-                  alignContent="center"
-                  justifyContent="center"
-                  xs={1}
-                >
-                  <Grid padding="checkbox" item>
-                    {listItem.text ? (
-                      <Checkbox
-                        checked={listItem.done}
-                        onClick={() => handleListCheckboxChange(index)}
-                      />
-                    ) : (
-                      <AddIcon />
+          {noteList
+            .filter((item) => !item.done)
+            .map((item, index) => {
+              return (
+                <ListItem key={index} divider>
+                  <Grid
+                    item
+                    container
+                    alignContent="center"
+                    justifyContent="center"
+                    xs={1}
+                  >
+                    <Grid padding="checkbox" item>
+                      {item.text ? (
+                        <Checkbox
+                          checked={item.done}
+                          onClick={() => handleListCheckboxChange(index)}
+                        />
+                      ) : (
+                        <AddIcon />
+                      )}
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={10}>
+                    <TextField
+                      autoFocus={index === 0}
+                      multiline
+                      placeholder="List item"
+                      size="small"
+                      onChange={(e) => handleListTextChange(e, index)}
+                      value={item.text}
+                      variant="outlined"
+                      sx={{
+                        width: '100%',
+                        paddingLeft: '0.2em',
+                        maxHeight: '50vh',
+                        overflowY: 'auto',
+                        '& .MuiOutlinedInput-root': {
+                          '& fieldset': {
+                            borderColor: 'transparent',
+                          },
+                          '&:hover fieldset': {
+                            borderColor: 'transparent',
+                          },
+                          '&.Mui-focused fieldset': {
+                            borderColor: 'transparent',
+                          },
+                        },
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={1}>
+                    {item.text.length > 0 && (
+                      <Tooltip title="Delete">
+                        <IconButton
+                          onClick={() => handleDelete(index)}
+                          aria-label="delete"
+                        >
+                          <ClearIcon />
+                        </IconButton>
+                      </Tooltip>
                     )}
                   </Grid>
-                </Grid>
-                <Grid item xs={10}>
-                  <TextField
-                    autoFocus={index === 0}
-                    multiline
-                    placeholder="List item"
-                    size="small"
-                    onChange={(e) => handleListTextChange(e, index)}
-                    value={listItem.text}
-                    variant="outlined"
-                    sx={{
-                      width: '100%',
-                      paddingLeft: '0.2em',
-                      maxHeight: '50vh',
-                      overflowY: 'auto',
-                      '& .MuiOutlinedInput-root': {
-                        '& fieldset': {
-                          borderColor: 'transparent',
-                        },
-                        '&:hover fieldset': {
-                          borderColor: 'transparent',
-                        },
-                        '&.Mui-focused fieldset': {
-                          borderColor: 'transparent',
-                        },
-                      },
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={1}>
-                  {listItem.text.length > 0 && (
-                    <Tooltip title="Delete">
-                      <IconButton
-                        onClick={() => handleDelete(index)}
-                        aria-label="delete"
-                      >
-                        <ClearIcon />
-                      </IconButton>
-                    </Tooltip>
-                  )}
-                </Grid>
-              </ListItem>
-            )
-          })}
+                </ListItem>
+              )
+            })}
         </List>
+        <CompletedItems
+          handleListCheckboxChange={handleListCheckboxChange}
+          handleDelete={handleDelete}
+        />
       </Grid>
     </Grid>
   )
 }
 
-export default ChecklistFormDesktop
+export default ChecklistForm
