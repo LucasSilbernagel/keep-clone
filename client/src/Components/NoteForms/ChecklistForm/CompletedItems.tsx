@@ -6,14 +6,45 @@ import {
   IconButton,
   Tooltip,
   Typography,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
 } from '@mui/material'
+import MuiAccordion, { AccordionProps } from '@mui/material/Accordion'
+import MuiAccordionSummary, {
+  AccordionSummaryProps,
+} from '@mui/material/AccordionSummary'
+import MuiAccordionDetails from '@mui/material/AccordionDetails'
+import { styled } from '@mui/material/styles'
 import { useRecoilValue } from 'recoil'
 import { atomNoteList } from '../../../atoms'
 import ClearIcon from '@mui/icons-material/Clear'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
+
+const Accordion = styled((props: AccordionProps) => (
+  <MuiAccordion
+    disableGutters
+    elevation={0}
+    square
+    defaultExpanded
+    {...props}
+  />
+))(({ theme }) => ({
+  paddingLeft: theme.spacing(1),
+}))
+
+const AccordionSummary = styled((props: AccordionSummaryProps) => (
+  <MuiAccordionSummary expandIcon={<KeyboardArrowRightIcon />} {...props} />
+))(({ theme }) => ({
+  flexDirection: 'row-reverse',
+  '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
+    transform: 'rotate(90deg)',
+  },
+  '& .MuiAccordionSummary-content': {
+    marginLeft: theme.spacing(3),
+  },
+}))
+
+const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
+  padding: theme.spacing(0),
+}))
 
 interface IComponentProps {
   handleListCheckboxChange: (id: string) => void
@@ -30,7 +61,6 @@ const CompletedItems = (props: IComponentProps) => {
       <>
         <Accordion defaultExpanded square sx={{ width: '100%' }}>
           <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
             aria-controls="completed-items"
             id="completed-items-header"
           >

@@ -136,7 +136,7 @@ const ChecklistForm = (props: IComponentProps) => {
         />
       </Grid>
       <Grid item container xs={12}>
-        <List sx={{ width: '100%' }} dense>
+        <List sx={{ width: '100%', paddingBottom: 0 }} dense>
           <Divider />
           {noteList
             .filter((item) => !item.done)
