@@ -17,7 +17,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import axios from 'axios'
 import NoteCreator from '../Components/NoteCreator'
 import NoteModal from '../Components/NoteModal/NoteModal'
-import { BLANK_LIST_ITEM } from '../Constants'
+import { nanoid } from 'nanoid'
 
 interface IComponentProps {
   getNotes: () => void
@@ -74,11 +74,11 @@ const NoteView = (props: IComponentProps): JSX.Element => {
             setNewNote({
               text: '',
               title: '',
-              list: [{ text: '', done: false }],
+              list: [{ text: '', done: false, id: nanoid() }],
               userGoogleId: '',
               lastEdited: 0,
             })
-            setNoteList([BLANK_LIST_ITEM])
+            setNoteList([{ text: '', done: false, id: nanoid() }])
           }
         })
         .catch((err) => console.error(err))

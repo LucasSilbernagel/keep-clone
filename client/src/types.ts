@@ -1,6 +1,7 @@
 export interface IListItem {
   text: string
   done: boolean
+  id: string
 }
 
 export interface IExistingNote {

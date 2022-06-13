@@ -1,11 +1,7 @@
 import { useState, useEffect, ChangeEvent } from 'react'
 import axios from 'axios'
 import NoteView from './NoteView'
-import {
-  BLANK_EXISTING_NOTE,
-  BLANK_NEW_NOTE,
-  BLANK_LIST_ITEM,
-} from '../Constants'
+import { BLANK_EXISTING_NOTE, BLANK_NEW_NOTE } from '../Constants'
 import { IExistingNote } from '../types'
 import Login from './Login'
 import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil'
@@ -19,6 +15,7 @@ import {
   atomNoteList,
   atomNoteType,
 } from '../atoms'
+import { nanoid } from 'nanoid'
 
 const Home = () => {
   /** Saved notes */
@@ -215,7 +212,7 @@ const Home = () => {
           setEditingID('')
           setNoteBeingEdited(BLANK_EXISTING_NOTE)
           setNewNote(BLANK_NEW_NOTE)
-          setNoteList([BLANK_LIST_ITEM])
+          setNoteList([{ text: '', done: false, id: nanoid() }])
         })
         .catch((err) => console.error(err))
     } else {

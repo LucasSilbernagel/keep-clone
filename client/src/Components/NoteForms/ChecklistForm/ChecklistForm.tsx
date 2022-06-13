@@ -8,15 +8,14 @@ import {
   Checkbox,
   IconButton,
   Tooltip,
-  Typography,
 } from '@mui/material'
 import { useRecoilState } from 'recoil'
 import { atomNewNote, atomNoteList, atomNoteBeingEdited } from '../../../atoms'
 import AddIcon from '@mui/icons-material/Add'
 import cloneDeep from 'lodash.clonedeep'
-import { BLANK_LIST_ITEM } from '../../../Constants'
 import ClearIcon from '@mui/icons-material/Clear'
 import CompletedItems from './CompletedItems'
+import { nanoid } from 'nanoid'
 
 interface IComponentProps {
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
@@ -36,7 +35,7 @@ const ChecklistForm = (props: IComponentProps) => {
   useEffect(() => {
     const noteListCopy = cloneDeep(noteList)
     if (noteList.every((listItem) => listItem.text.length > 0)) {
-      noteListCopy.push(BLANK_LIST_ITEM)
+      noteListCopy.push({ text: '', done: false, id: nanoid() })
       setNoteList(noteListCopy)
     }
   }, [noteList, setNoteList])
@@ -66,37 +65,43 @@ const ChecklistForm = (props: IComponentProps) => {
 
   const handleListTextChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    index: number
+    id: string
   ) => {
     setNoteList((prevList) => {
       const newList = [...prevList]
-      newList[index] = {
-        done: noteList[index].done,
-        text: e.target.value,
-      }
-      return newList
+      return newList.map((item) => {
+        if (item.id === id) {
+          return {
+            text: e.target.value,
+            done: item.done,
+            id: item.id,
+          }
+        }
+        return item
+      })
     })
   }
 
-  const handleListCheckboxChange = (index: number) => {
+  const handleListCheckboxChange = (id: string) => {
     setNoteList((prevList) => {
       const newList = [...prevList]
-      newList[index] = {
-        done: !noteList[index].done,
-        text: noteList[index].text,
-      }
-      return newList
+      return newList.map((item) => {
+        if (item.id === id) {
+          return {
+            text: item.text,
+            done: !item.done,
+            id: item.id,
+          }
+        }
+        return item
+      })
     })
   }
 
-  const handleDelete = (index: number) => {
+  const handleDelete = (id: string) => {
     setNoteList((prevList) => {
       const newList = [...prevList]
-      newList[index] = {
-        done: noteList[index].done,
-        text: '',
-      }
-      return newList
+      return newList.filter((item) => item.id !== id)
     })
   }
 
@@ -135,9 +140,9 @@ const ChecklistForm = (props: IComponentProps) => {
           <Divider />
           {noteList
             .filter((item) => !item.done)
-            .map((item, index) => {
+            .map((item) => {
               return (
-                <ListItem key={index} divider>
+                <ListItem key={item.id} divider>
                   <Grid
                     item
                     container
@@ -149,7 +154,7 @@ const ChecklistForm = (props: IComponentProps) => {
                       {item.text ? (
                         <Checkbox
                           checked={item.done}
-                          onClick={() => handleListCheckboxChange(index)}
+                          onClick={() => handleListCheckboxChange(item.id)}
                         />
                       ) : (
                         <AddIcon />
@@ -158,11 +163,11 @@ const ChecklistForm = (props: IComponentProps) => {
                   </Grid>
                   <Grid item xs={10}>
                     <TextField
-                      autoFocus={index === 0}
+                      autoFocus={noteList.length === 1}
                       multiline
                       placeholder="List item"
                       size="small"
-                      onChange={(e) => handleListTextChange(e, index)}
+                      onChange={(e) => handleListTextChange(e, item.id)}
                       value={item.text}
                       variant="outlined"
                       sx={{
@@ -188,7 +193,7 @@ const ChecklistForm = (props: IComponentProps) => {
                     {item.text.length > 0 && (
                       <Tooltip title="Delete">
                         <IconButton
-                          onClick={() => handleDelete(index)}
+                          onClick={() => handleDelete(item.id)}
                           aria-label="delete"
                         >
                           <ClearIcon />

@@ -16,8 +16,8 @@ import ClearIcon from '@mui/icons-material/Clear'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
 interface IComponentProps {
-  handleListCheckboxChange: (index: number) => void
-  handleDelete: (index: number) => void
+  handleListCheckboxChange: (id: string) => void
+  handleDelete: (id: string) => void
 }
 
 const CompletedItems = (props: IComponentProps) => {
@@ -34,15 +34,21 @@ const CompletedItems = (props: IComponentProps) => {
             aria-controls="completed-items"
             id="completed-items-header"
           >
-            <Typography>Completed items</Typography>
+            {noteList.filter((item) => item.done).length > 1 ? (
+              <Typography>
+                {noteList.filter((item) => item.done).length} Completed items
+              </Typography>
+            ) : (
+              <Typography>1 Completed item</Typography>
+            )}
           </AccordionSummary>
           <AccordionDetails>
             <List sx={{ width: '100%' }} dense>
               {noteList
                 .filter((item) => item.done)
-                .map((item, index) => {
+                .map((item) => {
                   return (
-                    <ListItem key={index}>
+                    <ListItem key={item.id}>
                       <Grid
                         item
                         container
@@ -53,7 +59,7 @@ const CompletedItems = (props: IComponentProps) => {
                         <Grid padding="checkbox" item>
                           <Checkbox
                             checked={item.done}
-                            onClick={() => handleListCheckboxChange(index)}
+                            onClick={() => handleListCheckboxChange(item.id)}
                           />
                         </Grid>
                       </Grid>
@@ -85,7 +91,7 @@ const CompletedItems = (props: IComponentProps) => {
                         {item.text.length > 0 && (
                           <Tooltip title="Delete">
                             <IconButton
-                              onClick={() => handleDelete(index)}
+                              onClick={() => handleDelete(item.id)}
                               aria-label="delete"
                             >
                               <ClearIcon />

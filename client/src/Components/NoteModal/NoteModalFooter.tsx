@@ -20,6 +20,7 @@ import axios from 'axios'
 import { IExistingNote, INewNote } from '../../types'
 import { BLANK_NEW_NOTE } from '../../Constants'
 import ReactTimeAgo from 'react-time-ago'
+import { nanoid } from 'nanoid'
 
 interface IComponentProps {
   getNotes: () => void
@@ -80,7 +81,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
           setNoteCopy({
             text: '',
             title: '',
-            list: [{ text: '', done: false }],
+            list: [{ text: '', done: false, id: nanoid() }],
             userGoogleId: '',
             lastEdited: 0,
           })
@@ -100,7 +101,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
     setNewNote({
       text: '',
       title: '',
-      list: [{ text: '', done: false }],
+      list: [{ text: '', done: false, id: nanoid() }],
       userGoogleId: '',
       lastEdited: 0,
     })
