@@ -8,6 +8,9 @@ import {
   Menu,
   MenuItem,
   useTheme,
+  List,
+  ListItem,
+  Checkbox,
 } from '@mui/material'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { IExistingNote } from '../types'
@@ -20,6 +23,7 @@ import {
 } from '../atoms'
 import { useSetRecoilState, useRecoilValue } from 'recoil'
 import { noteContentStyles } from '../LogicHelpers'
+import CompletedListSummary from './CompletedListSummary'
 
 interface IComponentProps {
   note: IExistingNote
@@ -159,7 +163,45 @@ const NoteContent = (props: IComponentProps) => {
                 </Typography>
               )}
               {note.list.some((item) => item.text.length > 0) && (
-                <Typography>List here</Typography>
+                <>
+                  <List sx={{ width: '100%', paddingBottom: 0 }} dense>
+                    {note.list
+                      .filter((item) => !item.done && item.text.length > 0)
+                      .map((item) => {
+                        return (
+                          <ListItem key={item.id}>
+                            <Grid container justifyContent="space-between">
+                              <Grid
+                                item
+                                container
+                                alignContent="center"
+                                justifyContent="center"
+                                xs={1}
+                              >
+                                <Grid item>
+                                  <Checkbox checked={item.done} disabled />
+                                </Grid>
+                              </Grid>
+                              <Grid item container xs={10} alignItems="center">
+                                <Grid item xs={12}>
+                                  <Typography
+                                    noWrap
+                                    sx={{
+                                      fontSize: '0.9rem',
+                                    }}
+                                  >
+                                    {item.text}
+                                  </Typography>
+                                </Grid>
+                              </Grid>
+                            </Grid>
+                          </ListItem>
+                        )
+                      })}
+                  </List>
+                  {note.list.filter((item) => item.done && item.text.length > 0)
+                    .length > 0 && <CompletedListSummary note={note} />}
+                </>
               )}
             </button>
           </Grid>

@@ -59,7 +59,11 @@ const CompletedItems = (props: IComponentProps) => {
   if (noteList.filter((item) => item.done).length > 0) {
     return (
       <>
-        <Accordion defaultExpanded square sx={{ width: '100%' }}>
+        <Accordion
+          defaultExpanded
+          square
+          sx={{ width: '100%', backgroundColor: 'inherit' }}
+        >
           <AccordionSummary
             aria-controls="completed-items"
             id="completed-items-header"
