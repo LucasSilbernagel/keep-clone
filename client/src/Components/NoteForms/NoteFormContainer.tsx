@@ -1,10 +1,11 @@
 import { ChangeEvent } from 'react'
 import TextFormMobile from './TextForm/TextFormMobile'
 import { useRecoilValue } from 'recoil'
-import { atomViewportWidth, atomIsDarkTheme } from '../../atoms'
+import { atomViewportWidth, atomIsDarkTheme, atomNoteType } from '../../atoms'
 import { Box, Grid, Button } from '@mui/material'
 import RenderNoteFormDesktop from '../RenderNoteForms/RenderNoteFormDesktop'
 import { noteFormStyles } from '../../LogicHelpers'
+import ChecklistForm from './ChecklistForm/ChecklistForm'
 
 interface IComponentProps {
   editingID: string
@@ -28,17 +29,26 @@ const NoteFormContainer = (props: IComponentProps) => {
 
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)
 
+  const noteType = useRecoilValue(atomNoteType)
+
   return (
     <Box sx={noteFormStyles(inModal, isDarkTheme)}>
-      {viewportWidth > 1011 ? (
+      {viewportWidth > 1011 && (
         <RenderNoteFormDesktop
           handleNoteTextChange={handleNoteTextChange}
           handleNoteTitleChange={handleNoteTitleChange}
           editingID={editingID}
         />
-      ) : (
+      )}
+      {viewportWidth <= 1011 && noteType === 'text' && (
         <TextFormMobile
           handleNoteTextChange={handleNoteTextChange}
+          handleNoteTitleChange={handleNoteTitleChange}
+          editingID={editingID}
+        />
+      )}
+      {viewportWidth <= 1011 && noteType === 'checklist' && (
+        <ChecklistForm
           handleNoteTitleChange={handleNoteTitleChange}
           editingID={editingID}
         />

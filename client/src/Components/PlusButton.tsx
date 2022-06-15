@@ -1,18 +1,25 @@
 import { IconButton, Box } from '@mui/material'
-import { atomIsModalOpen } from '../atoms'
+import { atomIsModalOpen, atomNoteType } from '../atoms'
 import { useSetRecoilState } from 'recoil'
 import AddBoxIcon from '@mui/icons-material/AddBox'
 
 const PlusButton = (): JSX.Element => {
   const setIsModalOpen = useSetRecoilState(atomIsModalOpen)
+  const setNoteType = useSetRecoilState(atomNoteType)
+
   const openModal = () => setIsModalOpen(true)
+
+  const createTextNote = () => {
+    setNoteType('text')
+    openModal()
+  }
 
   return (
     <IconButton
       aria-label="new note"
       color="info"
       sx={{ position: 'relative' }}
-      onClick={openModal}
+      onClick={createTextNote}
     >
       <Box
         sx={{

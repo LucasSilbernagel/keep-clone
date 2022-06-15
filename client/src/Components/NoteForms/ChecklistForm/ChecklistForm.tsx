@@ -150,16 +150,18 @@ const ChecklistForm = (props: IComponentProps) => {
                     justifyContent="center"
                     xs={1}
                   >
-                    <Grid padding="checkbox" item>
-                      {item.text ? (
+                    {item.text ? (
+                      <Grid item>
                         <Checkbox
                           checked={item.done}
                           onClick={() => handleListCheckboxChange(item.id)}
                         />
-                      ) : (
+                      </Grid>
+                    ) : (
+                      <Grid item>
                         <AddIcon />
-                      )}
-                    </Grid>
+                      </Grid>
+                    )}
                   </Grid>
                   <Grid item xs={10}>
                     <TextField

@@ -7,14 +7,19 @@ import {
   Box,
   Tooltip,
 } from '@mui/material'
-import { atomViewportWidth, atomIsDarkTheme, atomNoteType } from '../atoms'
+import {
+  atomViewportWidth,
+  atomIsDarkTheme,
+  atomNoteType,
+  atomIsModalOpen,
+} from '../atoms'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import NoteFormContainer from './NoteForms/NoteFormContainer'
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined'
 import BrushOutlinedIcon from '@mui/icons-material/BrushOutlined'
 import MicNoneOutlinedIcon from '@mui/icons-material/MicNoneOutlined'
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined'
-import CrosshairButton from './PlusButton'
+import PlusButton from './PlusButton'
 
 interface IComponentProps {
   editingID: string
@@ -44,14 +49,23 @@ const NoteCreator = (props: IComponentProps): JSX.Element => {
 
   const setNoteType = useSetRecoilState(atomNoteType)
 
+  const setIsModalOpen = useSetRecoilState(atomIsModalOpen)
+
+  const openModal = () => setIsModalOpen(true)
+
   const createTextNote = () => {
     setNoteType('text')
     setCreatingNote(true)
   }
 
-  const createChecklist = () => {
+  const createDesktopChecklist = () => {
     setNoteType('checklist')
     setCreatingNote(true)
+  }
+
+  const createMobileChecklist = () => {
+    setNoteType('checklist')
+    openModal()
   }
 
   if (viewportWidth > 1011) {
@@ -125,7 +139,7 @@ const NoteCreator = (props: IComponentProps): JSX.Element => {
               <Tooltip title="New checklist">
                 <IconButton
                   aria-label="new checklist"
-                  onClick={createChecklist}
+                  onClick={createDesktopChecklist}
                 >
                   <CheckBoxOutlinedIcon />
                 </IconButton>
@@ -180,11 +194,14 @@ const NoteCreator = (props: IComponentProps): JSX.Element => {
               <Box
                 sx={{ position: 'absolute', right: '-11px', bottom: '-35px' }}
               >
-                <CrosshairButton />
+                <PlusButton />
               </Box>
             </Box>
           </Box>
-          <IconButton aria-label="new checklist">
+          <IconButton
+            aria-label="new checklist"
+            onClick={createMobileChecklist}
+          >
             <CheckBoxOutlinedIcon />
           </IconButton>
           <IconButton aria-label="new drawing">

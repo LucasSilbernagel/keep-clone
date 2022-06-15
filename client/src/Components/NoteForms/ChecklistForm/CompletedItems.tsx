@@ -90,7 +90,7 @@ const CompletedItems = (props: IComponentProps) => {
                         justifyContent="center"
                         xs={1}
                       >
-                        <Grid padding="checkbox" item>
+                        <Grid item>
                           <Checkbox
                             checked={item.done}
                             onClick={() => handleListCheckboxChange(item.id)}
