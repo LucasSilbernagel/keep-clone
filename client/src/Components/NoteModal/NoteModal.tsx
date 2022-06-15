@@ -5,11 +5,11 @@ import {
   atomNewNote,
   atomViewportWidth,
   atomIsDarkTheme,
-} from '../atoms'
+  atomNoteBeingEdited,
+} from '../../atoms'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import NoteFormContainer from '../Components/NoteForm/NoteFormContainer'
-import { IExistingNote } from '../Interfaces'
+import NoteFormContainer from '../NoteForms/NoteFormContainer'
 import { TransitionProps } from '@mui/material/transitions'
 import NoteModalFooter from './NoteModalFooter'
 
@@ -25,25 +25,23 @@ const Transition = forwardRef(function Transition(
 
 interface IComponentProps {
   getNotes: () => void
-  note: IExistingNote
   saveNewNote: () => void
-  noteBeingEdited: IExistingNote
   editingID: string
   saveNote: () => void
   handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
+  finishCreatingNote: () => void
 }
 
 const NoteModal = (props: IComponentProps): JSX.Element => {
   const {
     getNotes,
-    note,
     saveNewNote,
-    noteBeingEdited,
     editingID,
     saveNote,
     handleNoteTextChange,
     handleNoteTitleChange,
+    finishCreatingNote,
   } = props
 
   const theme = useTheme()
@@ -57,6 +55,8 @@ const NoteModal = (props: IComponentProps): JSX.Element => {
 
   const newNote = useRecoilValue(atomNewNote)
 
+  const noteBeingEdited = useRecoilValue(atomNoteBeingEdited)
+
   const handleCloseModal = () => {
     if (editingID) {
       saveNote()
@@ -68,7 +68,7 @@ const NoteModal = (props: IComponentProps): JSX.Element => {
 
   /** Function called when the "back" button is clicked in the modal */
   const handleBack = () => {
-    if (newNote.text || note.title) {
+    if (newNote.text || noteBeingEdited.title) {
       saveNote()
       handleCloseModal()
     } else {
@@ -108,18 +108,17 @@ const NoteModal = (props: IComponentProps): JSX.Element => {
             </Grid>
           ) : null}
           <NoteFormContainer
-            noteBeingEdited={noteBeingEdited}
             editingID={editingID}
             handleNoteTextChange={handleNoteTextChange}
             handleNoteTitleChange={handleNoteTitleChange}
+            finishCreatingNote={finishCreatingNote}
+            inModal={true}
           />
         </Grid>
         <NoteModalFooter
           getNotes={getNotes}
-          note={note}
           handleCloseModal={handleCloseModal}
           editingID={editingID}
-          noteBeingEdited={noteBeingEdited}
           saveNote={saveNote}
         />
       </Box>

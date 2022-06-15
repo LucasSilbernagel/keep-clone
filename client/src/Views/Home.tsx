@@ -2,16 +2,20 @@ import { useState, useEffect, ChangeEvent } from 'react'
 import axios from 'axios'
 import NoteView from './NoteView'
 import { BLANK_EXISTING_NOTE, BLANK_NEW_NOTE } from '../Constants'
-import { IExistingNote } from '../Interfaces'
+import { IExistingNote } from '../types'
 import Login from './Login'
-import { useSetRecoilState, useRecoilValue } from 'recoil'
+import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil'
 import {
   atomNewNote,
   atomViewportWidth,
   atomSearchValue,
   atomIsLoading,
   atomIsDarkTheme,
+  atomNoteBeingEdited,
+  atomNoteList,
+  atomNoteType,
 } from '../atoms'
+import { nanoid } from 'nanoid'
 
 const Home = () => {
   /** Saved notes */
@@ -22,7 +26,7 @@ const Home = () => {
   const [editingID, setEditingID] = useState('')
   /** The note that is being edited */
   const [noteBeingEdited, setNoteBeingEdited] =
-    useState<IExistingNote>(BLANK_EXISTING_NOTE)
+    useRecoilState(atomNoteBeingEdited)
   /** Whether the user has authenticated */
   const [authenticated, setAuthenticated] = useState(false)
   /** Whether there was an issue with user authentication */
@@ -41,6 +45,10 @@ const Home = () => {
 
   let isDarkTheme = window.localStorage.getItem('keepCloneDarkTheme')
   const setIsDarkTheme = useSetRecoilState(atomIsDarkTheme)
+
+  const setNoteList = useSetRecoilState(atomNoteList)
+
+  const setNoteType = useSetRecoilState(atomNoteType)
 
   /** Keep track of the viewport/window width */
   useEffect(() => {
@@ -80,6 +88,21 @@ const Home = () => {
     }
   }, [notes, searchValue])
 
+  useEffect(() => {
+    if (editingID) {
+      if (noteBeingEdited.text.length > 0) {
+        setNoteType('text')
+      } else if (noteBeingEdited.list.some((item) => item.text.length > 0)) {
+        setNoteType('checklist')
+      }
+    }
+  }, [
+    editingID,
+    noteBeingEdited.list,
+    noteBeingEdited.text.length,
+    setNoteType,
+  ])
+
   /** Log out of the app */
   const logOut = () => {
     localStorage.setItem('userProfile', '')
@@ -90,21 +113,19 @@ const Home = () => {
   /** Returns all saved notes */
   const getNotes = () => {
     setIsLoading(true)
-    setTimeout(() => {
-      axios
-        .get('/api/notes', {
-          params: {
-            userGoogleId: JSON.parse(window.localStorage.userProfile).googleId,
-          },
-        })
-        .then((res) => {
-          if (res.data) {
-            setNotes(res.data)
-            setIsLoading(false)
-          }
-        })
-        .catch((err) => console.error(err))
-    }, 1000)
+    axios
+      .get('/api/notes', {
+        params: {
+          userGoogleId: JSON.parse(window.localStorage.userProfile).googleId,
+        },
+      })
+      .then((res) => {
+        if (res.data) {
+          setNotes(res.data)
+          setIsLoading(false)
+        }
+      })
+      .catch((err) => console.error(err))
   }
 
   /** Edit a note with a specific ID */
@@ -113,6 +134,18 @@ const Home = () => {
     setNoteBeingEdited(
       filteredNotes.find((note) => note._id === id) ?? BLANK_EXISTING_NOTE
     )
+  }
+
+  /** Delete a note with a specific ID */
+  const deleteNote = (id: string) => {
+    axios
+      .delete(`/api/notes/${id}`)
+      .then((res) => {
+        if (res.data) {
+          getNotes()
+        }
+      })
+      .catch((err) => console.error(err))
   }
 
   /** Change the text of a note as the user types into the editing field */
@@ -165,7 +198,8 @@ const Home = () => {
   const saveNote = () => {
     if (
       (noteBeingEdited.text && noteBeingEdited.text.length > 0) ||
-      (noteBeingEdited.title && noteBeingEdited.title.length > 0)
+      (noteBeingEdited.title && noteBeingEdited.title.length > 0) ||
+      noteBeingEdited.list.some((item) => item.text.length > 0)
     ) {
       axios
         .put(`/api/notes/${noteBeingEdited._id}`, noteBeingEdited)
@@ -178,8 +212,11 @@ const Home = () => {
           setEditingID('')
           setNoteBeingEdited(BLANK_EXISTING_NOTE)
           setNewNote(BLANK_NEW_NOTE)
+          setNoteList([{ text: '', done: false, id: nanoid() }])
         })
         .catch((err) => console.error(err))
+    } else {
+      deleteNote(noteBeingEdited._id)
     }
   }
 
@@ -193,7 +230,6 @@ const Home = () => {
         saveNote={saveNote}
         handleNoteTextChange={handleNoteTextChange}
         handleNoteTitleChange={handleNoteTitleChange}
-        noteBeingEdited={noteBeingEdited}
         logOut={logOut}
       />
     )

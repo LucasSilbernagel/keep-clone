@@ -8,6 +8,9 @@ const NoteSchema = new Schema({
   title: {
     type: String,
   },
+  list: {
+    type: Array,
+  },
   userGoogleId: {
     type: String,
     required: true,

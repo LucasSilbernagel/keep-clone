@@ -2,7 +2,7 @@ import { ChangeEvent, useState, useEffect } from 'react'
 import { Grid } from '@mui/material'
 import NoteGrid from '../Components/NoteGrid'
 import NoteList from '../Components/NoteList'
-import { IExistingNote } from '../Interfaces'
+import { IExistingNote } from '../types'
 import DesktopAppBar from '../Components/AppBar/DesktopAppBar'
 import MobileAppBar from '../Components/AppBar/MobileAppBar'
 import {
@@ -11,11 +11,13 @@ import {
   atomSearchValue,
   atomIsSearching,
   atomIsGridView,
+  atomNoteList,
 } from '../atoms'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import axios from 'axios'
 import NoteCreator from '../Components/NoteCreator'
-import NoteModal from '../Components/NoteModal'
+import NoteModal from '../Components/NoteModal/NoteModal'
+import { nanoid } from 'nanoid'
 
 interface IComponentProps {
   getNotes: () => void
@@ -25,7 +27,6 @@ interface IComponentProps {
   saveNote: () => void
   handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
-  noteBeingEdited: IExistingNote
   logOut: () => void
 }
 
@@ -38,7 +39,6 @@ const NoteView = (props: IComponentProps): JSX.Element => {
     saveNote,
     handleNoteTextChange,
     handleNoteTitleChange,
-    noteBeingEdited,
     logOut,
   } = props
 
@@ -55,6 +55,8 @@ const NoteView = (props: IComponentProps): JSX.Element => {
 
   const isGridView = useRecoilValue(atomIsGridView)
 
+  const setNoteList = useSetRecoilState(atomNoteList)
+
   /** Display all saved notes when the page first loads */
   useEffect(() => {
     getNotes()
@@ -69,7 +71,14 @@ const NoteView = (props: IComponentProps): JSX.Element => {
         .then((res) => {
           if (res.data) {
             getNotes()
-            setNewNote({ text: '', title: '', userGoogleId: '', lastEdited: 0 })
+            setNewNote({
+              text: '',
+              title: '',
+              list: [{ text: '', done: false, id: nanoid() }],
+              userGoogleId: '',
+              lastEdited: 0,
+            })
+            setNoteList([{ text: '', done: false, id: nanoid() }])
           }
         })
         .catch((err) => console.error(err))
@@ -98,13 +107,12 @@ const NoteView = (props: IComponentProps): JSX.Element => {
     <>
       <NoteModal
         getNotes={getNotes}
-        note={noteBeingEdited}
         saveNewNote={saveNewNote}
-        noteBeingEdited={noteBeingEdited}
         editingID={editingID}
         saveNote={saveNote}
         handleNoteTextChange={handleNoteTextChange}
         handleNoteTitleChange={handleNoteTitleChange}
+        finishCreatingNote={finishCreatingNote}
       />
       {creatingNote ? (
         <div
@@ -148,7 +156,6 @@ const NoteView = (props: IComponentProps): JSX.Element => {
             }}
           >
             <NoteCreator
-              noteBeingEdited={noteBeingEdited}
               editingID={editingID}
               handleNoteTextChange={handleNoteTextChange}
               handleNoteTitleChange={handleNoteTitleChange}

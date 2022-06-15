@@ -1,28 +1,23 @@
-import { ChangeEventHandler } from 'react'
+import { ChangeEvent, ChangeEventHandler } from 'react'
 import { TextField, Grid } from '@mui/material'
 import { useRecoilValue } from 'recoil'
-import { atomNewNote } from '../../atoms'
-import { IExistingNote } from '../../Interfaces'
+import { atomNewNote, atomNoteBeingEdited } from '../../../atoms'
 
 interface IComponentProps {
   handleNoteTextChange: ChangeEventHandler<HTMLInputElement>
-  handleNoteTitleChange: ChangeEventHandler<HTMLInputElement>
-  noteBeingEdited: IExistingNote
+  handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
   editingID: string
 }
 
-const NoteFormMobile = (props: IComponentProps) => {
-  const {
-    handleNoteTextChange,
-    handleNoteTitleChange,
-    noteBeingEdited,
-    editingID,
-  } = props
+const TextFormDesktop = (props: IComponentProps) => {
+  const { handleNoteTextChange, handleNoteTitleChange, editingID } = props
 
   const newNote = useRecoilValue(atomNewNote)
 
+  const noteBeingEdited = useRecoilValue(atomNoteBeingEdited)
+
   return (
-    <Grid container sx={{ padding: '0.5em' }}>
+    <Grid container>
       <Grid item xs={12}>
         <TextField
           multiline
@@ -32,6 +27,7 @@ const NoteFormMobile = (props: IComponentProps) => {
           variant="outlined"
           sx={{
             width: '100%',
+            paddingLeft: '0.2em',
             maxHeight: '50vh',
             overflowY: 'auto',
             '& .MuiOutlinedInput-root': {
@@ -54,14 +50,15 @@ const NoteFormMobile = (props: IComponentProps) => {
         <TextField
           autoFocus
           multiline
-          placeholder="Note"
+          placeholder="Take a note..."
           size="small"
           onChange={handleNoteTextChange}
           value={editingID ? noteBeingEdited.text : newNote.text}
           variant="outlined"
           sx={{
             width: '100%',
-            maxHeight: '80vh',
+            paddingLeft: '0.2em',
+            maxHeight: '50vh',
             overflowY: 'auto',
             '& .MuiOutlinedInput-root': {
               '& fieldset': {
@@ -81,4 +78,4 @@ const NoteFormMobile = (props: IComponentProps) => {
   )
 }
 
-export default NoteFormMobile
+export default TextFormDesktop

@@ -63,3 +63,27 @@ export const noteContentStyles = (
   }
   return styles
 }
+
+export const noteFormStyles = (inModal: boolean, isDarkTheme: boolean) => {
+  if (inModal && isDarkTheme) {
+    return {
+      backgroundColor: '#202123',
+      width: '100%',
+    }
+  } else if (inModal && !isDarkTheme) {
+    return {
+      width: '100%',
+    }
+  } else if (!inModal && isDarkTheme) {
+    return {
+      backgroundColor: '#202123',
+      width: '100%',
+      border: '1px solid #525355',
+      borderRadius: '10px',
+    }
+  } else if (!inModal && !isDarkTheme) {
+    return {
+      width: '100%',
+    }
+  }
+}

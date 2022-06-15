@@ -1,7 +1,7 @@
 import { Grid } from '@mui/material'
 import Masonry from '@mui/lab/Masonry'
 import NoteContent from './NoteContent'
-import { IExistingNote } from '../Interfaces'
+import { IExistingNote } from '../types'
 import { useRecoilValue } from 'recoil'
 import { atomViewportWidth } from '../atoms'
 
