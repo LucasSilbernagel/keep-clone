@@ -5,13 +5,12 @@ import { atomNoteType } from '../../atoms'
 import ChecklistForm from '../NoteForms/ChecklistForm/ChecklistForm'
 
 interface IComponentProps {
-  editingID: string
   handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
 const RenderNoteFormDesktop = (props: IComponentProps) => {
-  const { editingID, handleNoteTextChange, handleNoteTitleChange } = props
+  const { handleNoteTextChange, handleNoteTitleChange } = props
 
   const noteType = useRecoilValue(atomNoteType)
 
@@ -20,16 +19,10 @@ const RenderNoteFormDesktop = (props: IComponentProps) => {
       <TextFormDesktop
         handleNoteTextChange={handleNoteTextChange}
         handleNoteTitleChange={handleNoteTitleChange}
-        editingID={editingID}
       />
     )
   } else if (noteType === 'checklist') {
-    return (
-      <ChecklistForm
-        handleNoteTitleChange={handleNoteTitleChange}
-        editingID={editingID}
-      />
-    )
+    return <ChecklistForm handleNoteTitleChange={handleNoteTitleChange} />
   } else return null
 }
 

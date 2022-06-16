@@ -8,7 +8,6 @@ import { noteFormStyles } from '../../LogicHelpers'
 import ChecklistForm from './ChecklistForm/ChecklistForm'
 
 interface IComponentProps {
-  editingID: string
   handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
   finishCreatingNote: () => void
@@ -17,7 +16,6 @@ interface IComponentProps {
 
 const NoteFormContainer = (props: IComponentProps) => {
   const {
-    editingID,
     handleNoteTextChange,
     handleNoteTitleChange,
     finishCreatingNote,
@@ -37,21 +35,16 @@ const NoteFormContainer = (props: IComponentProps) => {
         <RenderNoteFormDesktop
           handleNoteTextChange={handleNoteTextChange}
           handleNoteTitleChange={handleNoteTitleChange}
-          editingID={editingID}
         />
       )}
       {viewportWidth <= 1011 && noteType === 'text' && (
         <TextFormMobile
           handleNoteTextChange={handleNoteTextChange}
           handleNoteTitleChange={handleNoteTitleChange}
-          editingID={editingID}
         />
       )}
       {viewportWidth <= 1011 && noteType === 'checklist' && (
-        <ChecklistForm
-          handleNoteTitleChange={handleNoteTitleChange}
-          editingID={editingID}
-        />
+        <ChecklistForm handleNoteTitleChange={handleNoteTitleChange} />
       )}
       {!inModal && (
         <Grid

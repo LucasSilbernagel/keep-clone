@@ -1,20 +1,21 @@
 import { ChangeEventHandler } from 'react'
 import { TextField, Grid } from '@mui/material'
 import { useRecoilValue } from 'recoil'
-import { atomNewNote, atomNoteBeingEdited } from '../../../atoms'
+import { atomEditingID, atomNewNote, atomNoteBeingEdited } from '../../../atoms'
 
 interface IComponentProps {
   handleNoteTextChange: ChangeEventHandler<HTMLInputElement>
   handleNoteTitleChange: ChangeEventHandler<HTMLInputElement>
-  editingID: string
 }
 
 const TextFormMobile = (props: IComponentProps) => {
-  const { handleNoteTextChange, handleNoteTitleChange, editingID } = props
+  const { handleNoteTextChange, handleNoteTitleChange } = props
 
   const newNote = useRecoilValue(atomNewNote)
 
   const noteBeingEdited = useRecoilValue(atomNoteBeingEdited)
+
+  const editingID = useRecoilValue(atomEditingID)
 
   return (
     <Grid container sx={{ padding: '0.5em' }}>

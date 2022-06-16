@@ -6,6 +6,7 @@ import {
   atomViewportWidth,
   atomIsDarkTheme,
   atomNoteBeingEdited,
+  atomEditingID,
 } from '../../atoms'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
@@ -26,7 +27,6 @@ const Transition = forwardRef(function Transition(
 interface IComponentProps {
   getNotes: () => void
   saveNewNote: () => void
-  editingID: string
   saveNote: () => void
   handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
@@ -37,7 +37,6 @@ const NoteModal = (props: IComponentProps): JSX.Element => {
   const {
     getNotes,
     saveNewNote,
-    editingID,
     saveNote,
     handleNoteTextChange,
     handleNoteTitleChange,
@@ -47,6 +46,8 @@ const NoteModal = (props: IComponentProps): JSX.Element => {
   const theme = useTheme()
 
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)
+
+  const editingID = useRecoilValue(atomEditingID)
 
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
@@ -108,7 +109,6 @@ const NoteModal = (props: IComponentProps): JSX.Element => {
             </Grid>
           ) : null}
           <NoteFormContainer
-            editingID={editingID}
             handleNoteTextChange={handleNoteTextChange}
             handleNoteTitleChange={handleNoteTitleChange}
             finishCreatingNote={finishCreatingNote}
@@ -118,7 +118,6 @@ const NoteModal = (props: IComponentProps): JSX.Element => {
         <NoteModalFooter
           getNotes={getNotes}
           handleCloseModal={handleCloseModal}
-          editingID={editingID}
           saveNote={saveNote}
         />
       </Box>

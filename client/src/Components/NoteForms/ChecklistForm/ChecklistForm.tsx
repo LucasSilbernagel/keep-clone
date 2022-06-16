@@ -9,8 +9,13 @@ import {
   IconButton,
   Tooltip,
 } from '@mui/material'
-import { useRecoilState } from 'recoil'
-import { atomNewNote, atomNoteList, atomNoteBeingEdited } from '../../../atoms'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import {
+  atomNewNote,
+  atomNoteList,
+  atomNoteBeingEdited,
+  atomEditingID,
+} from '../../../atoms'
 import AddIcon from '@mui/icons-material/Add'
 import cloneDeep from 'lodash.clonedeep'
 import ClearIcon from '@mui/icons-material/Clear'
@@ -19,15 +24,16 @@ import { nanoid } from 'nanoid'
 
 interface IComponentProps {
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
-  editingID: string
 }
 
 const ChecklistForm = (props: IComponentProps) => {
-  const { handleNoteTitleChange, editingID } = props
+  const { handleNoteTitleChange } = props
 
   const [newNote, setNewNote] = useRecoilState(atomNewNote)
 
   const [noteList, setNoteList] = useRecoilState(atomNoteList)
+
+  const editingID = useRecoilValue(atomEditingID)
 
   const [noteBeingEdited, setNoteBeingEdited] =
     useRecoilState(atomNoteBeingEdited)

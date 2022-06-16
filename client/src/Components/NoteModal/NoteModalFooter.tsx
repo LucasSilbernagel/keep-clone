@@ -13,6 +13,7 @@ import {
   atomViewportWidth,
   atomIsDarkTheme,
   atomNoteBeingEdited,
+  atomEditingID,
 } from '../../atoms'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
@@ -25,17 +26,18 @@ import { nanoid } from 'nanoid'
 interface IComponentProps {
   getNotes: () => void
   handleCloseModal: () => void
-  editingID: string
   saveNote: () => void
 }
 
 const NoteModalFooter = (props: IComponentProps): JSX.Element => {
-  const { getNotes, handleCloseModal, editingID, saveNote } = props
+  const { getNotes, handleCloseModal, saveNote } = props
 
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)
 
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
+
+  const editingID = useRecoilValue(atomEditingID)
 
   const [newNote, setNewNote] = useRecoilState(atomNewNote)
 

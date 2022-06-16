@@ -14,16 +14,18 @@ import {
   atomNoteBeingEdited,
   atomNoteList,
   atomNoteType,
+  atomFilteredNotes,
+  atomEditingID,
 } from '../atoms'
 import { nanoid } from 'nanoid'
 
 const Home = () => {
   /** Saved notes */
   const [notes, setNotes] = useState<IExistingNote[]>([])
-  /** Filtered saved notes */
-  const [filteredNotes, setFilteredNotes] = useState<IExistingNote[]>([])
+  /** Saved notes, filtered */
+  const [filteredNotes, setFilteredNotes] = useRecoilState(atomFilteredNotes)
   /** The ID of the note that is being edited */
-  const [editingID, setEditingID] = useState('')
+  const [editingID, setEditingID] = useRecoilState(atomEditingID)
   /** The note that is being edited */
   const [noteBeingEdited, setNoteBeingEdited] =
     useRecoilState(atomNoteBeingEdited)
@@ -224,9 +226,7 @@ const Home = () => {
     return (
       <NoteView
         getNotes={getNotes}
-        filteredNotes={filteredNotes}
         editNote={editNote}
-        editingID={editingID}
         saveNote={saveNote}
         handleNoteTextChange={handleNoteTextChange}
         handleNoteTitleChange={handleNoteTitleChange}

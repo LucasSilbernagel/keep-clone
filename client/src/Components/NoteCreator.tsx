@@ -22,7 +22,6 @@ import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined'
 import PlusButton from './PlusButton'
 
 interface IComponentProps {
-  editingID: string
   handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
   creatingNote: boolean
@@ -32,7 +31,6 @@ interface IComponentProps {
 
 const NoteCreator = (props: IComponentProps): JSX.Element => {
   const {
-    editingID,
     handleNoteTextChange,
     handleNoteTitleChange,
     creatingNote,
@@ -89,7 +87,6 @@ const NoteCreator = (props: IComponentProps): JSX.Element => {
         {creatingNote ? (
           <>
             <NoteFormContainer
-              editingID={editingID}
               handleNoteTextChange={handleNoteTextChange}
               handleNoteTitleChange={handleNoteTitleChange}
               finishCreatingNote={finishCreatingNote}

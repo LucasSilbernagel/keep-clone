@@ -21,9 +21,7 @@ import { nanoid } from 'nanoid'
 
 interface IComponentProps {
   getNotes: () => void
-  filteredNotes: Array<IExistingNote>
   editNote: (id: string) => void
-  editingID: string
   saveNote: () => void
   handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
@@ -33,9 +31,7 @@ interface IComponentProps {
 const NoteView = (props: IComponentProps): JSX.Element => {
   const {
     getNotes,
-    filteredNotes,
     editNote,
-    editingID,
     saveNote,
     handleNoteTextChange,
     handleNoteTitleChange,
@@ -108,7 +104,6 @@ const NoteView = (props: IComponentProps): JSX.Element => {
       <NoteModal
         getNotes={getNotes}
         saveNewNote={saveNewNote}
-        editingID={editingID}
         saveNote={saveNote}
         handleNoteTextChange={handleNoteTextChange}
         handleNoteTitleChange={handleNoteTitleChange}
@@ -156,7 +151,6 @@ const NoteView = (props: IComponentProps): JSX.Element => {
             }}
           >
             <NoteCreator
-              editingID={editingID}
               handleNoteTextChange={handleNoteTextChange}
               handleNoteTitleChange={handleNoteTitleChange}
               creatingNote={creatingNote}
@@ -171,17 +165,9 @@ const NoteView = (props: IComponentProps): JSX.Element => {
           sx={viewportWidth > 1011 ? {} : { paddingBottom: '100px' }}
         >
           {isGridView ? (
-            <NoteGrid
-              filteredNotes={filteredNotes}
-              getNotes={getNotes}
-              editNote={editNote}
-            />
+            <NoteGrid getNotes={getNotes} editNote={editNote} />
           ) : (
-            <NoteList
-              filteredNotes={filteredNotes}
-              getNotes={getNotes}
-              editNote={editNote}
-            />
+            <NoteList getNotes={getNotes} editNote={editNote} />
           )}
         </Grid>
       </Grid>

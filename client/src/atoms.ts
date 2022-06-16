@@ -39,7 +39,7 @@ export const atomIsLoading = atom<boolean>({
   default: false,
 })
 
-/** Boolean to determine whether notes are displayed in a grid */
+/** Boolean to determine whether notes are displayed in a grid (or in a list) */
 export const atomIsGridView = atom<boolean>({
   key: 'atomIsGridView',
   default: true,
@@ -67,4 +67,16 @@ export const atomNoteList = atom<Array<IListItem>>({
 export const atomNoteBeingEdited = atom<IExistingNote>({
   key: 'atomNoteBeingEdited',
   default: BLANK_EXISTING_NOTE,
+})
+
+/** The ID of the note that is being edited */
+export const atomEditingID = atom<string>({
+  key: 'atomEditingID',
+  default: '',
+})
+
+/** The notes array, filtered */
+export const atomFilteredNotes = atom<IExistingNote[]>({
+  key: 'atomFilteredNotes',
+  default: [],
 })
