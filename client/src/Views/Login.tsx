@@ -24,12 +24,14 @@ const Login = (props: IComponentProps): JSX.Element => {
     setAuthenticationFailedMessage,
   } = props
 
+  /** The application theme */
   const theme = useTheme()
-
+  /** State setter to determine whether notes are being loaded from the back end */
   const setIsLoading = useSetRecoilState(atomIsLoading)
-
+  /** State setter to update the notes array */
   const setNotes = useSetRecoilState(atomNotes)
 
+  /** Function called when the user authenticates successfully */
   const googleSuccess = async (res: CredentialResponse) => {
     fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${res.credential}`)
       .then((res) => res.json())
@@ -53,6 +55,8 @@ const Login = (props: IComponentProps): JSX.Element => {
         console.error(error)
       })
   }
+
+  /** Function called when the user does not authenticate successfully */
   const googleError = (error: Error) => {
     setAuthenticationFailed(true)
     setAuthenticationFailedMessage(`Google sign in was unsuccessful. ${error}`)

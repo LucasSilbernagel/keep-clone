@@ -37,21 +37,21 @@ const NoteView = (props: IComponentProps): JSX.Element => {
 
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
-
+  /** State setter to update the value that is typed into the search bar */
   const setSearchValue = useSetRecoilState(atomSearchValue)
-
+  /** State setter to determine whether the search bar is being used */
   const setIsSearching = useSetRecoilState(atomIsSearching)
-
+  /** Boolean to determine whether a new note is being created. */
   const [creatingNote, setCreatingNote] = useState(false)
-
+  /** New note atom */
   const [newNote, setNewNote] = useRecoilState(atomNewNote)
-
+  /** Boolean to determine whether notes are being displayed in a grid (or list) */
   const isGridView = useRecoilValue(atomIsGridView)
-
+  /** State setter to update the array of checklist items on a note */
   const setNoteList = useSetRecoilState(atomNoteList)
-
+  /** State setter to determine whether notes are being loaded from the back end */
   const setIsLoading = useSetRecoilState(atomIsLoading)
-
+  /** State setter to update the notes array */
   const setNotes = useSetRecoilState(atomNotes)
 
   /** Display all saved notes when the page first loads */
@@ -67,9 +67,13 @@ const NoteView = (props: IComponentProps): JSX.Element => {
     setNotes([])
   }
 
-  /** Save the new note to the database */
+  /** Save a new note to the database */
   const saveNewNote = () => {
-    if (newNote.text || newNote.title) {
+    if (
+      newNote.text ||
+      newNote.title ||
+      newNote.list.some((item) => item.text.length > 0)
+    ) {
       axios
         .post('/api/notes', newNote)
         .then((res) => {
@@ -89,19 +93,20 @@ const NoteView = (props: IComponentProps): JSX.Element => {
     }
   }
 
+  /** Function to finish creating a new note */
   const finishCreatingNote = () => {
-    if (newNote.text || newNote.title) {
-      saveNewNote()
-    }
+    saveNewNote()
     setCreatingNote(false)
   }
 
+  /** Update search filter with whatever the user types into the search bar */
   const handleSearch = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setSearchValue(e.target.value)
   }
 
+  /** Reset the search filter */
   const clearSearch = () => {
     setIsSearching(false)
     setSearchValue('')

@@ -1,6 +1,18 @@
 import { Schema as _Schema, model } from 'mongoose'
 const Schema = _Schema
 
+const NoteListSchema = new Schema({
+  text: {
+    type: String,
+  },
+  done: {
+    type: Boolean,
+  },
+  id: {
+    type: String,
+  },
+})
+
 const NoteSchema = new Schema({
   text: {
     type: String,
@@ -8,9 +20,7 @@ const NoteSchema = new Schema({
   title: {
     type: String,
   },
-  list: {
-    type: Array,
-  },
+  list: [NoteListSchema],
   userGoogleId: {
     type: String,
     required: true,

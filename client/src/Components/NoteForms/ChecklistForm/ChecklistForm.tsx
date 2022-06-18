@@ -57,6 +57,9 @@ const ChecklistForm = (props: IComponentProps) => {
       setNewNote((prevNote) => {
         const editedNote = { ...prevNote }
         editedNote.list = noteList
+        editedNote.userGoogleId = JSON.parse(
+          window.localStorage.userProfile
+        ).googleId
         return editedNote
       })
     }
