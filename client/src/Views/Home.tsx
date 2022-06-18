@@ -2,10 +2,10 @@ import { useState, useEffect, ChangeEvent } from 'react'
 import axios from 'axios'
 import NoteView from './NoteView'
 import { BLANK_EXISTING_NOTE, BLANK_NEW_NOTE } from '../Constants'
-import { IExistingNote } from '../types'
 import Login from './Login'
 import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil'
 import {
+  atomNotes,
   atomNewNote,
   atomViewportWidth,
   atomSearchValue,
@@ -18,10 +18,11 @@ import {
   atomEditingID,
 } from '../atoms'
 import { nanoid } from 'nanoid'
+import { getNotes } from '../LogicHelpers'
 
 const Home = () => {
   /** Saved notes */
-  const [notes, setNotes] = useState<IExistingNote[]>([])
+  const [notes, setNotes] = useRecoilState(atomNotes)
   /** Saved notes, filtered */
   const [filteredNotes, setFilteredNotes] = useRecoilState(atomFilteredNotes)
   /** The ID of the note that is being edited */
@@ -119,24 +120,6 @@ const Home = () => {
     setNotes([])
   }
 
-  /** Return all of the user's saved notes from the back end */
-  const getNotes = () => {
-    setIsLoading(true)
-    axios
-      .get('/api/notes', {
-        params: {
-          userGoogleId: JSON.parse(window.localStorage.userProfile).googleId,
-        },
-      })
-      .then((res) => {
-        if (res.data) {
-          setNotes(res.data)
-          setIsLoading(false)
-        }
-      })
-      .catch((err) => console.error(err))
-  }
-
   /** Edit a note with a specific ID */
   const editNote = (id: string) => {
     setEditingID(id)
@@ -151,7 +134,7 @@ const Home = () => {
       .delete(`/api/notes/${id}`)
       .then((res) => {
         if (res.data) {
-          getNotes()
+          getNotes(setIsLoading, setNotes)
         }
       })
       .catch((err) => console.error(err))
@@ -214,7 +197,7 @@ const Home = () => {
         .put(`/api/notes/${noteBeingEdited._id}`, noteBeingEdited)
         .then((res) => {
           if (res.data) {
-            getNotes()
+            getNotes(setIsLoading, setNotes)
           }
         })
         .then(() => {
@@ -232,7 +215,6 @@ const Home = () => {
   if (authenticated) {
     return (
       <NoteView
-        getNotes={getNotes}
         editNote={editNote}
         saveEditedNote={saveEditedNote}
         handleNoteTextChange={handleNoteTextChange}
@@ -244,7 +226,6 @@ const Home = () => {
     return (
       <Login
         setAuthenticated={setAuthenticated}
-        getNotes={getNotes}
         authenticationFailed={authenticationFailed}
         setAuthenticationFailed={setAuthenticationFailed}
         authenticationFailedMessage={authenticationFailedMessage}

@@ -25,7 +25,6 @@ const Transition = forwardRef(function Transition(
 })
 
 interface IComponentProps {
-  getNotes: () => void
   saveNewNote: () => void
   saveEditedNote: () => void
   handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
@@ -35,7 +34,6 @@ interface IComponentProps {
 
 const NoteModal = (props: IComponentProps): JSX.Element => {
   const {
-    getNotes,
     saveNewNote,
     saveEditedNote,
     handleNoteTextChange,
@@ -116,7 +114,6 @@ const NoteModal = (props: IComponentProps): JSX.Element => {
           />
         </Grid>
         <NoteModalFooter
-          getNotes={getNotes}
           handleCloseModal={handleCloseModal}
           saveEditedNote={saveEditedNote}
         />

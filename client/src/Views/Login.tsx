@@ -3,10 +3,12 @@ import { Grid, Typography, Paper, useTheme } from '@mui/material'
 import keep_icon from '../assets/keep_icon.png'
 import GitHubIcon from '@mui/icons-material/GitHub'
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google'
+import { getNotes } from '../LogicHelpers'
+import { atomNotes, atomIsLoading } from '../atoms'
+import { useSetRecoilState } from 'recoil'
 
 interface IComponentProps {
   setAuthenticated: Dispatch<SetStateAction<boolean>>
-  getNotes: () => void
   authenticationFailed: boolean
   setAuthenticationFailed: Dispatch<SetStateAction<boolean>>
   authenticationFailedMessage: string
@@ -16,7 +18,6 @@ interface IComponentProps {
 const Login = (props: IComponentProps): JSX.Element => {
   const {
     setAuthenticated,
-    getNotes,
     authenticationFailed,
     setAuthenticationFailed,
     authenticationFailedMessage,
@@ -24,6 +25,10 @@ const Login = (props: IComponentProps): JSX.Element => {
   } = props
 
   const theme = useTheme()
+
+  const setIsLoading = useSetRecoilState(atomIsLoading)
+
+  const setNotes = useSetRecoilState(atomNotes)
 
   const googleSuccess = async (res: CredentialResponse) => {
     fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${res.credential}`)
@@ -37,7 +42,7 @@ const Login = (props: IComponentProps): JSX.Element => {
         }
         localStorage.setItem('userProfile', JSON.stringify(googleProfile))
         setAuthenticated(true)
-        getNotes()
+        getNotes(setIsLoading, setNotes)
         setAuthenticationFailed(false)
       })
       .catch((error) => {

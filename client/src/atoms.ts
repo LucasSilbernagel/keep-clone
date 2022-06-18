@@ -3,6 +3,12 @@ import { BLANK_NEW_NOTE, BLANK_EXISTING_NOTE } from './Constants'
 import { INewNote, NoteType, IListItem, IExistingNote } from './types'
 import { nanoid } from 'nanoid'
 
+/** The user's saved notes */
+export const atomNotes = atom<IExistingNote[]>({
+  key: 'atomNotes',
+  default: [],
+})
+
 /** The width of the viewport/window, in pixels */
 export const atomViewportWidth = atom<number>({
   key: 'atomViewportWidth',

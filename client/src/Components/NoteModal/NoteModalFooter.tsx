@@ -14,23 +14,25 @@ import {
   atomIsDarkTheme,
   atomNoteBeingEdited,
   atomEditingID,
+  atomNotes,
+  atomIsLoading,
 } from '../../atoms'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import axios from 'axios'
 import { IExistingNote, INewNote } from '../../types'
 import { BLANK_NEW_NOTE } from '../../Constants'
 import ReactTimeAgo from 'react-time-ago'
 import { nanoid } from 'nanoid'
+import { getNotes } from '../../LogicHelpers'
 
 interface IComponentProps {
-  getNotes: () => void
   handleCloseModal: () => void
   saveEditedNote: () => void
 }
 
 const NoteModalFooter = (props: IComponentProps): JSX.Element => {
-  const { getNotes, handleCloseModal, saveEditedNote } = props
+  const { handleCloseModal, saveEditedNote } = props
 
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)
 
@@ -46,6 +48,10 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
   const [noteCopy, setNoteCopy] = useState<IExistingNote | INewNote>(
     BLANK_NEW_NOTE
   )
+
+  const setIsLoading = useSetRecoilState(atomIsLoading)
+
+  const setNotes = useSetRecoilState(atomNotes)
 
   /** Anchor for the "more" menu */
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -79,7 +85,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
       })
       .then((res) => {
         if (res.data) {
-          getNotes()
+          getNotes(setIsLoading, setNotes)
           setNoteCopy({
             text: '',
             title: '',
@@ -113,7 +119,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
       .delete(`/api/notes/${id}`)
       .then((res) => {
         if (res.data) {
-          getNotes()
+          getNotes(setIsLoading, setNotes)
         }
       })
       .catch((err) => console.error(err))

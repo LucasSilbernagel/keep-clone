@@ -20,19 +20,20 @@ import {
   atomViewportWidth,
   atomIsGridView,
   atomIsDarkTheme,
+  atomIsLoading,
+  atomNotes,
 } from '../atoms'
 import { useSetRecoilState, useRecoilValue } from 'recoil'
-import { noteContentStyles } from '../LogicHelpers'
+import { noteContentStyles, getNotes } from '../LogicHelpers'
 import CompletedListSummary from './CompletedListSummary'
 
 interface IComponentProps {
   note: IExistingNote
-  getNotes: () => void
   editNote: (id: string) => void
 }
 
 const NoteContent = (props: IComponentProps) => {
-  const { note, getNotes, editNote } = props
+  const { note, editNote } = props
 
   const theme = useTheme()
 
@@ -44,6 +45,10 @@ const NoteContent = (props: IComponentProps) => {
   const isGridView = useRecoilValue(atomIsGridView)
 
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)
+
+  const setIsLoading = useSetRecoilState(atomIsLoading)
+
+  const setNotes = useSetRecoilState(atomNotes)
 
   /** Anchor for the "more" menu */
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -68,7 +73,7 @@ const NoteContent = (props: IComponentProps) => {
       .post('/api/notes', newNote)
       .then((res) => {
         if (res.data) {
-          getNotes()
+          getNotes(setIsLoading, setNotes)
         }
       })
       .catch((err) => console.error(err))
@@ -80,7 +85,7 @@ const NoteContent = (props: IComponentProps) => {
       .delete(`/api/notes/${id}`)
       .then((res) => {
         if (res.data) {
-          getNotes()
+          getNotes(setIsLoading, setNotes)
         }
       })
       .catch((err) => console.error(err))

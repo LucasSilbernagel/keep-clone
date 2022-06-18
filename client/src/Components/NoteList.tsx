@@ -4,12 +4,11 @@ import { useRecoilValue } from 'recoil'
 import { atomFilteredNotes } from '../atoms'
 
 interface IComponentProps {
-  getNotes: () => void
   editNote: (id: string) => void
 }
 
 const NoteList = (props: IComponentProps) => {
-  const { getNotes, editNote } = props
+  const { editNote } = props
 
   /** Saved notes, filtered */
   const filteredNotes = useRecoilValue(atomFilteredNotes)
@@ -31,12 +30,7 @@ const NoteList = (props: IComponentProps) => {
         <Grid container item xs={12}>
           {filteredNotes.map((note) => {
             return (
-              <NoteContent
-                key={note._id}
-                note={note}
-                getNotes={getNotes}
-                editNote={editNote}
-              />
+              <NoteContent key={note._id} note={note} editNote={editNote} />
             )
           })}
         </Grid>

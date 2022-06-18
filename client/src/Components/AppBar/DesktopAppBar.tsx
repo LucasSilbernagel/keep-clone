@@ -17,20 +17,25 @@ import AccountCircle from '@mui/icons-material/AccountCircle'
 import GoogleKeepLogo from '../../assets/keep_icon.png'
 import ProfileMenu from '../ProfileMenu/ProfileMenu'
 import DesktopSearch from '../Search/DesktopSearch'
-import { atomIsLoading, atomIsGridView, atomIsDarkTheme } from '../../atoms'
-import { useRecoilValue, useRecoilState } from 'recoil'
+import {
+  atomIsLoading,
+  atomIsGridView,
+  atomIsDarkTheme,
+  atomNotes,
+} from '../../atoms'
+import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil'
 import GridViewIcon from '@mui/icons-material/GridView'
 import SettingsMenu from '../SettingsMenu'
+import { getNotes } from '../../LogicHelpers'
 
 interface IComponentProps {
   logOut: () => void
   handleSearch: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   clearSearch: () => void
-  getNotes: () => void
 }
 
 const DesktopAppBar = (props: IComponentProps): JSX.Element => {
-  const { logOut, handleSearch, clearSearch, getNotes } = props
+  const { logOut, handleSearch, clearSearch } = props
   const userProfile = JSON.parse(window.localStorage.userProfile)
   const [profileAnchorEl, setProfileAnchorEl] = useState<null | HTMLElement>(
     null
@@ -39,7 +44,7 @@ const DesktopAppBar = (props: IComponentProps): JSX.Element => {
   const [settingsAnchorEl, setSettingsAnchorEl] = useState<null | HTMLElement>(
     null
   )
-  const isLoading = useRecoilValue(atomIsLoading)
+  const [isLoading, setIsLoading] = useRecoilState(atomIsLoading)
   const [isGridView, setIsGridView] = useRecoilState(atomIsGridView)
 
   const isProfileMenuOpen = Boolean(profileAnchorEl)
@@ -64,6 +69,8 @@ const DesktopAppBar = (props: IComponentProps): JSX.Element => {
   }
 
   const settingsMenuId = 'settings-menu'
+
+  const setNotes = useSetRecoilState(atomNotes)
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -113,7 +120,7 @@ const DesktopAppBar = (props: IComponentProps): JSX.Element => {
                 <IconButton
                   size="large"
                   color="inherit"
-                  onClick={getNotes}
+                  onClick={() => getNotes(setIsLoading, setNotes)}
                   aria-label="Refresh"
                 >
                   <RefreshIcon />

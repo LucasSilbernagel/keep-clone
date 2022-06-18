@@ -11,15 +11,17 @@ import {
   atomIsSearching,
   atomIsGridView,
   atomNoteList,
+  atomIsLoading,
+  atomNotes,
 } from '../atoms'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import axios from 'axios'
 import NoteCreator from '../Components/NoteCreator'
 import NoteModal from '../Components/NoteModal/NoteModal'
 import { nanoid } from 'nanoid'
+import { getNotes } from '../LogicHelpers'
 
 interface IComponentProps {
-  getNotes: () => void
   editNote: (id: string) => void
   saveEditedNote: () => void
   handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
@@ -29,7 +31,6 @@ interface IComponentProps {
 
 const NoteView = (props: IComponentProps): JSX.Element => {
   const {
-    getNotes,
     editNote,
     saveEditedNote,
     handleNoteTextChange,
@@ -52,9 +53,13 @@ const NoteView = (props: IComponentProps): JSX.Element => {
 
   const setNoteList = useSetRecoilState(atomNoteList)
 
+  const setIsLoading = useSetRecoilState(atomIsLoading)
+
+  const setNotes = useSetRecoilState(atomNotes)
+
   /** Display all saved notes when the page first loads */
   useEffect(() => {
-    getNotes()
+    getNotes(setIsLoading, setNotes)
     // eslint-disable-next-line
   }, [])
 
@@ -65,7 +70,7 @@ const NoteView = (props: IComponentProps): JSX.Element => {
         .post('/api/notes', newNote)
         .then((res) => {
           if (res.data) {
-            getNotes()
+            getNotes(setIsLoading, setNotes)
             setNewNote({
               text: '',
               title: '',
@@ -96,13 +101,12 @@ const NoteView = (props: IComponentProps): JSX.Element => {
   const clearSearch = () => {
     setIsSearching(false)
     setSearchValue('')
-    getNotes()
+    getNotes(setIsLoading, setNotes)
   }
 
   return (
     <>
       <NoteModal
-        getNotes={getNotes}
         saveNewNote={saveNewNote}
         saveEditedNote={saveEditedNote}
         handleNoteTextChange={handleNoteTextChange}
@@ -127,7 +131,6 @@ const NoteView = (props: IComponentProps): JSX.Element => {
           logOut={logOut}
           handleSearch={handleSearch}
           clearSearch={clearSearch}
-          getNotes={getNotes}
         />
       ) : (
         <MobileAppBar
@@ -165,9 +168,9 @@ const NoteView = (props: IComponentProps): JSX.Element => {
           sx={viewportWidth > 1011 ? {} : { paddingBottom: '100px' }}
         >
           {isGridView ? (
-            <NoteGrid getNotes={getNotes} editNote={editNote} />
+            <NoteGrid editNote={editNote} />
           ) : (
-            <NoteList getNotes={getNotes} editNote={editNote} />
+            <NoteList editNote={editNote} />
           )}
         </Grid>
       </Grid>

@@ -1,4 +1,7 @@
 import { Theme } from '@mui/material'
+import axios from 'axios'
+import { SetterOrUpdater } from 'recoil'
+import { IExistingNote } from './types'
 
 /** Returns the styles for the Paper element of the note content
  * @param {Boolean} open - Whether or not the note menu is open
@@ -90,4 +93,25 @@ export const noteFormStyles = (inModal: boolean, isDarkTheme: boolean) => {
       width: '100%',
     }
   }
+}
+
+/** Return all of the user's saved notes from the back end */
+export const getNotes = (
+  setIsLoading: (boolean: boolean) => void,
+  setNotes: SetterOrUpdater<IExistingNote[]>
+) => {
+  setIsLoading(true)
+  axios
+    .get('/api/notes', {
+      params: {
+        userGoogleId: JSON.parse(window.localStorage.userProfile).googleId,
+      },
+    })
+    .then((res) => {
+      if (res.data) {
+        setNotes(res.data)
+        setIsLoading(false)
+      }
+    })
+    .catch((err) => console.error(err))
 }
