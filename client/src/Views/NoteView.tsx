@@ -29,18 +29,12 @@ import { getNotes } from '../LogicHelpers'
 
 interface IComponentProps {
   saveEditedNote: () => void
-  handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
   setAuthenticated: Dispatch<SetStateAction<boolean>>
   deleteNote: (id: string) => void
 }
 
 const NoteView = (props: IComponentProps): JSX.Element => {
-  const {
-    saveEditedNote,
-    handleNoteTitleChange,
-    setAuthenticated,
-    deleteNote,
-  } = props
+  const { saveEditedNote, setAuthenticated, deleteNote } = props
 
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
@@ -120,7 +114,6 @@ const NoteView = (props: IComponentProps): JSX.Element => {
       <NoteModal
         saveNewNote={saveNewNote}
         saveEditedNote={saveEditedNote}
-        handleNoteTitleChange={handleNoteTitleChange}
         finishCreatingNote={finishCreatingNote}
         deleteNote={deleteNote}
       />
@@ -165,7 +158,6 @@ const NoteView = (props: IComponentProps): JSX.Element => {
             }}
           >
             <NoteCreator
-              handleNoteTitleChange={handleNoteTitleChange}
               creatingNote={creatingNote}
               setCreatingNote={setCreatingNote}
               finishCreatingNote={finishCreatingNote}

@@ -1,4 +1,4 @@
-import { useState, useEffect, ChangeEvent } from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 import NoteView from './NoteView'
 import { BLANK_EXISTING_NOTE, BLANK_NEW_NOTE } from '../Constants'
@@ -125,29 +125,6 @@ const Home = () => {
       .catch((err) => console.error(err))
   }
 
-  /** Change the title of a note as the user types into the editing field */
-  const handleNoteTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (editingID) {
-      setNoteBeingEdited((prevNote) => {
-        const editedNote = { ...prevNote }
-        editedNote.title = e.target.value
-        editedNote.lastEdited = Date.now()
-        return editedNote
-      })
-    } else {
-      setNewNote((prevNote) => {
-        const editedNote = { ...prevNote }
-        editedNote.title = e.target.value
-        editedNote.text = prevNote.text
-        editedNote.lastEdited = Date.now()
-        editedNote.userGoogleId = JSON.parse(
-          window.localStorage.userProfile
-        ).googleId
-        return editedNote
-      })
-    }
-  }
-
   /** Save an edited note to the database */
   const saveEditedNote = () => {
     if (
@@ -178,7 +155,6 @@ const Home = () => {
     return (
       <NoteView
         saveEditedNote={saveEditedNote}
-        handleNoteTitleChange={handleNoteTitleChange}
         setAuthenticated={setAuthenticated}
         deleteNote={deleteNote}
       />

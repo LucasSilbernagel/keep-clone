@@ -1,4 +1,4 @@
-import { forwardRef, ChangeEvent } from 'react'
+import { forwardRef } from 'react'
 import { Dialog, Grid, IconButton, Slide, Box, useTheme } from '@mui/material'
 import {
   atomIsModalOpen,
@@ -27,19 +27,12 @@ const Transition = forwardRef(function Transition(
 interface IComponentProps {
   saveNewNote: () => void
   saveEditedNote: () => void
-  handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
   finishCreatingNote: () => void
   deleteNote: (id: string) => void
 }
 
 const NoteModal = (props: IComponentProps): JSX.Element => {
-  const {
-    saveNewNote,
-    saveEditedNote,
-    handleNoteTitleChange,
-    finishCreatingNote,
-    deleteNote,
-  } = props
+  const { saveNewNote, saveEditedNote, finishCreatingNote, deleteNote } = props
 
   const theme = useTheme()
 
@@ -107,7 +100,6 @@ const NoteModal = (props: IComponentProps): JSX.Element => {
             </Grid>
           ) : null}
           <NoteFormContainer
-            handleNoteTitleChange={handleNoteTitleChange}
             finishCreatingNote={finishCreatingNote}
             inModal={true}
           />

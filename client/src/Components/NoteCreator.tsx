@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction } from 'react'
 import {
   useTheme,
   Paper,
@@ -22,19 +22,13 @@ import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined'
 import PlusButton from './PlusButton'
 
 interface IComponentProps {
-  handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
   creatingNote: boolean
   setCreatingNote: Dispatch<SetStateAction<boolean>>
   finishCreatingNote: () => void
 }
 
 const NoteCreator = (props: IComponentProps): JSX.Element => {
-  const {
-    handleNoteTitleChange,
-    creatingNote,
-    setCreatingNote,
-    finishCreatingNote,
-  } = props
+  const { creatingNote, setCreatingNote, finishCreatingNote } = props
 
   const theme = useTheme()
 
@@ -85,7 +79,6 @@ const NoteCreator = (props: IComponentProps): JSX.Element => {
         {creatingNote ? (
           <>
             <NoteFormContainer
-              handleNoteTitleChange={handleNoteTitleChange}
               finishCreatingNote={finishCreatingNote}
               inModal={false}
             />

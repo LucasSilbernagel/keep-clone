@@ -15,13 +15,12 @@ import { noteFormStyles } from '../../LogicHelpers'
 import ChecklistForm from './ChecklistForm/ChecklistForm'
 
 interface IComponentProps {
-  handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
   finishCreatingNote: () => void
   inModal: boolean
 }
 
 const NoteFormContainer = (props: IComponentProps) => {
-  const { handleNoteTitleChange, finishCreatingNote, inModal } = props
+  const { finishCreatingNote, inModal } = props
 
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
@@ -35,6 +34,29 @@ const NoteFormContainer = (props: IComponentProps) => {
   const setNoteBeingEdited = useSetRecoilState(atomNoteBeingEdited)
 
   const setNewNote = useSetRecoilState(atomNewNote)
+
+  /** Change the title of a note as the user types into the editing field */
+  const handleNoteTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (editingID) {
+      setNoteBeingEdited((prevNote) => {
+        const editedNote = { ...prevNote }
+        editedNote.title = e.target.value
+        editedNote.lastEdited = Date.now()
+        return editedNote
+      })
+    } else {
+      setNewNote((prevNote) => {
+        const editedNote = { ...prevNote }
+        editedNote.title = e.target.value
+        editedNote.text = prevNote.text
+        editedNote.lastEdited = Date.now()
+        editedNote.userGoogleId = JSON.parse(
+          window.localStorage.userProfile
+        ).googleId
+        return editedNote
+      })
+    }
+  }
 
   /** Change the text of a note as the user types into the editing field */
   const handleNoteTextChange = (e: ChangeEvent<HTMLInputElement>) => {
