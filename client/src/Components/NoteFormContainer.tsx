@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react'
-import TextFormMobile from './TextForm/TextFormMobile'
+import TextFormMobile from './TextFormMobile'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import {
   atomViewportWidth,
@@ -8,11 +8,11 @@ import {
   atomEditingID,
   atomNoteBeingEdited,
   atomNewNote,
-} from '../../atoms'
+} from '../atoms'
 import { Box, Grid, Button } from '@mui/material'
-import RenderNoteFormDesktop from '../RenderNoteForms/RenderNoteFormDesktop'
-import { noteFormStyles } from '../../LogicHelpers'
-import ChecklistForm from './ChecklistForm/ChecklistForm'
+import RenderNoteFormDesktop from './RenderNoteFormDesktop'
+import { noteFormStyles } from '../LogicHelpers'
+import ChecklistForm from './ChecklistForm'
 
 interface IComponentProps {
   finishCreatingNote: () => void

@@ -1,7 +1,7 @@
 import { ChangeEvent, ChangeEventHandler } from 'react'
 import { TextField, Grid } from '@mui/material'
 import { useRecoilValue } from 'recoil'
-import { atomEditingID, atomNewNote, atomNoteBeingEdited } from '../../../atoms'
+import { atomEditingID, atomNewNote, atomNoteBeingEdited } from '../atoms'
 
 interface IComponentProps {
   handleNoteTextChange: ChangeEventHandler<HTMLInputElement>

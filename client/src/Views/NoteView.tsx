@@ -8,8 +8,8 @@ import {
 import { Grid } from '@mui/material'
 import NoteGrid from '../Components/NoteGrid'
 import NoteList from '../Components/NoteList'
-import DesktopAppBar from '../Components/AppBar/DesktopAppBar'
-import MobileAppBar from '../Components/AppBar/MobileAppBar'
+import DesktopAppBar from '../Components/DesktopAppBar'
+import MobileAppBar from '../Components/MobileAppBar'
 import {
   atomNewNote,
   atomViewportWidth,
@@ -23,7 +23,7 @@ import {
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import axios from 'axios'
 import NoteCreator from '../Components/NoteCreator'
-import NoteModal from '../Components/NoteModal/NoteModal'
+import NoteModal from '../Components/NoteModal'
 import { nanoid } from 'nanoid'
 import { getNotes } from '../LogicHelpers'
 

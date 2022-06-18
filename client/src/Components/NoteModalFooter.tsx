@@ -16,15 +16,15 @@ import {
   atomEditingID,
   atomNotes,
   atomIsLoading,
-} from '../../atoms'
+} from '../atoms'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import axios from 'axios'
-import { IExistingNote, INewNote } from '../../types'
-import { BLANK_NEW_NOTE } from '../../Constants'
+import { IExistingNote, INewNote } from '../types'
+import { BLANK_NEW_NOTE } from '../Constants'
 import ReactTimeAgo from 'react-time-ago'
 import { nanoid } from 'nanoid'
-import { getNotes } from '../../LogicHelpers'
+import { getNotes } from '../LogicHelpers'
 
 interface IComponentProps {
   handleCloseModal: () => void

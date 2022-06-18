@@ -1,8 +1,8 @@
 import { ChangeEvent } from 'react'
-import TextFormDesktop from '../NoteForms/TextForm/TextFormDesktop'
+import TextFormDesktop from './TextFormDesktop'
 import { useRecoilValue } from 'recoil'
-import { atomNoteType } from '../../atoms'
-import ChecklistForm from '../NoteForms/ChecklistForm/ChecklistForm'
+import { atomNoteType } from '../atoms'
+import ChecklistForm from './ChecklistForm'
 
 interface IComponentProps {
   handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void

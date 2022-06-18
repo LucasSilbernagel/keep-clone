@@ -12,13 +12,13 @@ import {
 import SettingsIcon from '@mui/icons-material/Settings'
 import SplitscreenIcon from '@mui/icons-material/Splitscreen'
 import AccountCircle from '@mui/icons-material/AccountCircle'
-import ProfileMenu from '../ProfileMenu/ProfileMenu'
-import { atomIsSearching } from '../../atoms'
-import MobileSearch from '../Search/MobileSearch'
-import { atomIsGridView } from '../../atoms'
+import ProfileMenu from './ProfileMenu'
+import { atomIsSearching } from '../atoms'
+import MobileSearch from './MobileSearch'
+import { atomIsGridView } from '../atoms'
 import { useRecoilState } from 'recoil'
 import GridViewIcon from '@mui/icons-material/GridView'
-import SettingsMenu from '../SettingsMenu'
+import SettingsMenu from './SettingsMenu'
 
 interface IComponentProps {
   logOut: () => void

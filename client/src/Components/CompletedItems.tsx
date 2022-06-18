@@ -14,7 +14,7 @@ import MuiAccordionSummary, {
 import MuiAccordionDetails from '@mui/material/AccordionDetails'
 import { styled } from '@mui/material/styles'
 import { useRecoilValue } from 'recoil'
-import { atomNoteList } from '../../../atoms'
+import { atomNoteList } from '../atoms'
 import ClearIcon from '@mui/icons-material/Clear'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 

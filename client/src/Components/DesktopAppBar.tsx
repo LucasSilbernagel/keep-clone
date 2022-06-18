@@ -14,19 +14,19 @@ import SettingsIcon from '@mui/icons-material/Settings'
 import SplitscreenIcon from '@mui/icons-material/Splitscreen'
 import RefreshIcon from '@mui/icons-material/Refresh'
 import AccountCircle from '@mui/icons-material/AccountCircle'
-import GoogleKeepLogo from '../../assets/keep_icon.png'
-import ProfileMenu from '../ProfileMenu/ProfileMenu'
-import DesktopSearch from '../Search/DesktopSearch'
+import GoogleKeepLogo from '../assets/keep_icon.png'
+import ProfileMenu from './ProfileMenu'
+import DesktopSearch from './DesktopSearch'
 import {
   atomIsLoading,
   atomIsGridView,
   atomIsDarkTheme,
   atomNotes,
-} from '../../atoms'
+} from '../atoms'
 import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil'
 import GridViewIcon from '@mui/icons-material/GridView'
-import SettingsMenu from '../SettingsMenu'
-import { getNotes } from '../../LogicHelpers'
+import SettingsMenu from './SettingsMenu'
+import { getNotes } from '../LogicHelpers'
 
 interface IComponentProps {
   logOut: () => void

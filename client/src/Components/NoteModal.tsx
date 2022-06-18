@@ -10,15 +10,15 @@ import {
   atomIsLoading,
   atomNotes,
   atomNoteList,
-} from '../../atoms'
+} from '../atoms'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import NoteFormContainer from '../NoteForms/NoteFormContainer'
+import NoteFormContainer from './NoteFormContainer'
 import { TransitionProps } from '@mui/material/transitions'
 import NoteModalFooter from './NoteModalFooter'
 import axios from 'axios'
-import { getNotes } from '../../LogicHelpers'
-import { BLANK_EXISTING_NOTE, BLANK_NEW_NOTE } from '../../Constants'
+import { getNotes } from '../LogicHelpers'
+import { BLANK_EXISTING_NOTE, BLANK_NEW_NOTE } from '../Constants'
 import { nanoid } from 'nanoid'
 
 /** Transition for the note modal */

@@ -2,7 +2,7 @@ import { ChangeEvent } from 'react'
 import { styled } from '@mui/material/styles'
 import { IconButton, InputBase } from '@mui/material'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { atomIsSearching, atomSearchValue } from '../../atoms'
+import { atomIsSearching, atomSearchValue } from '../atoms'
 import CloseIcon from '@mui/icons-material/Close'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 

@@ -15,7 +15,7 @@ import {
   atomNoteList,
   atomNoteBeingEdited,
   atomEditingID,
-} from '../../../atoms'
+} from '../atoms'
 import AddIcon from '@mui/icons-material/Add'
 import cloneDeep from 'lodash.clonedeep'
 import ClearIcon from '@mui/icons-material/Clear'

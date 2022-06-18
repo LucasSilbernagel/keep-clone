@@ -14,7 +14,7 @@ import {
   atomIsModalOpen,
 } from '../atoms'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
-import NoteFormContainer from './NoteForms/NoteFormContainer'
+import NoteFormContainer from './NoteFormContainer'
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined'
 import BrushOutlinedIcon from '@mui/icons-material/BrushOutlined'
 import MicNoneOutlinedIcon from '@mui/icons-material/MicNoneOutlined'

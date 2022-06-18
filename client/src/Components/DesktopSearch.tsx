@@ -2,7 +2,7 @@ import { ChangeEvent } from 'react'
 import { styled } from '@mui/material/styles'
 import { IconButton, InputBase, Tooltip } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
-import { atomIsSearching, atomSearchValue } from '../../atoms'
+import { atomIsSearching, atomSearchValue } from '../atoms'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import CloseIcon from '@mui/icons-material/Close'
 
