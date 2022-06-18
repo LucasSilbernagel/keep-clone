@@ -29,7 +29,6 @@ import { getNotes } from '../LogicHelpers'
 
 interface IComponentProps {
   saveEditedNote: () => void
-  handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
   setAuthenticated: Dispatch<SetStateAction<boolean>>
   deleteNote: (id: string) => void
@@ -38,7 +37,6 @@ interface IComponentProps {
 const NoteView = (props: IComponentProps): JSX.Element => {
   const {
     saveEditedNote,
-    handleNoteTextChange,
     handleNoteTitleChange,
     setAuthenticated,
     deleteNote,
@@ -122,7 +120,6 @@ const NoteView = (props: IComponentProps): JSX.Element => {
       <NoteModal
         saveNewNote={saveNewNote}
         saveEditedNote={saveEditedNote}
-        handleNoteTextChange={handleNoteTextChange}
         handleNoteTitleChange={handleNoteTitleChange}
         finishCreatingNote={finishCreatingNote}
         deleteNote={deleteNote}
@@ -168,7 +165,6 @@ const NoteView = (props: IComponentProps): JSX.Element => {
             }}
           >
             <NoteCreator
-              handleNoteTextChange={handleNoteTextChange}
               handleNoteTitleChange={handleNoteTitleChange}
               creatingNote={creatingNote}
               setCreatingNote={setCreatingNote}

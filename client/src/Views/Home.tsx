@@ -125,29 +125,6 @@ const Home = () => {
       .catch((err) => console.error(err))
   }
 
-  /** Change the text of a note as the user types into the editing field */
-  const handleNoteTextChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (editingID) {
-      setNoteBeingEdited((prevNote) => {
-        const editedNote = { ...prevNote }
-        editedNote.text = e.target.value
-        editedNote.lastEdited = Date.now()
-        return editedNote
-      })
-    } else {
-      setNewNote((prevNote) => {
-        const editedNote = { ...prevNote }
-        editedNote.text = e.target.value
-        editedNote.title = prevNote.title
-        editedNote.lastEdited = Date.now()
-        editedNote.userGoogleId = JSON.parse(
-          window.localStorage.userProfile
-        ).googleId
-        return editedNote
-      })
-    }
-  }
-
   /** Change the title of a note as the user types into the editing field */
   const handleNoteTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (editingID) {
@@ -201,7 +178,6 @@ const Home = () => {
     return (
       <NoteView
         saveEditedNote={saveEditedNote}
-        handleNoteTextChange={handleNoteTextChange}
         handleNoteTitleChange={handleNoteTitleChange}
         setAuthenticated={setAuthenticated}
         deleteNote={deleteNote}

@@ -27,7 +27,6 @@ const Transition = forwardRef(function Transition(
 interface IComponentProps {
   saveNewNote: () => void
   saveEditedNote: () => void
-  handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
   finishCreatingNote: () => void
   deleteNote: (id: string) => void
@@ -37,7 +36,6 @@ const NoteModal = (props: IComponentProps): JSX.Element => {
   const {
     saveNewNote,
     saveEditedNote,
-    handleNoteTextChange,
     handleNoteTitleChange,
     finishCreatingNote,
     deleteNote,
@@ -109,7 +107,6 @@ const NoteModal = (props: IComponentProps): JSX.Element => {
             </Grid>
           ) : null}
           <NoteFormContainer
-            handleNoteTextChange={handleNoteTextChange}
             handleNoteTitleChange={handleNoteTitleChange}
             finishCreatingNote={finishCreatingNote}
             inModal={true}

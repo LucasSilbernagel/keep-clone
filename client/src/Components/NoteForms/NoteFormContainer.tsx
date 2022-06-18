@@ -1,26 +1,27 @@
 import { ChangeEvent } from 'react'
 import TextFormMobile from './TextForm/TextFormMobile'
-import { useRecoilValue } from 'recoil'
-import { atomViewportWidth, atomIsDarkTheme, atomNoteType } from '../../atoms'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+import {
+  atomViewportWidth,
+  atomIsDarkTheme,
+  atomNoteType,
+  atomEditingID,
+  atomNoteBeingEdited,
+  atomNewNote,
+} from '../../atoms'
 import { Box, Grid, Button } from '@mui/material'
 import RenderNoteFormDesktop from '../RenderNoteForms/RenderNoteFormDesktop'
 import { noteFormStyles } from '../../LogicHelpers'
 import ChecklistForm from './ChecklistForm/ChecklistForm'
 
 interface IComponentProps {
-  handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
   finishCreatingNote: () => void
   inModal: boolean
 }
 
 const NoteFormContainer = (props: IComponentProps) => {
-  const {
-    handleNoteTextChange,
-    handleNoteTitleChange,
-    finishCreatingNote,
-    inModal,
-  } = props
+  const { handleNoteTitleChange, finishCreatingNote, inModal } = props
 
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
@@ -28,6 +29,35 @@ const NoteFormContainer = (props: IComponentProps) => {
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)
 
   const noteType = useRecoilValue(atomNoteType)
+
+  const editingID = useRecoilValue(atomEditingID)
+
+  const setNoteBeingEdited = useSetRecoilState(atomNoteBeingEdited)
+
+  const setNewNote = useSetRecoilState(atomNewNote)
+
+  /** Change the text of a note as the user types into the editing field */
+  const handleNoteTextChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (editingID) {
+      setNoteBeingEdited((prevNote) => {
+        const editedNote = { ...prevNote }
+        editedNote.text = e.target.value
+        editedNote.lastEdited = Date.now()
+        return editedNote
+      })
+    } else {
+      setNewNote((prevNote) => {
+        const editedNote = { ...prevNote }
+        editedNote.text = e.target.value
+        editedNote.title = prevNote.title
+        editedNote.lastEdited = Date.now()
+        editedNote.userGoogleId = JSON.parse(
+          window.localStorage.userProfile
+        ).googleId
+        return editedNote
+      })
+    }
+  }
 
   return (
     <Box sx={noteFormStyles(inModal, isDarkTheme)}>
