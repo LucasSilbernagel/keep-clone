@@ -29,10 +29,11 @@ import { getNotes } from '../../LogicHelpers'
 interface IComponentProps {
   handleCloseModal: () => void
   saveEditedNote: () => void
+  deleteNote: (id: string) => void
 }
 
 const NoteModalFooter = (props: IComponentProps): JSX.Element => {
-  const { handleCloseModal, saveEditedNote } = props
+  const { handleCloseModal, saveEditedNote, deleteNote } = props
 
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)
 
@@ -105,7 +106,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
     setAnchorEl(null)
   }
 
-  const deleteNote = (id: string) => {
+  const deleteNoteFromModal = (id: string) => {
     setNewNote({
       text: '',
       title: '',
@@ -115,14 +116,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
     })
     handleCloseModal()
     setAnchorEl(null)
-    axios
-      .delete(`/api/notes/${id}`)
-      .then((res) => {
-        if (res.data) {
-          getNotes(setIsLoading, setNotes)
-        }
-      })
-      .catch((err) => console.error(err))
+    deleteNote(id)
   }
 
   if (viewportWidth < 1011) {
@@ -165,7 +159,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
               'aria-labelledby': 'more-button',
             }}
           >
-            <MenuItem onClick={() => deleteNote(noteBeingEdited._id)}>
+            <MenuItem onClick={() => deleteNoteFromModal(noteBeingEdited._id)}>
               Delete note
             </MenuItem>
             <MenuItem onClick={() => copyNote()}>Make a copy</MenuItem>
@@ -221,7 +215,9 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
                   'aria-labelledby': 'more-button',
                 }}
               >
-                <MenuItem onClick={() => deleteNote(noteBeingEdited._id)}>
+                <MenuItem
+                  onClick={() => deleteNoteFromModal(noteBeingEdited._id)}
+                >
                   Delete note
                 </MenuItem>
                 <MenuItem onClick={() => copyNote()}>Make a copy</MenuItem>

@@ -22,18 +22,22 @@ import {
   atomIsDarkTheme,
   atomIsLoading,
   atomNotes,
+  atomEditingID,
+  atomNoteBeingEdited,
+  atomFilteredNotes,
 } from '../atoms'
 import { useSetRecoilState, useRecoilValue } from 'recoil'
 import { noteContentStyles, getNotes } from '../LogicHelpers'
 import CompletedListSummary from './CompletedListSummary'
+import { BLANK_EXISTING_NOTE } from '../Constants'
 
 interface IComponentProps {
   note: IExistingNote
-  editNote: (id: string) => void
+  deleteNote: (id: string) => void
 }
 
 const NoteContent = (props: IComponentProps) => {
-  const { note, editNote } = props
+  const { note, deleteNote } = props
 
   const theme = useTheme()
 
@@ -49,6 +53,12 @@ const NoteContent = (props: IComponentProps) => {
   const setIsLoading = useSetRecoilState(atomIsLoading)
 
   const setNotes = useSetRecoilState(atomNotes)
+
+  const setEditingID = useSetRecoilState(atomEditingID)
+
+  const setNoteBeingEdited = useSetRecoilState(atomNoteBeingEdited)
+
+  const filteredNotes = useRecoilValue(atomFilteredNotes)
 
   /** Anchor for the "more" menu */
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -79,20 +89,12 @@ const NoteContent = (props: IComponentProps) => {
       .catch((err) => console.error(err))
   }
 
-  /** Delete a note with a specific ID */
-  const deleteNote = (id: string) => {
-    axios
-      .delete(`/api/notes/${id}`)
-      .then((res) => {
-        if (res.data) {
-          getNotes(setIsLoading, setNotes)
-        }
-      })
-      .catch((err) => console.error(err))
-  }
-
-  const startEditingNote = (id: string) => {
-    editNote(id)
+  /** Edit a note with a specific ID */
+  const editNote = (id: string) => {
+    setEditingID(id)
+    setNoteBeingEdited(
+      filteredNotes.find((note) => note._id === id) ?? BLANK_EXISTING_NOTE
+    )
     setIsModalOpen(true)
   }
 
@@ -140,7 +142,7 @@ const NoteContent = (props: IComponentProps) => {
                       width: '100%',
                     }
               }
-              onClick={() => startEditingNote(note._id)}
+              onClick={() => editNote(note._id)}
             >
               {note.title && (
                 <Typography

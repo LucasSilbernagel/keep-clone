@@ -5,12 +5,11 @@ import { useRecoilValue } from 'recoil'
 import { atomViewportWidth, atomFilteredNotes } from '../atoms'
 
 interface IComponentProps {
-  editNote: (id: string) => void
+  deleteNote: (id: string) => void
 }
 
 const NoteGrid = (props: IComponentProps) => {
-  const { editNote } = props
-
+  const { deleteNote } = props
   /** Saved notes, filtered */
   const filteredNotes = useRecoilValue(atomFilteredNotes)
 
@@ -33,7 +32,11 @@ const NoteGrid = (props: IComponentProps) => {
           <Grid container item spacing={2}>
             {filteredNotes.map((note) => {
               return (
-                <NoteContent key={note._id} note={note} editNote={editNote} />
+                <NoteContent
+                  key={note._id}
+                  note={note}
+                  deleteNote={deleteNote}
+                />
               )
             })}
           </Grid>
@@ -53,7 +56,11 @@ const NoteGrid = (props: IComponentProps) => {
           <Masonry spacing={2} columns={{ lg: 3, md: 3, sm: 2, xs: 2 }}>
             {filteredNotes.map((note) => {
               return (
-                <NoteContent key={note._id} note={note} editNote={editNote} />
+                <NoteContent
+                  key={note._id}
+                  note={note}
+                  deleteNote={deleteNote}
+                />
               )
             })}
           </Masonry>
@@ -75,7 +82,7 @@ const NoteGrid = (props: IComponentProps) => {
                 <NoteContent
                   key={note._id}
                   note={note}
-                  editNote={editNote}
+                  deleteNote={deleteNote}
                 />
               )
             })}
@@ -102,7 +109,7 @@ const NoteGrid = (props: IComponentProps) => {
                 <NoteContent
                   key={note._id}
                   note={note}
-                  editNote={editNote}
+                  deleteNote={deleteNote}
                 />
               )
             })}

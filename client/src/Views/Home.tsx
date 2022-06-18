@@ -23,8 +23,8 @@ import { getNotes } from '../LogicHelpers'
 const Home = () => {
   /** Saved notes */
   const [notes, setNotes] = useRecoilState(atomNotes)
-  /** Saved notes, filtered */
-  const [filteredNotes, setFilteredNotes] = useRecoilState(atomFilteredNotes)
+  /** State setter to update the array of filtered notes */
+  const setFilteredNotes = useSetRecoilState(atomFilteredNotes)
   /** The ID of the note that is being edited */
   const [editingID, setEditingID] = useRecoilState(atomEditingID)
   /** The note that is being edited */
@@ -113,21 +113,6 @@ const Home = () => {
     setNoteType,
   ])
 
-  /** Log out of the app */
-  const logOut = () => {
-    localStorage.setItem('userProfile', '')
-    setAuthenticated(false)
-    setNotes([])
-  }
-
-  /** Edit a note with a specific ID */
-  const editNote = (id: string) => {
-    setEditingID(id)
-    setNoteBeingEdited(
-      filteredNotes.find((note) => note._id === id) ?? BLANK_EXISTING_NOTE
-    )
-  }
-
   /** Delete a note with a specific ID */
   const deleteNote = (id: string) => {
     axios
@@ -215,11 +200,11 @@ const Home = () => {
   if (authenticated) {
     return (
       <NoteView
-        editNote={editNote}
         saveEditedNote={saveEditedNote}
         handleNoteTextChange={handleNoteTextChange}
         handleNoteTitleChange={handleNoteTitleChange}
-        logOut={logOut}
+        setAuthenticated={setAuthenticated}
+        deleteNote={deleteNote}
       />
     )
   } else

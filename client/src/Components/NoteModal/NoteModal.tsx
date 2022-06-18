@@ -30,6 +30,7 @@ interface IComponentProps {
   handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
   finishCreatingNote: () => void
+  deleteNote: (id: string) => void
 }
 
 const NoteModal = (props: IComponentProps): JSX.Element => {
@@ -39,6 +40,7 @@ const NoteModal = (props: IComponentProps): JSX.Element => {
     handleNoteTextChange,
     handleNoteTitleChange,
     finishCreatingNote,
+    deleteNote,
   } = props
 
   const theme = useTheme()
@@ -116,6 +118,7 @@ const NoteModal = (props: IComponentProps): JSX.Element => {
         <NoteModalFooter
           handleCloseModal={handleCloseModal}
           saveEditedNote={saveEditedNote}
+          deleteNote={deleteNote}
         />
       </Box>
     </Dialog>

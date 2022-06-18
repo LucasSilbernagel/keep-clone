@@ -68,7 +68,7 @@ export const noteContentStyles = (
 }
 /** Returns the styles for the Box element container of the note form
  * @param {Boolean} inModal - Whether or not the note form is being rendered inside the modal
- * @param {Boolean} isDarkTheme - Whehter or not the dark theme is being used
+ * @param {Boolean} isDarkTheme - Whether or not the dark theme is being used
  * @returns {Object} - Returns the styles for the Box element container of the note form
  */
 export const noteFormStyles = (inModal: boolean, isDarkTheme: boolean) => {
@@ -95,7 +95,10 @@ export const noteFormStyles = (inModal: boolean, isDarkTheme: boolean) => {
   }
 }
 
-/** Return all of the user's saved notes from the back end */
+/** Return all of the user's saved notes from the back end
+ * @param {Function} setIsLoading - State setter that determines whether notes are being loaded from the back end
+ * @param {Function} setNotes - State setter that updates the notes array
+ */
 export const getNotes = (
   setIsLoading: (boolean: boolean) => void,
   setNotes: SetterOrUpdater<IExistingNote[]>

@@ -1,4 +1,10 @@
-import { ChangeEvent, useState, useEffect } from 'react'
+import {
+  ChangeEvent,
+  useState,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+} from 'react'
 import { Grid } from '@mui/material'
 import NoteGrid from '../Components/NoteGrid'
 import NoteList from '../Components/NoteList'
@@ -22,20 +28,20 @@ import { nanoid } from 'nanoid'
 import { getNotes } from '../LogicHelpers'
 
 interface IComponentProps {
-  editNote: (id: string) => void
   saveEditedNote: () => void
   handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
-  logOut: () => void
+  setAuthenticated: Dispatch<SetStateAction<boolean>>
+  deleteNote: (id: string) => void
 }
 
 const NoteView = (props: IComponentProps): JSX.Element => {
   const {
-    editNote,
     saveEditedNote,
     handleNoteTextChange,
     handleNoteTitleChange,
-    logOut,
+    setAuthenticated,
+    deleteNote,
   } = props
 
   /** The width of the viewport/window, in pixels */
@@ -62,6 +68,13 @@ const NoteView = (props: IComponentProps): JSX.Element => {
     getNotes(setIsLoading, setNotes)
     // eslint-disable-next-line
   }, [])
+
+  /** Log out of the app */
+  const logOut = () => {
+    localStorage.setItem('userProfile', '')
+    setAuthenticated(false)
+    setNotes([])
+  }
 
   /** Save the new note to the database */
   const saveNewNote = () => {
@@ -112,6 +125,7 @@ const NoteView = (props: IComponentProps): JSX.Element => {
         handleNoteTextChange={handleNoteTextChange}
         handleNoteTitleChange={handleNoteTitleChange}
         finishCreatingNote={finishCreatingNote}
+        deleteNote={deleteNote}
       />
       {creatingNote ? (
         <div
@@ -168,9 +182,9 @@ const NoteView = (props: IComponentProps): JSX.Element => {
           sx={viewportWidth > 1011 ? {} : { paddingBottom: '100px' }}
         >
           {isGridView ? (
-            <NoteGrid editNote={editNote} />
+            <NoteGrid deleteNote={deleteNote} />
           ) : (
-            <NoteList editNote={editNote} />
+            <NoteList deleteNote={deleteNote} />
           )}
         </Grid>
       </Grid>
