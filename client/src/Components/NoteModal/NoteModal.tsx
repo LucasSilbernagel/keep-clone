@@ -7,12 +7,19 @@ import {
   atomIsDarkTheme,
   atomNoteBeingEdited,
   atomEditingID,
+  atomIsLoading,
+  atomNotes,
+  atomNoteList,
 } from '../../atoms'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import NoteFormContainer from '../NoteForms/NoteFormContainer'
 import { TransitionProps } from '@mui/material/transitions'
 import NoteModalFooter from './NoteModalFooter'
+import axios from 'axios'
+import { getNotes } from '../../LogicHelpers'
+import { BLANK_EXISTING_NOTE, BLANK_NEW_NOTE } from '../../Constants'
+import { nanoid } from 'nanoid'
 
 /** Transition for the note modal */
 const Transition = forwardRef(function Transition(
@@ -26,28 +33,60 @@ const Transition = forwardRef(function Transition(
 
 interface IComponentProps {
   saveNewNote: () => void
-  saveEditedNote: () => void
   finishCreatingNote: () => void
   deleteNote: (id: string) => void
 }
 
 const NoteModal = (props: IComponentProps): JSX.Element => {
-  const { saveNewNote, saveEditedNote, finishCreatingNote, deleteNote } = props
+  const { saveNewNote, finishCreatingNote, deleteNote } = props
 
   const theme = useTheme()
 
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)
 
-  const editingID = useRecoilValue(atomEditingID)
+  const [editingID, setEditingID] = useRecoilState(atomEditingID)
 
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
 
   const [isModalOpen, setIsModalOpen] = useRecoilState(atomIsModalOpen)
 
-  const newNote = useRecoilValue(atomNewNote)
+  const [newNote, setNewNote] = useRecoilState(atomNewNote)
 
-  const noteBeingEdited = useRecoilValue(atomNoteBeingEdited)
+  const [noteBeingEdited, setNoteBeingEdited] =
+    useRecoilState(atomNoteBeingEdited)
+
+  const setIsLoading = useSetRecoilState(atomIsLoading)
+
+  const setNotes = useSetRecoilState(atomNotes)
+
+  const setNoteList = useSetRecoilState(atomNoteList)
+
+  /** Save an edited note to the database */
+  const saveEditedNote = () => {
+    if (
+      (noteBeingEdited.text && noteBeingEdited.text.length > 0) ||
+      (noteBeingEdited.title && noteBeingEdited.title.length > 0) ||
+      noteBeingEdited.list.some((item) => item.text.length > 0)
+    ) {
+      axios
+        .put(`/api/notes/${noteBeingEdited._id}`, noteBeingEdited)
+        .then((res) => {
+          if (res.data) {
+            getNotes(setIsLoading, setNotes)
+          }
+        })
+        .then(() => {
+          setEditingID('')
+          setNoteBeingEdited(BLANK_EXISTING_NOTE)
+          setNewNote(BLANK_NEW_NOTE)
+          setNoteList([{ text: '', done: false, id: nanoid() }])
+        })
+        .catch((err) => console.error(err))
+    } else {
+      deleteNote(noteBeingEdited._id)
+    }
+  }
 
   const handleCloseModal = () => {
     if (editingID) {

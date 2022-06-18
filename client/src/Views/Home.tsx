@@ -1,23 +1,19 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import NoteView from './NoteView'
-import { BLANK_EXISTING_NOTE, BLANK_NEW_NOTE } from '../Constants'
 import Login from './Login'
 import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil'
 import {
   atomNotes,
-  atomNewNote,
   atomViewportWidth,
   atomSearchValue,
   atomIsLoading,
   atomIsDarkTheme,
   atomNoteBeingEdited,
-  atomNoteList,
   atomNoteType,
   atomFilteredNotes,
   atomEditingID,
 } from '../atoms'
-import { nanoid } from 'nanoid'
 import { getNotes } from '../LogicHelpers'
 
 const Home = () => {
@@ -26,10 +22,9 @@ const Home = () => {
   /** State setter to update the array of filtered notes */
   const setFilteredNotes = useSetRecoilState(atomFilteredNotes)
   /** The ID of the note that is being edited */
-  const [editingID, setEditingID] = useRecoilState(atomEditingID)
+  const editingID = useRecoilValue(atomEditingID)
   /** The note that is being edited */
-  const [noteBeingEdited, setNoteBeingEdited] =
-    useRecoilState(atomNoteBeingEdited)
+  const noteBeingEdited = useRecoilValue(atomNoteBeingEdited)
   /** Whether the user has authenticated */
   const [authenticated, setAuthenticated] = useState(false)
   /** Whether there was an issue with user authentication */
@@ -39,8 +34,6 @@ const Home = () => {
     useState('Google sign in was unsuccessful.')
   /** State setter to update the width of the viewport/window, in pixels */
   const setViewportWidth = useSetRecoilState(atomViewportWidth)
-  /** State setter to update new note */
-  const setNewNote = useSetRecoilState(atomNewNote)
   /** The value typed into the search bar */
   const searchValue = useRecoilValue(atomSearchValue)
   /** State setter to determine whether notes are loading from the back end */
@@ -49,8 +42,6 @@ const Home = () => {
   let isDarkTheme = window.localStorage.getItem('keepCloneDarkTheme')
   /** State setter to update the application theme (light/dark) */
   const setIsDarkTheme = useSetRecoilState(atomIsDarkTheme)
-  /** State setter to update the array of checklist items for each note */
-  const setNoteList = useSetRecoilState(atomNoteList)
   /** State setter to update the note type that is being created or viewed */
   const setNoteType = useSetRecoilState(atomNoteType)
 
@@ -125,39 +116,9 @@ const Home = () => {
       .catch((err) => console.error(err))
   }
 
-  /** Save an edited note to the database */
-  const saveEditedNote = () => {
-    if (
-      (noteBeingEdited.text && noteBeingEdited.text.length > 0) ||
-      (noteBeingEdited.title && noteBeingEdited.title.length > 0) ||
-      noteBeingEdited.list.some((item) => item.text.length > 0)
-    ) {
-      axios
-        .put(`/api/notes/${noteBeingEdited._id}`, noteBeingEdited)
-        .then((res) => {
-          if (res.data) {
-            getNotes(setIsLoading, setNotes)
-          }
-        })
-        .then(() => {
-          setEditingID('')
-          setNoteBeingEdited(BLANK_EXISTING_NOTE)
-          setNewNote(BLANK_NEW_NOTE)
-          setNoteList([{ text: '', done: false, id: nanoid() }])
-        })
-        .catch((err) => console.error(err))
-    } else {
-      deleteNote(noteBeingEdited._id)
-    }
-  }
-
   if (authenticated) {
     return (
-      <NoteView
-        saveEditedNote={saveEditedNote}
-        setAuthenticated={setAuthenticated}
-        deleteNote={deleteNote}
-      />
+      <NoteView setAuthenticated={setAuthenticated} deleteNote={deleteNote} />
     )
   } else
     return (

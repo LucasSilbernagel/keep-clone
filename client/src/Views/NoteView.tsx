@@ -28,13 +28,12 @@ import { nanoid } from 'nanoid'
 import { getNotes } from '../LogicHelpers'
 
 interface IComponentProps {
-  saveEditedNote: () => void
   setAuthenticated: Dispatch<SetStateAction<boolean>>
   deleteNote: (id: string) => void
 }
 
 const NoteView = (props: IComponentProps): JSX.Element => {
-  const { saveEditedNote, setAuthenticated, deleteNote } = props
+  const { setAuthenticated, deleteNote } = props
 
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
@@ -113,7 +112,6 @@ const NoteView = (props: IComponentProps): JSX.Element => {
     <>
       <NoteModal
         saveNewNote={saveNewNote}
-        saveEditedNote={saveEditedNote}
         finishCreatingNote={finishCreatingNote}
         deleteNote={deleteNote}
       />
