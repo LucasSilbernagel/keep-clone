@@ -27,7 +27,7 @@ const Transition = forwardRef(function Transition(
 interface IComponentProps {
   getNotes: () => void
   saveNewNote: () => void
-  saveNote: () => void
+  saveEditedNote: () => void
   handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
   finishCreatingNote: () => void
@@ -37,7 +37,7 @@ const NoteModal = (props: IComponentProps): JSX.Element => {
   const {
     getNotes,
     saveNewNote,
-    saveNote,
+    saveEditedNote,
     handleNoteTextChange,
     handleNoteTitleChange,
     finishCreatingNote,
@@ -60,7 +60,7 @@ const NoteModal = (props: IComponentProps): JSX.Element => {
 
   const handleCloseModal = () => {
     if (editingID) {
-      saveNote()
+      saveEditedNote()
     } else {
       saveNewNote()
     }
@@ -70,7 +70,7 @@ const NoteModal = (props: IComponentProps): JSX.Element => {
   /** Function called when the "back" button is clicked in the modal */
   const handleBack = () => {
     if (newNote.text || noteBeingEdited.title) {
-      saveNote()
+      saveEditedNote()
       handleCloseModal()
     } else {
       handleCloseModal()
@@ -118,7 +118,7 @@ const NoteModal = (props: IComponentProps): JSX.Element => {
         <NoteModalFooter
           getNotes={getNotes}
           handleCloseModal={handleCloseModal}
-          saveNote={saveNote}
+          saveEditedNote={saveEditedNote}
         />
       </Box>
     </Dialog>

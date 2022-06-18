@@ -26,11 +26,11 @@ import { nanoid } from 'nanoid'
 interface IComponentProps {
   getNotes: () => void
   handleCloseModal: () => void
-  saveNote: () => void
+  saveEditedNote: () => void
 }
 
 const NoteModalFooter = (props: IComponentProps): JSX.Element => {
-  const { getNotes, handleCloseModal, saveNote } = props
+  const { getNotes, handleCloseModal, saveEditedNote } = props
 
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)
 
@@ -94,7 +94,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
 
   const copyNote = () => {
     saveNoteCopy()
-    saveNote()
+    saveEditedNote()
     handleCloseModal()
     setAnchorEl(null)
   }
