@@ -4,11 +4,14 @@ import { useSetRecoilState } from 'recoil'
 import AddBoxIcon from '@mui/icons-material/AddBox'
 
 const PlusButton = (): JSX.Element => {
+  /** State setter to open/close the modal */
   const setIsModalOpen = useSetRecoilState(atomIsModalOpen)
+  /** State setter to update the type of the note being created */
   const setNoteType = useSetRecoilState(atomNoteType)
-
+  /** Function to open the modal */
   const openModal = () => setIsModalOpen(true)
 
+  /** Function to create a new text note */
   const createTextNote = () => {
     setNoteType('text')
     openModal()

@@ -36,41 +36,55 @@ interface IComponentProps {
 
 const DesktopAppBar = (props: IComponentProps): JSX.Element => {
   const { logOut, handleSearch, clearSearch } = props
+
+  /** User profile data, returned from localStorage */
   const userProfile = JSON.parse(window.localStorage.userProfile)
+  /** Anchor element for the profile menu */
   const [profileAnchorEl, setProfileAnchorEl] = useState<null | HTMLElement>(
     null
   )
+  /** Boolean that determines whether the app is being viewed with the dark (or light) theme */
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)
+  /** Anchor element for the settings menu */
   const [settingsAnchorEl, setSettingsAnchorEl] = useState<null | HTMLElement>(
     null
   )
+  /** Boolean that determines whether notes are loading from the back end */
   const [isLoading, setIsLoading] = useRecoilState(atomIsLoading)
+  /** Boolean that determines whether notes are being displayed as a grid (or list) */
   const [isGridView, setIsGridView] = useRecoilState(atomIsGridView)
-
+  /** State setter to update the notes array */
+  const setNotes = useSetRecoilState(atomNotes)
+  /** Boolean that determines whether the profile menu is open */
   const isProfileMenuOpen = Boolean(profileAnchorEl)
+  /** Boolean that determines whether the settings menu is open */
   const isSettingsMenuOpen = Boolean(settingsAnchorEl)
 
+  /** Function to open the profile menu */
   const handleProfileMenuOpen = (event: MouseEvent<HTMLElement>) => {
     setProfileAnchorEl(event.currentTarget)
   }
 
+  /** Function to close the profile menu */
   const handleProfileMenuClose = () => {
     setProfileAnchorEl(null)
   }
 
+  /** The profile menu ID */
   const profileMenuId = 'account-menu'
 
+  /** Function to open the settings menu */
   const handleSettingsMenuOpen = (event: MouseEvent<HTMLElement>) => {
     setSettingsAnchorEl(event.currentTarget)
   }
 
+  /** Function to close the settings menu */
   const handleSettingsMenuClose = () => {
     setSettingsAnchorEl(null)
   }
 
+  /** The settings menu ID */
   const settingsMenuId = 'settings-menu'
-
-  const setNotes = useSetRecoilState(atomNotes)
 
   return (
     <Box sx={{ flexGrow: 1 }}>

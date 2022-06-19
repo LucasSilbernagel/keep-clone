@@ -24,15 +24,15 @@ const NoteFormContainer = (props: IComponentProps) => {
 
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
-
+  /** Boolean that determines whether the dark (or light) theme is being used */
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)
-
+  /** The type of note that is being edited or created */
   const noteType = useRecoilValue(atomNoteType)
-
+  /** The ID of the note that is being edited */
   const editingID = useRecoilValue(atomEditingID)
-
+  /** Function to create a new checklist, on desktop */
   const setNoteBeingEdited = useSetRecoilState(atomNoteBeingEdited)
-
+  /** State setter to update the contents of a new note */
   const setNewNote = useSetRecoilState(atomNewNote)
 
   /** Change the title of a note as the user types into the editing field */

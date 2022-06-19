@@ -17,13 +17,16 @@ const SettingsMenu = (props: IComponentProps): JSX.Element => {
     handleSettingsMenuClose,
   } = props
 
+  /** Whether the dark (or light) theme is being used */
   const [isDarkTheme, setIsDarkTheme] = useRecoilState(atomIsDarkTheme)
 
+  /** Function to turn off the dark theme */
   const turnOffDarkTheme = () => {
     window.localStorage.setItem('keepCloneDarkTheme', 'false')
     setIsDarkTheme(false)
   }
 
+  /** Function to turn on the dark theme */
   const turnOnDarkTheme = () => {
     window.localStorage.setItem('keepCloneDarkTheme', 'true')
     setIsDarkTheme(true)

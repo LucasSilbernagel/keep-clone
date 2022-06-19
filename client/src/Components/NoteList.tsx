@@ -9,6 +9,7 @@ interface IComponentProps {
 
 const NoteList = (props: IComponentProps) => {
   const { deleteNote } = props
+
   /** Saved notes, filtered */
   const filteredNotes = useRecoilValue(atomFilteredNotes)
 

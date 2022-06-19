@@ -62,8 +62,9 @@ interface IComponentProps {
 const DesktopSearch = (props: IComponentProps): JSX.Element => {
   const { handleSearch, clearSearch } = props
 
+  /** Boolean that determines whether the search bar is being used */
   const [isSearching, setIsSearching] = useRecoilState(atomIsSearching)
-
+  /** The value that is typed into the search bar */
   const searchValue = useRecoilValue(atomSearchValue)
 
   return (

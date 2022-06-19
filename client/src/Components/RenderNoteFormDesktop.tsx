@@ -12,6 +12,7 @@ interface IComponentProps {
 const RenderNoteFormDesktop = (props: IComponentProps) => {
   const { handleNoteTextChange, handleNoteTitleChange } = props
 
+  /** The type of note being edited/created */
   const noteType = useRecoilValue(atomNoteType)
 
   if (noteType === 'text') {

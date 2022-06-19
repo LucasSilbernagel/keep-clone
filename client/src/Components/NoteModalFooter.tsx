@@ -35,29 +35,30 @@ interface IComponentProps {
 const NoteModalFooter = (props: IComponentProps): JSX.Element => {
   const { handleCloseModal, saveEditedNote, deleteNote } = props
 
+  /** Boolean that determines whether the dark theme (or light theme) is being used */
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)
-
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
-
+  /** The ID of the note that is being edited */
   const editingID = useRecoilValue(atomEditingID)
-
+  /** A new note */
   const [newNote, setNewNote] = useRecoilState(atomNewNote)
-
+  /** The note that is being edited */
   const noteBeingEdited = useRecoilValue(atomNoteBeingEdited)
-
+  /** A copy of a note */
   const [noteCopy, setNoteCopy] = useState<IExistingNote | INewNote>(
     BLANK_NEW_NOTE
   )
-
+  /** State setter to update the application loading state */
   const setIsLoading = useSetRecoilState(atomIsLoading)
-
+  /** State setter to update the notes array */
   const setNotes = useSetRecoilState(atomNotes)
-
   /** Anchor for the "more" menu */
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  /** Boolean that determines whether the "more" menu is open */
   const open = Boolean(anchorEl)
 
+  /** Create a copy of the note that is being created or edited */
   useEffect(() => {
     if (editingID) {
       setNoteCopy(noteBeingEdited)
@@ -66,10 +67,12 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
     }
   }, [editingID, newNote, noteBeingEdited])
 
+  /** Function to open the "more" menu */
   const handleClickMore = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
   }
 
+  /** Function to close the "more" menu */
   const handleCloseMenu = () => {
     setAnchorEl(null)
   }
@@ -99,6 +102,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
       .catch((err) => console.error(err))
   }
 
+  /** Function to copy a note from inside the modal */
   const copyNote = () => {
     saveNoteCopy()
     saveEditedNote()
@@ -106,6 +110,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
     setAnchorEl(null)
   }
 
+  /** Function to delete a note from inside the modal */
   const deleteNoteFromModal = (id: string) => {
     setNewNote({
       text: '',

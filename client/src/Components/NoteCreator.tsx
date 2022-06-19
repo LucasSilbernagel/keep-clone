@@ -30,29 +30,33 @@ interface IComponentProps {
 const NoteCreator = (props: IComponentProps): JSX.Element => {
   const { creatingNote, setCreatingNote, finishCreatingNote } = props
 
+  /** The application theme */
   const theme = useTheme()
-
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
-
+  /** Boolean that determines whether the dark (or light) theme is being used */
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)
-
+  /** State setter to update the type of the note that is being created or edited */
   const setNoteType = useSetRecoilState(atomNoteType)
-
+  /** State setter to open/close the modal */
   const setIsModalOpen = useSetRecoilState(atomIsModalOpen)
 
+  /** Function to open the modal */
   const openModal = () => setIsModalOpen(true)
 
+  /** Function to create a new text note */
   const createTextNote = () => {
     setNoteType('text')
     setCreatingNote(true)
   }
 
+  /** Function to create a new checklist, on desktop */
   const createDesktopChecklist = () => {
     setNoteType('checklist')
     setCreatingNote(true)
   }
 
+  /** Function to create a new checklist, on mobile */
   const createMobileChecklist = () => {
     setNoteType('checklist')
     openModal()

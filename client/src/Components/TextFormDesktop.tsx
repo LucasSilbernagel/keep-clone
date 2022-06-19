@@ -11,10 +11,11 @@ interface IComponentProps {
 const TextFormDesktop = (props: IComponentProps) => {
   const { handleNoteTextChange, handleNoteTitleChange } = props
 
+  /** A new note */
   const newNote = useRecoilValue(atomNewNote)
-
+  /** The note being edited */
   const noteBeingEdited = useRecoilValue(atomNoteBeingEdited)
-
+  /** The ID of the note being edited */
   const editingID = useRecoilValue(atomEditingID)
 
   return (

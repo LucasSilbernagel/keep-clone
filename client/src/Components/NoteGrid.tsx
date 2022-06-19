@@ -10,9 +10,9 @@ interface IComponentProps {
 
 const NoteGrid = (props: IComponentProps) => {
   const { deleteNote } = props
+
   /** Saved notes, filtered */
   const filteredNotes = useRecoilValue(atomFilteredNotes)
-
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
 

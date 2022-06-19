@@ -39,37 +39,43 @@ interface IComponentProps {
 const NoteContent = (props: IComponentProps) => {
   const { note, deleteNote } = props
 
+  /** The application theme */
   const theme = useTheme()
 
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
-
+  /** State setter to update the modal open/closed state */
   const setIsModalOpen = useSetRecoilState(atomIsModalOpen)
-
+  /** Boolean that determines notes are displayed in a grid (or list) */
   const isGridView = useRecoilValue(atomIsGridView)
-
+  /** Boolean that determines whether the dark theme (or light theme) is being used */
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)
-
+  /** Boolean that determines whether notes are loading from the back end */
   const setIsLoading = useSetRecoilState(atomIsLoading)
-
+  /** State setter to update the notes array */
   const setNotes = useSetRecoilState(atomNotes)
-
+  /** State setter to save the ID of the note that is being edited */
   const setEditingID = useSetRecoilState(atomEditingID)
-
+  /** State setter to update which note that is being edited */
   const setNoteBeingEdited = useSetRecoilState(atomNoteBeingEdited)
-
+  /** The notes array, filtered */
   const filteredNotes = useRecoilValue(atomFilteredNotes)
-
   /** Anchor for the "more" menu */
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  /** Boolean that determines whether the "more" menu is open */
   const open = Boolean(anchorEl)
+
+  /** Function to open the "more" menu */
   const handleClickMore = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
   }
+
+  /** Function to close the "more" menu */
   const handleCloseMenu = () => {
     setAnchorEl(null)
   }
 
+  /** Function to copy a note */
   const copyNote = (note: IExistingNote) => {
     setAnchorEl(null)
     const newNote = {

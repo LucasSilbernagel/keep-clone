@@ -25,6 +25,7 @@ const ProfileMenu = (props: IComponentProps): JSX.Element => {
     logOut,
   } = props
 
+  /** User profile data, returned from localStorage */
   const userProfile = JSON.parse(window.localStorage.userProfile)
 
   return (

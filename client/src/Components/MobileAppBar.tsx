@@ -28,41 +28,46 @@ interface IComponentProps {
 
 const MobileAppBar = (props: IComponentProps): JSX.Element => {
   const { logOut, handleSearch, clearSearch } = props
+
+  /** The application theme */
   const theme = useTheme()
+  /** The user's profile data, returned from localStorage */
   const userProfile = JSON.parse(window.localStorage.userProfile)
+  /** Anchor element for the profile menu */
   const [profileAnchorEl, setProfileAnchorEl] = useState<null | HTMLElement>(
     null
   )
+  /** Anchor element for the settings menu */
   const [settingsAnchorEl, setSettingsAnchorEl] = useState<null | HTMLElement>(
     null
   )
-
+  /** Boolean that determines whether the search bar is being used */
   const [isSearching, setIsSearching] = useRecoilState(atomIsSearching)
-
+  /** Boolean that determines whether notes are being displayed in a grid (or list) */
   const [isGridView, setIsGridView] = useRecoilState(atomIsGridView)
-
+  /** Boolean that determines whether the profile menu is open */
   const isProfileMenuOpen = Boolean(profileAnchorEl)
-
+  /** Function to open the profile menu */
   const handleProfileMenuOpen = (event: MouseEvent<HTMLElement>) => {
     setProfileAnchorEl(event.currentTarget)
   }
-
+  /** Function to close the profile menu */
   const handleProfileMenuClose = () => {
     setProfileAnchorEl(null)
   }
-
+  /** The ID of the profile menu */
   const profileMenuId = 'account-menu'
-
+  /** Boolean that determines whether the settings menu is open */
   const isSettingsMenuOpen = Boolean(settingsAnchorEl)
-
+  /** Function to open the settings menu */
   const handleSettingsMenuOpen = (event: MouseEvent<HTMLElement>) => {
     setSettingsAnchorEl(event.currentTarget)
   }
-
+  /** Function to close the settings menu */
   const handleSettingsMenuClose = () => {
     setSettingsAnchorEl(null)
   }
-
+  /** The ID of the settings menu */
   const settingsMenuId = 'settings-menu'
 
   if (!isSearching) {

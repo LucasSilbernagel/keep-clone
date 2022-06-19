@@ -40,26 +40,26 @@ interface IComponentProps {
 const NoteModal = (props: IComponentProps): JSX.Element => {
   const { saveNewNote, finishCreatingNote, deleteNote } = props
 
+  /** The application theme */
   const theme = useTheme()
-
+  /** Boolean that determines whether the dark theme (or light theme) is being used */
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)
-
+  /** The ID of the note that is being edited */
   const [editingID, setEditingID] = useRecoilState(atomEditingID)
-
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
-
+  /** Boolean that determines whether the modal is open */
   const [isModalOpen, setIsModalOpen] = useRecoilState(atomIsModalOpen)
-
+  /** A new note */
   const [newNote, setNewNote] = useRecoilState(atomNewNote)
-
+  /** The note that is being edited */
   const [noteBeingEdited, setNoteBeingEdited] =
     useRecoilState(atomNoteBeingEdited)
-
+  /** State setter to update the application loading state */
   const setIsLoading = useSetRecoilState(atomIsLoading)
-
+  /** State setter to update the notes array */
   const setNotes = useSetRecoilState(atomNotes)
-
+  /** State setter to update the array of checklist items for a note */
   const setNoteList = useSetRecoilState(atomNoteList)
 
   /** Save an edited note to the database */
@@ -88,6 +88,7 @@ const NoteModal = (props: IComponentProps): JSX.Element => {
     }
   }
 
+  /** Function to close the modal */
   const handleCloseModal = () => {
     if (editingID) {
       saveEditedNote()

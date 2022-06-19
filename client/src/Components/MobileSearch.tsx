@@ -55,8 +55,9 @@ interface IComponentProps {
 const MobileSearch = (props: IComponentProps): JSX.Element => {
   const { handleSearch, clearSearch } = props
 
+  /** Boolean that determines whether the search bar is being used */
   const [isSearching, setIsSearching] = useRecoilState(atomIsSearching)
-
+  /** The value typed into the search bar */
   const searchValue = useRecoilValue(atomSearchValue)
 
   return (
