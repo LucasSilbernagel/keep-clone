@@ -22,11 +22,11 @@ import ClearIcon from '@mui/icons-material/Clear'
 import CompletedItems from './CompletedItems'
 import { nanoid } from 'nanoid'
 
-interface IComponentProps {
+interface ChecklistFormProps {
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-const ChecklistForm = (props: IComponentProps) => {
+const ChecklistForm = (props: ChecklistFormProps) => {
   const { handleNoteTitleChange } = props
 
   /** New note atom */

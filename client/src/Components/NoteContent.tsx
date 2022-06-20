@@ -31,17 +31,16 @@ import { noteContentStyles, getNotes } from '../LogicHelpers'
 import CompletedListSummary from './CompletedListSummary'
 import { BLANK_EXISTING_NOTE } from '../Constants'
 
-interface IComponentProps {
+interface NoteContentProps {
   note: IExistingNote
   deleteNote: (id: string) => void
 }
 
-const NoteContent = (props: IComponentProps) => {
+const NoteContent = (props: NoteContentProps) => {
   const { note, deleteNote } = props
 
   /** The application theme */
   const theme = useTheme()
-
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
   /** State setter to update the modal open/closed state */
@@ -60,24 +59,24 @@ const NoteContent = (props: IComponentProps) => {
   const setNoteBeingEdited = useSetRecoilState(atomNoteBeingEdited)
   /** The notes array, filtered */
   const filteredNotes = useRecoilValue(atomFilteredNotes)
-  /** Anchor for the "more" menu */
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  /** Anchor element for the "more" menu */
+  const [moreAnchorEl, setMoreAnchorEl] = useState<null | HTMLElement>(null)
   /** Boolean that determines whether the "more" menu is open */
-  const open = Boolean(anchorEl)
+  const isMoreMenuOpen = Boolean(moreAnchorEl)
 
   /** Function to open the "more" menu */
-  const handleClickMore = (event: MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget)
+  const handleClickMoreMenu = (event: MouseEvent<HTMLButtonElement>) => {
+    setMoreAnchorEl(event.currentTarget)
   }
 
   /** Function to close the "more" menu */
-  const handleCloseMenu = () => {
-    setAnchorEl(null)
+  const handleCloseMoreMenu = () => {
+    setMoreAnchorEl(null)
   }
 
   /** Function to copy a note */
   const copyNote = (note: IExistingNote) => {
-    setAnchorEl(null)
+    setMoreAnchorEl(null)
     const newNote = {
       text: note.text,
       title: note.title,
@@ -125,7 +124,12 @@ const NoteContent = (props: IComponentProps) => {
       <Paper
         tabIndex={0}
         elevation={2}
-        sx={noteContentStyles(open, isDarkTheme, theme, viewportWidth)}
+        sx={noteContentStyles(
+          isMoreMenuOpen,
+          isDarkTheme,
+          theme,
+          viewportWidth
+        )}
       >
         <Grid item container>
           <Grid item xs={12}>
@@ -223,9 +227,9 @@ const NoteContent = (props: IComponentProps) => {
               <Grid item>
                 <Menu
                   id="more-menu"
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={handleCloseMenu}
+                  anchorEl={moreAnchorEl}
+                  open={isMoreMenuOpen}
+                  onClose={handleCloseMoreMenu}
                   MenuListProps={{
                     'aria-labelledby': 'more-button',
                   }}
@@ -240,13 +244,15 @@ const NoteContent = (props: IComponentProps) => {
                 <Tooltip title="More">
                   <IconButton
                     id="more-button"
-                    aria-controls={open ? 'more-menu' : undefined}
+                    aria-controls={isMoreMenuOpen ? 'more-menu' : undefined}
                     aria-haspopup="true"
-                    aria-expanded={open ? 'true' : undefined}
-                    onClick={handleClickMore}
+                    aria-expanded={isMoreMenuOpen ? 'true' : undefined}
+                    onClick={handleClickMoreMenu}
                     color="inherit"
                     className="moreButton"
-                    sx={open ? { display: 'flex' } : { display: 'none' }}
+                    sx={
+                      isMoreMenuOpen ? { display: 'flex' } : { display: 'none' }
+                    }
                   >
                     <MoreVertIcon />
                   </IconButton>

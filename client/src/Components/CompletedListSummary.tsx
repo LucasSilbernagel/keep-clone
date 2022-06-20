@@ -1,7 +1,11 @@
 import { Typography, Divider } from '@mui/material'
 import { IExistingNote } from '../types'
 
-const CompletedListSummary = (props: { note: IExistingNote }) => {
+interface CompletedListSummaryProps {
+  note: IExistingNote
+}
+
+const CompletedListSummary = (props: CompletedListSummaryProps) => {
   const { note } = props
   return (
     <>

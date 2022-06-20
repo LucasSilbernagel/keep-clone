@@ -14,12 +14,12 @@ import RenderNoteFormDesktop from './RenderNoteFormDesktop'
 import { noteFormStyles } from '../LogicHelpers'
 import ChecklistForm from './ChecklistForm'
 
-interface IComponentProps {
+interface NoteFormContainerProps {
   finishCreatingNote: () => void
   inModal: boolean
 }
 
-const NoteFormContainer = (props: IComponentProps) => {
+const NoteFormContainer = (props: NoteFormContainerProps) => {
   const { finishCreatingNote, inModal } = props
 
   /** The width of the viewport/window, in pixels */

@@ -7,7 +7,7 @@ import { getNotes } from '../LogicHelpers'
 import { atomNotes, atomIsLoading } from '../atoms'
 import { useSetRecoilState } from 'recoil'
 
-interface IComponentProps {
+interface LoginProps {
   setAuthenticated: Dispatch<SetStateAction<boolean>>
   authenticationFailed: boolean
   setAuthenticationFailed: Dispatch<SetStateAction<boolean>>
@@ -15,7 +15,7 @@ interface IComponentProps {
   setAuthenticationFailedMessage: Dispatch<SetStateAction<string>>
 }
 
-const Login = (props: IComponentProps): JSX.Element => {
+const Login = (props: LoginProps): JSX.Element => {
   const {
     setAuthenticated,
     authenticationFailed,

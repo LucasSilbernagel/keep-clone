@@ -27,12 +27,12 @@ import NoteModal from '../Components/NoteModal'
 import { nanoid } from 'nanoid'
 import { getNotes } from '../LogicHelpers'
 
-interface IComponentProps {
+interface NoteViewProps {
   setAuthenticated: Dispatch<SetStateAction<boolean>>
   deleteNote: (id: string) => void
 }
 
-const NoteView = (props: IComponentProps): JSX.Element => {
+const NoteView = (props: NoteViewProps): JSX.Element => {
   const { setAuthenticated, deleteNote } = props
 
   /** The width of the viewport/window, in pixels */

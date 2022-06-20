@@ -4,11 +4,11 @@ import NoteContent from './NoteContent'
 import { useRecoilValue } from 'recoil'
 import { atomViewportWidth, atomFilteredNotes } from '../atoms'
 
-interface IComponentProps {
+interface NoteGridProps {
   deleteNote: (id: string) => void
 }
 
-const NoteGrid = (props: IComponentProps) => {
+const NoteGrid = (props: NoteGridProps) => {
   const { deleteNote } = props
 
   /** Saved notes, filtered */

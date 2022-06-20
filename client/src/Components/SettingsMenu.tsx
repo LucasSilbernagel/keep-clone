@@ -2,14 +2,14 @@ import { MenuItem, Menu, ListItemText } from '@mui/material'
 import { atomIsDarkTheme } from '../atoms'
 import { useRecoilState } from 'recoil'
 
-interface IComponentProps {
+interface SettingsMenuProps {
   settingsAnchorEl: null | HTMLElement
   settingsMenuId: string
   isSettingsMenuOpen: boolean
   handleSettingsMenuClose: () => void
 }
 
-const SettingsMenu = (props: IComponentProps): JSX.Element => {
+const SettingsMenu = (props: SettingsMenuProps): JSX.Element => {
   const {
     settingsAnchorEl,
     settingsMenuId,

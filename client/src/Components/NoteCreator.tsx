@@ -21,13 +21,13 @@ import MicNoneOutlinedIcon from '@mui/icons-material/MicNoneOutlined'
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined'
 import PlusButton from './PlusButton'
 
-interface IComponentProps {
+interface NoteCreatorProps {
   creatingNote: boolean
   setCreatingNote: Dispatch<SetStateAction<boolean>>
   finishCreatingNote: () => void
 }
 
-const NoteCreator = (props: IComponentProps): JSX.Element => {
+const NoteCreator = (props: NoteCreatorProps): JSX.Element => {
   const { creatingNote, setCreatingNote, finishCreatingNote } = props
 
   /** The application theme */

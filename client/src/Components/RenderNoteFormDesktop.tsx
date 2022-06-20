@@ -4,12 +4,12 @@ import { useRecoilValue } from 'recoil'
 import { atomNoteType } from '../atoms'
 import ChecklistForm from './ChecklistForm'
 
-interface IComponentProps {
+interface RenderNoteFormDesktopProps {
   handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-const RenderNoteFormDesktop = (props: IComponentProps) => {
+const RenderNoteFormDesktop = (props: RenderNoteFormDesktopProps) => {
   const { handleNoteTextChange, handleNoteTitleChange } = props
 
   /** The type of note being edited/created */

@@ -18,6 +18,7 @@ import { atomNoteList } from '../atoms'
 import ClearIcon from '@mui/icons-material/Clear'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 
+/** Accordino component that contains completed checklist items */
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion
     disableGutters
@@ -30,6 +31,7 @@ const Accordion = styled((props: AccordionProps) => (
   paddingLeft: theme.spacing(1),
 }))
 
+/** The accordion header */
 const AccordionSummary = styled((props: AccordionSummaryProps) => (
   <MuiAccordionSummary expandIcon={<KeyboardArrowRightIcon />} {...props} />
 ))(({ theme }) => ({
@@ -42,16 +44,17 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
   },
 }))
 
+/** The contents of the accordion, under the header */
 const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   padding: theme.spacing(0),
 }))
 
-interface IComponentProps {
+interface CompletedItemsProps {
   handleListCheckboxChange: (id: string) => void
   handleDeleteChecklistItem: (id: string) => void
 }
 
-const CompletedItems = (props: IComponentProps) => {
+const CompletedItems = (props: CompletedItemsProps) => {
   const { handleListCheckboxChange, handleDeleteChecklistItem } = props
 
   /** Array of checklist items for a note */

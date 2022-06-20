@@ -26,13 +26,13 @@ import ReactTimeAgo from 'react-time-ago'
 import { nanoid } from 'nanoid'
 import { getNotes } from '../LogicHelpers'
 
-interface IComponentProps {
+interface NoteModalFooterProps {
   handleCloseModal: () => void
   saveEditedNote: () => void
   deleteNote: (id: string) => void
 }
 
-const NoteModalFooter = (props: IComponentProps): JSX.Element => {
+const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
   const { handleCloseModal, saveEditedNote, deleteNote } = props
 
   /** Boolean that determines whether the dark theme (or light theme) is being used */
@@ -68,12 +68,12 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
   }, [editingID, newNote, noteBeingEdited])
 
   /** Function to open the "more" menu */
-  const handleClickMore = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleClickMoreMenu = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
   }
 
   /** Function to close the "more" menu */
-  const handleCloseMenu = () => {
+  const handleCloseMoreMenu = () => {
     setAnchorEl(null)
   }
 
@@ -103,7 +103,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
   }
 
   /** Function to copy a note from inside the modal */
-  const copyNote = () => {
+  const copyNoteFromModal = () => {
     saveNoteCopy()
     saveEditedNote()
     handleCloseModal()
@@ -159,7 +159,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
             id="more-menu"
             anchorEl={anchorEl}
             open={open}
-            onClose={handleCloseMenu}
+            onClose={handleCloseMoreMenu}
             MenuListProps={{
               'aria-labelledby': 'more-button',
             }}
@@ -167,7 +167,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
             <MenuItem onClick={() => deleteNoteFromModal(noteBeingEdited._id)}>
               Delete note
             </MenuItem>
-            <MenuItem onClick={() => copyNote()}>Make a copy</MenuItem>
+            <MenuItem onClick={() => copyNoteFromModal()}>Make a copy</MenuItem>
           </Menu>
         </Grid>
         <Grid item>
@@ -177,7 +177,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
               aria-controls={open ? 'more-menu' : undefined}
               aria-haspopup="true"
               aria-expanded={open ? 'true' : undefined}
-              onClick={handleClickMore}
+              onClick={handleClickMoreMenu}
               color="secondary"
               className="moreButton"
             >
@@ -215,7 +215,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
                 id="more-menu"
                 anchorEl={anchorEl}
                 open={open}
-                onClose={handleCloseMenu}
+                onClose={handleCloseMoreMenu}
                 MenuListProps={{
                   'aria-labelledby': 'more-button',
                 }}
@@ -225,7 +225,9 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
                 >
                   Delete note
                 </MenuItem>
-                <MenuItem onClick={() => copyNote()}>Make a copy</MenuItem>
+                <MenuItem onClick={() => copyNoteFromModal()}>
+                  Make a copy
+                </MenuItem>
               </Menu>
             </Grid>
             <Grid item>
@@ -235,7 +237,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
                   aria-controls={open ? 'more-menu' : undefined}
                   aria-haspopup="true"
                   aria-expanded={open ? 'true' : undefined}
-                  onClick={handleClickMore}
+                  onClick={handleClickMoreMenu}
                   color="secondary"
                   className="moreButton"
                 >

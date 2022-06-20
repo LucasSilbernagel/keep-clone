@@ -31,13 +31,13 @@ const Transition = forwardRef(function Transition(
   return <Slide ref={ref} direction="up" {...props} />
 })
 
-interface IComponentProps {
+interface NoteModalProps {
   saveNewNote: () => void
   finishCreatingNote: () => void
   deleteNote: (id: string) => void
 }
 
-const NoteModal = (props: IComponentProps): JSX.Element => {
+const NoteModal = (props: NoteModalProps): JSX.Element => {
   const { saveNewNote, finishCreatingNote, deleteNote } = props
 
   /** The application theme */

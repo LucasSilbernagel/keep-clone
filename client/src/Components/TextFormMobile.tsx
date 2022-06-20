@@ -3,12 +3,12 @@ import { TextField, Grid } from '@mui/material'
 import { useRecoilValue } from 'recoil'
 import { atomEditingID, atomNewNote, atomNoteBeingEdited } from '../atoms'
 
-interface IComponentProps {
+interface TextFormMobileProps {
   handleNoteTextChange: ChangeEventHandler<HTMLInputElement>
   handleNoteTitleChange: ChangeEventHandler<HTMLInputElement>
 }
 
-const TextFormMobile = (props: IComponentProps) => {
+const TextFormMobile = (props: TextFormMobileProps) => {
   const { handleNoteTextChange, handleNoteTitleChange } = props
 
   /** A new note */

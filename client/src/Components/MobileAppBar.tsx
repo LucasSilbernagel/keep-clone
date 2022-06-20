@@ -20,13 +20,13 @@ import { useRecoilState } from 'recoil'
 import GridViewIcon from '@mui/icons-material/GridView'
 import SettingsMenu from './SettingsMenu'
 
-interface IComponentProps {
+interface MobileAppBarProps {
   logOut: () => void
   handleSearch: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   clearSearch: () => void
 }
 
-const MobileAppBar = (props: IComponentProps): JSX.Element => {
+const MobileAppBar = (props: MobileAppBarProps): JSX.Element => {
   const { logOut, handleSearch, clearSearch } = props
 
   /** The application theme */
@@ -56,7 +56,7 @@ const MobileAppBar = (props: IComponentProps): JSX.Element => {
     setProfileAnchorEl(null)
   }
   /** The ID of the profile menu */
-  const profileMenuId = 'account-menu'
+  const profileMenuId = 'profile-menu'
   /** Boolean that determines whether the settings menu is open */
   const isSettingsMenuOpen = Boolean(settingsAnchorEl)
   /** Function to open the settings menu */

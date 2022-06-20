@@ -28,13 +28,13 @@ import GridViewIcon from '@mui/icons-material/GridView'
 import SettingsMenu from './SettingsMenu'
 import { getNotes } from '../LogicHelpers'
 
-interface IComponentProps {
+interface DesktopAppBarProps {
   logOut: () => void
   handleSearch: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   clearSearch: () => void
 }
 
-const DesktopAppBar = (props: IComponentProps): JSX.Element => {
+const DesktopAppBar = (props: DesktopAppBarProps): JSX.Element => {
   const { logOut, handleSearch, clearSearch } = props
 
   /** User profile data, returned from localStorage */
@@ -71,7 +71,7 @@ const DesktopAppBar = (props: IComponentProps): JSX.Element => {
   }
 
   /** The profile menu ID */
-  const profileMenuId = 'account-menu'
+  const profileMenuId = 'profile-menu'
 
   /** Function to open the settings menu */
   const handleSettingsMenuOpen = (event: MouseEvent<HTMLElement>) => {

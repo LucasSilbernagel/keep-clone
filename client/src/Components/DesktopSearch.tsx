@@ -6,6 +6,7 @@ import { atomIsSearching, atomSearchValue } from '../atoms'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import CloseIcon from '@mui/icons-material/Close'
 
+/** The search bar */
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -19,6 +20,7 @@ const Search = styled('div')(({ theme }) => ({
   background: theme.palette.primary.dark,
 }))
 
+/** Wrapper around the search icon */
 const SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: '100%',
@@ -29,6 +31,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   justifyContent: 'center',
 }))
 
+/** Wrapper around the close icon */
 const CloseIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: '100%',
@@ -40,6 +43,7 @@ const CloseIconWrapper = styled('div')(({ theme }) => ({
   justifyContent: 'center',
 }))
 
+/** Base input component, with custom styling */
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: theme.palette.secondary.dark,
   '& .MuiInputBase-input': {
@@ -54,12 +58,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }))
 
-interface IComponentProps {
+interface DesktopSearchProps {
   handleSearch: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   clearSearch: () => void
 }
 
-const DesktopSearch = (props: IComponentProps): JSX.Element => {
+const DesktopSearch = (props: DesktopSearchProps): JSX.Element => {
   const { handleSearch, clearSearch } = props
 
   /** Boolean that determines whether the search bar is being used */

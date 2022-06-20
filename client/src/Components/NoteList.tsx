@@ -3,11 +3,11 @@ import NoteContent from './NoteContent'
 import { useRecoilValue } from 'recoil'
 import { atomFilteredNotes } from '../atoms'
 
-interface IComponentProps {
+interface NoteListProps {
   deleteNote: (id: string) => void
 }
 
-const NoteList = (props: IComponentProps) => {
+const NoteList = (props: NoteListProps) => {
   const { deleteNote } = props
 
   /** Saved notes, filtered */
