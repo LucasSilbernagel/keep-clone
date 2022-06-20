@@ -1,14 +1,19 @@
 import { ChangeEvent, ChangeEventHandler } from 'react'
 import { TextField, Grid } from '@mui/material'
 import { useRecoilValue } from 'recoil'
-import { atomEditingID, atomNewNote, atomNoteBeingEdited } from '../atoms'
+import {
+  atomEditingID,
+  atomNewNote,
+  atomNoteBeingEdited,
+  atomViewportWidth,
+} from '../atoms'
 
-interface TextFormDesktopProps {
+interface TextFormProps {
   handleNoteTextChange: ChangeEventHandler<HTMLInputElement>
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-const TextFormDesktop = (props: TextFormDesktopProps) => {
+const TextForm = (props: TextFormProps) => {
   const { handleNoteTextChange, handleNoteTitleChange } = props
 
   /** A new note */
@@ -17,9 +22,11 @@ const TextFormDesktop = (props: TextFormDesktopProps) => {
   const noteBeingEdited = useRecoilValue(atomNoteBeingEdited)
   /** The ID of the note being edited */
   const editingID = useRecoilValue(atomEditingID)
+  /** The width of the browser, in pixels */
+  const viewportWidth = useRecoilValue(atomViewportWidth)
 
   return (
-    <Grid container>
+    <Grid container sx={viewportWidth <= 1011 ? { padding: '0.5em' } : {}}>
       <Grid item xs={12}>
         <TextField
           multiline
@@ -29,7 +36,7 @@ const TextFormDesktop = (props: TextFormDesktopProps) => {
           variant="outlined"
           sx={{
             width: '100%',
-            paddingLeft: '0.2em',
+            paddingLeft: viewportWidth > 1011 ? '0.2em' : '',
             maxHeight: '50vh',
             overflowY: 'auto',
             '& .MuiOutlinedInput-root': {
@@ -52,15 +59,15 @@ const TextFormDesktop = (props: TextFormDesktopProps) => {
         <TextField
           autoFocus
           multiline
-          placeholder="Take a note..."
+          placeholder={viewportWidth > 1011 ? 'Take a note...' : 'Note'}
           size="small"
           onChange={handleNoteTextChange}
           value={editingID ? noteBeingEdited.text : newNote.text}
           variant="outlined"
           sx={{
             width: '100%',
-            paddingLeft: '0.2em',
-            maxHeight: '50vh',
+            paddingLeft: viewportWidth > 1011 ? '0.2em' : '',
+            maxHeight: viewportWidth > 1011 ? '50vh' : '80vh',
             overflowY: 'auto',
             '& .MuiOutlinedInput-root': {
               '& fieldset': {
@@ -80,4 +87,4 @@ const TextFormDesktop = (props: TextFormDesktopProps) => {
   )
 }
 
-export default TextFormDesktop
+export default TextForm

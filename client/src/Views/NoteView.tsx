@@ -121,6 +121,8 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
         deleteNote={deleteNote}
       />
       {creatingNote ? (
+        /** Invisible background rendered when the desktop NoteCreator is being used. */
+        /** Triggers the finishCreatingNote function when clicked. */
         <div
           style={{
             width: '100%',

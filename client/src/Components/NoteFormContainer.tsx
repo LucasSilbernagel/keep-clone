@@ -1,8 +1,6 @@
 import { ChangeEvent } from 'react'
-import TextFormMobile from './TextFormMobile'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import {
-  atomViewportWidth,
   atomIsDarkTheme,
   atomNoteType,
   atomEditingID,
@@ -10,9 +8,9 @@ import {
   atomNewNote,
 } from '../atoms'
 import { Box, Grid, Button } from '@mui/material'
-import RenderNoteFormDesktop from './RenderNoteFormDesktop'
 import { noteFormStyles } from '../LogicHelpers'
 import ChecklistForm from './ChecklistForm'
+import TextForm from './TextForm'
 
 interface NoteFormContainerProps {
   finishCreatingNote: () => void
@@ -22,8 +20,6 @@ interface NoteFormContainerProps {
 const NoteFormContainer = (props: NoteFormContainerProps) => {
   const { finishCreatingNote, inModal } = props
 
-  /** The width of the viewport/window, in pixels */
-  const viewportWidth = useRecoilValue(atomViewportWidth)
   /** Boolean that determines whether the dark (or light) theme is being used */
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)
   /** The type of note that is being edited or created */
@@ -83,19 +79,13 @@ const NoteFormContainer = (props: NoteFormContainerProps) => {
 
   return (
     <Box sx={noteFormStyles(inModal, isDarkTheme)}>
-      {viewportWidth > 1011 && (
-        <RenderNoteFormDesktop
+      {noteType === 'text' && (
+        <TextForm
           handleNoteTextChange={handleNoteTextChange}
           handleNoteTitleChange={handleNoteTitleChange}
         />
       )}
-      {viewportWidth <= 1011 && noteType === 'text' && (
-        <TextFormMobile
-          handleNoteTextChange={handleNoteTextChange}
-          handleNoteTitleChange={handleNoteTitleChange}
-        />
-      )}
-      {viewportWidth <= 1011 && noteType === 'checklist' && (
+      {noteType === 'checklist' && (
         <ChecklistForm handleNoteTitleChange={handleNoteTitleChange} />
       )}
       {!inModal && (
