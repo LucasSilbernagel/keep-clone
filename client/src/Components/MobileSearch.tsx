@@ -2,10 +2,11 @@ import { ChangeEvent } from 'react'
 import { styled } from '@mui/material/styles'
 import { IconButton, InputBase } from '@mui/material'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { atomIsSearching, atomSearchValue } from '../../atoms'
+import { atomIsSearching, atomSearchValue } from '../atoms'
 import CloseIcon from '@mui/icons-material/Close'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
+/** The search bar */
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -15,6 +16,7 @@ const Search = styled('div')(({ theme }) => ({
   background: theme.palette.primary.dark,
 }))
 
+/** Wrapper around the back icon */
 const BackIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: '100%',
@@ -26,6 +28,7 @@ const BackIconWrapper = styled('div')(({ theme }) => ({
   zIndex: 10,
 }))
 
+/** Wrapper around the close icon */
 const CloseIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: '100%',
@@ -37,6 +40,7 @@ const CloseIconWrapper = styled('div')(({ theme }) => ({
   justifyContent: 'center',
 }))
 
+/** Base input component with custom styling */
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: theme.palette.secondary.dark,
   '& .MuiInputBase-input': {
@@ -47,16 +51,17 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }))
 
-interface IComponentProps {
+interface MobileSearchProps {
   handleSearch: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   clearSearch: () => void
 }
 
-const MobileSearch = (props: IComponentProps): JSX.Element => {
+const MobileSearch = (props: MobileSearchProps): JSX.Element => {
   const { handleSearch, clearSearch } = props
 
+  /** Boolean that determines whether the search bar is being used */
   const [isSearching, setIsSearching] = useRecoilState(atomIsSearching)
-
+  /** The value typed into the search bar */
   const searchValue = useRecoilValue(atomSearchValue)
 
   return (

@@ -14,55 +14,76 @@ import SettingsIcon from '@mui/icons-material/Settings'
 import SplitscreenIcon from '@mui/icons-material/Splitscreen'
 import RefreshIcon from '@mui/icons-material/Refresh'
 import AccountCircle from '@mui/icons-material/AccountCircle'
-import GoogleKeepLogo from '../../assets/keep_icon.png'
-import ProfileMenu from '../ProfileMenu/ProfileMenu'
-import DesktopSearch from '../Search/DesktopSearch'
-import { atomIsLoading, atomIsGridView, atomIsDarkTheme } from '../../atoms'
-import { useRecoilValue, useRecoilState } from 'recoil'
+import GoogleKeepLogo from '../assets/keep_icon.png'
+import ProfileMenu from './ProfileMenu'
+import DesktopSearch from './DesktopSearch'
+import {
+  atomIsLoading,
+  atomIsGridView,
+  atomIsDarkTheme,
+  atomNotes,
+} from '../atoms'
+import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil'
 import GridViewIcon from '@mui/icons-material/GridView'
-import SettingsMenu from '../SettingsMenu'
+import SettingsMenu from './SettingsMenu'
+import { getNotes } from '../LogicHelpers'
 
-interface IComponentProps {
+interface DesktopAppBarProps {
   logOut: () => void
   handleSearch: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   clearSearch: () => void
-  getNotes: () => void
 }
 
-const DesktopAppBar = (props: IComponentProps): JSX.Element => {
-  const { logOut, handleSearch, clearSearch, getNotes } = props
+const DesktopAppBar = (props: DesktopAppBarProps): JSX.Element => {
+  const { logOut, handleSearch, clearSearch } = props
+
+  /** User profile data, returned from localStorage */
   const userProfile = JSON.parse(window.localStorage.userProfile)
+  /** Anchor element for the profile menu */
   const [profileAnchorEl, setProfileAnchorEl] = useState<null | HTMLElement>(
     null
   )
+  /** Boolean that determines whether the app is being viewed with the dark (or light) theme */
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)
+  /** Anchor element for the settings menu */
   const [settingsAnchorEl, setSettingsAnchorEl] = useState<null | HTMLElement>(
     null
   )
-  const isLoading = useRecoilValue(atomIsLoading)
+  /** Boolean that determines whether notes are loading from the back end */
+  const [isLoading, setIsLoading] = useRecoilState(atomIsLoading)
+  /** Boolean that determines whether notes are being displayed as a grid (or list) */
   const [isGridView, setIsGridView] = useRecoilState(atomIsGridView)
-
+  /** State setter to update the notes array */
+  const setNotes = useSetRecoilState(atomNotes)
+  /** Boolean that determines whether the profile menu is open */
   const isProfileMenuOpen = Boolean(profileAnchorEl)
+  /** Boolean that determines whether the settings menu is open */
   const isSettingsMenuOpen = Boolean(settingsAnchorEl)
 
+  /** Function to open the profile menu */
   const handleProfileMenuOpen = (event: MouseEvent<HTMLElement>) => {
     setProfileAnchorEl(event.currentTarget)
   }
 
+  /** Function to close the profile menu */
   const handleProfileMenuClose = () => {
     setProfileAnchorEl(null)
   }
 
-  const profileMenuId = 'account-menu'
+  /** The profile menu ID */
+  const profileMenuId = 'profile-menu'
 
+  /** Function to open the settings menu */
   const handleSettingsMenuOpen = (event: MouseEvent<HTMLElement>) => {
     setSettingsAnchorEl(event.currentTarget)
   }
 
+  /** Function to close the settings menu */
   const handleSettingsMenuClose = () => {
     setSettingsAnchorEl(null)
   }
 
+  /** The settings menu ID */
   const settingsMenuId = 'settings-menu'
 
   return (
@@ -113,7 +134,7 @@ const DesktopAppBar = (props: IComponentProps): JSX.Element => {
                 <IconButton
                   size="large"
                   color="inherit"
-                  onClick={getNotes}
+                  onClick={() => getNotes(setIsLoading, setNotes)}
                   aria-label="Refresh"
                 >
                   <RefreshIcon />

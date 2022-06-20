@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction } from 'react'
 import {
   useTheme,
   Paper,
@@ -14,55 +14,49 @@ import {
   atomIsModalOpen,
 } from '../atoms'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
-import NoteFormContainer from './NoteForms/NoteFormContainer'
+import NoteFormContainer from './NoteFormContainer'
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined'
 import BrushOutlinedIcon from '@mui/icons-material/BrushOutlined'
 import MicNoneOutlinedIcon from '@mui/icons-material/MicNoneOutlined'
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined'
 import PlusButton from './PlusButton'
 
-interface IComponentProps {
-  editingID: string
-  handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
-  handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
+interface NoteCreatorProps {
   creatingNote: boolean
   setCreatingNote: Dispatch<SetStateAction<boolean>>
   finishCreatingNote: () => void
 }
 
-const NoteCreator = (props: IComponentProps): JSX.Element => {
-  const {
-    editingID,
-    handleNoteTextChange,
-    handleNoteTitleChange,
-    creatingNote,
-    setCreatingNote,
-    finishCreatingNote,
-  } = props
+const NoteCreator = (props: NoteCreatorProps): JSX.Element => {
+  const { creatingNote, setCreatingNote, finishCreatingNote } = props
 
+  /** The application theme */
   const theme = useTheme()
-
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
-
+  /** Boolean that determines whether the dark (or light) theme is being used */
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)
-
+  /** State setter to update the type of the note that is being created or edited */
   const setNoteType = useSetRecoilState(atomNoteType)
-
+  /** State setter to open/close the modal */
   const setIsModalOpen = useSetRecoilState(atomIsModalOpen)
 
+  /** Function to open the modal */
   const openModal = () => setIsModalOpen(true)
 
+  /** Function to create a new text note */
   const createTextNote = () => {
     setNoteType('text')
     setCreatingNote(true)
   }
 
+  /** Function to create a new checklist, on desktop */
   const createDesktopChecklist = () => {
     setNoteType('checklist')
     setCreatingNote(true)
   }
 
+  /** Function to create a new checklist, on mobile */
   const createMobileChecklist = () => {
     setNoteType('checklist')
     openModal()
@@ -89,9 +83,6 @@ const NoteCreator = (props: IComponentProps): JSX.Element => {
         {creatingNote ? (
           <>
             <NoteFormContainer
-              editingID={editingID}
-              handleNoteTextChange={handleNoteTextChange}
-              handleNoteTitleChange={handleNoteTitleChange}
               finishCreatingNote={finishCreatingNote}
               inModal={false}
             />

@@ -1,23 +1,32 @@
-import { ChangeEventHandler } from 'react'
+import { ChangeEvent, ChangeEventHandler } from 'react'
 import { TextField, Grid } from '@mui/material'
 import { useRecoilValue } from 'recoil'
-import { atomNewNote, atomNoteBeingEdited } from '../../../atoms'
+import {
+  atomEditingID,
+  atomNewNote,
+  atomNoteBeingEdited,
+  atomViewportWidth,
+} from '../atoms'
 
-interface IComponentProps {
+interface TextFormProps {
   handleNoteTextChange: ChangeEventHandler<HTMLInputElement>
-  handleNoteTitleChange: ChangeEventHandler<HTMLInputElement>
-  editingID: string
+  handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-const TextFormMobile = (props: IComponentProps) => {
-  const { handleNoteTextChange, handleNoteTitleChange, editingID } = props
+const TextForm = (props: TextFormProps) => {
+  const { handleNoteTextChange, handleNoteTitleChange } = props
 
+  /** A new note */
   const newNote = useRecoilValue(atomNewNote)
-
+  /** The note being edited */
   const noteBeingEdited = useRecoilValue(atomNoteBeingEdited)
+  /** The ID of the note being edited */
+  const editingID = useRecoilValue(atomEditingID)
+  /** The width of the browser, in pixels */
+  const viewportWidth = useRecoilValue(atomViewportWidth)
 
   return (
-    <Grid container sx={{ padding: '0.5em' }}>
+    <Grid container sx={viewportWidth <= 1011 ? { padding: '0.5em' } : {}}>
       <Grid item xs={12}>
         <TextField
           multiline
@@ -27,6 +36,7 @@ const TextFormMobile = (props: IComponentProps) => {
           variant="outlined"
           sx={{
             width: '100%',
+            paddingLeft: viewportWidth > 1011 ? '0.2em' : '',
             maxHeight: '50vh',
             overflowY: 'auto',
             '& .MuiOutlinedInput-root': {
@@ -49,14 +59,15 @@ const TextFormMobile = (props: IComponentProps) => {
         <TextField
           autoFocus
           multiline
-          placeholder="Note"
+          placeholder={viewportWidth > 1011 ? 'Take a note...' : 'Note'}
           size="small"
           onChange={handleNoteTextChange}
           value={editingID ? noteBeingEdited.text : newNote.text}
           variant="outlined"
           sx={{
             width: '100%',
-            maxHeight: '80vh',
+            paddingLeft: viewportWidth > 1011 ? '0.2em' : '',
+            maxHeight: viewportWidth > 1011 ? '50vh' : '80vh',
             overflowY: 'auto',
             '& .MuiOutlinedInput-root': {
               '& fieldset': {
@@ -76,4 +87,4 @@ const TextFormMobile = (props: IComponentProps) => {
   )
 }
 
-export default TextFormMobile
+export default TextForm

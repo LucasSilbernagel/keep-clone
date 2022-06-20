@@ -8,7 +8,7 @@ import {
 } from '@mui/material'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 
-interface IComponentProps {
+interface ProfileMenuProps {
   profileAnchorEl: null | HTMLElement
   profileMenuId: string
   isProfileMenuOpen: boolean
@@ -16,7 +16,7 @@ interface IComponentProps {
   logOut: () => void
 }
 
-const ProfileMenu = (props: IComponentProps): JSX.Element => {
+const ProfileMenu = (props: ProfileMenuProps): JSX.Element => {
   const {
     profileAnchorEl,
     profileMenuId,
@@ -25,6 +25,7 @@ const ProfileMenu = (props: IComponentProps): JSX.Element => {
     logOut,
   } = props
 
+  /** User profile data, returned from localStorage */
   const userProfile = JSON.parse(window.localStorage.userProfile)
 
   return (

@@ -1,32 +1,30 @@
-import { useState, useEffect, ChangeEvent } from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 import NoteView from './NoteView'
-import { BLANK_EXISTING_NOTE, BLANK_NEW_NOTE } from '../Constants'
-import { IExistingNote } from '../types'
 import Login from './Login'
 import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil'
 import {
-  atomNewNote,
+  atomNotes,
   atomViewportWidth,
   atomSearchValue,
   atomIsLoading,
   atomIsDarkTheme,
   atomNoteBeingEdited,
-  atomNoteList,
   atomNoteType,
+  atomFilteredNotes,
+  atomEditingID,
 } from '../atoms'
-import { nanoid } from 'nanoid'
+import { getNotes } from '../LogicHelpers'
 
 const Home = () => {
   /** Saved notes */
-  const [notes, setNotes] = useState<IExistingNote[]>([])
-  /** Filtered saved notes */
-  const [filteredNotes, setFilteredNotes] = useState<IExistingNote[]>([])
+  const [notes, setNotes] = useRecoilState(atomNotes)
+  /** State setter to update the array of filtered notes */
+  const setFilteredNotes = useSetRecoilState(atomFilteredNotes)
   /** The ID of the note that is being edited */
-  const [editingID, setEditingID] = useState('')
+  const editingID = useRecoilValue(atomEditingID)
   /** The note that is being edited */
-  const [noteBeingEdited, setNoteBeingEdited] =
-    useRecoilState(atomNoteBeingEdited)
+  const noteBeingEdited = useRecoilValue(atomNoteBeingEdited)
   /** Whether the user has authenticated */
   const [authenticated, setAuthenticated] = useState(false)
   /** Whether there was an issue with user authentication */
@@ -36,18 +34,15 @@ const Home = () => {
     useState('Google sign in was unsuccessful.')
   /** State setter to update the width of the viewport/window, in pixels */
   const setViewportWidth = useSetRecoilState(atomViewportWidth)
-  /** State setter to update new note */
-  const setNewNote = useSetRecoilState(atomNewNote)
-
+  /** The value typed into the search bar */
   const searchValue = useRecoilValue(atomSearchValue)
-
+  /** State setter to determine whether notes are loading from the back end */
   const setIsLoading = useSetRecoilState(atomIsLoading)
-
+  /** Application theme (dark/light), saved in localStorage */
   let isDarkTheme = window.localStorage.getItem('keepCloneDarkTheme')
+  /** State setter to update the application theme (light/dark) */
   const setIsDarkTheme = useSetRecoilState(atomIsDarkTheme)
-
-  const setNoteList = useSetRecoilState(atomNoteList)
-
+  /** State setter to update the note type that is being created or viewed */
   const setNoteType = useSetRecoilState(atomNoteType)
 
   /** Keep track of the viewport/window width */
@@ -78,16 +73,22 @@ const Home = () => {
 
   /** Filter notes */
   useEffect(() => {
-    setFilteredNotes(notes)
     if (searchValue) {
       setTimeout(() => {
         setFilteredNotes((notes) =>
-          notes.filter((note) => JSON.stringify(note).includes(searchValue))
+          notes.filter((note) =>
+            JSON.stringify(note)
+              .toLowerCase()
+              .includes(searchValue.toLowerCase())
+          )
         )
-      }, 500)
+      }, 1000)
+    } else {
+      setFilteredNotes(notes)
     }
-  }, [notes, searchValue])
+  }, [notes, searchValue, setFilteredNotes])
 
+  /** Update note type state according to the contents of the note that is clicked on for editing */
   useEffect(() => {
     if (editingID) {
       if (noteBeingEdited.text.length > 0) {
@@ -103,141 +104,26 @@ const Home = () => {
     setNoteType,
   ])
 
-  /** Log out of the app */
-  const logOut = () => {
-    localStorage.setItem('userProfile', '')
-    setAuthenticated(false)
-    setNotes([])
-  }
-
-  /** Returns all saved notes */
-  const getNotes = () => {
-    setIsLoading(true)
-    axios
-      .get('/api/notes', {
-        params: {
-          userGoogleId: JSON.parse(window.localStorage.userProfile).googleId,
-        },
-      })
-      .then((res) => {
-        if (res.data) {
-          setNotes(res.data)
-          setIsLoading(false)
-        }
-      })
-      .catch((err) => console.error(err))
-  }
-
-  /** Edit a note with a specific ID */
-  const editNote = (id: string) => {
-    setEditingID(id)
-    setNoteBeingEdited(
-      filteredNotes.find((note) => note._id === id) ?? BLANK_EXISTING_NOTE
-    )
-  }
-
   /** Delete a note with a specific ID */
   const deleteNote = (id: string) => {
     axios
       .delete(`/api/notes/${id}`)
       .then((res) => {
         if (res.data) {
-          getNotes()
+          getNotes(setIsLoading, setNotes)
         }
       })
       .catch((err) => console.error(err))
   }
 
-  /** Change the text of a note as the user types into the editing field */
-  const handleNoteTextChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (editingID) {
-      setNoteBeingEdited((prevNote) => {
-        const editedNote = { ...prevNote }
-        editedNote.text = e.target.value
-        editedNote.lastEdited = Date.now()
-        return editedNote
-      })
-    } else {
-      setNewNote((prevNote) => {
-        const editedNote = { ...prevNote }
-        editedNote.text = e.target.value
-        editedNote.title = prevNote.title
-        editedNote.lastEdited = Date.now()
-        editedNote.userGoogleId = JSON.parse(
-          window.localStorage.userProfile
-        ).googleId
-        return editedNote
-      })
-    }
-  }
-
-  /** Change the title of a note as the user types into the editing field */
-  const handleNoteTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (editingID) {
-      setNoteBeingEdited((prevNote) => {
-        const editedNote = { ...prevNote }
-        editedNote.title = e.target.value
-        editedNote.lastEdited = Date.now()
-        return editedNote
-      })
-    } else {
-      setNewNote((prevNote) => {
-        const editedNote = { ...prevNote }
-        editedNote.title = e.target.value
-        editedNote.text = prevNote.text
-        editedNote.lastEdited = Date.now()
-        editedNote.userGoogleId = JSON.parse(
-          window.localStorage.userProfile
-        ).googleId
-        return editedNote
-      })
-    }
-  }
-
-  /** Save an edited note to the database */
-  const saveNote = () => {
-    if (
-      (noteBeingEdited.text && noteBeingEdited.text.length > 0) ||
-      (noteBeingEdited.title && noteBeingEdited.title.length > 0) ||
-      noteBeingEdited.list.some((item) => item.text.length > 0)
-    ) {
-      axios
-        .put(`/api/notes/${noteBeingEdited._id}`, noteBeingEdited)
-        .then((res) => {
-          if (res.data) {
-            getNotes()
-          }
-        })
-        .then(() => {
-          setEditingID('')
-          setNoteBeingEdited(BLANK_EXISTING_NOTE)
-          setNewNote(BLANK_NEW_NOTE)
-          setNoteList([{ text: '', done: false, id: nanoid() }])
-        })
-        .catch((err) => console.error(err))
-    } else {
-      deleteNote(noteBeingEdited._id)
-    }
-  }
-
   if (authenticated) {
     return (
-      <NoteView
-        getNotes={getNotes}
-        filteredNotes={filteredNotes}
-        editNote={editNote}
-        editingID={editingID}
-        saveNote={saveNote}
-        handleNoteTextChange={handleNoteTextChange}
-        handleNoteTitleChange={handleNoteTitleChange}
-        logOut={logOut}
-      />
+      <NoteView setAuthenticated={setAuthenticated} deleteNote={deleteNote} />
     )
   } else
     return (
       <Login
         setAuthenticated={setAuthenticated}
-        getNotes={getNotes}
         authenticationFailed={authenticationFailed}
         setAuthenticationFailed={setAuthenticationFailed}
         authenticationFailedMessage={authenticationFailedMessage}

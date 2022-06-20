@@ -1,15 +1,17 @@
 import { Grid } from '@mui/material'
 import NoteContent from './NoteContent'
-import { IExistingNote } from '../types'
+import { useRecoilValue } from 'recoil'
+import { atomFilteredNotes } from '../atoms'
 
-interface IComponentProps {
-  filteredNotes: Array<IExistingNote>
-  getNotes: () => void
-  editNote: (id: string) => void
+interface NoteListProps {
+  deleteNote: (id: string) => void
 }
 
-const NoteList = (props: IComponentProps) => {
-  const { filteredNotes, getNotes, editNote } = props
+const NoteList = (props: NoteListProps) => {
+  const { deleteNote } = props
+
+  /** Saved notes, filtered */
+  const filteredNotes = useRecoilValue(atomFilteredNotes)
 
   /** Display filteredNotes if there are any saved */
   if (filteredNotes.length > 0) {
@@ -28,12 +30,7 @@ const NoteList = (props: IComponentProps) => {
         <Grid container item xs={12}>
           {filteredNotes.map((note) => {
             return (
-              <NoteContent
-                key={note._id}
-                note={note}
-                getNotes={getNotes}
-                editNote={editNote}
-              />
+              <NoteContent key={note._id} note={note} deleteNote={deleteNote} />
             )
           })}
         </Grid>

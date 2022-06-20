@@ -1,10 +1,15 @@
-import { ChangeEvent, useState, useEffect } from 'react'
+import {
+  ChangeEvent,
+  useState,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+} from 'react'
 import { Grid } from '@mui/material'
 import NoteGrid from '../Components/NoteGrid'
 import NoteList from '../Components/NoteList'
-import { IExistingNote } from '../types'
-import DesktopAppBar from '../Components/AppBar/DesktopAppBar'
-import MobileAppBar from '../Components/AppBar/MobileAppBar'
+import DesktopAppBar from '../Components/DesktopAppBar'
+import MobileAppBar from '../Components/MobileAppBar'
 import {
   atomNewNote,
   atomViewportWidth,
@@ -12,65 +17,68 @@ import {
   atomIsSearching,
   atomIsGridView,
   atomNoteList,
+  atomIsLoading,
+  atomNotes,
 } from '../atoms'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import axios from 'axios'
 import NoteCreator from '../Components/NoteCreator'
-import NoteModal from '../Components/NoteModal/NoteModal'
+import NoteModal from '../Components/NoteModal'
 import { nanoid } from 'nanoid'
+import { getNotes } from '../LogicHelpers'
 
-interface IComponentProps {
-  getNotes: () => void
-  filteredNotes: Array<IExistingNote>
-  editNote: (id: string) => void
-  editingID: string
-  saveNote: () => void
-  handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
-  handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
-  logOut: () => void
+interface NoteViewProps {
+  setAuthenticated: Dispatch<SetStateAction<boolean>>
+  deleteNote: (id: string) => void
 }
 
-const NoteView = (props: IComponentProps): JSX.Element => {
-  const {
-    getNotes,
-    filteredNotes,
-    editNote,
-    editingID,
-    saveNote,
-    handleNoteTextChange,
-    handleNoteTitleChange,
-    logOut,
-  } = props
+const NoteView = (props: NoteViewProps): JSX.Element => {
+  const { setAuthenticated, deleteNote } = props
 
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
-
+  /** State setter to update the value that is typed into the search bar */
   const setSearchValue = useSetRecoilState(atomSearchValue)
-
+  /** State setter to determine whether the search bar is being used */
   const setIsSearching = useSetRecoilState(atomIsSearching)
-
+  /** Boolean to determine whether a new note is being created. */
   const [creatingNote, setCreatingNote] = useState(false)
-
+  /** New note atom */
   const [newNote, setNewNote] = useRecoilState(atomNewNote)
-
+  /** Boolean to determine whether notes are being displayed in a grid (or list) */
   const isGridView = useRecoilValue(atomIsGridView)
-
+  /** State setter to update the array of checklist items on a note */
   const setNoteList = useSetRecoilState(atomNoteList)
+  /** State setter to determine whether notes are being loaded from the back end */
+  const setIsLoading = useSetRecoilState(atomIsLoading)
+  /** State setter to update the notes array */
+  const setNotes = useSetRecoilState(atomNotes)
 
   /** Display all saved notes when the page first loads */
   useEffect(() => {
-    getNotes()
+    getNotes(setIsLoading, setNotes)
     // eslint-disable-next-line
   }, [])
 
-  /** Save the new note to the database */
+  /** Log out of the app */
+  const logOut = () => {
+    localStorage.setItem('userProfile', '')
+    setAuthenticated(false)
+    setNotes([])
+  }
+
+  /** Save a new note to the database */
   const saveNewNote = () => {
-    if (newNote.text || newNote.title) {
+    if (
+      newNote.text ||
+      newNote.title ||
+      newNote.list.some((item) => item.text.length > 0)
+    ) {
       axios
         .post('/api/notes', newNote)
         .then((res) => {
           if (res.data) {
-            getNotes()
+            getNotes(setIsLoading, setNotes)
             setNewNote({
               text: '',
               title: '',
@@ -85,36 +93,36 @@ const NoteView = (props: IComponentProps): JSX.Element => {
     }
   }
 
+  /** Function to finish creating a new note */
   const finishCreatingNote = () => {
-    if (newNote.text || newNote.title) {
-      saveNewNote()
-    }
+    saveNewNote()
     setCreatingNote(false)
   }
 
+  /** Update search filter with whatever the user types into the search bar */
   const handleSearch = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setSearchValue(e.target.value)
   }
 
+  /** Reset the search filter */
   const clearSearch = () => {
     setIsSearching(false)
     setSearchValue('')
+    getNotes(setIsLoading, setNotes)
   }
 
   return (
     <>
       <NoteModal
-        getNotes={getNotes}
         saveNewNote={saveNewNote}
-        editingID={editingID}
-        saveNote={saveNote}
-        handleNoteTextChange={handleNoteTextChange}
-        handleNoteTitleChange={handleNoteTitleChange}
         finishCreatingNote={finishCreatingNote}
+        deleteNote={deleteNote}
       />
       {creatingNote ? (
+        /** Invisible background rendered when the desktop NoteCreator is being used. */
+        /** Triggers the finishCreatingNote function when clicked. */
         <div
           style={{
             width: '100%',
@@ -132,7 +140,6 @@ const NoteView = (props: IComponentProps): JSX.Element => {
           logOut={logOut}
           handleSearch={handleSearch}
           clearSearch={clearSearch}
-          getNotes={getNotes}
         />
       ) : (
         <MobileAppBar
@@ -156,9 +163,6 @@ const NoteView = (props: IComponentProps): JSX.Element => {
             }}
           >
             <NoteCreator
-              editingID={editingID}
-              handleNoteTextChange={handleNoteTextChange}
-              handleNoteTitleChange={handleNoteTitleChange}
               creatingNote={creatingNote}
               setCreatingNote={setCreatingNote}
               finishCreatingNote={finishCreatingNote}
@@ -171,17 +175,9 @@ const NoteView = (props: IComponentProps): JSX.Element => {
           sx={viewportWidth > 1011 ? {} : { paddingBottom: '100px' }}
         >
           {isGridView ? (
-            <NoteGrid
-              filteredNotes={filteredNotes}
-              getNotes={getNotes}
-              editNote={editNote}
-            />
+            <NoteGrid deleteNote={deleteNote} />
           ) : (
-            <NoteList
-              filteredNotes={filteredNotes}
-              getNotes={getNotes}
-              editNote={editNote}
-            />
+            <NoteList deleteNote={deleteNote} />
           )}
         </Grid>
       </Grid>

@@ -1,19 +1,18 @@
 import { Grid } from '@mui/material'
 import Masonry from '@mui/lab/Masonry'
 import NoteContent from './NoteContent'
-import { IExistingNote } from '../types'
 import { useRecoilValue } from 'recoil'
-import { atomViewportWidth } from '../atoms'
+import { atomViewportWidth, atomFilteredNotes } from '../atoms'
 
-interface IComponentProps {
-  filteredNotes: Array<IExistingNote>
-  getNotes: () => void
-  editNote: (id: string) => void
+interface NoteGridProps {
+  deleteNote: (id: string) => void
 }
 
-const NoteGrid = (props: IComponentProps) => {
-  const { filteredNotes, getNotes, editNote } = props
+const NoteGrid = (props: NoteGridProps) => {
+  const { deleteNote } = props
 
+  /** Saved notes, filtered */
+  const filteredNotes = useRecoilValue(atomFilteredNotes)
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
 
@@ -36,8 +35,7 @@ const NoteGrid = (props: IComponentProps) => {
                 <NoteContent
                   key={note._id}
                   note={note}
-                  getNotes={getNotes}
-                  editNote={editNote}
+                  deleteNote={deleteNote}
                 />
               )
             })}
@@ -61,8 +59,7 @@ const NoteGrid = (props: IComponentProps) => {
                 <NoteContent
                   key={note._id}
                   note={note}
-                  getNotes={getNotes}
-                  editNote={editNote}
+                  deleteNote={deleteNote}
                 />
               )
             })}
@@ -85,8 +82,7 @@ const NoteGrid = (props: IComponentProps) => {
                 <NoteContent
                   key={note._id}
                   note={note}
-                  getNotes={getNotes}
-                  editNote={editNote}
+                  deleteNote={deleteNote}
                 />
               )
             })}
@@ -113,8 +109,7 @@ const NoteGrid = (props: IComponentProps) => {
                 <NoteContent
                   key={note._id}
                   note={note}
-                  getNotes={getNotes}
-                  editNote={editNote}
+                  deleteNote={deleteNote}
                 />
               )
             })}

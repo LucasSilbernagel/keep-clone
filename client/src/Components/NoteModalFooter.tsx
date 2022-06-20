@@ -13,42 +13,52 @@ import {
   atomViewportWidth,
   atomIsDarkTheme,
   atomNoteBeingEdited,
-} from '../../atoms'
-import { useRecoilState, useRecoilValue } from 'recoil'
+  atomEditingID,
+  atomNotes,
+  atomIsLoading,
+} from '../atoms'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import axios from 'axios'
-import { IExistingNote, INewNote } from '../../types'
-import { BLANK_NEW_NOTE } from '../../Constants'
+import { IExistingNote, INewNote } from '../types'
+import { BLANK_NEW_NOTE } from '../Constants'
 import ReactTimeAgo from 'react-time-ago'
 import { nanoid } from 'nanoid'
+import { getNotes } from '../LogicHelpers'
 
-interface IComponentProps {
-  getNotes: () => void
+interface NoteModalFooterProps {
   handleCloseModal: () => void
-  editingID: string
-  saveNote: () => void
+  saveEditedNote: () => void
+  deleteNote: (id: string) => void
 }
 
-const NoteModalFooter = (props: IComponentProps): JSX.Element => {
-  const { getNotes, handleCloseModal, editingID, saveNote } = props
+const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
+  const { handleCloseModal, saveEditedNote, deleteNote } = props
 
+  /** Boolean that determines whether the dark theme (or light theme) is being used */
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)
-
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
-
+  /** The ID of the note that is being edited */
+  const editingID = useRecoilValue(atomEditingID)
+  /** A new note */
   const [newNote, setNewNote] = useRecoilState(atomNewNote)
-
+  /** The note that is being edited */
   const noteBeingEdited = useRecoilValue(atomNoteBeingEdited)
-
+  /** A copy of a note */
   const [noteCopy, setNoteCopy] = useState<IExistingNote | INewNote>(
     BLANK_NEW_NOTE
   )
-
+  /** State setter to update the application loading state */
+  const setIsLoading = useSetRecoilState(atomIsLoading)
+  /** State setter to update the notes array */
+  const setNotes = useSetRecoilState(atomNotes)
   /** Anchor for the "more" menu */
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  /** Boolean that determines whether the "more" menu is open */
   const open = Boolean(anchorEl)
 
+  /** Create a copy of the note that is being created or edited */
   useEffect(() => {
     if (editingID) {
       setNoteCopy(noteBeingEdited)
@@ -57,11 +67,13 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
     }
   }, [editingID, newNote, noteBeingEdited])
 
-  const handleClickMore = (event: MouseEvent<HTMLButtonElement>) => {
+  /** Function to open the "more" menu */
+  const handleClickMoreMenu = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
   }
 
-  const handleCloseMenu = () => {
+  /** Function to close the "more" menu */
+  const handleCloseMoreMenu = () => {
     setAnchorEl(null)
   }
 
@@ -77,7 +89,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
       })
       .then((res) => {
         if (res.data) {
-          getNotes()
+          getNotes(setIsLoading, setNotes)
           setNoteCopy({
             text: '',
             title: '',
@@ -90,14 +102,16 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
       .catch((err) => console.error(err))
   }
 
-  const copyNote = () => {
+  /** Function to copy a note from inside the modal */
+  const copyNoteFromModal = () => {
     saveNoteCopy()
-    saveNote()
+    saveEditedNote()
     handleCloseModal()
     setAnchorEl(null)
   }
 
-  const deleteNote = (id: string) => {
+  /** Function to delete a note from inside the modal */
+  const deleteNoteFromModal = (id: string) => {
     setNewNote({
       text: '',
       title: '',
@@ -107,14 +121,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
     })
     handleCloseModal()
     setAnchorEl(null)
-    axios
-      .delete(`/api/notes/${id}`)
-      .then((res) => {
-        if (res.data) {
-          getNotes()
-        }
-      })
-      .catch((err) => console.error(err))
+    deleteNote(id)
   }
 
   if (viewportWidth < 1011) {
@@ -152,15 +159,15 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
             id="more-menu"
             anchorEl={anchorEl}
             open={open}
-            onClose={handleCloseMenu}
+            onClose={handleCloseMoreMenu}
             MenuListProps={{
               'aria-labelledby': 'more-button',
             }}
           >
-            <MenuItem onClick={() => deleteNote(noteBeingEdited._id)}>
+            <MenuItem onClick={() => deleteNoteFromModal(noteBeingEdited._id)}>
               Delete note
             </MenuItem>
-            <MenuItem onClick={() => copyNote()}>Make a copy</MenuItem>
+            <MenuItem onClick={() => copyNoteFromModal()}>Make a copy</MenuItem>
           </Menu>
         </Grid>
         <Grid item>
@@ -170,7 +177,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
               aria-controls={open ? 'more-menu' : undefined}
               aria-haspopup="true"
               aria-expanded={open ? 'true' : undefined}
-              onClick={handleClickMore}
+              onClick={handleClickMoreMenu}
               color="secondary"
               className="moreButton"
             >
@@ -208,15 +215,19 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
                 id="more-menu"
                 anchorEl={anchorEl}
                 open={open}
-                onClose={handleCloseMenu}
+                onClose={handleCloseMoreMenu}
                 MenuListProps={{
                   'aria-labelledby': 'more-button',
                 }}
               >
-                <MenuItem onClick={() => deleteNote(noteBeingEdited._id)}>
+                <MenuItem
+                  onClick={() => deleteNoteFromModal(noteBeingEdited._id)}
+                >
                   Delete note
                 </MenuItem>
-                <MenuItem onClick={() => copyNote()}>Make a copy</MenuItem>
+                <MenuItem onClick={() => copyNoteFromModal()}>
+                  Make a copy
+                </MenuItem>
               </Menu>
             </Grid>
             <Grid item>
@@ -226,7 +237,7 @@ const NoteModalFooter = (props: IComponentProps): JSX.Element => {
                   aria-controls={open ? 'more-menu' : undefined}
                   aria-haspopup="true"
                   aria-expanded={open ? 'true' : undefined}
-                  onClick={handleClickMore}
+                  onClick={handleClickMoreMenu}
                   color="secondary"
                   className="moreButton"
                 >

@@ -1,4 +1,4 @@
-import { forwardRef, ChangeEvent } from 'react'
+import { forwardRef } from 'react'
 import { Dialog, Grid, IconButton, Slide, Box, useTheme } from '@mui/material'
 import {
   atomIsModalOpen,
@@ -6,12 +6,20 @@ import {
   atomViewportWidth,
   atomIsDarkTheme,
   atomNoteBeingEdited,
-} from '../../atoms'
-import { useRecoilState, useRecoilValue } from 'recoil'
+  atomEditingID,
+  atomIsLoading,
+  atomNotes,
+  atomNoteList,
+} from '../atoms'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import NoteFormContainer from '../NoteForms/NoteFormContainer'
+import NoteFormContainer from './NoteFormContainer'
 import { TransitionProps } from '@mui/material/transitions'
 import NoteModalFooter from './NoteModalFooter'
+import axios from 'axios'
+import { getNotes } from '../LogicHelpers'
+import { BLANK_EXISTING_NOTE, BLANK_NEW_NOTE } from '../Constants'
+import { nanoid } from 'nanoid'
 
 /** Transition for the note modal */
 const Transition = forwardRef(function Transition(
@@ -23,43 +31,67 @@ const Transition = forwardRef(function Transition(
   return <Slide ref={ref} direction="up" {...props} />
 })
 
-interface IComponentProps {
-  getNotes: () => void
+interface NoteModalProps {
   saveNewNote: () => void
-  editingID: string
-  saveNote: () => void
-  handleNoteTextChange: (e: ChangeEvent<HTMLInputElement>) => void
-  handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
   finishCreatingNote: () => void
+  deleteNote: (id: string) => void
 }
 
-const NoteModal = (props: IComponentProps): JSX.Element => {
-  const {
-    getNotes,
-    saveNewNote,
-    editingID,
-    saveNote,
-    handleNoteTextChange,
-    handleNoteTitleChange,
-    finishCreatingNote,
-  } = props
+const NoteModal = (props: NoteModalProps): JSX.Element => {
+  const { saveNewNote, finishCreatingNote, deleteNote } = props
 
+  /** The application theme */
   const theme = useTheme()
-
+  /** Boolean that determines whether the dark theme (or light theme) is being used */
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)
-
+  /** The ID of the note that is being edited */
+  const [editingID, setEditingID] = useRecoilState(atomEditingID)
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
-
+  /** Boolean that determines whether the modal is open */
   const [isModalOpen, setIsModalOpen] = useRecoilState(atomIsModalOpen)
+  /** A new note */
+  const [newNote, setNewNote] = useRecoilState(atomNewNote)
+  /** The note that is being edited */
+  const [noteBeingEdited, setNoteBeingEdited] =
+    useRecoilState(atomNoteBeingEdited)
+  /** State setter to update the application loading state */
+  const setIsLoading = useSetRecoilState(atomIsLoading)
+  /** State setter to update the notes array */
+  const setNotes = useSetRecoilState(atomNotes)
+  /** State setter to update the array of checklist items for a note */
+  const setNoteList = useSetRecoilState(atomNoteList)
 
-  const newNote = useRecoilValue(atomNewNote)
+  /** Save an edited note to the database */
+  const saveEditedNote = () => {
+    if (
+      (noteBeingEdited.text && noteBeingEdited.text.length > 0) ||
+      (noteBeingEdited.title && noteBeingEdited.title.length > 0) ||
+      noteBeingEdited.list.some((item) => item.text.length > 0)
+    ) {
+      axios
+        .put(`/api/notes/${noteBeingEdited._id}`, noteBeingEdited)
+        .then((res) => {
+          if (res.data) {
+            getNotes(setIsLoading, setNotes)
+          }
+        })
+        .then(() => {
+          setEditingID('')
+          setNoteBeingEdited(BLANK_EXISTING_NOTE)
+          setNewNote(BLANK_NEW_NOTE)
+          setNoteList([{ text: '', done: false, id: nanoid() }])
+        })
+        .catch((err) => console.error(err))
+    } else {
+      deleteNote(noteBeingEdited._id)
+    }
+  }
 
-  const noteBeingEdited = useRecoilValue(atomNoteBeingEdited)
-
+  /** Function to close the modal */
   const handleCloseModal = () => {
     if (editingID) {
-      saveNote()
+      saveEditedNote()
     } else {
       saveNewNote()
     }
@@ -69,7 +101,7 @@ const NoteModal = (props: IComponentProps): JSX.Element => {
   /** Function called when the "back" button is clicked in the modal */
   const handleBack = () => {
     if (newNote.text || noteBeingEdited.title) {
-      saveNote()
+      saveEditedNote()
       handleCloseModal()
     } else {
       handleCloseModal()
@@ -108,18 +140,14 @@ const NoteModal = (props: IComponentProps): JSX.Element => {
             </Grid>
           ) : null}
           <NoteFormContainer
-            editingID={editingID}
-            handleNoteTextChange={handleNoteTextChange}
-            handleNoteTitleChange={handleNoteTitleChange}
             finishCreatingNote={finishCreatingNote}
             inModal={true}
           />
         </Grid>
         <NoteModalFooter
-          getNotes={getNotes}
           handleCloseModal={handleCloseModal}
-          editingID={editingID}
-          saveNote={saveNote}
+          saveEditedNote={saveEditedNote}
+          deleteNote={deleteNote}
         />
       </Box>
     </Dialog>

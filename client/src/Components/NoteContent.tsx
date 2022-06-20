@@ -1,93 +1,56 @@
-import { useState, MouseEvent } from 'react'
-import {
-  Grid,
-  Typography,
-  IconButton,
-  Paper,
-  Tooltip,
-  Menu,
-  MenuItem,
-  useTheme,
-  List,
-  ListItem,
-  Checkbox,
-} from '@mui/material'
-import MoreVertIcon from '@mui/icons-material/MoreVert'
+import { useState } from 'react'
+import { Grid, Typography, Paper, useTheme } from '@mui/material'
 import { IExistingNote } from '../types'
-import axios from 'axios'
 import {
   atomIsModalOpen,
   atomViewportWidth,
   atomIsGridView,
   atomIsDarkTheme,
+  atomEditingID,
+  atomNoteBeingEdited,
+  atomFilteredNotes,
 } from '../atoms'
 import { useSetRecoilState, useRecoilValue } from 'recoil'
 import { noteContentStyles } from '../LogicHelpers'
-import CompletedListSummary from './CompletedListSummary'
+import { BLANK_EXISTING_NOTE } from '../Constants'
+import NoteContentChecklist from './NoteContentChecklist'
+import NoteContentFooter from './NoteContentFooter'
 
-interface IComponentProps {
+interface NoteContentProps {
   note: IExistingNote
-  getNotes: () => void
-  editNote: (id: string) => void
+  deleteNote: (id: string) => void
 }
 
-const NoteContent = (props: IComponentProps) => {
-  const { note, getNotes, editNote } = props
+const NoteContent = (props: NoteContentProps) => {
+  const { note, deleteNote } = props
 
+  /** The application theme */
   const theme = useTheme()
-
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
-
+  /** State setter to update the modal open/closed state */
   const setIsModalOpen = useSetRecoilState(atomIsModalOpen)
-
+  /** Boolean that determines notes are displayed in a grid (or list) */
   const isGridView = useRecoilValue(atomIsGridView)
-
+  /** Boolean that determines whether the dark theme (or light theme) is being used */
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)
+  /** State setter to save the ID of the note that is being edited */
+  const setEditingID = useSetRecoilState(atomEditingID)
+  /** State setter to update which note that is being edited */
+  const setNoteBeingEdited = useSetRecoilState(atomNoteBeingEdited)
+  /** The notes array, filtered */
+  const filteredNotes = useRecoilValue(atomFilteredNotes)
+  /** Anchor element for the "more" menu */
+  const [moreAnchorEl, setMoreAnchorEl] = useState<null | HTMLElement>(null)
+  /** Boolean that determines whether the "more" menu is open */
+  const isMoreMenuOpen = Boolean(moreAnchorEl)
 
-  /** Anchor for the "more" menu */
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const open = Boolean(anchorEl)
-  const handleClickMore = (event: MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
-  const handleCloseMenu = () => {
-    setAnchorEl(null)
-  }
-
-  const copyNote = (note: IExistingNote) => {
-    setAnchorEl(null)
-    const newNote = {
-      text: note.text,
-      title: note.title,
-      list: note.list,
-      userGoogleId: note.userGoogleId,
-      lastEdited: Date.now(),
-    }
-    axios
-      .post('/api/notes', newNote)
-      .then((res) => {
-        if (res.data) {
-          getNotes()
-        }
-      })
-      .catch((err) => console.error(err))
-  }
-
-  /** Delete a note with a specific ID */
-  const deleteNote = (id: string) => {
-    axios
-      .delete(`/api/notes/${id}`)
-      .then((res) => {
-        if (res.data) {
-          getNotes()
-        }
-      })
-      .catch((err) => console.error(err))
-  }
-
-  const startEditingNote = (id: string) => {
-    editNote(id)
+  /** Edit a note with a specific ID */
+  const editNote = (id: string) => {
+    setEditingID(id)
+    setNoteBeingEdited(
+      filteredNotes.find((note) => note._id === id) ?? BLANK_EXISTING_NOTE
+    )
     setIsModalOpen(true)
   }
 
@@ -112,7 +75,12 @@ const NoteContent = (props: IComponentProps) => {
       <Paper
         tabIndex={0}
         elevation={2}
-        sx={noteContentStyles(open, isDarkTheme, theme, viewportWidth)}
+        sx={noteContentStyles(
+          isMoreMenuOpen,
+          isDarkTheme,
+          theme,
+          viewportWidth
+        )}
       >
         <Grid item container>
           <Grid item xs={12}>
@@ -135,7 +103,7 @@ const NoteContent = (props: IComponentProps) => {
                       width: '100%',
                     }
               }
-              onClick={() => startEditingNote(note._id)}
+              onClick={() => editNote(note._id)}
             >
               {note.title && (
                 <Typography
@@ -163,84 +131,17 @@ const NoteContent = (props: IComponentProps) => {
                 </Typography>
               )}
               {note.list.some((item) => item.text.length > 0) && (
-                <>
-                  <List sx={{ width: '100%', paddingBottom: 0 }} dense>
-                    {note.list
-                      .filter((item) => !item.done && item.text.length > 0)
-                      .map((item) => {
-                        return (
-                          <ListItem key={item.id}>
-                            <Grid container justifyContent="space-between">
-                              <Grid
-                                item
-                                container
-                                alignContent="center"
-                                justifyContent="center"
-                                xs={1}
-                              >
-                                <Grid item>
-                                  <Checkbox checked={item.done} disabled />
-                                </Grid>
-                              </Grid>
-                              <Grid item container xs={10} alignItems="center">
-                                <Grid item xs={12}>
-                                  <Typography
-                                    noWrap
-                                    sx={{
-                                      fontSize: '0.9rem',
-                                    }}
-                                  >
-                                    {item.text}
-                                  </Typography>
-                                </Grid>
-                              </Grid>
-                            </Grid>
-                          </ListItem>
-                        )
-                      })}
-                  </List>
-                  {note.list.filter((item) => item.done && item.text.length > 0)
-                    .length > 0 && <CompletedListSummary note={note} />}
-                </>
+                <NoteContentChecklist note={note} />
               )}
             </button>
           </Grid>
-          {viewportWidth > 1011 ? (
-            <Grid item container justifyContent="flex-end">
-              <Grid item>
-                <Menu
-                  id="more-menu"
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={handleCloseMenu}
-                  MenuListProps={{
-                    'aria-labelledby': 'more-button',
-                  }}
-                >
-                  <MenuItem onClick={() => deleteNote(note._id)}>
-                    Delete note
-                  </MenuItem>
-                  <MenuItem onClick={() => copyNote(note)}>
-                    Make a copy
-                  </MenuItem>
-                </Menu>
-                <Tooltip title="More">
-                  <IconButton
-                    id="more-button"
-                    aria-controls={open ? 'more-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? 'true' : undefined}
-                    onClick={handleClickMore}
-                    color="inherit"
-                    className="moreButton"
-                    sx={open ? { display: 'flex' } : { display: 'none' }}
-                  >
-                    <MoreVertIcon />
-                  </IconButton>
-                </Tooltip>
-              </Grid>
-            </Grid>
-          ) : null}
+          <NoteContentFooter
+            note={note}
+            deleteNote={deleteNote}
+            moreAnchorEl={moreAnchorEl}
+            setMoreAnchorEl={setMoreAnchorEl}
+            isMoreMenuOpen={isMoreMenuOpen}
+          />
         </Grid>
       </Paper>
     </Grid>

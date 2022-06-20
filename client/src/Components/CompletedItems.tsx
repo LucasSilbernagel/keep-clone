@@ -14,10 +14,11 @@ import MuiAccordionSummary, {
 import MuiAccordionDetails from '@mui/material/AccordionDetails'
 import { styled } from '@mui/material/styles'
 import { useRecoilValue } from 'recoil'
-import { atomNoteList } from '../../../atoms'
+import { atomNoteList } from '../atoms'
 import ClearIcon from '@mui/icons-material/Clear'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 
+/** Accordino component that contains completed checklist items */
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion
     disableGutters
@@ -30,6 +31,7 @@ const Accordion = styled((props: AccordionProps) => (
   paddingLeft: theme.spacing(1),
 }))
 
+/** The accordion header */
 const AccordionSummary = styled((props: AccordionSummaryProps) => (
   <MuiAccordionSummary expandIcon={<KeyboardArrowRightIcon />} {...props} />
 ))(({ theme }) => ({
@@ -42,18 +44,20 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
   },
 }))
 
+/** The contents of the accordion, under the header */
 const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   padding: theme.spacing(0),
 }))
 
-interface IComponentProps {
+interface CompletedItemsProps {
   handleListCheckboxChange: (id: string) => void
-  handleDelete: (id: string) => void
+  handleDeleteChecklistItem: (id: string) => void
 }
 
-const CompletedItems = (props: IComponentProps) => {
-  const { handleListCheckboxChange, handleDelete } = props
+const CompletedItems = (props: CompletedItemsProps) => {
+  const { handleListCheckboxChange, handleDeleteChecklistItem } = props
 
+  /** Array of checklist items for a note */
   const noteList = useRecoilValue(atomNoteList)
 
   if (noteList.filter((item) => item.done).length > 0) {
@@ -125,7 +129,7 @@ const CompletedItems = (props: IComponentProps) => {
                         {item.text.length > 0 && (
                           <Tooltip title="Delete">
                             <IconButton
-                              onClick={() => handleDelete(item.id)}
+                              onClick={() => handleDeleteChecklistItem(item.id)}
                               aria-label="delete"
                             >
                               <ClearIcon />
