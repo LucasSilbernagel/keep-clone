@@ -6,6 +6,7 @@ import axios from 'axios'
 import { atomViewportWidth, atomIsLoading, atomNotes } from '../atoms'
 import { useSetRecoilState, useRecoilValue } from 'recoil'
 import { getNotes } from '../LogicHelpers'
+import { MAIN_BREAKPOINT } from '../Constants'
 
 interface NoteContentFooterProps {
   note: IExistingNote
@@ -56,7 +57,7 @@ const NoteContentFooter = (props: NoteContentFooterProps) => {
       .catch((err) => console.error(err))
   }
 
-  if (viewportWidth > 1011) {
+  if (viewportWidth > MAIN_BREAKPOINT) {
     return (
       <Grid item container justifyContent="flex-end">
         <Grid item>

@@ -21,7 +21,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import axios from 'axios'
 import { IExistingNote, INewNote } from '../types'
-import { BLANK_NEW_NOTE } from '../Constants'
+import { BLANK_NEW_NOTE, MAIN_BREAKPOINT } from '../Constants'
 import ReactTimeAgo from 'react-time-ago'
 import { nanoid } from 'nanoid'
 import { getNotes } from '../LogicHelpers'
@@ -124,7 +124,7 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
     deleteNote(id)
   }
 
-  if (viewportWidth < 1011) {
+  if (viewportWidth < MAIN_BREAKPOINT) {
     return (
       <Grid
         container

@@ -18,7 +18,11 @@ import { TransitionProps } from '@mui/material/transitions'
 import NoteModalFooter from './NoteModalFooter'
 import axios from 'axios'
 import { getNotes } from '../LogicHelpers'
-import { BLANK_EXISTING_NOTE, BLANK_NEW_NOTE } from '../Constants'
+import {
+  BLANK_EXISTING_NOTE,
+  BLANK_NEW_NOTE,
+  MAIN_BREAKPOINT,
+} from '../Constants'
 import { nanoid } from 'nanoid'
 
 /** Transition for the note modal */
@@ -112,8 +116,8 @@ const NoteModal = (props: NoteModalProps): JSX.Element => {
     <Dialog
       onClose={handleCloseModal}
       open={isModalOpen}
-      fullScreen={viewportWidth < 1011}
-      fullWidth={viewportWidth > 1011}
+      fullScreen={viewportWidth < MAIN_BREAKPOINT}
+      fullWidth={viewportWidth > MAIN_BREAKPOINT}
       TransitionComponent={Transition}
     >
       <Box
@@ -121,14 +125,15 @@ const NoteModal = (props: NoteModalProps): JSX.Element => {
           isDarkTheme
             ? {
                 backgroundColor: theme.palette.background.default,
-                border: viewportWidth > 1011 ? '1px solid #525355' : '',
+                border:
+                  viewportWidth > MAIN_BREAKPOINT ? '1px solid #525355' : '',
                 height: '100%',
               }
             : {}
         }
       >
         <Grid container>
-          {viewportWidth < 1011 ? (
+          {viewportWidth < MAIN_BREAKPOINT ? (
             <Grid item xs={12}>
               <IconButton
                 aria-label="Save or cancel"

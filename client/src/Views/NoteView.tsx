@@ -26,6 +26,7 @@ import NoteCreator from '../Components/NoteCreator'
 import NoteModal from '../Components/NoteModal'
 import { nanoid } from 'nanoid'
 import { getNotes } from '../LogicHelpers'
+import { MAIN_BREAKPOINT } from '../Constants'
 
 interface NoteViewProps {
   setAuthenticated: Dispatch<SetStateAction<boolean>>
@@ -135,7 +136,7 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
           onClick={finishCreatingNote}
         ></div>
       ) : null}
-      {viewportWidth > 1011 ? (
+      {viewportWidth > MAIN_BREAKPOINT ? (
         <DesktopAppBar
           logOut={logOut}
           handleSearch={handleSearch}
@@ -172,7 +173,7 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
         <Grid
           item
           container
-          sx={viewportWidth > 1011 ? {} : { paddingBottom: '100px' }}
+          sx={viewportWidth > MAIN_BREAKPOINT ? {} : { paddingBottom: '100px' }}
         >
           {isGridView ? (
             <NoteGrid deleteNote={deleteNote} />

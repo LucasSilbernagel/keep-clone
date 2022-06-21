@@ -20,6 +20,7 @@ import BrushOutlinedIcon from '@mui/icons-material/BrushOutlined'
 import MicNoneOutlinedIcon from '@mui/icons-material/MicNoneOutlined'
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined'
 import PlusButton from './PlusButton'
+import { MAIN_BREAKPOINT } from '../Constants'
 
 interface NoteCreatorProps {
   creatingNote: boolean
@@ -62,7 +63,7 @@ const NoteCreator = (props: NoteCreatorProps): JSX.Element => {
     openModal()
   }
 
-  if (viewportWidth > 1011) {
+  if (viewportWidth > MAIN_BREAKPOINT) {
     return (
       <Paper
         elevation={3}

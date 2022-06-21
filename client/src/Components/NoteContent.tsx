@@ -12,7 +12,7 @@ import {
 } from '../atoms'
 import { useSetRecoilState, useRecoilValue } from 'recoil'
 import { noteContentStyles } from '../LogicHelpers'
-import { BLANK_EXISTING_NOTE } from '../Constants'
+import { BLANK_EXISTING_NOTE, MAIN_BREAKPOINT } from '../Constants'
 import NoteContentChecklist from './NoteContentChecklist'
 import NoteContentFooter from './NoteContentFooter'
 
@@ -91,7 +91,8 @@ const NoteContent = (props: NoteContentProps) => {
                       background: 'inherit',
                       border: 'none',
                       textAlign: 'left',
-                      paddingBottom: viewportWidth < 1011 ? '1em' : 'unset',
+                      paddingBottom:
+                        viewportWidth < MAIN_BREAKPOINT ? '1em' : 'unset',
                       width: '100%',
                       color: '#FFFFFF',
                     }
@@ -99,7 +100,8 @@ const NoteContent = (props: NoteContentProps) => {
                       background: 'inherit',
                       border: 'none',
                       textAlign: 'left',
-                      paddingBottom: viewportWidth < 1011 ? '1em' : 'unset',
+                      paddingBottom:
+                        viewportWidth < MAIN_BREAKPOINT ? '1em' : 'unset',
                       width: '100%',
                     }
               }

@@ -7,6 +7,7 @@ import {
   atomNoteBeingEdited,
   atomViewportWidth,
 } from '../atoms'
+import { MAIN_BREAKPOINT } from '../Constants'
 
 interface TextFormProps {
   handleNoteTextChange: ChangeEventHandler<HTMLInputElement>
@@ -26,7 +27,10 @@ const TextForm = (props: TextFormProps) => {
   const viewportWidth = useRecoilValue(atomViewportWidth)
 
   return (
-    <Grid container sx={viewportWidth <= 1011 ? { padding: '0.5em' } : {}}>
+    <Grid
+      container
+      sx={viewportWidth <= MAIN_BREAKPOINT ? { padding: '0.5em' } : {}}
+    >
       <Grid item xs={12}>
         <TextField
           multiline
@@ -36,7 +40,7 @@ const TextForm = (props: TextFormProps) => {
           variant="outlined"
           sx={{
             width: '100%',
-            paddingLeft: viewportWidth > 1011 ? '0.2em' : '',
+            paddingLeft: viewportWidth > MAIN_BREAKPOINT ? '0.2em' : '',
             maxHeight: '50vh',
             overflowY: 'auto',
             '& .MuiOutlinedInput-root': {
@@ -59,15 +63,17 @@ const TextForm = (props: TextFormProps) => {
         <TextField
           autoFocus
           multiline
-          placeholder={viewportWidth > 1011 ? 'Take a note...' : 'Note'}
+          placeholder={
+            viewportWidth > MAIN_BREAKPOINT ? 'Take a note...' : 'Note'
+          }
           size="small"
           onChange={handleNoteTextChange}
           value={editingID ? noteBeingEdited.text : newNote.text}
           variant="outlined"
           sx={{
             width: '100%',
-            paddingLeft: viewportWidth > 1011 ? '0.2em' : '',
-            maxHeight: viewportWidth > 1011 ? '50vh' : '80vh',
+            paddingLeft: viewportWidth > MAIN_BREAKPOINT ? '0.2em' : '',
+            maxHeight: viewportWidth > MAIN_BREAKPOINT ? '50vh' : '80vh',
             overflowY: 'auto',
             '& .MuiOutlinedInput-root': {
               '& fieldset': {
