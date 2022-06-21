@@ -12,6 +12,7 @@ import {
   atomIsDarkTheme,
   atomNoteType,
   atomIsModalOpen,
+  atomIsDrawingActive,
 } from '../atoms'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import NoteFormContainer from './NoteFormContainer'
@@ -41,6 +42,8 @@ const NoteCreator = (props: NoteCreatorProps): JSX.Element => {
   const setNoteType = useSetRecoilState(atomNoteType)
   /** State setter to open/close the modal */
   const setIsModalOpen = useSetRecoilState(atomIsModalOpen)
+  /** State setter to open/close the drawing container */
+  const setIsDrawingActive = useSetRecoilState(atomIsDrawingActive)
 
   /** Function to open the modal */
   const openModal = () => setIsModalOpen(true)
@@ -61,6 +64,12 @@ const NoteCreator = (props: NoteCreatorProps): JSX.Element => {
   const createMobileChecklist = () => {
     setNoteType('checklist')
     openModal()
+  }
+
+  /** Function to create a new drawing */
+  const createDrawing = () => {
+    setNoteType('drawing')
+    setIsDrawingActive(true)
   }
 
   if (viewportWidth > MAIN_BREAKPOINT) {
@@ -137,7 +146,7 @@ const NoteCreator = (props: NoteCreatorProps): JSX.Element => {
                 </IconButton>
               </Tooltip>
               <Tooltip title="New drawing">
-                <IconButton aria-label="new drawing">
+                <IconButton aria-label="new drawing" onClick={createDrawing}>
                   <BrushOutlinedIcon />
                 </IconButton>
               </Tooltip>
@@ -196,7 +205,7 @@ const NoteCreator = (props: NoteCreatorProps): JSX.Element => {
           >
             <CheckBoxOutlinedIcon />
           </IconButton>
-          <IconButton aria-label="new drawing">
+          <IconButton aria-label="new drawing" onClick={createDrawing}>
             <BrushOutlinedIcon />
           </IconButton>
           <IconButton aria-label="new recording">

@@ -27,6 +27,7 @@ import NoteModal from '../Components/NoteModal'
 import { nanoid } from 'nanoid'
 import { getNotes } from '../LogicHelpers'
 import { MAIN_BREAKPOINT } from '../Constants'
+import DrawingContainer from '../Components/DrawingContainer'
 
 interface NoteViewProps {
   setAuthenticated: Dispatch<SetStateAction<boolean>>
@@ -136,6 +137,7 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
           onClick={finishCreatingNote}
         ></div>
       ) : null}
+      <DrawingContainer />
       {viewportWidth > MAIN_BREAKPOINT ? (
         <DesktopAppBar
           logOut={logOut}

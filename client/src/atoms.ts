@@ -86,3 +86,9 @@ export const atomFilteredNotes = atom<IExistingNote[]>({
   key: 'atomFilteredNotes',
   default: [],
 })
+
+/** Boolean to determine whether a drawing is being created or edited */
+export const atomIsDrawingActive = atom<boolean>({
+  key: 'atomIsDrawingActive',
+  default: false,
+})
