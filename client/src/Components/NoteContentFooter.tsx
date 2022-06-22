@@ -68,6 +68,7 @@ const NoteContentFooter = (props: NoteContentFooterProps) => {
             onClose={handleCloseMoreMenu}
             MenuListProps={{
               'aria-labelledby': 'more-button',
+              disablePadding: true,
             }}
           >
             <MenuItem onClick={() => deleteNote(note._id)}>

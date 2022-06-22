@@ -162,6 +162,7 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
             onClose={handleCloseMoreMenu}
             MenuListProps={{
               'aria-labelledby': 'more-button',
+              disablePadding: true,
             }}
           >
             <MenuItem onClick={() => deleteNoteFromModal(noteBeingEdited._id)}>
@@ -218,6 +219,7 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
                 onClose={handleCloseMoreMenu}
                 MenuListProps={{
                   'aria-labelledby': 'more-button',
+                  disablePadding: true,
                 }}
               >
                 <MenuItem

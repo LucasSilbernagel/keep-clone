@@ -25,6 +25,11 @@ const DrawingMenu = () => {
   const [moreAnchorEl, setMoreAnchorEl] = useState<null | HTMLElement>(null)
   /** Boolean that determines whether the "more" menu is open */
   const isMoreMenuOpen = Boolean(moreAnchorEl)
+  /** Anchor element for the paintbrush menu */
+  const [paintbrushAnchorEl, setPaintbrushAnchorEl] =
+    useState<null | HTMLElement>(null)
+  /** Boolean that determines whether the paintbrush menu is open */
+  const isPaintbrushMenuOpen = Boolean(paintbrushAnchorEl)
 
   /** Save the drawing and close the drawing container */
   const handleBackClick = () => {
@@ -46,6 +51,16 @@ const DrawingMenu = () => {
   /** Function to close the "more" menu */
   const handleCloseMoreMenu = () => {
     setMoreAnchorEl(null)
+  }
+
+  /** Function to open the paintbrush menu */
+  const openPaintbrushMenu = (event: MouseEvent<HTMLButtonElement>) => {
+    setPaintbrushAnchorEl(event.currentTarget)
+  }
+
+  /** Function to close the paintbrush menu */
+  const closePaintbrushMenu = () => {
+    setPaintbrushAnchorEl(null)
   }
 
   return (
@@ -73,8 +88,32 @@ const DrawingMenu = () => {
                 </Tooltip>
               </Grid>
               <Grid item>
+                <Menu
+                  id="paintbrush-menu"
+                  anchorEl={paintbrushAnchorEl}
+                  open={isPaintbrushMenuOpen}
+                  onClose={closePaintbrushMenu}
+                  MenuListProps={{
+                    'aria-labelledby': 'paintbrush-button',
+                    disablePadding: true,
+                    style: { backgroundColor: '#FFFFFF' },
+                  }}
+                >
+                  <IconButton sx={{ backgroundColor: '#FFFFFF' }}>
+                    <BrushSharpIcon color="info" />
+                  </IconButton>
+                </Menu>
                 <Tooltip title="Paintbrush">
-                  <IconButton aria-label="Paintbrush" color="info">
+                  <IconButton
+                    id="paintbrush-button"
+                    aria-controls={
+                      isPaintbrushMenuOpen ? 'paintbrush-menu' : undefined
+                    }
+                    aria-haspopup="true"
+                    aria-expanded={isPaintbrushMenuOpen ? 'true' : undefined}
+                    onClick={openPaintbrushMenu}
+                    color="info"
+                  >
                     <BrushSharpIcon />
                   </IconButton>
                 </Tooltip>
@@ -88,6 +127,7 @@ const DrawingMenu = () => {
                 onClose={handleCloseMoreMenu}
                 MenuListProps={{
                   'aria-labelledby': 'more-button',
+                  disablePadding: true,
                 }}
               >
                 <MenuItem onClick={deleteCurrentDrawing}>
@@ -102,7 +142,6 @@ const DrawingMenu = () => {
                   aria-expanded={isMoreMenuOpen ? 'true' : undefined}
                   onClick={handleClickMoreMenu}
                   color="info"
-                  className="moreButton"
                 >
                   <MoreVertIcon />
                 </IconButton>
