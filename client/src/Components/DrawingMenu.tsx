@@ -9,12 +9,54 @@ import {
   Menu,
   MenuItem,
 } from '@mui/material'
+import { styled } from '@mui/material/styles'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh'
 import BrushSharpIcon from '@mui/icons-material/BrushSharp'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { atomIsDrawingActive, atomIsModalOpen } from '../atoms'
 import { useSetRecoilState } from 'recoil'
+
+/** Color button */
+const ColorButton = styled('button')(() => ({
+  width: '20px',
+  height: '20px',
+  borderRadius: '50%',
+  border: 'none',
+  cursor: 'pointer',
+  transition: 'all .2s ease-in-out',
+  '&:hover': {
+    transform: 'scale(1.3)',
+  },
+  '&:focus': {
+    transform: 'scale(1.3)',
+  },
+  '&:active': {
+    transform: 'scale(1.3)',
+  },
+}))
+
+/** Size button */
+const SizeButton = styled('button')(() => ({
+  width: '35px',
+  height: '35px',
+  borderRadius: '50%',
+  border: 'none',
+  cursor: 'pointer',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: '#FFFFFF',
+  '&:hover': {
+    border: '1px solid #000000',
+  },
+  '&:focus': {
+    border: '1px solid #000000',
+  },
+  '&:active': {
+    border: '1px solid #000000',
+  },
+}))
 
 const DrawingMenu = () => {
   /** State setter to update whether a drawing is being created or edited */
@@ -63,12 +105,41 @@ const DrawingMenu = () => {
     setPaintbrushAnchorEl(null)
   }
 
+  /** Array of colours to draw with */
+  const colorOptions = [
+    { label: 'Black', color: '#000000' },
+    { label: 'Red', color: '#FE5252' },
+    { label: 'Yellow', color: '#FEBC00' },
+    { label: 'Green', color: '#0AC853' },
+    { label: 'Blue', color: '#0FB0FF' },
+    { label: 'Purple', color: '#D400F9' },
+    { label: 'Brown', color: '#8D6E63' },
+  ]
+
+  /** Array of options for drawing brush stroke size */
+  const brushStrokeOptions = [
+    '2px',
+    '3px',
+    '5px',
+    '10px',
+    '15px',
+    '20px',
+    '30px',
+  ]
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ backgroundColor: '#FFFFFF' }}>
         <Toolbar>
           <Grid container justifyContent="space-between">
-            <Grid item container xs={2} justifyContent="space-between">
+            <Grid
+              item
+              container
+              xs={8}
+              sm={4}
+              md={2}
+              justifyContent="space-between"
+            >
               <Grid item>
                 <Tooltip title="Back">
                   <IconButton
@@ -96,12 +167,49 @@ const DrawingMenu = () => {
                   MenuListProps={{
                     'aria-labelledby': 'paintbrush-button',
                     disablePadding: true,
-                    style: { backgroundColor: '#FFFFFF' },
+                    style: { backgroundColor: '#FFFFFF', padding: '0.5em' },
                   }}
                 >
-                  <IconButton sx={{ backgroundColor: '#FFFFFF' }}>
-                    <BrushSharpIcon color="info" />
-                  </IconButton>
+                  <Grid container>
+                    <Grid
+                      item
+                      container
+                      justifyContent="space-between"
+                      sx={{ marginBottom: '1em' }}
+                    >
+                      {colorOptions.map((color, index) => {
+                        return (
+                          <Grid item key={index}>
+                            <ColorButton
+                              style={{
+                                backgroundColor: color.color,
+                              }}
+                            ></ColorButton>
+                          </Grid>
+                        )
+                      })}
+                    </Grid>
+                    <Grid item container justifyContent="space-between">
+                      {brushStrokeOptions.map((option, index) => {
+                        return (
+                          <Grid item key={index}>
+                            <SizeButton>
+                              <div
+                                style={{
+                                  width: option,
+                                  minWidth: option,
+                                  height: option,
+                                  minHeight: option,
+                                  backgroundColor: '#000000',
+                                  borderRadius: '50%',
+                                }}
+                              ></div>
+                            </SizeButton>
+                          </Grid>
+                        )
+                      })}
+                    </Grid>
+                  </Grid>
                 </Menu>
                 <Tooltip title="Paintbrush">
                   <IconButton
