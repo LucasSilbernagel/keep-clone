@@ -19,3 +19,25 @@ export const BLANK_NEW_NOTE = {
 
 /** Main dividing breakpoint between mobile and desktop screen sizes. Screen width in pixels. */
 export const MAIN_BREAKPOINT = 1011
+
+/** Array of colours to draw with */
+export const COLOR_OPTIONS = [
+  { label: 'Black', color: '#000000' },
+  { label: 'Red', color: '#FE5252' },
+  { label: 'Yellow', color: '#FEBC00' },
+  { label: 'Green', color: '#0AC853' },
+  { label: 'Blue', color: '#0FB0FF' },
+  { label: 'Purple', color: '#D400F9' },
+  { label: 'Brown', color: '#8D6E63' },
+]
+
+/** Array of options for drawing brush stroke size */
+export const STROKE_OPTIONS = [
+  '2px',
+  '3px',
+  '5px',
+  '10px',
+  '15px',
+  '20px',
+  '30px',
+]

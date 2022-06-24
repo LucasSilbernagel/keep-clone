@@ -16,6 +16,7 @@ import BrushSharpIcon from '@mui/icons-material/BrushSharp'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { atomIsDrawingActive, atomIsModalOpen } from '../atoms'
 import { useSetRecoilState } from 'recoil'
+import { COLOR_OPTIONS, STROKE_OPTIONS } from '../Constants'
 
 /** Color button */
 const ColorButton = styled('button')(() => ({
@@ -29,9 +30,6 @@ const ColorButton = styled('button')(() => ({
     transform: 'scale(1.3)',
   },
   '&:focus': {
-    transform: 'scale(1.3)',
-  },
-  '&:active': {
     transform: 'scale(1.3)',
   },
 }))
@@ -53,9 +51,6 @@ const SizeButton = styled('button')(() => ({
   '&:focus': {
     border: '1px solid #000000',
   },
-  '&:active': {
-    border: '1px solid #000000',
-  },
 }))
 
 const DrawingMenu = () => {
@@ -65,6 +60,15 @@ const DrawingMenu = () => {
   const setIsModalOpen = useSetRecoilState(atomIsModalOpen)
   /** Anchor element for the "more" menu */
   const [moreAnchorEl, setMoreAnchorEl] = useState<null | HTMLElement>(null)
+  /** Selected colour for drawing */
+  const [selectedColor, setSelectedColor] = useState<{
+    label: string
+    color: string
+  }>(COLOR_OPTIONS[0])
+  /** Selected brush stroke size for drawing */
+  const [selectedStroke, setSelectedStroke] = useState<string>(
+    STROKE_OPTIONS[2]
+  )
   /** Boolean that determines whether the "more" menu is open */
   const isMoreMenuOpen = Boolean(moreAnchorEl)
   /** Anchor element for the paintbrush menu */
@@ -105,27 +109,15 @@ const DrawingMenu = () => {
     setPaintbrushAnchorEl(null)
   }
 
-  /** Array of colours to draw with */
-  const colorOptions = [
-    { label: 'Black', color: '#000000' },
-    { label: 'Red', color: '#FE5252' },
-    { label: 'Yellow', color: '#FEBC00' },
-    { label: 'Green', color: '#0AC853' },
-    { label: 'Blue', color: '#0FB0FF' },
-    { label: 'Purple', color: '#D400F9' },
-    { label: 'Brown', color: '#8D6E63' },
-  ]
+  /** Function to update the selected colour */
+  const updateColor = (color: { label: string; color: string }) => {
+    setSelectedColor(color)
+  }
 
-  /** Array of options for drawing brush stroke size */
-  const brushStrokeOptions = [
-    '2px',
-    '3px',
-    '5px',
-    '10px',
-    '15px',
-    '20px',
-    '30px',
-  ]
+  /** Function to update the selected brush stroke size */
+  const updateStroke = (stroke: string) => {
+    setSelectedStroke(stroke)
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -175,31 +167,42 @@ const DrawingMenu = () => {
                       item
                       container
                       justifyContent="space-between"
-                      sx={{ marginBottom: '1em' }}
+                      sx={{ marginBottom: '1em', padding: '0em 0.5em' }}
                     >
-                      {colorOptions.map((color, index) => {
+                      {COLOR_OPTIONS.map((color, index) => {
                         return (
                           <Grid item key={index}>
                             <ColorButton
                               style={{
                                 backgroundColor: color.color,
+                                transform:
+                                  color === selectedColor ? 'scale(1.3)' : '',
                               }}
+                              onClick={() => updateColor(color)}
                             ></ColorButton>
                           </Grid>
                         )
                       })}
                     </Grid>
                     <Grid item container justifyContent="space-between">
-                      {brushStrokeOptions.map((option, index) => {
+                      {STROKE_OPTIONS.map((stroke, index) => {
                         return (
                           <Grid item key={index}>
-                            <SizeButton>
+                            <SizeButton
+                              onClick={() => updateStroke(stroke)}
+                              style={{
+                                border:
+                                  stroke === selectedStroke
+                                    ? '1px solid #000000'
+                                    : '',
+                              }}
+                            >
                               <div
                                 style={{
-                                  width: option,
-                                  minWidth: option,
-                                  height: option,
-                                  minHeight: option,
+                                  width: stroke,
+                                  minWidth: stroke,
+                                  height: stroke,
+                                  minHeight: stroke,
                                   backgroundColor: '#000000',
                                   borderRadius: '50%',
                                 }}
