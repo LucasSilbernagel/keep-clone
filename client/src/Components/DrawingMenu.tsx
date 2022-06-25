@@ -17,6 +17,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { atomIsDrawingActive, atomIsModalOpen } from '../atoms'
 import { useSetRecoilState } from 'recoil'
 import { COLOR_OPTIONS, STROKE_OPTIONS } from '../Constants'
+import { IDrawingColor } from '../types'
 
 /** Color button */
 const ColorButton = styled('button')(() => ({
@@ -53,22 +54,28 @@ const SizeButton = styled('button')(() => ({
   },
 }))
 
-const DrawingMenu = () => {
+interface DrawingMenuProps {
+  selectedColor: { label: string; color: string }
+  setSelectedColor: (color: IDrawingColor) => void
+  selectedStroke: number
+  setSelectedStroke: (stroke: number) => void
+  handleBackClick: () => void
+}
+
+const DrawingMenu = (props: DrawingMenuProps) => {
+  const {
+    selectedColor,
+    setSelectedColor,
+    selectedStroke,
+    setSelectedStroke,
+    handleBackClick,
+  } = props
   /** State setter to update whether a drawing is being created or edited */
   const setIsDrawingActive = useSetRecoilState(atomIsDrawingActive)
   /** State setter to update whether the modal is open or not */
   const setIsModalOpen = useSetRecoilState(atomIsModalOpen)
   /** Anchor element for the "more" menu */
   const [moreAnchorEl, setMoreAnchorEl] = useState<null | HTMLElement>(null)
-  /** Selected colour for drawing */
-  const [selectedColor, setSelectedColor] = useState<{
-    label: string
-    color: string
-  }>(COLOR_OPTIONS[0])
-  /** Selected brush stroke size for drawing */
-  const [selectedStroke, setSelectedStroke] = useState<string>(
-    STROKE_OPTIONS[2]
-  )
   /** Boolean that determines whether the "more" menu is open */
   const isMoreMenuOpen = Boolean(moreAnchorEl)
   /** Anchor element for the paintbrush menu */
@@ -76,12 +83,6 @@ const DrawingMenu = () => {
     useState<null | HTMLElement>(null)
   /** Boolean that determines whether the paintbrush menu is open */
   const isPaintbrushMenuOpen = Boolean(paintbrushAnchorEl)
-
-  /** Save the drawing and close the drawing container */
-  const handleBackClick = () => {
-    setIsDrawingActive(false)
-    setIsModalOpen(true)
-  }
 
   /** Close drawing container without saving drawing */
   const deleteCurrentDrawing = () => {
@@ -115,12 +116,12 @@ const DrawingMenu = () => {
   }
 
   /** Function to update the selected brush stroke size */
-  const updateStroke = (stroke: string) => {
+  const updateStroke = (stroke: number) => {
     setSelectedStroke(stroke)
   }
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, marginBottom: '0.5em' }}>
       <AppBar position="static" sx={{ backgroundColor: '#FFFFFF' }}>
         <Toolbar>
           <Grid container justifyContent="space-between">
@@ -172,14 +173,16 @@ const DrawingMenu = () => {
                       {COLOR_OPTIONS.map((color, index) => {
                         return (
                           <Grid item key={index}>
-                            <ColorButton
-                              style={{
-                                backgroundColor: color.color,
-                                transform:
-                                  color === selectedColor ? 'scale(1.3)' : '',
-                              }}
-                              onClick={() => updateColor(color)}
-                            ></ColorButton>
+                            <Tooltip title={color.label}>
+                              <ColorButton
+                                style={{
+                                  backgroundColor: color.color,
+                                  transform:
+                                    color === selectedColor ? 'scale(1.3)' : '',
+                                }}
+                                onClick={() => updateColor(color)}
+                              ></ColorButton>
+                            </Tooltip>
                           </Grid>
                         )
                       })}

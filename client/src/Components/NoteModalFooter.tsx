@@ -94,6 +94,8 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
             text: '',
             title: '',
             list: [{ text: '', done: false, id: nanoid() }],
+            drawing: '',
+            drawingImage: '',
             userGoogleId: '',
             lastEdited: 0,
           })
@@ -116,6 +118,8 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
       text: '',
       title: '',
       list: [{ text: '', done: false, id: nanoid() }],
+      drawing: '',
+      drawingImage: '',
       userGoogleId: '',
       lastEdited: 0,
     })

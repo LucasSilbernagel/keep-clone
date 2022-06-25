@@ -5,6 +5,8 @@ export const BLANK_EXISTING_NOTE = {
   text: '',
   title: '',
   list: [{ text: '', done: false, id: nanoid() }],
+  drawing: '',
+  drawingImage: '',
   userGoogleId: '',
   lastEdited: 0,
 }
@@ -13,6 +15,8 @@ export const BLANK_NEW_NOTE = {
   text: '',
   title: '',
   list: [{ text: '', done: false, id: nanoid() }],
+  drawing: '',
+  drawingImage: '',
   userGoogleId: '',
   lastEdited: 0,
 }
@@ -32,12 +36,4 @@ export const COLOR_OPTIONS = [
 ]
 
 /** Array of options for drawing brush stroke size */
-export const STROKE_OPTIONS = [
-  '2px',
-  '3px',
-  '5px',
-  '10px',
-  '15px',
-  '20px',
-  '30px',
-]
+export const STROKE_OPTIONS = [2, 3, 5, 10, 15, 20, 30]

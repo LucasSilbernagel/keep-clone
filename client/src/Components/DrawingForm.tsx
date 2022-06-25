@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react'
-import { TextField, Grid } from '@mui/material'
+import { TextField, Grid, Box } from '@mui/material'
 import { useRecoilValue } from 'recoil'
 import { atomNewNote, atomNoteBeingEdited, atomEditingID } from '../atoms'
 
@@ -46,6 +46,15 @@ const DrawingForm = (props: DrawingFormProps) => {
           inputProps={{ style: { fontSize: '1.2rem' }, maxLength: 1000 }}
           InputLabelProps={{ style: { fontSize: '1.2rem' } }}
         />
+      </Grid>
+      <Grid item xs={12}>
+        <Box sx={{ backgroundColor: '#FFFFFF' }}>
+          <img
+            src={newNote.drawingImage}
+            alt="drawing"
+            style={{ width: '100%', display: 'block' }}
+          />
+        </Box>
       </Grid>
     </Grid>
   )

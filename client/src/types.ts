@@ -9,6 +9,8 @@ export interface IExistingNote {
   text: string
   title: string
   list: Array<IListItem>
+  drawing: string
+  drawingImage: string
   userGoogleId: string
   lastEdited: number
 }
@@ -17,8 +19,15 @@ export interface INewNote {
   text: string
   title: string
   list: Array<IListItem>
+  drawing: string
+  drawingImage: string
   userGoogleId: string
   lastEdited: number
 }
 
 export type NoteType = 'text' | 'checklist' | 'drawing' | 'recording' | 'image'
+
+export interface IDrawingColor {
+  label: string
+  color: string
+}

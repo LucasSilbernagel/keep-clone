@@ -85,6 +85,8 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
               text: '',
               title: '',
               list: [{ text: '', done: false, id: nanoid() }],
+              drawing: '',
+              drawingImage: '',
               userGoogleId: '',
               lastEdited: 0,
             })
