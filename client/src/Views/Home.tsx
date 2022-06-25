@@ -13,6 +13,7 @@ import {
   atomNoteType,
   atomFilteredNotes,
   atomEditingID,
+  atomViewportHeight,
 } from '../atoms'
 import { getNotes } from '../LogicHelpers'
 
@@ -34,6 +35,8 @@ const Home = () => {
     useState('Google sign in was unsuccessful.')
   /** State setter to update the width of the viewport/window, in pixels */
   const setViewportWidth = useSetRecoilState(atomViewportWidth)
+  /** State setter to update the height of the viewport/window, in pixels */
+  const setViewportHeight = useSetRecoilState(atomViewportHeight)
   /** The value typed into the search bar */
   const searchValue = useRecoilValue(atomSearchValue)
   /** State setter to determine whether notes are loading from the back end */
@@ -45,15 +48,19 @@ const Home = () => {
   /** State setter to update the note type that is being created or viewed */
   const setNoteType = useSetRecoilState(atomNoteType)
 
-  /** Keep track of the viewport/window width */
+  /** Keep track of the viewport/window dimensions */
   useEffect(() => {
     setViewportWidth(window.innerWidth)
-    const handleResizeWindow = () => setViewportWidth(window.innerWidth)
+    setViewportHeight(window.innerHeight)
+    const handleResizeWindow = () => {
+      setViewportWidth(window.innerWidth)
+      setViewportHeight(window.innerHeight)
+    }
     window.addEventListener('resize', handleResizeWindow)
     return () => {
       window.removeEventListener('resize', handleResizeWindow)
     }
-  }, [setViewportWidth])
+  }, [setViewportWidth, setViewportHeight])
 
   /** Keep user logged in on their device by default */
   useEffect(() => {
@@ -95,12 +102,15 @@ const Home = () => {
         setNoteType('text')
       } else if (noteBeingEdited.list.some((item) => item.text.length > 0)) {
         setNoteType('checklist')
+      } else if (noteBeingEdited.drawing.length > 0) {
+        setNoteType('drawing')
       }
     }
   }, [
     editingID,
     noteBeingEdited.list,
     noteBeingEdited.text.length,
+    noteBeingEdited.drawing.length,
     setNoteType,
   ])
 

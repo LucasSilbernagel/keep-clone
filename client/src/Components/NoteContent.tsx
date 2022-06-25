@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Grid, Typography, Paper, useTheme } from '@mui/material'
+import { Grid, Typography, Paper, useTheme, Box } from '@mui/material'
 import { IExistingNote } from '../types'
 import {
   atomIsModalOpen,
@@ -134,6 +134,15 @@ const NoteContent = (props: NoteContentProps) => {
               )}
               {note.list.some((item) => item.text.length > 0) && (
                 <NoteContentChecklist note={note} />
+              )}
+              {note.drawingImage.length > 0 && (
+                <Box sx={{ backgroundColor: '#FFFFFF', marginTop: '0.5em' }}>
+                  <img
+                    src={note.drawingImage}
+                    alt="drawing"
+                    style={{ width: '100%', display: 'block' }}
+                  />
+                </Box>
               )}
             </button>
           </Grid>

@@ -15,6 +15,12 @@ export const atomViewportWidth = atom<number>({
   default: 0,
 })
 
+/** The height of the viewport/window, in pixels */
+export const atomViewportHeight = atom<number>({
+  key: 'atomViewportHeight',
+  default: 0,
+})
+
 /** A new note */
 export const atomNewNote = atom<INewNote>({
   key: 'atomNewNote',

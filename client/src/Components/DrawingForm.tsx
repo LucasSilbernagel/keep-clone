@@ -1,7 +1,13 @@
 import { ChangeEvent } from 'react'
 import { TextField, Grid, Box } from '@mui/material'
-import { useRecoilValue } from 'recoil'
-import { atomNewNote, atomNoteBeingEdited, atomEditingID } from '../atoms'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+import {
+  atomNewNote,
+  atomNoteBeingEdited,
+  atomEditingID,
+  atomIsDrawingActive,
+  atomIsModalOpen,
+} from '../atoms'
 
 interface DrawingFormProps {
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
@@ -16,6 +22,15 @@ const DrawingForm = (props: DrawingFormProps) => {
   const editingID = useRecoilValue(atomEditingID)
   /** The note that is being edited */
   const noteBeingEdited = useRecoilValue(atomNoteBeingEdited)
+  /** State setter to open the drawing canvas */
+  const setIsDrawingActive = useSetRecoilState(atomIsDrawingActive)
+  /** State setter to open and close the modal */
+  const setIsModalOpen = useSetRecoilState(atomIsModalOpen)
+
+  const editDrawing = () => {
+    setIsModalOpen(false)
+    setIsDrawingActive(true)
+  }
 
   return (
     <Grid container>
@@ -47,15 +62,24 @@ const DrawingForm = (props: DrawingFormProps) => {
           InputLabelProps={{ style: { fontSize: '1.2rem' } }}
         />
       </Grid>
-      <Grid item xs={12}>
-        <Box sx={{ backgroundColor: '#FFFFFF' }}>
-          <img
-            src={newNote.drawingImage}
-            alt="drawing"
-            style={{ width: '100%', display: 'block' }}
-          />
-        </Box>
-      </Grid>
+      {noteBeingEdited.drawingImage ||
+        (newNote.drawingImage && (
+          <Grid item xs={12}>
+            <button onClick={editDrawing}>
+              <Box sx={{ backgroundColor: '#FFFFFF' }}>
+                <img
+                  src={
+                    editingID
+                      ? noteBeingEdited.drawingImage
+                      : newNote.drawingImage
+                  }
+                  alt="drawing"
+                  style={{ width: '100%', display: 'block' }}
+                />
+              </Box>
+            </button>
+          </Grid>
+        ))}
     </Grid>
   )
 }

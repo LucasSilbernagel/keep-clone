@@ -1,10 +1,14 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import { Box } from '@mui/material'
 import {
   atomIsDrawingActive,
   atomNoteType,
   atomIsModalOpen,
   atomNewNote,
+  atomEditingID,
+  atomNoteBeingEdited,
+  atomViewportWidth,
+  atomViewportHeight,
 } from '../atoms'
 import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil'
 import DrawingMenu from './DrawingMenu'
@@ -14,8 +18,17 @@ import { COLOR_OPTIONS, STROKE_OPTIONS } from '../Constants'
 const DrawingContainer = () => {
   /** The type of the note that is being created or edited */
   const noteType = useRecoilValue(atomNoteType)
-  /** State setter to update the new note */
-  const setNewNote = useSetRecoilState(atomNewNote)
+  /** The width of the window, in pixels */
+  const viewportWidth = useRecoilValue(atomViewportWidth)
+  /** The height of the window, in pixels */
+  const viewportHeight = useRecoilValue(atomViewportHeight)
+  /** The ID of the note that is being edited */
+  const editingID = useRecoilValue(atomEditingID)
+  /** The note that is being edited */
+  const [noteBeingEdited, setNoteBeingEdited] =
+    useRecoilState(atomNoteBeingEdited)
+  /** The new note */
+  const [newNote, setNewNote] = useRecoilState(atomNewNote)
   /** Boolean to determine whether the drawing container is open */
   const [isDrawingActive, setIsDrawingActive] =
     useRecoilState(atomIsDrawingActive)
@@ -30,40 +43,38 @@ const DrawingContainer = () => {
   const [selectedStroke, setSelectedStroke] = useState<number>(
     STROKE_OPTIONS[2]
   )
-  /** Width of the container around the drawing canvas */
-  const [containerWidth, setContainerWidth] = useState(1000)
-  /** Height of the container around the drawing canvas */
-  const [containerHeight, setContainerHeight] = useState(1000)
   /** Ref for the container around the drawing canvas */
   const drawingContainerRef = useRef<HTMLDivElement>(null)
   /** Ref for the drawing canvas */
   const [canvasRef, setCanvasRef] = useState<CanvasDraw>()
 
-  /** Keep track of the height and width of the container around the drawing canvas */
-  useEffect(() => {
-    const resizeObserver = new ResizeObserver((event) => {
-      setContainerWidth(event[0].contentBoxSize[0].inlineSize)
-      setContainerHeight(event[0].contentBoxSize[0].blockSize)
-    })
-    if (drawingContainerRef.current !== null) {
-      resizeObserver.observe(drawingContainerRef.current)
-    }
-  })
-
   /** Save the drawing and close the drawing container */
   const handleBackClick = () => {
-    setNewNote((prevNote) => {
-      const editedNote = { ...prevNote }
-      if (canvasRef) {
-        editedNote.drawing = canvasRef.getSaveData()
-        // @ts-ignore: Unreachable code error
-        editedNote.drawingImage = canvasRef.getDataURL()
-      }
-      editedNote.userGoogleId = JSON.parse(
-        window.localStorage.userProfile
-      ).googleId
-      return editedNote
-    })
+    if (editingID) {
+      setNoteBeingEdited((prevNote) => {
+        const editedNote = { ...prevNote }
+        if (canvasRef) {
+          editedNote.drawing = canvasRef.getSaveData()
+          // @ts-ignore: Unreachable code error
+          editedNote.drawingImage = canvasRef.getDataURL()
+        }
+        editedNote.lastEdited = Date.now()
+        return editedNote
+      })
+    } else {
+      setNewNote((prevNote) => {
+        const editedNote = { ...prevNote }
+        if (canvasRef) {
+          editedNote.drawing = canvasRef.getSaveData()
+          // @ts-ignore: Unreachable code error
+          editedNote.drawingImage = canvasRef.getDataURL()
+        }
+        editedNote.userGoogleId = JSON.parse(
+          window.localStorage.userProfile
+        ).googleId
+        return editedNote
+      })
+    }
     setIsDrawingActive(false)
     setIsModalOpen(true)
   }
@@ -95,11 +106,13 @@ const DrawingContainer = () => {
               setCanvasRef(canvasDraw)
             }
           }}
-          canvasHeight={containerHeight}
-          canvasWidth={containerWidth}
+          canvasHeight={viewportHeight}
+          canvasWidth={viewportWidth}
           brushColor={selectedColor.color}
           brushRadius={selectedStroke}
           style={{ cursor: 'pointer' }}
+          saveData={editingID ? noteBeingEdited.drawing : newNote.drawing}
+          immediateLoading
         />
       </Box>
     )

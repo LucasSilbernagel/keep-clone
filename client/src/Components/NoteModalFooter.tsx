@@ -84,6 +84,8 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
         text: noteCopy.text,
         title: noteCopy.title,
         list: noteCopy.list,
+        drawing: noteCopy.drawing,
+        drawingImage: noteCopy.drawingImage,
         userGoogleId: noteCopy.userGoogleId,
         lastEdited: Date.now(),
       })

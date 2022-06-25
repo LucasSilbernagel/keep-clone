@@ -1,7 +1,7 @@
 import { MouseEvent, Dispatch, SetStateAction } from 'react'
 import { Grid, IconButton, Tooltip, Menu, MenuItem } from '@mui/material'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
-import { IExistingNote } from '../types'
+import { IExistingNote, INewNote } from '../types'
 import axios from 'axios'
 import { atomViewportWidth, atomIsLoading, atomNotes } from '../atoms'
 import { useSetRecoilState, useRecoilValue } from 'recoil'
@@ -38,12 +38,14 @@ const NoteContentFooter = (props: NoteContentFooterProps) => {
   }
 
   /** Function to copy a note */
-  const copyNote = (note: IExistingNote) => {
+  const copyNote = (note: IExistingNote | INewNote) => {
     setMoreAnchorEl(null)
     const newNote = {
       text: note.text,
       title: note.title,
       list: note.list,
+      drawing: note.drawing,
+      drawingImage: note.drawingImage,
       userGoogleId: note.userGoogleId,
       lastEdited: Date.now(),
     }

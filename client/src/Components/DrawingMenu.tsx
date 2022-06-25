@@ -14,8 +14,14 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh'
 import BrushSharpIcon from '@mui/icons-material/BrushSharp'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
-import { atomIsDrawingActive, atomIsModalOpen } from '../atoms'
-import { useSetRecoilState } from 'recoil'
+import {
+  atomIsDrawingActive,
+  atomIsModalOpen,
+  atomNewNote,
+  atomNoteBeingEdited,
+  atomEditingID,
+} from '../atoms'
+import { useSetRecoilState, useRecoilValue } from 'recoil'
 import { COLOR_OPTIONS, STROKE_OPTIONS } from '../Constants'
 import { IDrawingColor } from '../types'
 
@@ -74,6 +80,12 @@ const DrawingMenu = (props: DrawingMenuProps) => {
   const setIsDrawingActive = useSetRecoilState(atomIsDrawingActive)
   /** State setter to update whether the modal is open or not */
   const setIsModalOpen = useSetRecoilState(atomIsModalOpen)
+  /** State setter to update the note that is being edited */
+  const setNoteBeingEdited = useSetRecoilState(atomNoteBeingEdited)
+  /** State setter to update the new note */
+  const setNewNote = useSetRecoilState(atomNewNote)
+  /** The ID of the note that is being edited */
+  const editingID = useRecoilValue(atomEditingID)
   /** Anchor element for the "more" menu */
   const [moreAnchorEl, setMoreAnchorEl] = useState<null | HTMLElement>(null)
   /** Boolean that determines whether the "more" menu is open */
@@ -86,8 +98,27 @@ const DrawingMenu = (props: DrawingMenuProps) => {
 
   /** Close drawing container without saving drawing */
   const deleteCurrentDrawing = () => {
-    setIsDrawingActive(false)
-    setIsModalOpen(true)
+    if (editingID) {
+      setNoteBeingEdited((prevNote) => {
+        const editedNote = { ...prevNote }
+        editedNote.drawing = ''
+        editedNote.drawingImage = ''
+        editedNote.lastEdited = Date.now()
+        return editedNote
+      })
+    } else {
+      setNewNote((prevNote) => {
+        const editedNote = { ...prevNote }
+        editedNote.drawing = ''
+        editedNote.drawingImage = ''
+        editedNote.userGoogleId = JSON.parse(
+          window.localStorage.userProfile
+        ).googleId
+        return editedNote
+      })
+      setIsDrawingActive(false)
+      setIsModalOpen(true)
+    }
   }
 
   /** Function to open the "more" menu */

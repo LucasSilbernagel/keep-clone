@@ -21,6 +21,8 @@ const NoteSchema = new Schema({
     type: String,
   },
   list: [NoteListSchema],
+  drawing: String,
+  drawingImage: String,
   userGoogleId: {
     type: String,
     required: true,
@@ -29,11 +31,11 @@ const NoteSchema = new Schema({
     type: Number,
     required: true,
   },
-  // expireAt: {
-  //   type: Date,
-  //   default: Date.now,
-  //   expires: 600, // 600 seconds = 10 minutes
-  // },
+  expireAt: {
+    type: Date,
+    default: Date.now,
+    expires: 600, // 600 seconds = 10 minutes
+  },
 })
 
 const Note = model('Note', NoteSchema)

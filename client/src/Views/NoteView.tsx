@@ -74,7 +74,8 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
     if (
       newNote.text ||
       newNote.title ||
-      newNote.list.some((item) => item.text.length > 0)
+      newNote.list.some((item) => item.text.length > 0) ||
+      newNote.drawing
     ) {
       axios
         .post('/api/notes', newNote)

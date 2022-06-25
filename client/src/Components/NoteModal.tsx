@@ -71,7 +71,8 @@ const NoteModal = (props: NoteModalProps): JSX.Element => {
     if (
       (noteBeingEdited.text && noteBeingEdited.text.length > 0) ||
       (noteBeingEdited.title && noteBeingEdited.title.length > 0) ||
-      noteBeingEdited.list.some((item) => item.text.length > 0)
+      noteBeingEdited.list.some((item) => item.text.length > 0) ||
+      (noteBeingEdited.drawing && noteBeingEdited.drawing.length > 0)
     ) {
       axios
         .put(`/api/notes/${noteBeingEdited._id}`, noteBeingEdited)
