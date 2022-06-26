@@ -30,10 +30,11 @@ interface NoteModalFooterProps {
   handleCloseModal: () => void
   saveEditedNote: () => void
   deleteNote: (id: string) => void
+  saveNewNote: () => void
 }
 
 const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
-  const { handleCloseModal, saveEditedNote, deleteNote } = props
+  const { handleCloseModal, saveEditedNote, deleteNote, saveNewNote } = props
 
   /** Boolean that determines whether the dark theme (or light theme) is being used */
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)
@@ -108,8 +109,23 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
 
   /** Function to copy a note from inside the modal */
   const copyNoteFromModal = () => {
-    saveNoteCopy()
-    saveEditedNote()
+    if (
+      (noteBeingEdited.text && noteBeingEdited.text.length > 0) ||
+      (noteBeingEdited.title && noteBeingEdited.title.length > 0) ||
+      noteBeingEdited.list.some((item) => item.text.length > 0) ||
+      (noteBeingEdited.drawing && noteBeingEdited.drawing.length > 0)
+    ) {
+      saveEditedNote()
+      saveNoteCopy()
+    }
+    if (
+      (newNote.text && newNote.text.length > 0) ||
+      (newNote.title && newNote.title.length > 0) ||
+      newNote.list.some((item) => item.text.length > 0) ||
+      (newNote.drawing && newNote.drawing.length > 0)
+    ) {
+      saveNewNote()
+    }
     handleCloseModal()
     setAnchorEl(null)
   }
@@ -127,7 +143,9 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
     })
     handleCloseModal()
     setAnchorEl(null)
-    deleteNote(id)
+    if (id) {
+      deleteNote(id)
+    }
   }
 
   if (viewportWidth < MAIN_BREAKPOINT) {

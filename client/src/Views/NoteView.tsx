@@ -124,6 +124,7 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
         saveNewNote={saveNewNote}
         finishCreatingNote={finishCreatingNote}
         deleteNote={deleteNote}
+        creatingNote={creatingNote}
       />
       {creatingNote ? (
         /** Invisible background rendered when the desktop NoteCreator is being used. */

@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { forwardRef, useEffect } from 'react'
 import { Dialog, Grid, IconButton, Slide, Box, useTheme } from '@mui/material'
 import {
   atomIsModalOpen,
@@ -39,10 +39,11 @@ interface NoteModalProps {
   saveNewNote: () => void
   finishCreatingNote: () => void
   deleteNote: (id: string) => void
+  creatingNote: boolean
 }
 
 const NoteModal = (props: NoteModalProps): JSX.Element => {
-  const { saveNewNote, finishCreatingNote, deleteNote } = props
+  const { saveNewNote, finishCreatingNote, deleteNote, creatingNote } = props
 
   /** The application theme */
   const theme = useTheme()
@@ -65,6 +66,21 @@ const NoteModal = (props: NoteModalProps): JSX.Element => {
   const setNotes = useSetRecoilState(atomNotes)
   /** State setter to update the array of checklist items for a note */
   const setNoteList = useSetRecoilState(atomNoteList)
+
+  /** Save a new note when the modal is closed, if the newNote state has content. */
+  useEffect(() => {
+    if (
+      !isModalOpen &&
+      !creatingNote &&
+      (newNote.text ||
+        newNote.title ||
+        newNote.list.some((item) => item.text.length > 0) ||
+        newNote.drawing)
+    ) {
+      saveNewNote()
+    }
+    // eslint-disable-next-line
+  }, [isModalOpen, newNote.drawing, newNote.list, newNote.text, newNote.title])
 
   /** Save an edited note to the database */
   const saveEditedNote = () => {
@@ -97,8 +113,6 @@ const NoteModal = (props: NoteModalProps): JSX.Element => {
   const handleCloseModal = () => {
     if (editingID) {
       saveEditedNote()
-    } else {
-      saveNewNote()
     }
     setIsModalOpen(false)
   }
@@ -153,6 +167,7 @@ const NoteModal = (props: NoteModalProps): JSX.Element => {
         <NoteModalFooter
           handleCloseModal={handleCloseModal}
           saveEditedNote={saveEditedNote}
+          saveNewNote={saveNewNote}
           deleteNote={deleteNote}
         />
       </Box>
