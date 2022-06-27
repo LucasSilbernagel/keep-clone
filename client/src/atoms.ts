@@ -98,3 +98,9 @@ export const atomIsDrawingActive = atom<boolean>({
   key: 'atomIsDrawingActive',
   default: false,
 })
+
+/** A copy of a note */
+export const atomNoteCopy = atom<IExistingNote | INewNote>({
+  key: 'atomNoteCopy',
+  default: BLANK_NEW_NOTE,
+})

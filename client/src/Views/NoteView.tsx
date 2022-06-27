@@ -19,6 +19,9 @@ import {
   atomNoteList,
   atomIsLoading,
   atomNotes,
+  atomNoteCopy,
+  atomEditingID,
+  atomNoteBeingEdited,
 } from '../atoms'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import axios from 'axios'
@@ -55,6 +58,12 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
   const setIsLoading = useSetRecoilState(atomIsLoading)
   /** State setter to update the notes array */
   const setNotes = useSetRecoilState(atomNotes)
+  /** The ID of the note being edited */
+  const editingID = useRecoilValue(atomEditingID)
+  /** The note being edited */
+  const noteBeingEdited = useRecoilValue(atomNoteBeingEdited)
+  /** State setter to update the note copy */
+  const setNoteCopy = useSetRecoilState(atomNoteCopy)
 
   /** Display all saved notes when the page first loads */
   useEffect(() => {
@@ -68,6 +77,15 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
     setAuthenticated(false)
     setNotes([])
   }
+
+  /** Create a copy of the note that is being created or edited */
+  useEffect(() => {
+    if (editingID) {
+      setNoteCopy(noteBeingEdited)
+    } else {
+      setNoteCopy(newNote)
+    }
+  }, [editingID, newNote, noteBeingEdited, setNoteCopy])
 
   /** Save a new note to the database */
   const saveNewNote = () => {

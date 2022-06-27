@@ -98,10 +98,12 @@ const NoteModal = (props: NoteModalProps): JSX.Element => {
           }
         })
         .then(() => {
-          setEditingID('')
           setNoteBeingEdited(BLANK_EXISTING_NOTE)
           setNewNote(BLANK_NEW_NOTE)
           setNoteList([{ text: '', done: false, id: nanoid() }])
+        })
+        .then(() => {
+          setEditingID('')
         })
         .catch((err) => console.error(err))
     } else {

@@ -1,4 +1,4 @@
-import { useState, MouseEvent, useEffect } from 'react'
+import { useState, MouseEvent } from 'react'
 import {
   Typography,
   Grid,
@@ -13,15 +13,14 @@ import {
   atomViewportWidth,
   atomIsDarkTheme,
   atomNoteBeingEdited,
-  atomEditingID,
   atomNotes,
   atomIsLoading,
+  atomNoteCopy,
 } from '../atoms'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import axios from 'axios'
-import { IExistingNote, INewNote } from '../types'
-import { BLANK_NEW_NOTE, MAIN_BREAKPOINT } from '../Constants'
+import { MAIN_BREAKPOINT } from '../Constants'
 import ReactTimeAgo from 'react-time-ago'
 import { nanoid } from 'nanoid'
 import { getNotes } from '../LogicHelpers'
@@ -40,16 +39,12 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
-  /** The ID of the note that is being edited */
-  const editingID = useRecoilValue(atomEditingID)
   /** A new note */
   const [newNote, setNewNote] = useRecoilState(atomNewNote)
   /** The note that is being edited */
   const noteBeingEdited = useRecoilValue(atomNoteBeingEdited)
   /** A copy of a note */
-  const [noteCopy, setNoteCopy] = useState<IExistingNote | INewNote>(
-    BLANK_NEW_NOTE
-  )
+  const [noteCopy, setNoteCopy] = useRecoilState(atomNoteCopy)
   /** State setter to update the application loading state */
   const setIsLoading = useSetRecoilState(atomIsLoading)
   /** State setter to update the notes array */
@@ -58,15 +53,6 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   /** Boolean that determines whether the "more" menu is open */
   const open = Boolean(anchorEl)
-
-  /** Create a copy of the note that is being created or edited */
-  useEffect(() => {
-    if (editingID) {
-      setNoteCopy(noteBeingEdited)
-    } else {
-      setNoteCopy(newNote)
-    }
-  }, [editingID, newNote, noteBeingEdited])
 
   /** Function to open the "more" menu */
   const handleClickMoreMenu = (event: MouseEvent<HTMLButtonElement>) => {
