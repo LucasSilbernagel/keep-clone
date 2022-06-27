@@ -62,24 +62,23 @@ const DrawingForm = (props: DrawingFormProps) => {
           InputLabelProps={{ style: { fontSize: '1.2rem' } }}
         />
       </Grid>
-      {noteBeingEdited.drawingImage ||
-        (newNote.drawingImage && (
-          <Grid item xs={12}>
-            <button onClick={editDrawing}>
-              <Box sx={{ backgroundColor: '#FFFFFF' }}>
-                <img
-                  src={
-                    editingID
-                      ? noteBeingEdited.drawingImage
-                      : newNote.drawingImage
-                  }
-                  alt="drawing"
-                  style={{ width: '100%', display: 'block' }}
-                />
-              </Box>
-            </button>
-          </Grid>
-        ))}
+      {(noteBeingEdited.drawingImage || newNote.drawingImage) && (
+        <Grid item xs={12}>
+          <button onClick={editDrawing}>
+            <Box sx={{ backgroundColor: '#FFFFFF' }}>
+              <img
+                src={
+                  editingID
+                    ? noteBeingEdited.drawingImage
+                    : newNote.drawingImage
+                }
+                alt="drawing"
+                style={{ width: '100%', display: 'block' }}
+              />
+            </Box>
+          </button>
+        </Grid>
+      )}
     </Grid>
   )
 }
