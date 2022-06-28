@@ -116,9 +116,9 @@ const DrawingMenu = (props: DrawingMenuProps) => {
         ).googleId
         return editedNote
       })
-      setIsDrawingActive(false)
-      setIsModalOpen(true)
     }
+    setIsDrawingActive(false)
+    setIsModalOpen(true)
   }
 
   /** Function to open the "more" menu */
