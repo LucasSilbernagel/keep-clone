@@ -119,6 +119,7 @@ const DrawingContainer = () => {
           style={{ cursor: 'pointer' }}
           saveData={editingID ? noteBeingEdited.drawing : newNote.drawing}
           immediateLoading
+          hideInterface
         />
       </Box>
     )
