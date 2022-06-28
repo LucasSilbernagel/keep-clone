@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Box } from '@mui/material'
 import {
   atomIsDrawingActive,
@@ -10,7 +10,7 @@ import {
   atomViewportWidth,
   atomViewportHeight,
 } from '../atoms'
-import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilValue, useRecoilState } from 'recoil'
 import DrawingMenu from './DrawingMenu'
 import CanvasDraw from 'react-canvas-draw'
 import { COLOR_OPTIONS, STROKE_OPTIONS } from '../Constants'
@@ -32,8 +32,8 @@ const DrawingContainer = () => {
   /** Boolean to determine whether the drawing container is open */
   const [isDrawingActive, setIsDrawingActive] =
     useRecoilState(atomIsDrawingActive)
-  /** State setter to update whether the modal is open */
-  const setIsModalOpen = useSetRecoilState(atomIsModalOpen)
+  /** Boolean to determine whether the modal is open */
+  const [isModalOpen, setIsModalOpen] = useRecoilState(atomIsModalOpen)
   /** Selected colour for drawing */
   const [selectedColor, setSelectedColor] = useState<{
     label: string
@@ -47,6 +47,12 @@ const DrawingContainer = () => {
   const drawingContainerRef = useRef<HTMLDivElement>(null)
   /** Ref for the drawing canvas */
   const [canvasRef, setCanvasRef] = useState<CanvasDraw>()
+
+  /** Reset to the default colour and stroke when the drawing editor opens */
+  useEffect(() => {
+    setSelectedColor(COLOR_OPTIONS[0])
+    setSelectedStroke(STROKE_OPTIONS[2])
+  }, [isModalOpen])
 
   /** Save the drawing and close the drawing container */
   const handleBackClick = () => {
