@@ -85,6 +85,13 @@ const DrawingContainer = () => {
     setIsModalOpen(true)
   }
 
+  /** Function to clear the canvas */
+  const clearCanvas = () => {
+    if (canvasRef) {
+      canvasRef.clear()
+    }
+  }
+
   if (noteType === 'drawing' && isDrawingActive) {
     return (
       <Box
@@ -105,6 +112,7 @@ const DrawingContainer = () => {
           selectedStroke={selectedStroke}
           setSelectedStroke={setSelectedStroke}
           handleBackClick={handleBackClick}
+          clearCanvas={clearCanvas}
         />
         <CanvasDraw
           ref={(canvasDraw) => {

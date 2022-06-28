@@ -11,7 +11,7 @@ import {
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh'
+import ClearIcon from '@mui/icons-material/Clear'
 import BrushSharpIcon from '@mui/icons-material/BrushSharp'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import {
@@ -66,6 +66,7 @@ interface DrawingMenuProps {
   selectedStroke: number
   setSelectedStroke: (stroke: number) => void
   handleBackClick: () => void
+  clearCanvas: () => void
 }
 
 const DrawingMenu = (props: DrawingMenuProps) => {
@@ -75,6 +76,7 @@ const DrawingMenu = (props: DrawingMenuProps) => {
     selectedStroke,
     setSelectedStroke,
     handleBackClick,
+    clearCanvas,
   } = props
   /** State setter to update whether a drawing is being created or edited */
   const setIsDrawingActive = useSetRecoilState(atomIsDrawingActive)
@@ -176,9 +178,13 @@ const DrawingMenu = (props: DrawingMenuProps) => {
                 </Tooltip>
               </Grid>
               <Grid item>
-                <Tooltip title="Eraser">
-                  <IconButton aria-label="eraser" color="info">
-                    <AutoFixHighIcon />
+                <Tooltip title="Clear Page">
+                  <IconButton
+                    aria-label="clear page"
+                    color="info"
+                    onClick={clearCanvas}
+                  >
+                    <ClearIcon />
                   </IconButton>
                 </Tooltip>
               </Grid>
