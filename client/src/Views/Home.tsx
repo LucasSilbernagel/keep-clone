@@ -64,7 +64,7 @@ const Home = () => {
 
   /** Keep user logged in on their device by default */
   useEffect(() => {
-    if (window.localStorage.userProfile.length > 0) {
+    if (window.localStorage.userProfile?.length > 0) {
       setAuthenticated(true)
     }
   }, [])
