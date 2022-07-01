@@ -47,6 +47,9 @@ const SettingsMenu = (props: SettingsMenuProps): JSX.Element => {
       }}
       open={isSettingsMenuOpen}
       onClose={handleSettingsMenuClose}
+      MenuListProps={{
+        disablePadding: true,
+      }}
     >
       {isDarkTheme ? (
         <MenuItem onClick={turnOffDarkTheme}>

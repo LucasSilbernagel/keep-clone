@@ -31,10 +31,10 @@ const lightMuiTheme = createTheme({
       contrastText: '#FFFFFF', // White
     },
     info: {
-      main: '#FABD06', // Medium accent (yellow)
-      light: '#FEF0C3', // Light accent (yellow)
-      dark: '#F3A430', // Dark accent (yellow)
-      contrastText: '#000000', // Black
+      main: '#525355',
+      light: '#525355',
+      dark: '#525355',
+      contrastText: '#FFFFFF', // White
     },
     success: {
       main: '#1C72E8', // Blue

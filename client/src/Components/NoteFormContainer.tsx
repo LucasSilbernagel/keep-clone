@@ -11,6 +11,7 @@ import { Box, Grid, Button } from '@mui/material'
 import { noteFormStyles } from '../LogicHelpers'
 import ChecklistForm from './ChecklistForm'
 import TextForm from './TextForm'
+import DrawingForm from './DrawingForm'
 
 interface NoteFormContainerProps {
   finishCreatingNote: () => void
@@ -87,6 +88,9 @@ const NoteFormContainer = (props: NoteFormContainerProps) => {
       )}
       {noteType === 'checklist' && (
         <ChecklistForm handleNoteTitleChange={handleNoteTitleChange} />
+      )}
+      {noteType === 'drawing' && (
+        <DrawingForm handleNoteTitleChange={handleNoteTitleChange} />
       )}
       {!inModal && (
         <Grid

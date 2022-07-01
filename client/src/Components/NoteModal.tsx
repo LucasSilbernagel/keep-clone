@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { forwardRef, useEffect } from 'react'
 import { Dialog, Grid, IconButton, Slide, Box, useTheme } from '@mui/material'
 import {
   atomIsModalOpen,
@@ -39,10 +39,11 @@ interface NoteModalProps {
   saveNewNote: () => void
   finishCreatingNote: () => void
   deleteNote: (id: string) => void
+  creatingNote: boolean
 }
 
 const NoteModal = (props: NoteModalProps): JSX.Element => {
-  const { saveNewNote, finishCreatingNote, deleteNote } = props
+  const { saveNewNote, finishCreatingNote, deleteNote, creatingNote } = props
 
   /** The application theme */
   const theme = useTheme()
@@ -66,12 +67,28 @@ const NoteModal = (props: NoteModalProps): JSX.Element => {
   /** State setter to update the array of checklist items for a note */
   const setNoteList = useSetRecoilState(atomNoteList)
 
+  /** Save a new note when the modal is closed, if the newNote state has content. */
+  useEffect(() => {
+    if (
+      !isModalOpen &&
+      !creatingNote &&
+      (newNote.text ||
+        newNote.title ||
+        newNote.list.some((item) => item.text.length > 0) ||
+        newNote.drawing)
+    ) {
+      saveNewNote()
+    }
+    // eslint-disable-next-line
+  }, [isModalOpen, newNote.drawing, newNote.list, newNote.text, newNote.title])
+
   /** Save an edited note to the database */
   const saveEditedNote = () => {
     if (
       (noteBeingEdited.text && noteBeingEdited.text.length > 0) ||
       (noteBeingEdited.title && noteBeingEdited.title.length > 0) ||
-      noteBeingEdited.list.some((item) => item.text.length > 0)
+      noteBeingEdited.list.some((item) => item.text.length > 0) ||
+      (noteBeingEdited.drawing && noteBeingEdited.drawing.length > 0)
     ) {
       axios
         .put(`/api/notes/${noteBeingEdited._id}`, noteBeingEdited)
@@ -81,10 +98,12 @@ const NoteModal = (props: NoteModalProps): JSX.Element => {
           }
         })
         .then(() => {
-          setEditingID('')
           setNoteBeingEdited(BLANK_EXISTING_NOTE)
           setNewNote(BLANK_NEW_NOTE)
           setNoteList([{ text: '', done: false, id: nanoid() }])
+        })
+        .then(() => {
+          setEditingID('')
         })
         .catch((err) => console.error(err))
     } else {
@@ -96,8 +115,6 @@ const NoteModal = (props: NoteModalProps): JSX.Element => {
   const handleCloseModal = () => {
     if (editingID) {
       saveEditedNote()
-    } else {
-      saveNewNote()
     }
     setIsModalOpen(false)
   }
@@ -152,6 +169,7 @@ const NoteModal = (props: NoteModalProps): JSX.Element => {
         <NoteModalFooter
           handleCloseModal={handleCloseModal}
           saveEditedNote={saveEditedNote}
+          saveNewNote={saveNewNote}
           deleteNote={deleteNote}
         />
       </Box>

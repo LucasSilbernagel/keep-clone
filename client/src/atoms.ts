@@ -15,6 +15,12 @@ export const atomViewportWidth = atom<number>({
   default: 0,
 })
 
+/** The height of the viewport/window, in pixels */
+export const atomViewportHeight = atom<number>({
+  key: 'atomViewportHeight',
+  default: 0,
+})
+
 /** A new note */
 export const atomNewNote = atom<INewNote>({
   key: 'atomNewNote',
@@ -85,4 +91,16 @@ export const atomEditingID = atom<string>({
 export const atomFilteredNotes = atom<IExistingNote[]>({
   key: 'atomFilteredNotes',
   default: [],
+})
+
+/** Boolean to determine whether a drawing is being created or edited */
+export const atomIsDrawingActive = atom<boolean>({
+  key: 'atomIsDrawingActive',
+  default: false,
+})
+
+/** A copy of a note */
+export const atomNoteCopy = atom<IExistingNote | INewNote>({
+  key: 'atomNoteCopy',
+  default: BLANK_NEW_NOTE,
 })

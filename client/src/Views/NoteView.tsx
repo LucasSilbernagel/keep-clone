@@ -19,6 +19,9 @@ import {
   atomNoteList,
   atomIsLoading,
   atomNotes,
+  atomNoteCopy,
+  atomEditingID,
+  atomNoteBeingEdited,
 } from '../atoms'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import axios from 'axios'
@@ -27,6 +30,7 @@ import NoteModal from '../Components/NoteModal'
 import { nanoid } from 'nanoid'
 import { getNotes } from '../LogicHelpers'
 import { MAIN_BREAKPOINT } from '../Constants'
+import DrawingContainer from '../Components/DrawingContainer'
 
 interface NoteViewProps {
   setAuthenticated: Dispatch<SetStateAction<boolean>>
@@ -54,6 +58,12 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
   const setIsLoading = useSetRecoilState(atomIsLoading)
   /** State setter to update the notes array */
   const setNotes = useSetRecoilState(atomNotes)
+  /** The ID of the note being edited */
+  const editingID = useRecoilValue(atomEditingID)
+  /** The note being edited */
+  const noteBeingEdited = useRecoilValue(atomNoteBeingEdited)
+  /** State setter to update the note copy */
+  const setNoteCopy = useSetRecoilState(atomNoteCopy)
 
   /** Display all saved notes when the page first loads */
   useEffect(() => {
@@ -68,12 +78,22 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
     setNotes([])
   }
 
+  /** Create a copy of the note that is being created or edited */
+  useEffect(() => {
+    if (editingID) {
+      setNoteCopy(noteBeingEdited)
+    } else {
+      setNoteCopy(newNote)
+    }
+  }, [editingID, newNote, noteBeingEdited, setNoteCopy])
+
   /** Save a new note to the database */
   const saveNewNote = () => {
     if (
       newNote.text ||
       newNote.title ||
-      newNote.list.some((item) => item.text.length > 0)
+      newNote.list.some((item) => item.text.length > 0) ||
+      newNote.drawing
     ) {
       axios
         .post('/api/notes', newNote)
@@ -84,6 +104,8 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
               text: '',
               title: '',
               list: [{ text: '', done: false, id: nanoid() }],
+              drawing: '',
+              drawingImage: '',
               userGoogleId: '',
               lastEdited: 0,
             })
@@ -120,6 +142,7 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
         saveNewNote={saveNewNote}
         finishCreatingNote={finishCreatingNote}
         deleteNote={deleteNote}
+        creatingNote={creatingNote}
       />
       {creatingNote ? (
         /** Invisible background rendered when the desktop NoteCreator is being used. */
@@ -136,6 +159,7 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
           onClick={finishCreatingNote}
         ></div>
       ) : null}
+      <DrawingContainer />
       {viewportWidth > MAIN_BREAKPOINT ? (
         <DesktopAppBar
           logOut={logOut}

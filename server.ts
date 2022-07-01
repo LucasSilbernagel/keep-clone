@@ -41,7 +41,8 @@ app.use((req: Request, res: Response, next) => {
   )
   next()
 })
-app.use(bodyParser.json())
+app.use(bodyParser.json({ limit: '50mb' }))
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }))
 app.use('/api', noteRouter)
 app.use(express.static(path.join(__dirname, 'client/build')))
 app.get('*', (req: Request, res: Response) => {

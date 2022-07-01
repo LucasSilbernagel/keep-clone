@@ -1,4 +1,4 @@
-import { useState, MouseEvent, useEffect } from 'react'
+import { useState, MouseEvent } from 'react'
 import {
   Typography,
   Grid,
@@ -13,15 +13,14 @@ import {
   atomViewportWidth,
   atomIsDarkTheme,
   atomNoteBeingEdited,
-  atomEditingID,
   atomNotes,
   atomIsLoading,
+  atomNoteCopy,
 } from '../atoms'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import axios from 'axios'
-import { IExistingNote, INewNote } from '../types'
-import { BLANK_NEW_NOTE, MAIN_BREAKPOINT } from '../Constants'
+import { MAIN_BREAKPOINT } from '../Constants'
 import ReactTimeAgo from 'react-time-ago'
 import { nanoid } from 'nanoid'
 import { getNotes } from '../LogicHelpers'
@@ -30,25 +29,22 @@ interface NoteModalFooterProps {
   handleCloseModal: () => void
   saveEditedNote: () => void
   deleteNote: (id: string) => void
+  saveNewNote: () => void
 }
 
 const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
-  const { handleCloseModal, saveEditedNote, deleteNote } = props
+  const { handleCloseModal, saveEditedNote, deleteNote, saveNewNote } = props
 
   /** Boolean that determines whether the dark theme (or light theme) is being used */
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
-  /** The ID of the note that is being edited */
-  const editingID = useRecoilValue(atomEditingID)
   /** A new note */
   const [newNote, setNewNote] = useRecoilState(atomNewNote)
   /** The note that is being edited */
   const noteBeingEdited = useRecoilValue(atomNoteBeingEdited)
   /** A copy of a note */
-  const [noteCopy, setNoteCopy] = useState<IExistingNote | INewNote>(
-    BLANK_NEW_NOTE
-  )
+  const [noteCopy, setNoteCopy] = useRecoilState(atomNoteCopy)
   /** State setter to update the application loading state */
   const setIsLoading = useSetRecoilState(atomIsLoading)
   /** State setter to update the notes array */
@@ -57,15 +53,6 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   /** Boolean that determines whether the "more" menu is open */
   const open = Boolean(anchorEl)
-
-  /** Create a copy of the note that is being created or edited */
-  useEffect(() => {
-    if (editingID) {
-      setNoteCopy(noteBeingEdited)
-    } else {
-      setNoteCopy(newNote)
-    }
-  }, [editingID, newNote, noteBeingEdited])
 
   /** Function to open the "more" menu */
   const handleClickMoreMenu = (event: MouseEvent<HTMLButtonElement>) => {
@@ -84,6 +71,8 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
         text: noteCopy.text,
         title: noteCopy.title,
         list: noteCopy.list,
+        drawing: noteCopy.drawing,
+        drawingImage: noteCopy.drawingImage,
         userGoogleId: noteCopy.userGoogleId,
         lastEdited: Date.now(),
       })
@@ -94,6 +83,8 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
             text: '',
             title: '',
             list: [{ text: '', done: false, id: nanoid() }],
+            drawing: '',
+            drawingImage: '',
             userGoogleId: '',
             lastEdited: 0,
           })
@@ -104,8 +95,23 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
 
   /** Function to copy a note from inside the modal */
   const copyNoteFromModal = () => {
-    saveNoteCopy()
-    saveEditedNote()
+    if (
+      (noteBeingEdited.text && noteBeingEdited.text.length > 0) ||
+      (noteBeingEdited.title && noteBeingEdited.title.length > 0) ||
+      noteBeingEdited.list.some((item) => item.text.length > 0) ||
+      (noteBeingEdited.drawing && noteBeingEdited.drawing.length > 0)
+    ) {
+      saveEditedNote()
+      saveNoteCopy()
+    }
+    if (
+      (newNote.text && newNote.text.length > 0) ||
+      (newNote.title && newNote.title.length > 0) ||
+      newNote.list.some((item) => item.text.length > 0) ||
+      (newNote.drawing && newNote.drawing.length > 0)
+    ) {
+      saveNewNote()
+    }
     handleCloseModal()
     setAnchorEl(null)
   }
@@ -116,12 +122,16 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
       text: '',
       title: '',
       list: [{ text: '', done: false, id: nanoid() }],
+      drawing: '',
+      drawingImage: '',
       userGoogleId: '',
       lastEdited: 0,
     })
     handleCloseModal()
     setAnchorEl(null)
-    deleteNote(id)
+    if (id) {
+      deleteNote(id)
+    }
   }
 
   if (viewportWidth < MAIN_BREAKPOINT) {
@@ -162,6 +172,7 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
             onClose={handleCloseMoreMenu}
             MenuListProps={{
               'aria-labelledby': 'more-button',
+              disablePadding: true,
             }}
           >
             <MenuItem onClick={() => deleteNoteFromModal(noteBeingEdited._id)}>
@@ -218,6 +229,7 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
                 onClose={handleCloseMoreMenu}
                 MenuListProps={{
                   'aria-labelledby': 'more-button',
+                  disablePadding: true,
                 }}
               >
                 <MenuItem

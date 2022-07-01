@@ -54,6 +54,7 @@ const ChecklistForm = (props: ChecklistFormProps) => {
       setNoteBeingEdited((prevNote) => {
         const editedNote = { ...prevNote }
         editedNote.list = noteList
+        editedNote.lastEdited = Date.now()
         return editedNote
       })
     } else {
