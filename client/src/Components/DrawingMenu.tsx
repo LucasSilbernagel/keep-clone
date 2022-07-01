@@ -15,6 +15,7 @@ import ClearIcon from '@mui/icons-material/Clear'
 import BrushSharpIcon from '@mui/icons-material/BrushSharp'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh'
+import UndoIcon from '@mui/icons-material/Undo'
 import {
   atomIsDrawingActive,
   atomIsModalOpen,
@@ -68,6 +69,7 @@ interface DrawingMenuProps {
   setSelectedStroke: (stroke: number) => void
   handleBackClick: () => void
   clearCanvas: () => void
+  undo: () => void
 }
 
 const DrawingMenu = (props: DrawingMenuProps) => {
@@ -78,6 +80,7 @@ const DrawingMenu = (props: DrawingMenuProps) => {
     setSelectedStroke,
     handleBackClick,
     clearCanvas,
+    undo,
   } = props
   /** State setter to update whether a drawing is being created or edited */
   const setIsDrawingActive = useSetRecoilState(atomIsDrawingActive)
@@ -305,7 +308,12 @@ const DrawingMenu = (props: DrawingMenuProps) => {
                 </Tooltip>
               </Grid>
             </Grid>
-            <Grid item container justifyContent="flex-end" xs={1}>
+            <Grid item container justifyContent="space-between" md={2} lg={1}>
+              <Tooltip title="Undo">
+                <IconButton onClick={undo} color="info">
+                  <UndoIcon />
+                </IconButton>
+              </Tooltip>
               <Menu
                 id="more-menu"
                 anchorEl={moreAnchorEl}

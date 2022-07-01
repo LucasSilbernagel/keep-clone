@@ -92,6 +92,13 @@ const DrawingContainer = () => {
     }
   }
 
+  /** Function to undo last drawing action */
+  const undo = () => {
+    if (canvasRef) {
+      canvasRef.undo()
+    }
+  }
+
   if (noteType === 'drawing' && isDrawingActive) {
     return (
       <Box
@@ -113,6 +120,7 @@ const DrawingContainer = () => {
           setSelectedStroke={setSelectedStroke}
           handleBackClick={handleBackClick}
           clearCanvas={clearCanvas}
+          undo={undo}
         />
         <CanvasDraw
           ref={(canvasDraw) => {
