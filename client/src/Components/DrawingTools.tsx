@@ -168,10 +168,16 @@ const DrawingTools = (props: DrawingToolsProps) => {
                     </Grid>
                   )
                 })}
-                <Tooltip title="More Colours">
+                <Tooltip
+                  title={
+                    showingMoreColors ? 'Hide More Colours' : 'More Colours'
+                  }
+                >
                   <IconButton
                     onClick={() => setShowingMoreColors(!showingMoreColors)}
-                    aria-label="more colours"
+                    aria-label={
+                      showingMoreColors ? 'hide more colours' : 'more colours'
+                    }
                     color="info"
                   >
                     {showingMoreColors ? (
