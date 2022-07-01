@@ -91,6 +91,10 @@ const DrawingMenu = (props: DrawingMenuProps) => {
   const editingID = useRecoilValue(atomEditingID)
   /** Anchor element for the "more" menu */
   const [moreAnchorEl, setMoreAnchorEl] = useState<null | HTMLElement>(null)
+  /** The drawing tool that is being used */
+  const [toolType, setToolType] = useState<'paintbrush' | 'eraser'>(
+    'paintbrush'
+  )
   /** Boolean that determines whether the "more" menu is open */
   const isMoreMenuOpen = Boolean(moreAnchorEl)
   /** Anchor element for the paintbrush menu */
@@ -140,6 +144,7 @@ const DrawingMenu = (props: DrawingMenuProps) => {
       setSelectedColor({ label: 'Black', color: '#000000' })
     }
     setPaintbrushAnchorEl(event.currentTarget)
+    setToolType('paintbrush')
   }
 
   /** Function to close the paintbrush menu */
@@ -155,6 +160,12 @@ const DrawingMenu = (props: DrawingMenuProps) => {
   /** Function to update the selected brush stroke size */
   const updateStroke = (stroke: number) => {
     setSelectedStroke(stroke)
+  }
+
+  /** Function to use the eraser tool */
+  const useEraser = () => {
+    updateColor({ label: 'White', color: '#FFFFFF' })
+    setToolType('eraser')
   }
 
   return (
@@ -197,9 +208,10 @@ const DrawingMenu = (props: DrawingMenuProps) => {
                   <IconButton
                     aria-label="eraser"
                     color="info"
-                    onClick={() =>
-                      updateColor({ label: 'White', color: '#FFFFFF' })
-                    }
+                    onClick={useEraser}
+                    sx={{
+                      border: toolType === 'eraser' ? '1px solid #000000' : '',
+                    }}
                   >
                     <AutoFixHighIcon />
                   </IconButton>
@@ -283,6 +295,10 @@ const DrawingMenu = (props: DrawingMenuProps) => {
                     aria-expanded={isPaintbrushMenuOpen ? 'true' : undefined}
                     onClick={openPaintbrushMenu}
                     color="info"
+                    sx={{
+                      border:
+                        toolType === 'paintbrush' ? '1px solid #000000' : '',
+                    }}
                   >
                     <BrushSharpIcon />
                   </IconButton>
