@@ -84,7 +84,11 @@ const Home = () => {
       setTimeout(() => {
         setFilteredNotes((notes) =>
           notes.filter((note) =>
-            JSON.stringify(note)
+            JSON.stringify({
+              title: note.title,
+              text: note.text,
+              list: note.list,
+            })
               .toLowerCase()
               .includes(searchValue.toLowerCase())
           )
