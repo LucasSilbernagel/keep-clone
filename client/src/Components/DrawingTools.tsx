@@ -4,8 +4,11 @@ import { styled } from '@mui/material/styles'
 import ClearIcon from '@mui/icons-material/Clear'
 import BrushSharpIcon from '@mui/icons-material/BrushSharp'
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh'
-import { COLOR_OPTIONS, STROKE_OPTIONS } from '../Constants'
+import { FIRST_COLOR_OPTIONS, STROKE_OPTIONS } from '../Constants'
 import { IDrawingColor } from '../types'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
+import MoreColors from './MoreColors'
 
 /** Color button */
 const ColorButton = styled('button')(() => ({
@@ -43,7 +46,7 @@ const SizeButton = styled('button')(() => ({
 }))
 
 interface DrawingToolsProps {
-  selectedColor: { label: string; color: string }
+  selectedColor: IDrawingColor
   setSelectedColor: (color: IDrawingColor) => void
   selectedStroke: number
   setSelectedStroke: (stroke: number) => void
@@ -65,6 +68,8 @@ const DrawingTools = (props: DrawingToolsProps) => {
   /** Anchor element for the paintbrush menu */
   const [paintbrushAnchorEl, setPaintbrushAnchorEl] =
     useState<null | HTMLElement>(null)
+  /** Whether or not the additional colours menu is visible */
+  const [showingMoreColors, setShowingMoreColors] = useState<boolean>(false)
   /** Boolean that determines whether the paintbrush menu is open */
   const isPaintbrushMenuOpen = Boolean(paintbrushAnchorEl)
 
@@ -83,7 +88,7 @@ const DrawingTools = (props: DrawingToolsProps) => {
   }
 
   /** Function to update the selected colour */
-  const updateColor = (color: { label: string; color: string }) => {
+  const updateColor = (color: IDrawingColor) => {
     setSelectedColor(color)
   }
 
@@ -141,27 +146,47 @@ const DrawingTools = (props: DrawingToolsProps) => {
             <Grid
               item
               container
-              justifyContent="space-between"
+              direction="column"
               sx={{ marginBottom: '1em', padding: '0em 0.5em' }}
             >
-              {COLOR_OPTIONS.map((color, index) => {
-                return (
-                  <Grid item key={index}>
-                    <Tooltip title={color.label}>
-                      <ColorButton
-                        style={{
-                          backgroundColor: color.color,
-                          transform:
-                            color.label === selectedColor.label
-                              ? 'scale(1.3)'
-                              : '',
-                        }}
-                        onClick={() => updateColor(color)}
-                      ></ColorButton>
-                    </Tooltip>
-                  </Grid>
-                )
-              })}
+              <Grid item container justifyContent="space-between">
+                {FIRST_COLOR_OPTIONS.map((color, index) => {
+                  return (
+                    <Grid item key={index}>
+                      <Tooltip title={color.label}>
+                        <ColorButton
+                          style={{
+                            backgroundColor: color.color,
+                            transform:
+                              color.label === selectedColor.label
+                                ? 'scale(1.3)'
+                                : '',
+                          }}
+                          onClick={() => updateColor(color)}
+                        ></ColorButton>
+                      </Tooltip>
+                    </Grid>
+                  )
+                })}
+                <Tooltip title="More Colours">
+                  <IconButton
+                    onClick={() => setShowingMoreColors(!showingMoreColors)}
+                    aria-label="more colours"
+                    color="info"
+                  >
+                    {showingMoreColors ? (
+                      <KeyboardArrowUpIcon />
+                    ) : (
+                      <KeyboardArrowDownIcon />
+                    )}
+                  </IconButton>
+                </Tooltip>
+              </Grid>
+              <MoreColors
+                selectedColor={selectedColor}
+                showingMoreColors={showingMoreColors}
+                updateColor={updateColor}
+              />
             </Grid>
             <Grid item container justifyContent="space-between">
               {STROKE_OPTIONS.map((stroke, index) => {

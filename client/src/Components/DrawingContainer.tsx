@@ -14,7 +14,11 @@ import { useRecoilValue, useRecoilState } from 'recoil'
 import DrawingMenu from './DrawingMenu'
 import MobileDrawingMenu from './MobileDrawingMenu'
 import CanvasDraw from 'react-canvas-draw'
-import { COLOR_OPTIONS, MAIN_BREAKPOINT, STROKE_OPTIONS } from '../Constants'
+import {
+  FIRST_COLOR_OPTIONS,
+  MAIN_BREAKPOINT,
+  STROKE_OPTIONS,
+} from '../Constants'
 
 const DrawingContainer = () => {
   /** The type of the note that is being created or edited */
@@ -39,7 +43,7 @@ const DrawingContainer = () => {
   const [selectedColor, setSelectedColor] = useState<{
     label: string
     color: string
-  }>(COLOR_OPTIONS[0])
+  }>(FIRST_COLOR_OPTIONS[0])
   /** Selected brush stroke size for drawing */
   const [selectedStroke, setSelectedStroke] = useState<number>(
     STROKE_OPTIONS[2]
@@ -51,7 +55,7 @@ const DrawingContainer = () => {
 
   /** Reset to the default colour and stroke when the drawing editor opens */
   useEffect(() => {
-    setSelectedColor(COLOR_OPTIONS[0])
+    setSelectedColor(FIRST_COLOR_OPTIONS[0])
     setSelectedStroke(STROKE_OPTIONS[2])
   }, [isModalOpen])
 
@@ -139,6 +143,7 @@ const DrawingContainer = () => {
           saveData={editingID ? noteBeingEdited.drawing : newNote.drawing}
           immediateLoading
           hideGrid
+          hideInterface={viewportWidth <= MAIN_BREAKPOINT}
         />
         <MobileDrawingMenu
           selectedColor={selectedColor}
