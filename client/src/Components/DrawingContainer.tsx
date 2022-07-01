@@ -12,8 +12,9 @@ import {
 } from '../atoms'
 import { useRecoilValue, useRecoilState } from 'recoil'
 import DrawingMenu from './DrawingMenu'
+import MobileDrawingMenu from './MobileDrawingMenu'
 import CanvasDraw from 'react-canvas-draw'
-import { COLOR_OPTIONS, STROKE_OPTIONS } from '../Constants'
+import { COLOR_OPTIONS, MAIN_BREAKPOINT, STROKE_OPTIONS } from '../Constants'
 
 const DrawingContainer = () => {
   /** The type of the note that is being created or edited */
@@ -132,10 +133,19 @@ const DrawingContainer = () => {
           canvasWidth={viewportWidth}
           brushColor={selectedColor.color}
           brushRadius={selectedStroke}
-          style={{ cursor: 'pointer' }}
+          style={{
+            paddingBottom: viewportWidth <= MAIN_BREAKPOINT ? '8em' : '',
+          }}
           saveData={editingID ? noteBeingEdited.drawing : newNote.drawing}
           immediateLoading
           hideGrid
+        />
+        <MobileDrawingMenu
+          selectedColor={selectedColor}
+          setSelectedColor={setSelectedColor}
+          selectedStroke={selectedStroke}
+          setSelectedStroke={setSelectedStroke}
+          clearCanvas={clearCanvas}
         />
       </Box>
     )
