@@ -14,6 +14,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import ClearIcon from '@mui/icons-material/Clear'
 import BrushSharpIcon from '@mui/icons-material/BrushSharp'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
+import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh'
 import {
   atomIsDrawingActive,
   atomIsModalOpen,
@@ -135,6 +136,9 @@ const DrawingMenu = (props: DrawingMenuProps) => {
 
   /** Function to open the paintbrush menu */
   const openPaintbrushMenu = (event: MouseEvent<HTMLButtonElement>) => {
+    if (selectedColor.label === 'White') {
+      setSelectedColor({ label: 'Black', color: '#000000' })
+    }
     setPaintbrushAnchorEl(event.currentTarget)
   }
 
@@ -163,7 +167,7 @@ const DrawingMenu = (props: DrawingMenuProps) => {
               container
               xs={8}
               sm={4}
-              md={2}
+              md={3}
               justifyContent="space-between"
             >
               <Grid item>
@@ -185,6 +189,19 @@ const DrawingMenu = (props: DrawingMenuProps) => {
                     onClick={clearCanvas}
                   >
                     <ClearIcon />
+                  </IconButton>
+                </Tooltip>
+              </Grid>
+              <Grid item>
+                <Tooltip title="Eraser">
+                  <IconButton
+                    aria-label="eraser"
+                    color="info"
+                    onClick={() =>
+                      updateColor({ label: 'White', color: '#FFFFFF' })
+                    }
+                  >
+                    <AutoFixHighIcon />
                   </IconButton>
                 </Tooltip>
               </Grid>
@@ -215,7 +232,9 @@ const DrawingMenu = (props: DrawingMenuProps) => {
                                 style={{
                                   backgroundColor: color.color,
                                   transform:
-                                    color === selectedColor ? 'scale(1.3)' : '',
+                                    color.label === selectedColor.label
+                                      ? 'scale(1.3)'
+                                      : '',
                                 }}
                                 onClick={() => updateColor(color)}
                               ></ColorButton>
