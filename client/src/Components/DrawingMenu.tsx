@@ -22,9 +22,10 @@ import {
   atomNewNote,
   atomNoteBeingEdited,
   atomEditingID,
+  atomViewportWidth,
 } from '../atoms'
 import { useSetRecoilState, useRecoilValue } from 'recoil'
-import { COLOR_OPTIONS, STROKE_OPTIONS } from '../Constants'
+import { COLOR_OPTIONS, STROKE_OPTIONS, MAIN_BREAKPOINT } from '../Constants'
 import { IDrawingColor } from '../types'
 
 /** Color button */
@@ -86,6 +87,8 @@ const DrawingMenu = (props: DrawingMenuProps) => {
   const setIsDrawingActive = useSetRecoilState(atomIsDrawingActive)
   /** State setter to update whether the modal is open or not */
   const setIsModalOpen = useSetRecoilState(atomIsModalOpen)
+  /** The width of the window, in pixels */
+  const viewportWidth = useRecoilValue(atomViewportWidth)
   /** State setter to update the note that is being edited */
   const setNoteBeingEdited = useSetRecoilState(atomNoteBeingEdited)
   /** State setter to update the new note */
@@ -195,120 +198,136 @@ const DrawingMenu = (props: DrawingMenuProps) => {
                   </IconButton>
                 </Tooltip>
               </Grid>
-              <Grid item>
-                <Tooltip title="Clear Page">
-                  <IconButton
-                    aria-label="clear page"
-                    color="info"
-                    onClick={clearCanvas}
-                  >
-                    <ClearIcon />
-                  </IconButton>
-                </Tooltip>
-              </Grid>
-              <Grid item>
-                <Tooltip title="Eraser">
-                  <IconButton
-                    aria-label="eraser"
-                    color="info"
-                    onClick={useEraser}
-                    sx={{
-                      border: toolType === 'eraser' ? '1px solid #000000' : '',
-                    }}
-                  >
-                    <AutoFixHighIcon />
-                  </IconButton>
-                </Tooltip>
-              </Grid>
-              <Grid item>
-                <Menu
-                  id="paintbrush-menu"
-                  anchorEl={paintbrushAnchorEl}
-                  open={isPaintbrushMenuOpen}
-                  onClose={closePaintbrushMenu}
-                  MenuListProps={{
-                    'aria-labelledby': 'paintbrush-button',
-                    disablePadding: true,
-                    style: { backgroundColor: '#FFFFFF', padding: '0.5em' },
-                  }}
-                >
-                  <Grid container>
-                    <Grid
-                      item
-                      container
-                      justifyContent="space-between"
-                      sx={{ marginBottom: '1em', padding: '0em 0.5em' }}
-                    >
-                      {COLOR_OPTIONS.map((color, index) => {
-                        return (
-                          <Grid item key={index}>
-                            <Tooltip title={color.label}>
-                              <ColorButton
-                                style={{
-                                  backgroundColor: color.color,
-                                  transform:
-                                    color.label === selectedColor.label
-                                      ? 'scale(1.3)'
-                                      : '',
-                                }}
-                                onClick={() => updateColor(color)}
-                              ></ColorButton>
-                            </Tooltip>
-                          </Grid>
-                        )
-                      })}
-                    </Grid>
-                    <Grid item container justifyContent="space-between">
-                      {STROKE_OPTIONS.map((stroke, index) => {
-                        return (
-                          <Grid item key={index}>
-                            <SizeButton
-                              onClick={() => updateStroke(stroke)}
-                              style={{
-                                border:
-                                  stroke === selectedStroke
-                                    ? '1px solid #000000'
-                                    : '',
-                              }}
-                            >
-                              <div
-                                style={{
-                                  width: stroke,
-                                  minWidth: stroke,
-                                  height: stroke,
-                                  minHeight: stroke,
-                                  backgroundColor: '#000000',
-                                  borderRadius: '50%',
-                                }}
-                              ></div>
-                            </SizeButton>
-                          </Grid>
-                        )
-                      })}
-                    </Grid>
+              {viewportWidth > MAIN_BREAKPOINT && (
+                <>
+                  <Grid item>
+                    <Tooltip title="Clear Page">
+                      <IconButton
+                        aria-label="clear page"
+                        color="info"
+                        onClick={clearCanvas}
+                      >
+                        <ClearIcon />
+                      </IconButton>
+                    </Tooltip>
                   </Grid>
-                </Menu>
-                <Tooltip title="Paintbrush">
-                  <IconButton
-                    id="paintbrush-button"
-                    aria-controls={
-                      isPaintbrushMenuOpen ? 'paintbrush-menu' : undefined
-                    }
-                    aria-haspopup="true"
-                    aria-expanded={isPaintbrushMenuOpen ? 'true' : undefined}
-                    onClick={openPaintbrushMenu}
-                    color="info"
-                    sx={{
-                      border:
-                        toolType === 'paintbrush' ? '1px solid #000000' : '',
-                    }}
-                  >
-                    <BrushSharpIcon />
-                  </IconButton>
-                </Tooltip>
-              </Grid>
+                  <Grid item>
+                    <Tooltip title="Eraser">
+                      <IconButton
+                        aria-label="eraser"
+                        color="info"
+                        onClick={useEraser}
+                        sx={{
+                          border:
+                            toolType === 'eraser' ? '1px solid #000000' : '',
+                        }}
+                      >
+                        <AutoFixHighIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </Grid>
+                  <Grid item>
+                    <Menu
+                      id="paintbrush-menu"
+                      anchorEl={paintbrushAnchorEl}
+                      open={isPaintbrushMenuOpen}
+                      onClose={closePaintbrushMenu}
+                      MenuListProps={{
+                        'aria-labelledby': 'paintbrush-button',
+                        disablePadding: true,
+                        style: { backgroundColor: '#FFFFFF', padding: '0.5em' },
+                      }}
+                    >
+                      <Grid container>
+                        <Grid
+                          item
+                          container
+                          justifyContent="space-between"
+                          sx={{ marginBottom: '1em', padding: '0em 0.5em' }}
+                        >
+                          {COLOR_OPTIONS.map((color, index) => {
+                            return (
+                              <Grid item key={index}>
+                                <Tooltip title={color.label}>
+                                  <ColorButton
+                                    style={{
+                                      backgroundColor: color.color,
+                                      transform:
+                                        color.label === selectedColor.label
+                                          ? 'scale(1.3)'
+                                          : '',
+                                    }}
+                                    onClick={() => updateColor(color)}
+                                  ></ColorButton>
+                                </Tooltip>
+                              </Grid>
+                            )
+                          })}
+                        </Grid>
+                        <Grid item container justifyContent="space-between">
+                          {STROKE_OPTIONS.map((stroke, index) => {
+                            return (
+                              <Grid item key={index}>
+                                <SizeButton
+                                  onClick={() => updateStroke(stroke)}
+                                  style={{
+                                    border:
+                                      stroke === selectedStroke
+                                        ? '1px solid #000000'
+                                        : '',
+                                  }}
+                                >
+                                  <div
+                                    style={{
+                                      width: stroke,
+                                      minWidth: stroke,
+                                      height: stroke,
+                                      minHeight: stroke,
+                                      backgroundColor: '#000000',
+                                      borderRadius: '50%',
+                                    }}
+                                  ></div>
+                                </SizeButton>
+                              </Grid>
+                            )
+                          })}
+                        </Grid>
+                      </Grid>
+                    </Menu>
+                    <Tooltip title="Paintbrush">
+                      <IconButton
+                        id="paintbrush-button"
+                        aria-controls={
+                          isPaintbrushMenuOpen ? 'paintbrush-menu' : undefined
+                        }
+                        aria-haspopup="true"
+                        aria-expanded={
+                          isPaintbrushMenuOpen ? 'true' : undefined
+                        }
+                        onClick={openPaintbrushMenu}
+                        color="info"
+                        sx={{
+                          border:
+                            toolType === 'paintbrush'
+                              ? '1px solid #000000'
+                              : '',
+                        }}
+                      >
+                        <BrushSharpIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </Grid>
+                </>
+              )}
             </Grid>
-            <Grid item container justifyContent="space-between" md={2} lg={1}>
+            <Grid
+              item
+              container
+              justifyContent="space-between"
+              xs={4}
+              sm={2}
+              lg={1}
+            >
               <Tooltip title="Undo">
                 <IconButton onClick={undo} color="info">
                   <UndoIcon />
