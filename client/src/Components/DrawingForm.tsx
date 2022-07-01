@@ -64,7 +64,7 @@ const DrawingForm = (props: DrawingFormProps) => {
       </Grid>
       {(noteBeingEdited.drawingImage || newNote.drawingImage) && (
         <Grid item xs={12}>
-          <button onClick={editDrawing}>
+          <button onClick={editDrawing} style={{ border: 'none' }}>
             <Box sx={{ backgroundColor: '#FFFFFF' }}>
               <img
                 src={
