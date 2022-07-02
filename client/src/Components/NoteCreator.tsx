@@ -72,6 +72,12 @@ const NoteCreator = (props: NoteCreatorProps): JSX.Element => {
     setIsDrawingActive(true)
   }
 
+  /** Function to create a new recording */
+  const createRecording = () => {
+    setNoteType('recording')
+    openModal()
+  }
+
   if (viewportWidth > MAIN_BREAKPOINT) {
     return (
       <Paper
@@ -151,7 +157,10 @@ const NoteCreator = (props: NoteCreatorProps): JSX.Element => {
                 </IconButton>
               </Tooltip>
               <Tooltip title="New recording">
-                <IconButton aria-label="new recording">
+                <IconButton
+                  aria-label="new recording"
+                  onClick={createRecording}
+                >
                   <MicNoneOutlinedIcon />
                 </IconButton>
               </Tooltip>
@@ -208,7 +217,7 @@ const NoteCreator = (props: NoteCreatorProps): JSX.Element => {
           <IconButton aria-label="new drawing" onClick={createDrawing}>
             <BrushOutlinedIcon />
           </IconButton>
-          <IconButton aria-label="new recording">
+          <IconButton aria-label="new recording" onClick={createRecording}>
             <MicNoneOutlinedIcon />
           </IconButton>
           <IconButton aria-label="new image">
