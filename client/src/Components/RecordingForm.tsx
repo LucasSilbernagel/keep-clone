@@ -37,16 +37,32 @@ const RecordingForm = (props: RecordingFormProps) => {
   /** Save the audio recording */
   useEffect(() => {
     if (audioResult) {
-      setNewNote((prevNote) => {
-        const editedNote = { ...prevNote }
-        editedNote.recording = audioResult
-        editedNote.userGoogleId = JSON.parse(
-          window.localStorage.userProfile
-        ).googleId
-        return editedNote
-      })
+      fetch(audioResult)
+        .then((res) => res.blob())
+        .then((blob) => blobToBase64(blob))
+        .then((base64) =>
+          setNewNote((prevNote) => {
+            const editedNote = { ...prevNote }
+            if (typeof base64 === 'string') {
+              editedNote.recording = base64
+            }
+            editedNote.userGoogleId = JSON.parse(
+              window.localStorage.userProfile
+            ).googleId
+            return editedNote
+          })
+        )
     }
   }, [audioResult, setNewNote])
+
+  /** Function to convert a Blob to base64 format */
+  const blobToBase64 = (blob: Blob) => {
+    return new Promise((resolve, _) => {
+      const reader = new FileReader()
+      reader.onloadend = () => resolve(reader.result)
+      reader.readAsDataURL(blob)
+    })
+  }
 
   /** Function to get stopwatch format (00:00:00) from an ISO string */
   const getStopwatch = (str: string) => {
