@@ -4,8 +4,6 @@ import NoteTitleInput from './NoteTitleInput'
 import { useAudioRecorder } from '@sarafhbk/react-audio-recorder'
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice'
 import StopIcon from '@mui/icons-material/Stop'
-import PauseIcon from '@mui/icons-material/Pause'
-import ArrowRightIcon from '@mui/icons-material/ArrowRight'
 import { keyframes } from '@mui/system'
 import { atomNewNote, atomNoteBeingEdited, atomEditingID } from '../atoms'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
@@ -17,15 +15,9 @@ interface RecordingFormProps {
 const RecordingForm = (props: RecordingFormProps) => {
   const { handleNoteTitleChange } = props
 
-  const {
-    audioResult,
-    timer,
-    startRecording,
-    stopRecording,
-    pauseRecording,
-    resumeRecording,
-    status,
-  } = useAudioRecorder()
+  /** Methods from the audio recorder library */
+  const { audioResult, timer, startRecording, stopRecording, status } =
+    useAudioRecorder()
 
   /** State setter to update the new note */
   const setNewNote = useSetRecoilState(atomNewNote)
@@ -125,40 +117,25 @@ const RecordingForm = (props: RecordingFormProps) => {
                 : savedTimer}
             </Typography>
           </Grid>
-          <Grid item container justifyContent="space-evenly">
-            <Tooltip title="Stop">
-              <IconButton
-                onClick={handleStopRecording}
-                aria-label="stop recording"
-              >
-                <StopIcon sx={{ fontSize: '2rem' }} />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Record">
-              <IconButton
-                onClick={startRecording}
-                aria-label="start recording"
-                color={status && status === 'recording' ? 'success' : 'default'}
-              >
-                <KeyboardVoiceIcon sx={{ fontSize: '3rem' }} />
-              </IconButton>
-            </Tooltip>
-            {status !== 'paused' ? (
-              <Tooltip title="Pause">
+          <Grid item>
+            {status !== 'recording' ? (
+              <Tooltip title="Record">
                 <IconButton
-                  onClick={pauseRecording}
-                  aria-label="pause recording"
+                  onClick={startRecording}
+                  aria-label="record"
+                  color="success"
                 >
-                  <PauseIcon sx={{ fontSize: '2rem' }} />
+                  <KeyboardVoiceIcon sx={{ fontSize: '3rem' }} />
                 </IconButton>
               </Tooltip>
             ) : (
-              <Tooltip title="Resume">
+              <Tooltip title="Stop">
                 <IconButton
-                  onClick={resumeRecording}
-                  aria-label="resume recording"
+                  onClick={handleStopRecording}
+                  aria-label="stop recording"
+                  color="error"
                 >
-                  <ArrowRightIcon sx={{ fontSize: '2rem' }} />
+                  <StopIcon sx={{ fontSize: '3rem' }} />
                 </IconButton>
               </Tooltip>
             )}
