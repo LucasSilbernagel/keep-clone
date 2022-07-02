@@ -11,6 +11,7 @@ export interface IExistingNote {
   list: Array<IListItem>
   drawing: string
   drawingImage: string
+  recording: string
   userGoogleId: string
   lastEdited: number
 }
@@ -21,6 +22,7 @@ export interface INewNote {
   list: Array<IListItem>
   drawing: string
   drawingImage: string
+  recording: string
   userGoogleId: string
   lastEdited: number
 }

@@ -93,7 +93,8 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
       newNote.text ||
       newNote.title ||
       newNote.list.some((item) => item.text.length > 0) ||
-      newNote.drawing
+      newNote.drawing ||
+      newNote.recording
     ) {
       axios
         .post('/api/notes', newNote)
@@ -106,6 +107,7 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
               list: [{ text: '', done: false, id: nanoid() }],
               drawing: '',
               drawingImage: '',
+              recording: '',
               userGoogleId: '',
               lastEdited: 0,
             })

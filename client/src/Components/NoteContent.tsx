@@ -144,6 +144,17 @@ const NoteContent = (props: NoteContentProps) => {
                   />
                 </Box>
               )}
+              {note.recording.length > 0 && (
+                <audio
+                  style={{
+                    display: 'block',
+                    width: '100%',
+                    pointerEvents: 'none',
+                  }}
+                  src={note.recording}
+                  controls
+                />
+              )}
             </button>
           </Grid>
           <NoteContentFooter

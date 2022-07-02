@@ -108,6 +108,8 @@ const Home = () => {
         setNoteType('checklist')
       } else if (noteBeingEdited.drawing.length > 0) {
         setNoteType('drawing')
+      } else if (noteBeingEdited.recording.length > 0) {
+        setNoteType('recording')
       }
     }
   }, [
@@ -115,6 +117,7 @@ const Home = () => {
     noteBeingEdited.list,
     noteBeingEdited.text.length,
     noteBeingEdited.drawing.length,
+    noteBeingEdited.recording.length,
     setNoteType,
   ])
 

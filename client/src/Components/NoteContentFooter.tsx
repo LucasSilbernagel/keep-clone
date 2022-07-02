@@ -46,6 +46,7 @@ const NoteContentFooter = (props: NoteContentFooterProps) => {
       list: note.list,
       drawing: note.drawing,
       drawingImage: note.drawingImage,
+      recording: note.recording,
       userGoogleId: note.userGoogleId,
       lastEdited: Date.now(),
     }

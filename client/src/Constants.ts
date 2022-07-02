@@ -7,6 +7,7 @@ export const BLANK_EXISTING_NOTE = {
   list: [{ text: '', done: false, id: nanoid() }],
   drawing: '',
   drawingImage: '',
+  recording: '',
   userGoogleId: '',
   lastEdited: 0,
 }
@@ -17,6 +18,7 @@ export const BLANK_NEW_NOTE = {
   list: [{ text: '', done: false, id: nanoid() }],
   drawing: '',
   drawingImage: '',
+  recording: '',
   userGoogleId: '',
   lastEdited: 0,
 }
