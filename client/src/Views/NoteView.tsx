@@ -108,6 +108,7 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
               drawing: '',
               drawingImage: '',
               recording: '',
+              recordingDuration: '',
               userGoogleId: '',
               lastEdited: 0,
             })

@@ -145,15 +145,30 @@ const NoteContent = (props: NoteContentProps) => {
                 </Box>
               )}
               {note.recording.length > 0 && (
-                <audio
-                  style={{
-                    display: 'block',
-                    width: '100%',
-                    pointerEvents: 'none',
-                  }}
-                  src={note.recording}
-                  controls
-                />
+                <Grid item container direction="column">
+                  <Grid item>
+                    <audio
+                      style={{
+                        display: 'block',
+                        width: '100%',
+                        pointerEvents: 'none',
+                        margin: '0.5em 0em',
+                      }}
+                      src={note.recording}
+                      controls
+                    />
+                  </Grid>
+                  <Grid item>
+                    <Typography
+                      sx={{
+                        fontSize: '1.5rem',
+                        textAlign: 'center',
+                      }}
+                    >
+                      {note.recordingDuration}
+                    </Typography>
+                  </Grid>
+                </Grid>
               )}
             </button>
           </Grid>

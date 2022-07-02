@@ -74,6 +74,7 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
         drawing: noteCopy.drawing,
         drawingImage: noteCopy.drawingImage,
         recording: noteCopy.recording,
+        recordingDuration: noteCopy.recordingDuration,
         userGoogleId: noteCopy.userGoogleId,
         lastEdited: Date.now(),
       })
@@ -87,6 +88,7 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
             drawing: '',
             drawingImage: '',
             recording: '',
+            recordingDuration: '',
             userGoogleId: '',
             lastEdited: 0,
           })
@@ -129,6 +131,7 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
       drawing: '',
       drawingImage: '',
       recording: '',
+      recordingDuration: '',
       userGoogleId: '',
       lastEdited: 0,
     })

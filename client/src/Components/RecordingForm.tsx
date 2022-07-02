@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { Grid, Typography, IconButton, Tooltip } from '@mui/material'
 import NoteTitleInput from './NoteTitleInput'
 import { useAudioRecorder } from '@sarafhbk/react-audio-recorder'
@@ -33,6 +33,8 @@ const RecordingForm = (props: RecordingFormProps) => {
   const noteBeingEdited = useRecoilValue(atomNoteBeingEdited)
   /** The ID of the note being edited */
   const editingID = useRecoilValue(atomEditingID)
+  /** The recording duration, saved */
+  const [savedTimer, setSavedTimer] = useState<string>('00:00:00')
 
   /** Save the audio recording */
   useEffect(() => {
@@ -45,6 +47,7 @@ const RecordingForm = (props: RecordingFormProps) => {
             const editedNote = { ...prevNote }
             if (typeof base64 === 'string') {
               editedNote.recording = base64
+              editedNote.recordingDuration = savedTimer
             }
             editedNote.userGoogleId = JSON.parse(
               window.localStorage.userProfile
@@ -53,7 +56,7 @@ const RecordingForm = (props: RecordingFormProps) => {
           })
         )
     }
-  }, [audioResult, setNewNote])
+  }, [audioResult, setNewNote, savedTimer])
 
   /** Function to convert a Blob to base64 format */
   const blobToBase64 = (blob: Blob) => {
@@ -69,6 +72,12 @@ const RecordingForm = (props: RecordingFormProps) => {
     return [str.slice(0, 11), str.slice(11)][1].split('.')[0]
   }
 
+  /** Function to stop recording and save the recording duration timestamp */
+  const handleStopRecording = () => {
+    setSavedTimer(getStopwatch(new Date(timer * 1000).toISOString()))
+    stopRecording()
+  }
+
   /** Blinking animation for the stopwatch when recording is paused */
   const blink = keyframes`
   0%,100% { opacity: 0 }
@@ -82,6 +91,15 @@ const RecordingForm = (props: RecordingFormProps) => {
         <Grid item container direction="column" alignItems="center">
           <Grid item>
             <audio controls src={noteBeingEdited.recording} />
+          </Grid>
+          <Grid item>
+            <Typography
+              sx={{
+                fontSize: '2rem',
+              }}
+            >
+              {noteBeingEdited.recordingDuration}
+            </Typography>
           </Grid>
         </Grid>
       </Grid>
@@ -102,12 +120,17 @@ const RecordingForm = (props: RecordingFormProps) => {
                   status === 'paused' ? `${blink} 1.5s linear infinite` : '',
               }}
             >
-              {getStopwatch(new Date(timer * 1000).toISOString())}
+              {status === 'recording' || status === 'paused'
+                ? getStopwatch(new Date(timer * 1000).toISOString())
+                : savedTimer}
             </Typography>
           </Grid>
           <Grid item container justifyContent="space-evenly">
             <Tooltip title="Stop">
-              <IconButton onClick={stopRecording} aria-label="stop recording">
+              <IconButton
+                onClick={handleStopRecording}
+                aria-label="stop recording"
+              >
                 <StopIcon sx={{ fontSize: '2rem' }} />
               </IconButton>
             </Tooltip>
