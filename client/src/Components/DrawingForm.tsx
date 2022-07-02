@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react'
-import { TextField, Grid, Box } from '@mui/material'
+import { Grid, Box } from '@mui/material'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import {
   atomNewNote,
@@ -8,6 +8,7 @@ import {
   atomIsDrawingActive,
   atomIsModalOpen,
 } from '../atoms'
+import NoteTitleInput from './NoteTitleInput'
 
 interface DrawingFormProps {
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
@@ -34,34 +35,7 @@ const DrawingForm = (props: DrawingFormProps) => {
 
   return (
     <Grid container>
-      <Grid item xs={12}>
-        <TextField
-          multiline
-          placeholder="Title"
-          onChange={handleNoteTitleChange}
-          value={editingID ? noteBeingEdited.title : newNote.title}
-          variant="outlined"
-          sx={{
-            width: '100%',
-            paddingLeft: '0.2em',
-            maxHeight: '50vh',
-            overflowY: 'auto',
-            '& .MuiOutlinedInput-root': {
-              '& fieldset': {
-                borderColor: 'transparent',
-              },
-              '&:hover fieldset': {
-                borderColor: 'transparent',
-              },
-              '&.Mui-focused fieldset': {
-                borderColor: 'transparent',
-              },
-            },
-          }}
-          inputProps={{ style: { fontSize: '1.2rem' }, maxLength: 1000 }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
-        />
-      </Grid>
+      <NoteTitleInput handleNoteTitleChange={handleNoteTitleChange} />
       {(noteBeingEdited.drawingImage || newNote.drawingImage) && (
         <Grid item xs={12}>
           <button onClick={editDrawing} style={{ border: 'none' }}>

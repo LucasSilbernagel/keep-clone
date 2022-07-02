@@ -9,7 +9,7 @@ import {
   IconButton,
   Tooltip,
 } from '@mui/material'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import {
   atomNewNote,
   atomNoteList,
@@ -21,6 +21,7 @@ import cloneDeep from 'lodash.clonedeep'
 import ClearIcon from '@mui/icons-material/Clear'
 import CompletedItems from './CompletedItems'
 import { nanoid } from 'nanoid'
+import NoteTitleInput from './NoteTitleInput'
 
 interface ChecklistFormProps {
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
@@ -29,8 +30,8 @@ interface ChecklistFormProps {
 const ChecklistForm = (props: ChecklistFormProps) => {
   const { handleNoteTitleChange } = props
 
-  /** New note atom */
-  const [newNote, setNewNote] = useRecoilState(atomNewNote)
+  /** State setter to update the new note atom */
+  const setNewNote = useSetRecoilState(atomNewNote)
   /** Array of checklist items for a note */
   const [noteList, setNoteList] = useRecoilState(atomNoteList)
   /** The ID of the note that is being edited */
@@ -114,6 +115,7 @@ const ChecklistForm = (props: ChecklistFormProps) => {
     })
   }
 
+  /** Function to delete a checklist item */
   const handleDeleteChecklistItem = (id: string) => {
     setNoteList((prevList) => {
       const newList = [...prevList]
@@ -123,34 +125,7 @@ const ChecklistForm = (props: ChecklistFormProps) => {
 
   return (
     <Grid container>
-      <Grid item xs={12}>
-        <TextField
-          multiline
-          placeholder="Title"
-          onChange={handleNoteTitleChange}
-          value={editingID ? noteBeingEdited.title : newNote.title}
-          variant="outlined"
-          sx={{
-            width: '100%',
-            paddingLeft: '0.2em',
-            maxHeight: '50vh',
-            overflowY: 'auto',
-            '& .MuiOutlinedInput-root': {
-              '& fieldset': {
-                borderColor: 'transparent',
-              },
-              '&:hover fieldset': {
-                borderColor: 'transparent',
-              },
-              '&.Mui-focused fieldset': {
-                borderColor: 'transparent',
-              },
-            },
-          }}
-          inputProps={{ style: { fontSize: '1.2rem' }, maxLength: 1000 }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
-        />
-      </Grid>
+      <NoteTitleInput handleNoteTitleChange={handleNoteTitleChange} />
       <Grid item container xs={12}>
         <List sx={{ width: '100%', paddingBottom: 0 }} dense>
           <Divider />

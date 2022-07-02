@@ -12,6 +12,7 @@ import { noteFormStyles } from '../LogicHelpers'
 import ChecklistForm from './ChecklistForm'
 import TextForm from './TextForm'
 import DrawingForm from './DrawingForm'
+import RecordingForm from './RecordingForm'
 
 interface NoteFormContainerProps {
   finishCreatingNote: () => void
@@ -91,6 +92,9 @@ const NoteFormContainer = (props: NoteFormContainerProps) => {
       )}
       {noteType === 'drawing' && (
         <DrawingForm handleNoteTitleChange={handleNoteTitleChange} />
+      )}
+      {noteType === 'recording' && (
+        <RecordingForm handleNoteTitleChange={handleNoteTitleChange} />
       )}
       {!inModal && (
         <Grid

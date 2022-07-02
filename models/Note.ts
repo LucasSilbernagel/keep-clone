@@ -23,6 +23,8 @@ const NoteSchema = new Schema({
   list: [NoteListSchema],
   drawing: String,
   drawingImage: String,
+  recording: String,
+  recordingDuration: String,
   userGoogleId: {
     type: String,
     required: true,

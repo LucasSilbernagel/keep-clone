@@ -8,6 +8,7 @@ import {
   atomViewportWidth,
 } from '../atoms'
 import { MAIN_BREAKPOINT } from '../Constants'
+import NoteTitleInput from './NoteTitleInput'
 
 interface TextFormProps {
   handleNoteTextChange: ChangeEventHandler<HTMLInputElement>
@@ -31,34 +32,7 @@ const TextForm = (props: TextFormProps) => {
       container
       sx={viewportWidth <= MAIN_BREAKPOINT ? { padding: '0.5em' } : {}}
     >
-      <Grid item xs={12}>
-        <TextField
-          multiline
-          placeholder="Title"
-          onChange={handleNoteTitleChange}
-          value={editingID ? noteBeingEdited.title : newNote.title}
-          variant="outlined"
-          sx={{
-            width: '100%',
-            paddingLeft: viewportWidth > MAIN_BREAKPOINT ? '0.2em' : '',
-            maxHeight: '50vh',
-            overflowY: 'auto',
-            '& .MuiOutlinedInput-root': {
-              '& fieldset': {
-                borderColor: 'transparent',
-              },
-              '&:hover fieldset': {
-                borderColor: 'transparent',
-              },
-              '&.Mui-focused fieldset': {
-                borderColor: 'transparent',
-              },
-            },
-          }}
-          inputProps={{ style: { fontSize: '1.2rem' }, maxLength: 1000 }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
-        />
-      </Grid>
+      <NoteTitleInput handleNoteTitleChange={handleNoteTitleChange} />
       <Grid item xs={12}>
         <TextField
           autoFocus

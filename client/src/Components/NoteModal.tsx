@@ -75,12 +75,20 @@ const NoteModal = (props: NoteModalProps): JSX.Element => {
       (newNote.text ||
         newNote.title ||
         newNote.list.some((item) => item.text.length > 0) ||
-        newNote.drawing)
+        newNote.drawing ||
+        newNote.recording)
     ) {
       saveNewNote()
     }
     // eslint-disable-next-line
-  }, [isModalOpen, newNote.drawing, newNote.list, newNote.text, newNote.title])
+  }, [
+    isModalOpen,
+    newNote.drawing,
+    newNote.recording,
+    newNote.list,
+    newNote.text,
+    newNote.title,
+  ])
 
   /** Save an edited note to the database */
   const saveEditedNote = () => {
@@ -88,7 +96,8 @@ const NoteModal = (props: NoteModalProps): JSX.Element => {
       (noteBeingEdited.text && noteBeingEdited.text.length > 0) ||
       (noteBeingEdited.title && noteBeingEdited.title.length > 0) ||
       noteBeingEdited.list.some((item) => item.text.length > 0) ||
-      (noteBeingEdited.drawing && noteBeingEdited.drawing.length > 0)
+      (noteBeingEdited.drawing && noteBeingEdited.drawing.length > 0) ||
+      (noteBeingEdited.recording && noteBeingEdited.recording.length > 0)
     ) {
       axios
         .put(`/api/notes/${noteBeingEdited._id}`, noteBeingEdited)

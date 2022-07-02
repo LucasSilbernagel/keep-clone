@@ -73,6 +73,8 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
         list: noteCopy.list,
         drawing: noteCopy.drawing,
         drawingImage: noteCopy.drawingImage,
+        recording: noteCopy.recording,
+        recordingDuration: noteCopy.recordingDuration,
         userGoogleId: noteCopy.userGoogleId,
         lastEdited: Date.now(),
       })
@@ -85,6 +87,8 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
             list: [{ text: '', done: false, id: nanoid() }],
             drawing: '',
             drawingImage: '',
+            recording: '',
+            recordingDuration: '',
             userGoogleId: '',
             lastEdited: 0,
           })
@@ -99,7 +103,8 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
       (noteBeingEdited.text && noteBeingEdited.text.length > 0) ||
       (noteBeingEdited.title && noteBeingEdited.title.length > 0) ||
       noteBeingEdited.list.some((item) => item.text.length > 0) ||
-      (noteBeingEdited.drawing && noteBeingEdited.drawing.length > 0)
+      (noteBeingEdited.drawing && noteBeingEdited.drawing.length > 0) ||
+      (noteBeingEdited.recording && noteBeingEdited.recording.length > 0)
     ) {
       saveEditedNote()
       saveNoteCopy()
@@ -108,7 +113,8 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
       (newNote.text && newNote.text.length > 0) ||
       (newNote.title && newNote.title.length > 0) ||
       newNote.list.some((item) => item.text.length > 0) ||
-      (newNote.drawing && newNote.drawing.length > 0)
+      (newNote.drawing && newNote.drawing.length > 0) ||
+      (newNote.recording && newNote.recording.length > 0)
     ) {
       saveNewNote()
     }
@@ -124,6 +130,8 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
       list: [{ text: '', done: false, id: nanoid() }],
       drawing: '',
       drawingImage: '',
+      recording: '',
+      recordingDuration: '',
       userGoogleId: '',
       lastEdited: 0,
     })
