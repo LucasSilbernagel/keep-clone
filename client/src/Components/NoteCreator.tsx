@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useRef } from 'react'
 import {
   useTheme,
   Paper,
@@ -44,6 +44,28 @@ const NoteCreator = (props: NoteCreatorProps): JSX.Element => {
   const setIsModalOpen = useSetRecoilState(atomIsModalOpen)
   /** State setter to open/close the drawing container */
   const setIsDrawingActive = useSetRecoilState(atomIsDrawingActive)
+
+  /** Ref for the hidden file input (image upload) */
+  const hiddenFileInput = useRef<HTMLInputElement>(null)
+
+  /** When the image upload button is clicked, click the inner hidden file input */
+  const handleFileInputWrapperClick = () => {
+    if (hiddenFileInput.current !== null) {
+      hiddenFileInput.current.click()
+    }
+  }
+
+  /** Function called when the image upload button is clicked */
+  const handleFileUpload = (event: { target: { files: FileList | null } }) => {
+    if (event.target.files) {
+      const image = event.target.files[0]
+      const reader = new FileReader()
+      reader.onload = (base64) => {
+        console.log(base64.target?.result)
+      }
+      reader.readAsDataURL(image)
+    }
+  }
 
   /** Function to open the modal */
   const openModal = () => setIsModalOpen(true)
@@ -165,9 +187,21 @@ const NoteCreator = (props: NoteCreatorProps): JSX.Element => {
                 </IconButton>
               </Tooltip>
               <Tooltip title="New image">
-                <IconButton aria-label="new image">
-                  <InsertPhotoOutlinedIcon />
-                </IconButton>
+                <>
+                  <IconButton
+                    aria-label="new image"
+                    onClick={handleFileInputWrapperClick}
+                  >
+                    <InsertPhotoOutlinedIcon />
+                  </IconButton>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    ref={hiddenFileInput}
+                    onChange={handleFileUpload}
+                    style={{ display: 'none' }}
+                  />
+                </>
               </Tooltip>
             </Box>
           </Box>
@@ -220,8 +254,18 @@ const NoteCreator = (props: NoteCreatorProps): JSX.Element => {
           <IconButton aria-label="new recording" onClick={createRecording}>
             <MicNoneOutlinedIcon />
           </IconButton>
-          <IconButton aria-label="new image">
+          <IconButton
+            aria-label="new image"
+            onClick={handleFileInputWrapperClick}
+          >
             <InsertPhotoOutlinedIcon />
+            <input
+              type="file"
+              accept="image/*"
+              ref={hiddenFileInput}
+              onChange={handleFileUpload}
+              style={{ display: 'none' }}
+            />
           </IconButton>
         </Box>
       </Paper>
