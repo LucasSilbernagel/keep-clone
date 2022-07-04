@@ -13,6 +13,7 @@ import ChecklistForm from './ChecklistForm'
 import TextForm from './TextForm'
 import DrawingForm from './DrawingForm'
 import RecordingForm from './RecordingForm'
+import ImageForm from './ImageForm'
 
 interface NoteFormContainerProps {
   finishCreatingNote: () => void
@@ -95,6 +96,9 @@ const NoteFormContainer = (props: NoteFormContainerProps) => {
       )}
       {noteType === 'recording' && (
         <RecordingForm handleNoteTitleChange={handleNoteTitleChange} />
+      )}
+      {noteType === 'image' && (
+        <ImageForm handleNoteTitleChange={handleNoteTitleChange} />
       )}
       {!inModal && (
         <Grid

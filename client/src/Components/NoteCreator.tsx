@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useRef } from 'react'
 import {
   useTheme,
   Paper,
@@ -13,6 +13,7 @@ import {
   atomNoteType,
   atomIsModalOpen,
   atomIsDrawingActive,
+  atomNewNote,
 } from '../atoms'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import NoteFormContainer from './NoteFormContainer'
@@ -44,6 +45,46 @@ const NoteCreator = (props: NoteCreatorProps): JSX.Element => {
   const setIsModalOpen = useSetRecoilState(atomIsModalOpen)
   /** State setter to open/close the drawing container */
   const setIsDrawingActive = useSetRecoilState(atomIsDrawingActive)
+  /** State setter to update the new note */
+  const setNewNote = useSetRecoilState(atomNewNote)
+
+  /** Ref for the hidden file input (image upload) */
+  const hiddenFileInput = useRef<HTMLInputElement>(null)
+
+  /** When the image upload button is clicked, click the inner hidden file input */
+  const handleFileInputWrapperClick = () => {
+    if (hiddenFileInput.current !== null) {
+      hiddenFileInput.current.click()
+    }
+  }
+
+  /** Function open the modal with the image form */
+  const openImageModal = () => {
+    setNoteType('image')
+    openModal()
+  }
+
+  /** Function called when the image upload button is clicked */
+  const handleFileUpload = (event: { target: { files: FileList | null } }) => {
+    if (event.target.files) {
+      const image = event.target.files[0]
+      const reader = new FileReader()
+      reader.onload = (base64) => {
+        setNewNote((currentNote) => {
+          const editedNote = { ...currentNote }
+          if (base64.target && typeof base64.target.result === 'string') {
+            editedNote.image = base64.target?.result
+          }
+          editedNote.userGoogleId = JSON.parse(
+            window.localStorage.userProfile
+          ).googleId
+          return editedNote
+        })
+      }
+      reader.readAsDataURL(image)
+      openImageModal()
+    }
+  }
 
   /** Function to open the modal */
   const openModal = () => setIsModalOpen(true)
@@ -165,9 +206,21 @@ const NoteCreator = (props: NoteCreatorProps): JSX.Element => {
                 </IconButton>
               </Tooltip>
               <Tooltip title="New image">
-                <IconButton aria-label="new image">
-                  <InsertPhotoOutlinedIcon />
-                </IconButton>
+                <>
+                  <IconButton
+                    aria-label="new image"
+                    onClick={handleFileInputWrapperClick}
+                  >
+                    <InsertPhotoOutlinedIcon />
+                  </IconButton>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    ref={hiddenFileInput}
+                    onChange={handleFileUpload}
+                    style={{ display: 'none' }}
+                  />
+                </>
               </Tooltip>
             </Box>
           </Box>
@@ -220,8 +273,18 @@ const NoteCreator = (props: NoteCreatorProps): JSX.Element => {
           <IconButton aria-label="new recording" onClick={createRecording}>
             <MicNoneOutlinedIcon />
           </IconButton>
-          <IconButton aria-label="new image">
+          <IconButton
+            aria-label="new image"
+            onClick={handleFileInputWrapperClick}
+          >
             <InsertPhotoOutlinedIcon />
+            <input
+              type="file"
+              accept="image/*"
+              ref={hiddenFileInput}
+              onChange={handleFileUpload}
+              style={{ display: 'none' }}
+            />
           </IconButton>
         </Box>
       </Paper>
