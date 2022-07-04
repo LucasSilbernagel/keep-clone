@@ -4,7 +4,6 @@ import NoteTitleInput from './NoteTitleInput'
 import { useAudioRecorder } from '@sarafhbk/react-audio-recorder'
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice'
 import StopIcon from '@mui/icons-material/Stop'
-import { keyframes } from '@mui/system'
 import { atomNewNote, atomNoteBeingEdited, atomEditingID } from '../atoms'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 
@@ -70,12 +69,6 @@ const RecordingForm = (props: RecordingFormProps) => {
     stopRecording()
   }
 
-  /** Blinking animation for the stopwatch when recording is paused */
-  const blink = keyframes`
-  0%,100% { opacity: 0 }
-  50% { opacity: 1 }
-  `
-
   if (editingID) {
     return (
       <Grid container>
@@ -108,8 +101,6 @@ const RecordingForm = (props: RecordingFormProps) => {
             <Typography
               sx={{
                 fontSize: '2rem',
-                animation:
-                  status === 'paused' ? `${blink} 1.5s linear infinite` : '',
               }}
             >
               {status === 'recording' || status === 'paused'

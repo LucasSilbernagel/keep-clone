@@ -13,6 +13,7 @@ import {
   atomNoteType,
   atomIsModalOpen,
   atomIsDrawingActive,
+  atomNewNote,
 } from '../atoms'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import NoteFormContainer from './NoteFormContainer'
@@ -44,6 +45,8 @@ const NoteCreator = (props: NoteCreatorProps): JSX.Element => {
   const setIsModalOpen = useSetRecoilState(atomIsModalOpen)
   /** State setter to open/close the drawing container */
   const setIsDrawingActive = useSetRecoilState(atomIsDrawingActive)
+  /** State setter to update the new note */
+  const setNewNote = useSetRecoilState(atomNewNote)
 
   /** Ref for the hidden file input (image upload) */
   const hiddenFileInput = useRef<HTMLInputElement>(null)
@@ -55,15 +58,31 @@ const NoteCreator = (props: NoteCreatorProps): JSX.Element => {
     }
   }
 
+  /** Function open the modal with the image form */
+  const openImageModal = () => {
+    setNoteType('image')
+    openModal()
+  }
+
   /** Function called when the image upload button is clicked */
   const handleFileUpload = (event: { target: { files: FileList | null } }) => {
     if (event.target.files) {
       const image = event.target.files[0]
       const reader = new FileReader()
       reader.onload = (base64) => {
-        console.log(base64.target?.result)
+        setNewNote((currentNote) => {
+          const editedNote = { ...currentNote }
+          if (base64.target && typeof base64.target.result === 'string') {
+            editedNote.image = base64.target?.result
+          }
+          editedNote.userGoogleId = JSON.parse(
+            window.localStorage.userProfile
+          ).googleId
+          return editedNote
+        })
       }
       reader.readAsDataURL(image)
+      openImageModal()
     }
   }
 

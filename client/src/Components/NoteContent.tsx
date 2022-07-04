@@ -139,7 +139,7 @@ const NoteContent = (props: NoteContentProps) => {
                 <Box sx={{ backgroundColor: '#FFFFFF', marginTop: '0.5em' }}>
                   <img
                     src={note.drawingImage}
-                    alt="drawing"
+                    alt="my drawing"
                     style={{ width: '100%', display: 'block' }}
                   />
                 </Box>
@@ -169,6 +169,15 @@ const NoteContent = (props: NoteContentProps) => {
                     </Typography>
                   </Grid>
                 </Grid>
+              )}
+              {note.image.length > 0 && (
+                <Box sx={{ backgroundColor: '#FFFFFF', marginTop: '0.5em' }}>
+                  <img
+                    src={note.image}
+                    alt="my upload"
+                    style={{ width: '100%', display: 'block' }}
+                  />
+                </Box>
               )}
             </button>
           </Grid>

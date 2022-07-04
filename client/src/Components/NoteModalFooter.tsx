@@ -75,6 +75,7 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
         drawingImage: noteCopy.drawingImage,
         recording: noteCopy.recording,
         recordingDuration: noteCopy.recordingDuration,
+        image: noteCopy.image,
         userGoogleId: noteCopy.userGoogleId,
         lastEdited: Date.now(),
       })
@@ -89,6 +90,7 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
             drawingImage: '',
             recording: '',
             recordingDuration: '',
+            image: '',
             userGoogleId: '',
             lastEdited: 0,
           })
@@ -104,7 +106,8 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
       (noteBeingEdited.title && noteBeingEdited.title.length > 0) ||
       noteBeingEdited.list.some((item) => item.text.length > 0) ||
       (noteBeingEdited.drawing && noteBeingEdited.drawing.length > 0) ||
-      (noteBeingEdited.recording && noteBeingEdited.recording.length > 0)
+      (noteBeingEdited.recording && noteBeingEdited.recording.length > 0) ||
+      (noteBeingEdited.image && noteBeingEdited.image.length > 0)
     ) {
       saveEditedNote()
       saveNoteCopy()
@@ -114,7 +117,8 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
       (newNote.title && newNote.title.length > 0) ||
       newNote.list.some((item) => item.text.length > 0) ||
       (newNote.drawing && newNote.drawing.length > 0) ||
-      (newNote.recording && newNote.recording.length > 0)
+      (newNote.recording && newNote.recording.length > 0) ||
+      (newNote.image && newNote.image.length > 0)
     ) {
       saveNewNote()
     }
@@ -132,6 +136,7 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
       drawingImage: '',
       recording: '',
       recordingDuration: '',
+      image: '',
       userGoogleId: '',
       lastEdited: 0,
     })

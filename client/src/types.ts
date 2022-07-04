@@ -13,6 +13,7 @@ export interface IExistingNote {
   drawingImage: string
   recording: string
   recordingDuration: string
+  image: string
   userGoogleId: string
   lastEdited: number
 }
@@ -25,6 +26,7 @@ export interface INewNote {
   drawingImage: string
   recording: string
   recordingDuration: string
+  image: string
   userGoogleId: string
   lastEdited: number
 }

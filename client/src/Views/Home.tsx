@@ -110,6 +110,8 @@ const Home = () => {
         setNoteType('drawing')
       } else if (noteBeingEdited.recording.length > 0) {
         setNoteType('recording')
+      } else if (noteBeingEdited.image.length > 0) {
+        setNoteType('image')
       }
     }
   }, [
@@ -118,6 +120,7 @@ const Home = () => {
     noteBeingEdited.text.length,
     noteBeingEdited.drawing.length,
     noteBeingEdited.recording.length,
+    noteBeingEdited.image.length,
     setNoteType,
   ])
 
