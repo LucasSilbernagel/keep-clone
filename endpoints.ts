@@ -5,6 +5,7 @@ import Note from './models/Note'
 /** Return all notes for the authenticated user */
 router.get('/notes', (req: Request, res: Response, next) => {
   Note.find({ userGoogleId: req.query.userGoogleId })
+    .sort({ isPinned: -1 })
     .then((data: any) => res.json(data))
     .catch(next)
 })

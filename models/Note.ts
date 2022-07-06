@@ -26,6 +26,7 @@ const NoteSchema = new Schema({
   recording: String,
   recordingDuration: String,
   image: String,
+  isPinned: Boolean,
   userGoogleId: {
     type: String,
     required: true,

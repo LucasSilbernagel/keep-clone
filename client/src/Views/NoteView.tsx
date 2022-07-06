@@ -111,6 +111,7 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
               recording: '',
               recordingDuration: '',
               image: '',
+              isPinned: false,
               userGoogleId: '',
               lastEdited: 0,
             })

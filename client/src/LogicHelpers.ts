@@ -26,14 +26,21 @@ export const noteContentStyles = (
       '& .moreButton': {
         display: 'flex',
       },
+      '& .pinButton': {
+        display: 'flex',
+      },
       zIndex: 0,
       backgroundColor: theme.palette.background,
+      position: 'relative',
     }
   } else if (open && !isDarkTheme) {
     styles = {
       boxShadow: 4,
       paddingBottom: 'unset',
       '& .moreButton': {
+        display: 'flex',
+      },
+      '& .pinButton': {
         display: 'flex',
       },
       zIndex: 0,
@@ -48,9 +55,13 @@ export const noteContentStyles = (
         '& .moreButton': {
           display: 'flex',
         },
+        '& .pinButton': {
+          display: 'flex',
+        },
       },
       zIndex: 0,
       backgroundColor: theme.palette.background,
+      position: 'relative',
     }
   } else if (!open && !isDarkTheme) {
     styles = {
@@ -61,8 +72,12 @@ export const noteContentStyles = (
         '& .moreButton': {
           display: 'flex',
         },
+        '& .pinButton': {
+          display: 'flex',
+        },
       },
       zIndex: 0,
+      position: 'relative',
     }
   }
   return styles
@@ -115,6 +130,26 @@ export const getNotes = (
       if (res.data) {
         setNotes(res.data)
         setIsLoading(false)
+      }
+    })
+    .catch((err) => console.error(err))
+}
+
+/** Pushes a small note edit to the database, such as when a note is pinned.
+ * @param {IExistingNote} noteBeingEdited - The note being edited
+ * @param {Function} setIsLoading - State setter that determines whether notes are being loaded from the back end
+ * @param {Function} setNotes - State setter that updates the notes array
+ */
+export const pushNoteEdit = (
+  noteBeingEdited: IExistingNote,
+  setIsLoading: (boolean: boolean) => void,
+  setNotes: SetterOrUpdater<IExistingNote[]>
+) => {
+  axios
+    .put(`/api/notes/${noteBeingEdited._id}`, noteBeingEdited)
+    .then((res) => {
+      if (res.data) {
+        getNotes(setIsLoading, setNotes)
       }
     })
     .catch((err) => console.error(err))

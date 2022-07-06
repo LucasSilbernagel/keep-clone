@@ -9,6 +9,7 @@ import {
 } from '../atoms'
 import { MAIN_BREAKPOINT } from '../Constants'
 import NoteTitleInput from './NoteTitleInput'
+import PinButton from './PinButton'
 
 interface TextFormProps {
   handleNoteTextChange: ChangeEventHandler<HTMLInputElement>
@@ -30,8 +31,19 @@ const TextForm = (props: TextFormProps) => {
   return (
     <Grid
       container
-      sx={viewportWidth <= MAIN_BREAKPOINT ? { padding: '0.5em' } : {}}
+      sx={
+        viewportWidth <= MAIN_BREAKPOINT
+          ? { padding: '0.5em', position: 'relative' }
+          : { position: 'relative' }
+      }
     >
+      <PinButton
+        rightAlignment={0}
+        topAlignment={-5}
+        zIndex={10}
+        note={editingID ? noteBeingEdited : undefined}
+        isAlreadySaved={false}
+      />
       <NoteTitleInput handleNoteTitleChange={handleNoteTitleChange} />
       <Grid item xs={12}>
         <TextField

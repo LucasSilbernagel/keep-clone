@@ -49,6 +49,7 @@ const NoteContentFooter = (props: NoteContentFooterProps) => {
       recording: note.recording,
       recordingDuration: note.recordingDuration,
       image: note.image,
+      isPinned: note.isPinned,
       userGoogleId: note.userGoogleId,
       lastEdited: Date.now(),
     }
