@@ -76,6 +76,7 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
         recording: noteCopy.recording,
         recordingDuration: noteCopy.recordingDuration,
         image: noteCopy.image,
+        isPinned: noteCopy.isPinned,
         userGoogleId: noteCopy.userGoogleId,
         lastEdited: Date.now(),
       })
@@ -91,6 +92,7 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
             recording: '',
             recordingDuration: '',
             image: '',
+            isPinned: false,
             userGoogleId: '',
             lastEdited: 0,
           })
@@ -137,6 +139,7 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
       recording: '',
       recordingDuration: '',
       image: '',
+      isPinned: false,
       userGoogleId: '',
       lastEdited: 0,
     })

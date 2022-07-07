@@ -15,6 +15,7 @@ import { noteContentStyles } from '../LogicHelpers'
 import { BLANK_EXISTING_NOTE, MAIN_BREAKPOINT } from '../Constants'
 import NoteContentChecklist from './NoteContentChecklist'
 import NoteContentFooter from './NoteContentFooter'
+import PinButton from './PinButton'
 
 interface NoteContentProps {
   note: IExistingNote
@@ -75,13 +76,18 @@ const NoteContent = (props: NoteContentProps) => {
       <Paper
         tabIndex={0}
         elevation={2}
-        sx={noteContentStyles(
-          isMoreMenuOpen,
-          isDarkTheme,
-          theme,
-          viewportWidth
-        )}
+        sx={noteContentStyles(isMoreMenuOpen, isDarkTheme, theme)}
       >
+        {viewportWidth > MAIN_BREAKPOINT && (
+          <PinButton
+            className="pinButton"
+            rightAlignment={-10}
+            topAlignment={-5}
+            note={note}
+            isAlreadySaved={true}
+            defaultHidden={true}
+          />
+        )}
         <Grid item container>
           <Grid item xs={12}>
             <button

@@ -65,6 +65,7 @@ const ChecklistForm = (props: ChecklistFormProps) => {
         editedNote.userGoogleId = JSON.parse(
           window.localStorage.userProfile
         ).googleId
+        editedNote.lastEdited = Date.now()
         return editedNote
       })
     }

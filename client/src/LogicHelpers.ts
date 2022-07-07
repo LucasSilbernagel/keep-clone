@@ -1,21 +1,18 @@
 import { Theme } from '@mui/material'
 import axios from 'axios'
 import { SetterOrUpdater } from 'recoil'
-import { MAIN_BREAKPOINT } from './Constants'
 import { IExistingNote } from './types'
 
 /** Returns the styles for the Paper element of the note content
  * @param {Boolean} open - Whether or not the note menu is open
  * @param {Boolean} isDarkTheme - Whether or not the dark theme is being used
  * @param {Theme} theme - The MUI theme
- * @param {Number} viewportWidth - The width of the viewport in pixels
  * @returns {Object} - Returns the styles for the Paper element of the note content
  */
 export const noteContentStyles = (
   open: boolean,
   isDarkTheme: boolean,
-  theme: Theme,
-  viewportWidth: number
+  theme: Theme
 ) => {
   let styles = {}
   if (open && isDarkTheme) {
@@ -26,8 +23,12 @@ export const noteContentStyles = (
       '& .moreButton': {
         display: 'flex',
       },
+      '& .pinButton': {
+        display: 'flex',
+      },
       zIndex: 0,
       backgroundColor: theme.palette.background,
+      position: 'relative',
     }
   } else if (open && !isDarkTheme) {
     styles = {
@@ -36,33 +37,54 @@ export const noteContentStyles = (
       '& .moreButton': {
         display: 'flex',
       },
+      '& .pinButton': {
+        display: 'flex',
+      },
       zIndex: 0,
     }
   } else if (!open && isDarkTheme) {
     styles = {
-      paddingBottom: viewportWidth > MAIN_BREAKPOINT ? '2.5em' : 'unset',
       border: '1px solid #525355',
+      '& .moreButton': {
+        visibility: 'hidden',
+      },
+      '& .pinButton': {
+        visibility: 'hidden',
+      },
       '&:hover, &:focus': {
         boxShadow: 4,
         paddingBottom: 'unset',
         '& .moreButton': {
-          display: 'flex',
+          visibility: 'unset',
+        },
+        '& .pinButton': {
+          visibility: 'unset',
         },
       },
       zIndex: 0,
       backgroundColor: theme.palette.background,
+      position: 'relative',
     }
   } else if (!open && !isDarkTheme) {
     styles = {
-      paddingBottom: viewportWidth > MAIN_BREAKPOINT ? '2.5em' : 'unset',
+      '& .moreButton': {
+        visibility: 'hidden',
+      },
+      '& .pinButton': {
+        visibility: 'hidden',
+      },
       '&:hover, &:focus': {
         boxShadow: 4,
         paddingBottom: 'unset',
         '& .moreButton': {
-          display: 'flex',
+          visibility: 'unset',
+        },
+        '& .pinButton': {
+          visibility: 'unset',
         },
       },
       zIndex: 0,
+      position: 'relative',
     }
   }
   return styles
@@ -115,6 +137,26 @@ export const getNotes = (
       if (res.data) {
         setNotes(res.data)
         setIsLoading(false)
+      }
+    })
+    .catch((err) => console.error(err))
+}
+
+/** Pushes a small note edit to the database, such as when a note is pinned.
+ * @param {IExistingNote} noteBeingEdited - The note being edited
+ * @param {Function} setIsLoading - State setter that determines whether notes are being loaded from the back end
+ * @param {Function} setNotes - State setter that updates the notes array
+ */
+export const pushNoteEdit = (
+  noteBeingEdited: IExistingNote,
+  setIsLoading: (boolean: boolean) => void,
+  setNotes: SetterOrUpdater<IExistingNote[]>
+) => {
+  axios
+    .put(`/api/notes/${noteBeingEdited._id}`, noteBeingEdited)
+    .then((res) => {
+      if (res.data) {
+        getNotes(setIsLoading, setNotes)
       }
     })
     .catch((err) => console.error(err))

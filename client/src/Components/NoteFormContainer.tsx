@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil'
 import {
   atomIsDarkTheme,
   atomNoteType,
@@ -14,6 +14,7 @@ import TextForm from './TextForm'
 import DrawingForm from './DrawingForm'
 import RecordingForm from './RecordingForm'
 import ImageForm from './ImageForm'
+import PinButton from './PinButton'
 
 interface NoteFormContainerProps {
   finishCreatingNote: () => void
@@ -29,8 +30,9 @@ const NoteFormContainer = (props: NoteFormContainerProps) => {
   const noteType = useRecoilValue(atomNoteType)
   /** The ID of the note that is being edited */
   const editingID = useRecoilValue(atomEditingID)
-  /** Function to create a new checklist, on desktop */
-  const setNoteBeingEdited = useSetRecoilState(atomNoteBeingEdited)
+  /** The note being edited */
+  const [noteBeingEdited, setNoteBeingEdited] =
+    useRecoilState(atomNoteBeingEdited)
   /** State setter to update the contents of a new note */
   const setNewNote = useSetRecoilState(atomNewNote)
 
@@ -81,7 +83,19 @@ const NoteFormContainer = (props: NoteFormContainerProps) => {
   }
 
   return (
-    <Box sx={noteFormStyles(inModal, isDarkTheme)}>
+    <Box
+      sx={noteFormStyles(inModal, isDarkTheme)}
+      style={{ position: 'relative' }}
+    >
+      {noteType !== 'text' && (
+        <PinButton
+          rightAlignment={0}
+          topAlignment={-5}
+          zIndex={10}
+          isAlreadySaved={false}
+          note={editingID ? noteBeingEdited : undefined}
+        />
+      )}
       {noteType === 'text' && (
         <TextForm
           handleNoteTextChange={handleNoteTextChange}

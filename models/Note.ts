@@ -2,30 +2,21 @@ import { Schema as _Schema, model } from 'mongoose'
 const Schema = _Schema
 
 const NoteListSchema = new Schema({
-  text: {
-    type: String,
-  },
-  done: {
-    type: Boolean,
-  },
-  id: {
-    type: String,
-  },
+  text: String,
+  done: String,
+  id: String,
 })
 
 const NoteSchema = new Schema({
-  text: {
-    type: String,
-  },
-  title: {
-    type: String,
-  },
+  text: String,
+  title: String,
   list: [NoteListSchema],
   drawing: String,
   drawingImage: String,
   recording: String,
   recordingDuration: String,
   image: String,
+  isPinned: Boolean,
   userGoogleId: {
     type: String,
     required: true,

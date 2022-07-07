@@ -10,6 +10,7 @@ export const BLANK_EXISTING_NOTE = {
   recording: '',
   recordingDuration: '',
   image: '',
+  isPinned: false,
   userGoogleId: '',
   lastEdited: 0,
 }
@@ -23,6 +24,7 @@ export const BLANK_NEW_NOTE = {
   recording: '',
   recordingDuration: '',
   image: '',
+  isPinned: false,
   userGoogleId: '',
   lastEdited: 0,
 }

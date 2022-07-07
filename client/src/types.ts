@@ -14,6 +14,7 @@ export interface IExistingNote {
   recording: string
   recordingDuration: string
   image: string
+  isPinned: boolean
   userGoogleId: string
   lastEdited: number
 }
@@ -27,6 +28,7 @@ export interface INewNote {
   recording: string
   recordingDuration: string
   image: string
+  isPinned: boolean
   userGoogleId: string
   lastEdited: number
 }

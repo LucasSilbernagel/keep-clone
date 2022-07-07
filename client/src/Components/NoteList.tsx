@@ -1,20 +1,19 @@
 import { Grid } from '@mui/material'
 import NoteContent from './NoteContent'
-import { useRecoilValue } from 'recoil'
-import { atomFilteredNotes } from '../atoms'
+import { IExistingNote } from '../types'
+import PinnedLabel from './PinnedLabel'
 
 interface NoteListProps {
   deleteNote: (id: string) => void
+  notes: IExistingNote[]
+  pinnedStatus?: 'Pinned' | 'Others'
 }
 
 const NoteList = (props: NoteListProps) => {
-  const { deleteNote } = props
-
-  /** Saved notes, filtered */
-  const filteredNotes = useRecoilValue(atomFilteredNotes)
+  const { deleteNote, notes, pinnedStatus } = props
 
   /** Display filteredNotes if there are any saved */
-  if (filteredNotes.length > 0) {
+  if (notes.length > 0) {
     return (
       <Grid
         container
@@ -27,8 +26,9 @@ const NoteList = (props: NoteListProps) => {
           margin: '0 auto',
         }}
       >
+        <PinnedLabel pinnedStatus={pinnedStatus} />
         <Grid container item xs={12}>
-          {filteredNotes.map((note) => {
+          {notes.map((note) => {
             return (
               <NoteContent key={note._id} note={note} deleteNote={deleteNote} />
             )

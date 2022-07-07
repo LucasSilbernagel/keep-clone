@@ -30,6 +30,7 @@ const NoteTitleInput = (props: NoteTitleInputProps) => {
           paddingLeft: '0.2em',
           maxHeight: '50vh',
           overflowY: 'auto',
+          paddingRight: '2em',
           '& .MuiOutlinedInput-root': {
             '& fieldset': {
               borderColor: 'transparent',
