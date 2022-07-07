@@ -91,7 +91,6 @@ const NoteContentFooter = (props: NoteContentFooterProps) => {
               onClick={handleClickMoreMenu}
               color="inherit"
               className="moreButton"
-              sx={isMoreMenuOpen ? { display: 'flex' } : { display: 'none' }}
             >
               <MoreVertIcon />
             </IconButton>

@@ -64,6 +64,7 @@ const PinButton = (props: PinButtonProps) => {
         editedNote.userGoogleId = JSON.parse(
           window.localStorage.userProfile
         ).googleId
+        editedNote.lastEdited = Date.now()
         return editedNote
       })
     }
@@ -75,7 +76,7 @@ const PinButton = (props: PinButtonProps) => {
         position: 'absolute',
         right: rightAlignment,
         top: topAlignment,
-        display: defaultHidden ? 'none' : '',
+        visibility: defaultHidden ? 'hidden' : 'unset',
         zIndex: zIndex,
       }}
       className={className}

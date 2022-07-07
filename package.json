@@ -5,7 +5,7 @@
   "main": "server.ts",
   "scripts": {
     "start": "ts-node-dev server.ts",
-    "start-watch": "nodemon server.ts",
+    "start-watch": "nodemon server.ts --ignore client",
     "dev": "concurrently \"npm run start-watch\" \"cd client && npm start\"",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },

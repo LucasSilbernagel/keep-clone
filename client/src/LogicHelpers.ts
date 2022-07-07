@@ -1,21 +1,18 @@
 import { Theme } from '@mui/material'
 import axios from 'axios'
 import { SetterOrUpdater } from 'recoil'
-import { MAIN_BREAKPOINT } from './Constants'
 import { IExistingNote } from './types'
 
 /** Returns the styles for the Paper element of the note content
  * @param {Boolean} open - Whether or not the note menu is open
  * @param {Boolean} isDarkTheme - Whether or not the dark theme is being used
  * @param {Theme} theme - The MUI theme
- * @param {Number} viewportWidth - The width of the viewport in pixels
  * @returns {Object} - Returns the styles for the Paper element of the note content
  */
 export const noteContentStyles = (
   open: boolean,
   isDarkTheme: boolean,
-  theme: Theme,
-  viewportWidth: number
+  theme: Theme
 ) => {
   let styles = {}
   if (open && isDarkTheme) {
@@ -47,16 +44,21 @@ export const noteContentStyles = (
     }
   } else if (!open && isDarkTheme) {
     styles = {
-      paddingBottom: viewportWidth > MAIN_BREAKPOINT ? '2.5em' : 'unset',
       border: '1px solid #525355',
+      '& .moreButton': {
+        visibility: 'hidden',
+      },
+      '& .pinButton': {
+        visibility: 'hidden',
+      },
       '&:hover, &:focus': {
         boxShadow: 4,
         paddingBottom: 'unset',
         '& .moreButton': {
-          display: 'flex',
+          visibility: 'unset',
         },
         '& .pinButton': {
-          display: 'flex',
+          visibility: 'unset',
         },
       },
       zIndex: 0,
@@ -65,15 +67,20 @@ export const noteContentStyles = (
     }
   } else if (!open && !isDarkTheme) {
     styles = {
-      paddingBottom: viewportWidth > MAIN_BREAKPOINT ? '2.5em' : 'unset',
+      '& .moreButton': {
+        visibility: 'hidden',
+      },
+      '& .pinButton': {
+        visibility: 'hidden',
+      },
       '&:hover, &:focus': {
         boxShadow: 4,
         paddingBottom: 'unset',
         '& .moreButton': {
-          display: 'flex',
+          visibility: 'unset',
         },
         '& .pinButton': {
-          display: 'flex',
+          visibility: 'unset',
         },
       },
       zIndex: 0,

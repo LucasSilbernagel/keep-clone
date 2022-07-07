@@ -43,6 +43,7 @@ const RecordingForm = (props: RecordingFormProps) => {
             editedNote.userGoogleId = JSON.parse(
               window.localStorage.userProfile
             ).googleId
+            editedNote.lastEdited = Date.now()
             return editedNote
           })
         )
