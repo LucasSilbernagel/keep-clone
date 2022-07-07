@@ -2,23 +2,25 @@ import { Grid } from '@mui/material'
 import Masonry from '@mui/lab/Masonry'
 import NoteContent from './NoteContent'
 import { useRecoilValue } from 'recoil'
-import { atomViewportWidth, atomFilteredNotes } from '../atoms'
+import { atomViewportWidth } from '../atoms'
+import { IExistingNote } from '../types'
+import PinnedLabel from './PinnedLabel'
 
 interface NoteGridProps {
   deleteNote: (id: string) => void
+  notes: IExistingNote[]
+  pinnedStatus?: 'Pinned' | 'Others'
 }
 
 const NoteGrid = (props: NoteGridProps) => {
-  const { deleteNote } = props
+  const { deleteNote, notes, pinnedStatus } = props
 
-  /** Saved notes, filtered */
-  const filteredNotes = useRecoilValue(atomFilteredNotes)
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
 
   /** Display filteredNotes if there are any saved */
-  if (filteredNotes.length > 0) {
-    if (filteredNotes.length < 3 && viewportWidth > 700) {
+  if (notes.length > 0) {
+    if (notes.length < 3 && viewportWidth > 700) {
       return (
         <Grid
           container
@@ -29,8 +31,9 @@ const NoteGrid = (props: NoteGridProps) => {
             margin: '0 auto',
           }}
         >
+          <PinnedLabel pinnedStatus={pinnedStatus} />
           <Grid container item spacing={2}>
-            {filteredNotes.map((note) => {
+            {notes.map((note) => {
               return (
                 <NoteContent
                   key={note._id}
@@ -42,7 +45,7 @@ const NoteGrid = (props: NoteGridProps) => {
           </Grid>
         </Grid>
       )
-    } else if (filteredNotes.length === 3) {
+    } else if (notes.length === 3) {
       return (
         <Grid
           container
@@ -53,8 +56,9 @@ const NoteGrid = (props: NoteGridProps) => {
             paddingLeft: { xs: '0.5em', sm: 'default' },
           }}
         >
+          <PinnedLabel pinnedStatus={pinnedStatus} />
           <Masonry spacing={2} columns={{ lg: 3, md: 3, sm: 2, xs: 2 }}>
-            {filteredNotes.map((note) => {
+            {notes.map((note) => {
               return (
                 <NoteContent
                   key={note._id}
@@ -66,7 +70,7 @@ const NoteGrid = (props: NoteGridProps) => {
           </Masonry>
         </Grid>
       )
-    } else if (viewportWidth >= 1536 && filteredNotes.length === 4) {
+    } else if (viewportWidth >= 1536 && notes.length === 4) {
       return (
         <Grid
           container
@@ -76,8 +80,9 @@ const NoteGrid = (props: NoteGridProps) => {
             margin: '0 auto',
           }}
         >
+          <PinnedLabel pinnedStatus={pinnedStatus} />
           <Masonry spacing={2} columns={{ lg: 4 }}>
-            {filteredNotes.map((note) => {
+            {notes.map((note) => {
               return (
                 <NoteContent
                   key={note._id}
@@ -103,8 +108,9 @@ const NoteGrid = (props: NoteGridProps) => {
             paddingLeft: { xs: '0.5em', sm: 'default' },
           }}
         >
+          <PinnedLabel pinnedStatus={pinnedStatus} />
           <Masonry spacing={2} columns={{ xs: 2, sm: 2, md: 3, lg: 4, xl: 5 }}>
-            {filteredNotes.map((note) => {
+            {notes.map((note) => {
               return (
                 <NoteContent
                   key={note._id}

@@ -6,8 +6,6 @@ import {
   SetStateAction,
 } from 'react'
 import { Grid } from '@mui/material'
-import NoteGrid from '../Components/NoteGrid'
-import NoteList from '../Components/NoteList'
 import DesktopAppBar from '../Components/DesktopAppBar'
 import MobileAppBar from '../Components/MobileAppBar'
 import {
@@ -15,7 +13,6 @@ import {
   atomViewportWidth,
   atomSearchValue,
   atomIsSearching,
-  atomIsGridView,
   atomNoteList,
   atomIsLoading,
   atomNotes,
@@ -31,6 +28,7 @@ import { nanoid } from 'nanoid'
 import { getNotes } from '../LogicHelpers'
 import { MAIN_BREAKPOINT } from '../Constants'
 import DrawingContainer from '../Components/DrawingContainer'
+import Notes from '../Components/Notes'
 
 interface NoteViewProps {
   setAuthenticated: Dispatch<SetStateAction<boolean>>
@@ -50,8 +48,6 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
   const [creatingNote, setCreatingNote] = useState(false)
   /** New note atom */
   const [newNote, setNewNote] = useRecoilState(atomNewNote)
-  /** Boolean to determine whether notes are being displayed in a grid (or list) */
-  const isGridView = useRecoilValue(atomIsGridView)
   /** State setter to update the array of checklist items on a note */
   const setNoteList = useSetRecoilState(atomNoteList)
   /** State setter to determine whether notes are being loaded from the back end */
@@ -200,17 +196,7 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
             />
           </Grid>
         </Grid>
-        <Grid
-          item
-          container
-          sx={viewportWidth > MAIN_BREAKPOINT ? {} : { paddingBottom: '100px' }}
-        >
-          {isGridView ? (
-            <NoteGrid deleteNote={deleteNote} />
-          ) : (
-            <NoteList deleteNote={deleteNote} />
-          )}
-        </Grid>
+        <Notes deleteNote={deleteNote} />
       </Grid>
     </>
   )
