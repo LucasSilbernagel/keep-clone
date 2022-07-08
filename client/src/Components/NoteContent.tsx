@@ -77,7 +77,7 @@ const NoteContent = (props: NoteContentProps) => {
       <Paper
         tabIndex={0}
         elevation={2}
-        sx={noteContentStyles(isMoreMenuOpen, isDarkTheme, theme)}
+        sx={noteContentStyles(isMoreMenuOpen, isDarkTheme, theme, note)}
       >
         {viewportWidth > MAIN_BREAKPOINT && (
           <>

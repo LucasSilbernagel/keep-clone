@@ -12,18 +12,22 @@ import { IExistingNote } from './types'
 export const noteContentStyles = (
   open: boolean,
   isDarkTheme: boolean,
-  theme: Theme
+  theme: Theme,
+  note: IExistingNote
 ) => {
   let styles = {}
   if (open && isDarkTheme) {
     styles = {
       boxShadow: 4,
-      border: '1px solid #525355',
+      border: note.isSelected ? '1px solid #FFFFFF' : '1px solid #525355',
       paddingBottom: 'unset',
       '& .moreButton': {
         display: 'flex',
       },
       '& .pinButton': {
+        display: 'flex',
+      },
+      '& .selectButton': {
         display: 'flex',
       },
       zIndex: 0,
@@ -32,6 +36,7 @@ export const noteContentStyles = (
     }
   } else if (open && !isDarkTheme) {
     styles = {
+      border: note.isSelected ? '1px solid #000000' : '1px solid transparent',
       boxShadow: 4,
       paddingBottom: 'unset',
       '& .moreButton': {
@@ -40,15 +45,21 @@ export const noteContentStyles = (
       '& .pinButton': {
         display: 'flex',
       },
+      '& .selectButton': {
+        display: 'flex',
+      },
       zIndex: 0,
     }
   } else if (!open && isDarkTheme) {
     styles = {
-      border: '1px solid #525355',
+      border: note.isSelected ? '1px solid #FFFFFF' : '1px solid #525355',
       '& .moreButton': {
         visibility: 'hidden',
       },
       '& .pinButton': {
+        visibility: 'hidden',
+      },
+      '& .selectButton': {
         visibility: 'hidden',
       },
       '&:hover, &:focus': {
@@ -58,6 +69,9 @@ export const noteContentStyles = (
           visibility: 'unset',
         },
         '& .pinButton': {
+          visibility: 'unset',
+        },
+        '& .selectButton': {
           visibility: 'unset',
         },
       },
@@ -67,10 +81,14 @@ export const noteContentStyles = (
     }
   } else if (!open && !isDarkTheme) {
     styles = {
+      border: note.isSelected ? '1px solid #000000' : '1px solid transparent',
       '& .moreButton': {
         visibility: 'hidden',
       },
       '& .pinButton': {
+        visibility: 'hidden',
+      },
+      '& .selectButton': {
         visibility: 'hidden',
       },
       '&:hover, &:focus': {
@@ -80,6 +98,9 @@ export const noteContentStyles = (
           visibility: 'unset',
         },
         '& .pinButton': {
+          visibility: 'unset',
+        },
+        '& .selectButton': {
           visibility: 'unset',
         },
       },

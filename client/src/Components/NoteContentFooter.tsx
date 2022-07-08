@@ -50,6 +50,7 @@ const NoteContentFooter = (props: NoteContentFooterProps) => {
       recordingDuration: note.recordingDuration,
       image: note.image,
       isPinned: note.isPinned,
+      isSelected: false,
       userGoogleId: note.userGoogleId,
       lastEdited: Date.now(),
     }

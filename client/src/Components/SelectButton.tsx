@@ -34,8 +34,8 @@ const SelectButton = (props: SelectButtonProps) => {
     <Box
       sx={{
         position: 'absolute',
-        top: 0,
-        left: 0,
+        top: -22,
+        left: -22,
         visibility: defaultHidden ? 'hidden' : 'unset',
       }}
       className="selectButton"
