@@ -16,6 +16,7 @@ import { BLANK_EXISTING_NOTE, MAIN_BREAKPOINT } from '../Constants'
 import NoteContentChecklist from './NoteContentChecklist'
 import NoteContentFooter from './NoteContentFooter'
 import PinButton from './PinButton'
+import SelectButton from './SelectButton'
 
 interface NoteContentProps {
   note: IExistingNote
@@ -79,14 +80,21 @@ const NoteContent = (props: NoteContentProps) => {
         sx={noteContentStyles(isMoreMenuOpen, isDarkTheme, theme)}
       >
         {viewportWidth > MAIN_BREAKPOINT && (
-          <PinButton
-            className="pinButton"
-            rightAlignment={-10}
-            topAlignment={-5}
-            note={note}
-            isAlreadySaved={true}
-            defaultHidden={true}
-          />
+          <>
+            <SelectButton
+              note={note}
+              isAlreadySaved={true}
+              defaultHidden={true}
+            />
+            <PinButton
+              className="pinButton"
+              rightAlignment={-10}
+              topAlignment={-5}
+              note={note}
+              isAlreadySaved={true}
+              defaultHidden={true}
+            />
+          </>
         )}
         <Grid item container>
           <Grid item xs={12}>

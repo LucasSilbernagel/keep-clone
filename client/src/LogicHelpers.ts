@@ -142,7 +142,7 @@ export const getNotes = (
     .catch((err) => console.error(err))
 }
 
-/** Pushes a small note edit to the database, such as when a note is pinned.
+/** Pushes a small note edit to the database, such as when a note is pinned or selected.
  * @param {IExistingNote} noteBeingEdited - The note being edited
  * @param {Function} setIsLoading - State setter that determines whether notes are being loaded from the back end
  * @param {Function} setNotes - State setter that updates the notes array
