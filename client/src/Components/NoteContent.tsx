@@ -9,9 +9,11 @@ import {
   atomEditingID,
   atomNoteBeingEdited,
   atomFilteredNotes,
+  atomIsLoading,
+  atomNotes,
 } from '../atoms'
 import { useSetRecoilState, useRecoilValue } from 'recoil'
-import { noteContentStyles } from '../LogicHelpers'
+import { noteContentStyles, pushNoteEdit } from '../LogicHelpers'
 import { BLANK_EXISTING_NOTE, MAIN_BREAKPOINT } from '../Constants'
 import NoteContentChecklist from './NoteContentChecklist'
 import NoteContentFooter from './NoteContentFooter'
@@ -42,6 +44,10 @@ const NoteContent = (props: NoteContentProps) => {
   const setNoteBeingEdited = useSetRecoilState(atomNoteBeingEdited)
   /** The notes array, filtered */
   const filteredNotes = useRecoilValue(atomFilteredNotes)
+  /** State setter to update the application loading state */
+  const setIsLoading = useSetRecoilState(atomIsLoading)
+  /** State setter to update the notes array */
+  const setNotes = useSetRecoilState(atomNotes)
   /** Anchor element for the "more" menu */
   const [moreAnchorEl, setMoreAnchorEl] = useState<null | HTMLElement>(null)
   /** Boolean that determines whether the "more" menu is open */
@@ -55,6 +61,9 @@ const NoteContent = (props: NoteContentProps) => {
     )
     setIsModalOpen(true)
   }
+
+  /** Trigger time to detect the difference between a click and a long press */
+  let triggerTime: number
 
   return (
     <Grid
@@ -119,7 +128,33 @@ const NoteContent = (props: NoteContentProps) => {
                       width: '100%',
                     }
               }
-              onClick={() => editNote(note._id)}
+              onClick={() => {
+                if (triggerTime > 400) {
+                  /** Long press */
+                  pushNoteEdit(
+                    { ...note, isSelected: !note.isSelected },
+                    setIsLoading,
+                    setNotes
+                  )
+                } else {
+                  /** Normal click */
+                  editNote(note._id)
+                  if (note.isSelected) {
+                    setNoteBeingEdited((prevNote) => {
+                      const editedNote = { ...prevNote }
+                      editedNote.isSelected = false
+                      return editedNote
+                    })
+                  }
+                }
+              }}
+              onMouseDown={() => {
+                triggerTime = new Date().getTime()
+              }}
+              onMouseUp={() => {
+                let thisMoment = new Date().getTime()
+                triggerTime = thisMoment - triggerTime
+              }}
             >
               {note.title && (
                 <Typography
