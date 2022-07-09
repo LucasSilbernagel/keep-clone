@@ -1,18 +1,7 @@
-import {
-  ChangeEvent,
-  useState,
-  useEffect,
-  Dispatch,
-  SetStateAction,
-} from 'react'
+import { useState, useEffect, Dispatch, SetStateAction } from 'react'
 import { Grid } from '@mui/material'
-import DesktopAppBar from '../Components/DesktopAppBar'
-import MobileAppBar from '../Components/MobileAppBar'
 import {
   atomNewNote,
-  atomViewportWidth,
-  atomSearchValue,
-  atomIsSearching,
   atomNoteList,
   atomIsLoading,
   atomNotes,
@@ -26,9 +15,9 @@ import NoteCreator from '../Components/NoteCreator'
 import NoteModal from '../Components/NoteModal'
 import { nanoid } from 'nanoid'
 import { getNotes } from '../LogicHelpers'
-import { MAIN_BREAKPOINT } from '../Constants'
 import DrawingContainer from '../Components/DrawingContainer'
 import Notes from '../Components/Notes'
+import TopBar from '../Components/TopBar'
 
 interface NoteViewProps {
   setAuthenticated: Dispatch<SetStateAction<boolean>>
@@ -38,12 +27,6 @@ interface NoteViewProps {
 const NoteView = (props: NoteViewProps): JSX.Element => {
   const { setAuthenticated, deleteNote } = props
 
-  /** The width of the viewport/window, in pixels */
-  const viewportWidth = useRecoilValue(atomViewportWidth)
-  /** State setter to update the value that is typed into the search bar */
-  const setSearchValue = useSetRecoilState(atomSearchValue)
-  /** State setter to determine whether the search bar is being used */
-  const setIsSearching = useSetRecoilState(atomIsSearching)
   /** Boolean to determine whether a new note is being created. */
   const [creatingNote, setCreatingNote] = useState(false)
   /** New note atom */
@@ -66,13 +49,6 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
     getNotes(setIsLoading, setNotes)
     // eslint-disable-next-line
   }, [])
-
-  /** Log out of the app */
-  const logOut = () => {
-    localStorage.setItem('userProfile', '')
-    setAuthenticated(false)
-    setNotes([])
-  }
 
   /** Create a copy of the note that is being created or edited */
   useEffect(() => {
@@ -125,20 +101,6 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
     setCreatingNote(false)
   }
 
-  /** Update search filter with whatever the user types into the search bar */
-  const handleSearch = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setSearchValue(e.target.value)
-  }
-
-  /** Reset the search filter */
-  const clearSearch = () => {
-    setIsSearching(false)
-    setSearchValue('')
-    getNotes(setIsLoading, setNotes)
-  }
-
   return (
     <>
       <NoteModal
@@ -163,19 +125,7 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
         ></div>
       ) : null}
       <DrawingContainer />
-      {viewportWidth > MAIN_BREAKPOINT ? (
-        <DesktopAppBar
-          logOut={logOut}
-          handleSearch={handleSearch}
-          clearSearch={clearSearch}
-        />
-      ) : (
-        <MobileAppBar
-          logOut={logOut}
-          handleSearch={handleSearch}
-          clearSearch={clearSearch}
-        />
-      )}
+      <TopBar setAuthenticated={setAuthenticated} />
       <Grid container item>
         <Grid container item lg={12} justifyContent="center">
           <Grid
