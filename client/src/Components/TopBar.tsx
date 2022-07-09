@@ -7,10 +7,12 @@ import {
   atomIsSearching,
   atomIsLoading,
   atomNotes,
+  atomFilteredNotes,
 } from '../atoms'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { getNotes } from '../LogicHelpers'
 import { MAIN_BREAKPOINT } from '../Constants'
+import SelectedNotesBar from './SelectedNotesBar'
 
 interface TopBarProps {
   setAuthenticated: Dispatch<SetStateAction<boolean>>
@@ -29,6 +31,8 @@ const TopBar = (props: TopBarProps): JSX.Element => {
   const setIsLoading = useSetRecoilState(atomIsLoading)
   /** State setter to update the notes array */
   const setNotes = useSetRecoilState(atomNotes)
+  /** Array of notes, filtered */
+  const filteredNotes = useRecoilValue(atomFilteredNotes)
 
   /** Log out of the app */
   const logOut = () => {
@@ -51,7 +55,11 @@ const TopBar = (props: TopBarProps): JSX.Element => {
     getNotes(setIsLoading, setNotes)
   }
 
-  if (viewportWidth > MAIN_BREAKPOINT) {
+  /** Whether or not any notes are selected */
+  const notesSelected =
+    filteredNotes.filter((note) => note.isSelected).length > 0
+
+  if (viewportWidth > MAIN_BREAKPOINT && !notesSelected) {
     return (
       <DesktopAppBar
         logOut={logOut}
@@ -59,7 +67,7 @@ const TopBar = (props: TopBarProps): JSX.Element => {
         clearSearch={clearSearch}
       />
     )
-  } else {
+  } else if (viewportWidth <= MAIN_BREAKPOINT && !notesSelected) {
     return (
       <MobileAppBar
         logOut={logOut}
@@ -67,6 +75,8 @@ const TopBar = (props: TopBarProps): JSX.Element => {
         clearSearch={clearSearch}
       />
     )
+  } else {
+    return <SelectedNotesBar />
   }
 }
 
