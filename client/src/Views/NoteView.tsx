@@ -95,6 +95,21 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
     }
   }
 
+  /** Edit selected notes */
+  const editNotes = (editField: string, ids: string[]) => {
+    axios({
+      url: `/api/notes/${editField}`,
+      method: 'post',
+      data: { ids },
+    })
+      .then((res) => {
+        if (res.data) {
+          getNotes(setIsLoading, setNotes)
+        }
+      })
+      .catch((err) => console.error(err))
+  }
+
   /** Function to finish creating a new note */
   const finishCreatingNote = () => {
     saveNewNote()
@@ -125,7 +140,7 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
         ></div>
       ) : null}
       <DrawingContainer />
-      <TopBar setAuthenticated={setAuthenticated} />
+      <TopBar setAuthenticated={setAuthenticated} editNotes={editNotes} />
       <Grid container item>
         <Grid container item lg={12} justifyContent="center">
           <Grid

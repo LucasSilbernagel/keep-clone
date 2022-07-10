@@ -42,4 +42,25 @@ router.post('/notes/batchDelete', async (req: Request, res: Response, next) => {
     .catch(next)
 })
 
+/** Edit multiple notes by ID */
+router.post('/notes/:editField', async (req: Request, res: Response, next) => {
+  const { ids } = req.body
+  const editField = req.params.editField
+  if (editField === 'isPinned') {
+    await Note.updateMany(
+      { isPinned: false, _id: { $in: ids } },
+      { $set: { isPinned: true } }
+    )
+      .then((data: any) => res.json(data))
+      .catch(next)
+  } else if (editField === 'isSelected') {
+    await Note.updateMany(
+      { _id: { $in: ids } },
+      { $set: { isSelected: false } }
+    )
+      .then((data: any) => res.json(data))
+      .catch(next)
+  }
+})
+
 export { router as noteRouter }

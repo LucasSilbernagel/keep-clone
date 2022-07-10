@@ -16,10 +16,11 @@ import SelectedNotesBar from './SelectedNotesBar'
 
 interface TopBarProps {
   setAuthenticated: Dispatch<SetStateAction<boolean>>
+  editNotes: (editField: string, ids: string[]) => void
 }
 
 const TopBar = (props: TopBarProps): JSX.Element => {
-  const { setAuthenticated } = props
+  const { setAuthenticated, editNotes } = props
 
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
@@ -76,7 +77,7 @@ const TopBar = (props: TopBarProps): JSX.Element => {
       />
     )
   } else {
-    return <SelectedNotesBar />
+    return <SelectedNotesBar editNotes={editNotes} />
   }
 }
 

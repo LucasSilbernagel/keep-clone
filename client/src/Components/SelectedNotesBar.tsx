@@ -20,7 +20,12 @@ import { useRecoilValue, useSetRecoilState } from 'recoil'
 import axios from 'axios'
 import { getNotes } from '../LogicHelpers'
 
-const SelectedNotesBar = (): JSX.Element => {
+interface SelectedNotesBarProps {
+  editNotes: (editField: string, ids: string[]) => void
+}
+
+const SelectedNotesBar = (props: SelectedNotesBarProps): JSX.Element => {
+  const { editNotes } = props
   /** Boolean that determines whether the app is being viewed with the dark (or light) theme */
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)
   /** Array of notes, filtered */
@@ -71,6 +76,7 @@ const SelectedNotesBar = (): JSX.Element => {
                     size="large"
                     color="inherit"
                     aria-label="Clear selection"
+                    onClick={() => editNotes('isSelected', selectedIds)}
                   >
                     <CloseIcon />
                   </IconButton>
@@ -96,6 +102,7 @@ const SelectedNotesBar = (): JSX.Element => {
                     size="large"
                     color="inherit"
                     aria-label="Pin selection"
+                    onClick={() => editNotes('isPinned', selectedIds)}
                   >
                     <PushPinOutlinedIcon />
                   </IconButton>
