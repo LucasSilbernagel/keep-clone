@@ -10,14 +10,45 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete'
 import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined'
 import CloseIcon from '@mui/icons-material/Close'
-import { atomIsDarkTheme, atomFilteredNotes } from '../atoms'
-import { useRecoilValue } from 'recoil'
+import {
+  atomIsDarkTheme,
+  atomFilteredNotes,
+  atomIsLoading,
+  atomNotes,
+} from '../atoms'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+import axios from 'axios'
+import { getNotes } from '../LogicHelpers'
 
 const SelectedNotesBar = (): JSX.Element => {
   /** Boolean that determines whether the app is being viewed with the dark (or light) theme */
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)
   /** Array of notes, filtered */
   const filteredNotes = useRecoilValue(atomFilteredNotes)
+  /** State setter to update loading state */
+  const setIsLoading = useSetRecoilState(atomIsLoading)
+  /** State setter to update the notes array */
+  const setNotes = useSetRecoilState(atomNotes)
+
+  /** The IDs of the selected notes */
+  const selectedIds = filteredNotes
+    .filter((note) => note.isSelected)
+    .map((note) => note._id)
+
+  /** Delete selected notes */
+  const deleteNotes = (ids: string[]) => {
+    axios({
+      url: '/api/notes/batchDelete',
+      method: 'post',
+      data: { ids },
+    })
+      .then((res) => {
+        if (res.data) {
+          getNotes(setIsLoading, setNotes)
+        }
+      })
+      .catch((err) => console.error(err))
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -76,6 +107,7 @@ const SelectedNotesBar = (): JSX.Element => {
                     size="large"
                     color="inherit"
                     aria-label="Delete selection"
+                    onClick={() => deleteNotes(selectedIds)}
                   >
                     <DeleteIcon />
                   </IconButton>
