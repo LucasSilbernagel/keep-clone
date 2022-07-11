@@ -9,11 +9,10 @@ import {
   atomEditingID,
   atomNoteBeingEdited,
   atomFilteredNotes,
-  atomIsLoading,
-  atomNotes,
+  atomSelectedNoteIds,
 } from '../atoms'
-import { useSetRecoilState, useRecoilValue } from 'recoil'
-import { noteContentStyles, pushNoteEdit } from '../LogicHelpers'
+import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil'
+import { noteContentStyles } from '../LogicHelpers'
 import { BLANK_EXISTING_NOTE, MAIN_BREAKPOINT } from '../Constants'
 import NoteContentChecklist from './NoteContentChecklist'
 import NoteContentFooter from './NoteContentFooter'
@@ -42,12 +41,11 @@ const NoteContent = (props: NoteContentProps) => {
   const setEditingID = useSetRecoilState(atomEditingID)
   /** State setter to update which note that is being edited */
   const setNoteBeingEdited = useSetRecoilState(atomNoteBeingEdited)
+  /** Array of selected note IDs */
+  const [selectedNoteIds, setSelectedNoteIds] =
+    useRecoilState(atomSelectedNoteIds)
   /** The notes array, filtered */
   const filteredNotes = useRecoilValue(atomFilteredNotes)
-  /** State setter to update the application loading state */
-  const setIsLoading = useSetRecoilState(atomIsLoading)
-  /** State setter to update the notes array */
-  const setNotes = useSetRecoilState(atomNotes)
   /** Anchor element for the "more" menu */
   const [moreAnchorEl, setMoreAnchorEl] = useState<null | HTMLElement>(null)
   /** Boolean that determines whether the "more" menu is open */
@@ -64,6 +62,9 @@ const NoteContent = (props: NoteContentProps) => {
 
   /** Trigger time to detect the difference between a click and a long press */
   let triggerTime: number
+
+  /** Whether the note has been selected or not */
+  const isSelectedNote = selectedNoteIds.includes(note._id)
 
   return (
     <Grid
@@ -86,15 +87,16 @@ const NoteContent = (props: NoteContentProps) => {
       <Paper
         tabIndex={0}
         elevation={2}
-        sx={noteContentStyles(isMoreMenuOpen, isDarkTheme, theme, note)}
+        sx={noteContentStyles(
+          isMoreMenuOpen,
+          isDarkTheme,
+          theme,
+          isSelectedNote
+        )}
       >
         {viewportWidth > MAIN_BREAKPOINT && (
           <>
-            <SelectButton
-              note={note}
-              isAlreadySaved={true}
-              defaultHidden={true}
-            />
+            <SelectButton note={note} defaultHidden={true} />
             <PinButton
               className="pinButton"
               rightAlignment={-10}
@@ -131,20 +133,25 @@ const NoteContent = (props: NoteContentProps) => {
               onClick={() => {
                 if (triggerTime > 400) {
                   /** Long press */
-                  pushNoteEdit(
-                    { ...note, isSelected: !note.isSelected },
-                    setIsLoading,
-                    setNotes
-                  )
+                  if (selectedNoteIds.includes(note._id)) {
+                    setSelectedNoteIds(
+                      selectedNoteIds.filter((id) => id !== note._id)
+                    )
+                  } else {
+                    setSelectedNoteIds([...selectedNoteIds, note._id])
+                  }
                 } else {
                   /** Normal click */
-                  editNote(note._id)
-                  if (note.isSelected) {
-                    setNoteBeingEdited((prevNote) => {
-                      const editedNote = { ...prevNote }
-                      editedNote.isSelected = false
-                      return editedNote
-                    })
+                  if (selectedNoteIds.length > 0) {
+                    if (selectedNoteIds.includes(note._id)) {
+                      setSelectedNoteIds(
+                        selectedNoteIds.filter((id) => id !== note._id)
+                      )
+                    } else {
+                      setSelectedNoteIds([...selectedNoteIds, note._id])
+                    }
+                  } else {
+                    editNote(note._id)
                   }
                 }
               }}

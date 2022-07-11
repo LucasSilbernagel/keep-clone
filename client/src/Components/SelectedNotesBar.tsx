@@ -12,11 +12,11 @@ import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined'
 import CloseIcon from '@mui/icons-material/Close'
 import {
   atomIsDarkTheme,
-  atomFilteredNotes,
   atomIsLoading,
   atomNotes,
+  atomSelectedNoteIds,
 } from '../atoms'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil'
 import axios from 'axios'
 import { getNotes } from '../LogicHelpers'
 
@@ -28,17 +28,13 @@ const SelectedNotesBar = (props: SelectedNotesBarProps): JSX.Element => {
   const { editNotes } = props
   /** Boolean that determines whether the app is being viewed with the dark (or light) theme */
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)
-  /** Array of notes, filtered */
-  const filteredNotes = useRecoilValue(atomFilteredNotes)
   /** State setter to update loading state */
   const setIsLoading = useSetRecoilState(atomIsLoading)
   /** State setter to update the notes array */
   const setNotes = useSetRecoilState(atomNotes)
-
-  /** The IDs of the selected notes */
-  const selectedIds = filteredNotes
-    .filter((note) => note.isSelected)
-    .map((note) => note._id)
+  /** Array of selected note IDs */
+  const [selectedNoteIds, setSelectedNoteIds] =
+    useRecoilState(atomSelectedNoteIds)
 
   /** Delete selected notes */
   const deleteNotes = (ids: string[]) => {
@@ -76,7 +72,7 @@ const SelectedNotesBar = (props: SelectedNotesBarProps): JSX.Element => {
                     size="large"
                     color="inherit"
                     aria-label="Clear selection"
-                    onClick={() => editNotes('isSelected', selectedIds)}
+                    onClick={() => setSelectedNoteIds([])}
                   >
                     <CloseIcon />
                   </IconButton>
@@ -84,8 +80,7 @@ const SelectedNotesBar = (props: SelectedNotesBarProps): JSX.Element => {
               </Grid>
               <Grid item>
                 <Typography sx={{ ml: 2 }}>
-                  {filteredNotes.filter((note) => note.isSelected).length}{' '}
-                  selected
+                  {selectedNoteIds.length} selected
                 </Typography>
               </Grid>
             </Grid>
@@ -102,7 +97,10 @@ const SelectedNotesBar = (props: SelectedNotesBarProps): JSX.Element => {
                     size="large"
                     color="inherit"
                     aria-label="Pin selection"
-                    onClick={() => editNotes('isPinned', selectedIds)}
+                    onClick={() => {
+                      editNotes('isPinned', selectedNoteIds)
+                      setSelectedNoteIds([])
+                    }}
                   >
                     <PushPinOutlinedIcon />
                   </IconButton>
@@ -114,7 +112,7 @@ const SelectedNotesBar = (props: SelectedNotesBarProps): JSX.Element => {
                     size="large"
                     color="inherit"
                     aria-label="Delete selection"
-                    onClick={() => deleteNotes(selectedIds)}
+                    onClick={() => deleteNotes(selectedNoteIds)}
                   >
                     <DeleteIcon />
                   </IconButton>

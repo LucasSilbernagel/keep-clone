@@ -7,19 +7,20 @@ import { IExistingNote } from './types'
  * @param {Boolean} open - Whether or not the note menu is open
  * @param {Boolean} isDarkTheme - Whether or not the dark theme is being used
  * @param {Theme} theme - The MUI theme
+ * @param {Boolean} isSelectedNote - Whether or not the note has been selected
  * @returns {Object} - Returns the styles for the Paper element of the note content
  */
 export const noteContentStyles = (
   open: boolean,
   isDarkTheme: boolean,
   theme: Theme,
-  note: IExistingNote
+  isSelectedNote: boolean
 ) => {
   let styles = {}
   if (open && isDarkTheme) {
     styles = {
       boxShadow: 4,
-      border: note.isSelected ? '1px solid #FFFFFF' : '1px solid #525355',
+      border: isSelectedNote ? '1px solid #FFFFFF' : '1px solid #525355',
       paddingBottom: 'unset',
       '& .moreButton': {
         display: 'flex',
@@ -36,7 +37,7 @@ export const noteContentStyles = (
     }
   } else if (open && !isDarkTheme) {
     styles = {
-      border: note.isSelected ? '1px solid #000000' : '1px solid transparent',
+      border: isSelectedNote ? '1px solid #000000' : '1px solid transparent',
       boxShadow: 4,
       paddingBottom: 'unset',
       '& .moreButton': {
@@ -52,7 +53,7 @@ export const noteContentStyles = (
     }
   } else if (!open && isDarkTheme) {
     styles = {
-      border: note.isSelected ? '1px solid #FFFFFF' : '1px solid #525355',
+      border: isSelectedNote ? '1px solid #FFFFFF' : '1px solid #525355',
       '& .moreButton': {
         visibility: 'hidden',
       },
@@ -81,7 +82,7 @@ export const noteContentStyles = (
     }
   } else if (!open && !isDarkTheme) {
     styles = {
-      border: note.isSelected ? '1px solid #000000' : '1px solid transparent',
+      border: isSelectedNote ? '1px solid #000000' : '1px solid transparent',
       '& .moreButton': {
         visibility: 'hidden',
       },

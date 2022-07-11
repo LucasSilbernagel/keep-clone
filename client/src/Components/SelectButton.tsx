@@ -1,32 +1,27 @@
 import { Box, IconButton, Tooltip } from '@mui/material'
-import { atomIsLoading, atomNotes } from '../atoms'
-import { useSetRecoilState } from 'recoil'
+import { atomSelectedNoteIds } from '../atoms'
+import { useRecoilState } from 'recoil'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import { IExistingNote } from '../types'
-import { pushNoteEdit } from '../LogicHelpers'
 
 interface SelectButtonProps {
-  note?: IExistingNote
-  isAlreadySaved: boolean
+  note: IExistingNote
   defaultHidden?: boolean
 }
 
 const SelectButton = (props: SelectButtonProps) => {
-  const { note, isAlreadySaved, defaultHidden } = props
+  const { note, defaultHidden } = props
 
-  /** State setter to update the application loading state */
-  const setIsLoading = useSetRecoilState(atomIsLoading)
-  /** State setter to update the notes array */
-  const setNotes = useSetRecoilState(atomNotes)
+  /** State setter to update the array of selected note IDs */
+  const [selectedNoteIds, setSelectedNoteIds] =
+    useRecoilState(atomSelectedNoteIds)
 
   /** Function to select or deselect a note */
   const handleSelectNote = () => {
-    if (isAlreadySaved && note) {
-      pushNoteEdit(
-        { ...note, isSelected: !note.isSelected },
-        setIsLoading,
-        setNotes
-      )
+    if (selectedNoteIds.includes(note._id)) {
+      setSelectedNoteIds(selectedNoteIds.filter((id) => id !== note._id))
+    } else {
+      setSelectedNoteIds([...selectedNoteIds, note._id])
     }
   }
 

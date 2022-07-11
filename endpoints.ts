@@ -53,13 +53,6 @@ router.post('/notes/:editField', async (req: Request, res: Response, next) => {
     )
       .then((data: any) => res.json(data))
       .catch(next)
-  } else if (editField === 'isSelected') {
-    await Note.updateMany(
-      { _id: { $in: ids } },
-      { $set: { isSelected: false } }
-    )
-      .then((data: any) => res.json(data))
-      .catch(next)
   }
 })
 

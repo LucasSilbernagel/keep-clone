@@ -8,6 +8,7 @@ import {
   atomIsLoading,
   atomNotes,
   atomFilteredNotes,
+  atomSelectedNoteIds,
 } from '../atoms'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { getNotes } from '../LogicHelpers'
@@ -24,6 +25,8 @@ const TopBar = (props: TopBarProps): JSX.Element => {
 
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
+  /** Array of selected note IDs */
+  const selectedNoteIds = useRecoilValue(atomSelectedNoteIds)
   /** State setter to update the value that is typed into the search bar */
   const setSearchValue = useSetRecoilState(atomSearchValue)
   /** State setter to determine whether the search bar is being used */
@@ -57,8 +60,9 @@ const TopBar = (props: TopBarProps): JSX.Element => {
   }
 
   /** Whether or not any notes are selected */
-  const notesSelected =
-    filteredNotes.filter((note) => note.isSelected).length > 0
+  const notesSelected = filteredNotes.some((note) =>
+    selectedNoteIds.includes(note._id)
+  )
 
   if (viewportWidth > MAIN_BREAKPOINT && !notesSelected) {
     return (
