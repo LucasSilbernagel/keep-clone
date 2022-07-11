@@ -76,7 +76,8 @@ const NoteModal = (props: NoteModalProps): JSX.Element => {
         newNote.title ||
         newNote.list.some((item) => item.text.length > 0) ||
         newNote.drawing ||
-        newNote.recording || newNote.image)
+        newNote.recording ||
+        newNote.image)
     ) {
       saveNewNote()
     }
@@ -98,7 +99,8 @@ const NoteModal = (props: NoteModalProps): JSX.Element => {
       (noteBeingEdited.title && noteBeingEdited.title.length > 0) ||
       noteBeingEdited.list.some((item) => item.text.length > 0) ||
       (noteBeingEdited.drawing && noteBeingEdited.drawing.length > 0) ||
-      (noteBeingEdited.recording && noteBeingEdited.recording.length > 0) || (noteBeingEdited.image && noteBeingEdited.image.length > 0)
+      (noteBeingEdited.recording && noteBeingEdited.recording.length > 0) ||
+      (noteBeingEdited.image && noteBeingEdited.image.length > 0)
     ) {
       axios
         .put(`/api/notes/${noteBeingEdited._id}`, noteBeingEdited)

@@ -1,24 +1,14 @@
-import {
-  ChangeEvent,
-  useState,
-  useEffect,
-  Dispatch,
-  SetStateAction,
-} from 'react'
+import { useState, useEffect, Dispatch, SetStateAction } from 'react'
 import { Grid } from '@mui/material'
-import DesktopAppBar from '../Components/DesktopAppBar'
-import MobileAppBar from '../Components/MobileAppBar'
 import {
   atomNewNote,
-  atomViewportWidth,
-  atomSearchValue,
-  atomIsSearching,
   atomNoteList,
   atomIsLoading,
   atomNotes,
   atomNoteCopy,
   atomEditingID,
   atomNoteBeingEdited,
+  atomSelectedNoteIds,
 } from '../atoms'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import axios from 'axios'
@@ -26,9 +16,9 @@ import NoteCreator from '../Components/NoteCreator'
 import NoteModal from '../Components/NoteModal'
 import { nanoid } from 'nanoid'
 import { getNotes } from '../LogicHelpers'
-import { MAIN_BREAKPOINT } from '../Constants'
 import DrawingContainer from '../Components/DrawingContainer'
 import Notes from '../Components/Notes'
+import TopBar from '../Components/TopBar'
 
 interface NoteViewProps {
   setAuthenticated: Dispatch<SetStateAction<boolean>>
@@ -38,12 +28,6 @@ interface NoteViewProps {
 const NoteView = (props: NoteViewProps): JSX.Element => {
   const { setAuthenticated, deleteNote } = props
 
-  /** The width of the viewport/window, in pixels */
-  const viewportWidth = useRecoilValue(atomViewportWidth)
-  /** State setter to update the value that is typed into the search bar */
-  const setSearchValue = useSetRecoilState(atomSearchValue)
-  /** State setter to determine whether the search bar is being used */
-  const setIsSearching = useSetRecoilState(atomIsSearching)
   /** Boolean to determine whether a new note is being created. */
   const [creatingNote, setCreatingNote] = useState(false)
   /** New note atom */
@@ -56,6 +40,9 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
   const setNotes = useSetRecoilState(atomNotes)
   /** The ID of the note being edited */
   const editingID = useRecoilValue(atomEditingID)
+  /** Array of selected note IDs */
+  const [selectedNoteIds, setSelectedNoteIds] =
+    useRecoilState(atomSelectedNoteIds)
   /** The note being edited */
   const noteBeingEdited = useRecoilValue(atomNoteBeingEdited)
   /** State setter to update the note copy */
@@ -66,13 +53,6 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
     getNotes(setIsLoading, setNotes)
     // eslint-disable-next-line
   }, [])
-
-  /** Log out of the app */
-  const logOut = () => {
-    localStorage.setItem('userProfile', '')
-    setAuthenticated(false)
-    setNotes([])
-  }
 
   /** Create a copy of the note that is being created or edited */
   useEffect(() => {
@@ -118,24 +98,25 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
     }
   }
 
+  /** Edit selected notes */
+  const editNotes = (editField: string, ids: string[]) => {
+    axios({
+      url: `/api/notes/${editField}`,
+      method: 'post',
+      data: { ids },
+    })
+      .then((res) => {
+        if (res.data) {
+          getNotes(setIsLoading, setNotes)
+        }
+      })
+      .catch((err) => console.error(err))
+  }
+
   /** Function to finish creating a new note */
   const finishCreatingNote = () => {
     saveNewNote()
     setCreatingNote(false)
-  }
-
-  /** Update search filter with whatever the user types into the search bar */
-  const handleSearch = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setSearchValue(e.target.value)
-  }
-
-  /** Reset the search filter */
-  const clearSearch = () => {
-    setIsSearching(false)
-    setSearchValue('')
-    getNotes(setIsLoading, setNotes)
   }
 
   return (
@@ -161,20 +142,23 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
           onClick={finishCreatingNote}
         ></div>
       ) : null}
-      <DrawingContainer />
-      {viewportWidth > MAIN_BREAKPOINT ? (
-        <DesktopAppBar
-          logOut={logOut}
-          handleSearch={handleSearch}
-          clearSearch={clearSearch}
-        />
-      ) : (
-        <MobileAppBar
-          logOut={logOut}
-          handleSearch={handleSearch}
-          clearSearch={clearSearch}
-        />
+      {selectedNoteIds.length > 0 && (
+        /** Invisible background rendered when the note multi-select feature is being used. */
+        /** Empties the selected notes array when clicked. */
+        <div
+          style={{
+            width: '100%',
+            height: '100%',
+            top: 0,
+            left: 0,
+            position: 'fixed',
+            zIndex: 70,
+          }}
+          onClick={() => setSelectedNoteIds([])}
+        ></div>
       )}
+      <DrawingContainer />
+      <TopBar setAuthenticated={setAuthenticated} editNotes={editNotes} />
       <Grid container item>
         <Grid container item lg={12} justifyContent="center">
           <Grid

@@ -9,13 +9,15 @@ import {
   atomEditingID,
   atomNoteBeingEdited,
   atomFilteredNotes,
+  atomSelectedNoteIds,
 } from '../atoms'
-import { useSetRecoilState, useRecoilValue } from 'recoil'
+import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil'
 import { noteContentStyles } from '../LogicHelpers'
 import { BLANK_EXISTING_NOTE, MAIN_BREAKPOINT } from '../Constants'
 import NoteContentChecklist from './NoteContentChecklist'
 import NoteContentFooter from './NoteContentFooter'
 import PinButton from './PinButton'
+import SelectButton from './SelectButton'
 
 interface NoteContentProps {
   note: IExistingNote
@@ -39,6 +41,9 @@ const NoteContent = (props: NoteContentProps) => {
   const setEditingID = useSetRecoilState(atomEditingID)
   /** State setter to update which note that is being edited */
   const setNoteBeingEdited = useSetRecoilState(atomNoteBeingEdited)
+  /** Array of selected note IDs */
+  const [selectedNoteIds, setSelectedNoteIds] =
+    useRecoilState(atomSelectedNoteIds)
   /** The notes array, filtered */
   const filteredNotes = useRecoilValue(atomFilteredNotes)
   /** Anchor element for the "more" menu */
@@ -54,6 +59,12 @@ const NoteContent = (props: NoteContentProps) => {
     )
     setIsModalOpen(true)
   }
+
+  /** Trigger time to detect the difference between a click and a long press */
+  let triggerTime: number
+
+  /** Whether the note has been selected or not */
+  const isSelectedNote = selectedNoteIds.includes(note._id)
 
   return (
     <Grid
@@ -76,17 +87,26 @@ const NoteContent = (props: NoteContentProps) => {
       <Paper
         tabIndex={0}
         elevation={2}
-        sx={noteContentStyles(isMoreMenuOpen, isDarkTheme, theme)}
+        sx={noteContentStyles(
+          isMoreMenuOpen,
+          isDarkTheme,
+          theme,
+          isSelectedNote,
+          selectedNoteIds
+        )}
       >
         {viewportWidth > MAIN_BREAKPOINT && (
-          <PinButton
-            className="pinButton"
-            rightAlignment={-10}
-            topAlignment={-5}
-            note={note}
-            isAlreadySaved={true}
-            defaultHidden={true}
-          />
+          <>
+            <SelectButton note={note} defaultHidden={true} />
+            <PinButton
+              className="pinButton"
+              rightAlignment={-10}
+              topAlignment={-5}
+              note={note}
+              isAlreadySaved={true}
+              defaultHidden={true}
+            />
+          </>
         )}
         <Grid item container>
           <Grid item xs={12}>
@@ -111,7 +131,38 @@ const NoteContent = (props: NoteContentProps) => {
                       width: '100%',
                     }
               }
-              onClick={() => editNote(note._id)}
+              onClick={() => {
+                if (triggerTime > 400) {
+                  /** Long press */
+                  if (selectedNoteIds.includes(note._id)) {
+                    setSelectedNoteIds(
+                      selectedNoteIds.filter((id) => id !== note._id)
+                    )
+                  } else {
+                    setSelectedNoteIds([...selectedNoteIds, note._id])
+                  }
+                } else {
+                  /** Normal click */
+                  if (selectedNoteIds.length > 0) {
+                    if (selectedNoteIds.includes(note._id)) {
+                      setSelectedNoteIds(
+                        selectedNoteIds.filter((id) => id !== note._id)
+                      )
+                    } else {
+                      setSelectedNoteIds([...selectedNoteIds, note._id])
+                    }
+                  } else {
+                    editNote(note._id)
+                  }
+                }
+              }}
+              onMouseDown={() => {
+                triggerTime = new Date().getTime()
+              }}
+              onMouseUp={() => {
+                let thisMoment = new Date().getTime()
+                triggerTime = thisMoment - triggerTime
+              }}
             >
               {note.title && (
                 <Typography

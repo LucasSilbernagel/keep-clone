@@ -104,3 +104,9 @@ export const atomNoteCopy = atom<IExistingNote | INewNote>({
   key: 'atomNoteCopy',
   default: BLANK_NEW_NOTE,
 })
+
+/** Selected note IDs */
+export const atomSelectedNoteIds = atom<string[]>({
+  key: 'atomSelectedNoteIds',
+  default: [],
+})

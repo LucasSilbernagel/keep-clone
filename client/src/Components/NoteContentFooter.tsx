@@ -3,7 +3,12 @@ import { Grid, IconButton, Tooltip, Menu, MenuItem } from '@mui/material'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { IExistingNote, INewNote } from '../types'
 import axios from 'axios'
-import { atomViewportWidth, atomIsLoading, atomNotes } from '../atoms'
+import {
+  atomViewportWidth,
+  atomIsLoading,
+  atomNotes,
+  atomSelectedNoteIds,
+} from '../atoms'
 import { useSetRecoilState, useRecoilValue } from 'recoil'
 import { getNotes } from '../LogicHelpers'
 import { MAIN_BREAKPOINT } from '../Constants'
@@ -26,6 +31,8 @@ const NoteContentFooter = (props: NoteContentFooterProps) => {
   const setIsLoading = useSetRecoilState(atomIsLoading)
   /** State setter to update the notes array */
   const setNotes = useSetRecoilState(atomNotes)
+  /** Array of selected note IDs */
+  const selectedNoteIds = useRecoilValue(atomSelectedNoteIds)
 
   /** Function to open the "more" menu */
   const handleClickMoreMenu = (event: MouseEvent<HTMLButtonElement>) => {
@@ -91,6 +98,7 @@ const NoteContentFooter = (props: NoteContentFooterProps) => {
               onClick={handleClickMoreMenu}
               color="inherit"
               className="moreButton"
+              disabled={selectedNoteIds.length > 0}
             >
               <MoreVertIcon />
             </IconButton>
