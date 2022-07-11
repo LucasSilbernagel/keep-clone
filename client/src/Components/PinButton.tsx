@@ -4,8 +4,9 @@ import {
   atomNewNote,
   atomIsLoading,
   atomNotes,
+  atomSelectedNoteIds,
 } from '../atoms'
-import { useSetRecoilState, useRecoilState } from 'recoil'
+import { useSetRecoilState, useRecoilState, useRecoilValue } from 'recoil'
 import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined'
 import PushPinIcon from '@mui/icons-material/PushPin'
 import { IExistingNote } from '../types'
@@ -41,6 +42,8 @@ const PinButton = (props: PinButtonProps) => {
   const setIsLoading = useSetRecoilState(atomIsLoading)
   /** State setter to update the notes array */
   const setNotes = useSetRecoilState(atomNotes)
+  /** Array of selected note IDs */
+  const selectedNoteIds = useRecoilValue(atomSelectedNoteIds)
 
   /** Function to pin or unpin a note */
   const handlePinNote = () => {
@@ -88,6 +91,7 @@ const PinButton = (props: PinButtonProps) => {
             color="inherit"
             aria-label="unpin"
             onClick={handlePinNote}
+            disabled={selectedNoteIds.length > 0}
           >
             <PushPinIcon />
           </IconButton>
@@ -99,6 +103,7 @@ const PinButton = (props: PinButtonProps) => {
             color="inherit"
             aria-label="pin"
             onClick={handlePinNote}
+            disabled={selectedNoteIds.length > 0}
           >
             <PushPinOutlinedIcon />
           </IconButton>
