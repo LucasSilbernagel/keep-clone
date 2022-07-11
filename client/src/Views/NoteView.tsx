@@ -143,6 +143,8 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
         ></div>
       ) : null}
       {selectedNoteIds.length > 0 && (
+        /** Invisible background rendered when the note multi-select feature is being used. */
+        /** Empties the selected notes array when clicked. */
         <div
           style={{
             width: '100%',
