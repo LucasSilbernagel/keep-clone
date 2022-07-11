@@ -77,10 +77,12 @@ const NoteContent = (props: NoteContentProps) => {
                 xs: '180px',
                 sm: '250px',
               },
+              zIndex: selectedNoteIds.length > 0 ? 80 : 'unset',
             }
           : {
               width: '100%',
               marginBottom: '1em',
+              zIndex: selectedNoteIds.length > 0 ? 80 : 'unset',
             }
       }
     >

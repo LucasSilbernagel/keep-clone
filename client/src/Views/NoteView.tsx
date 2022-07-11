@@ -8,6 +8,7 @@ import {
   atomNoteCopy,
   atomEditingID,
   atomNoteBeingEdited,
+  atomSelectedNoteIds,
 } from '../atoms'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import axios from 'axios'
@@ -39,6 +40,9 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
   const setNotes = useSetRecoilState(atomNotes)
   /** The ID of the note being edited */
   const editingID = useRecoilValue(atomEditingID)
+  /** Array of selected note IDs */
+  const [selectedNoteIds, setSelectedNoteIds] =
+    useRecoilState(atomSelectedNoteIds)
   /** The note being edited */
   const noteBeingEdited = useRecoilValue(atomNoteBeingEdited)
   /** State setter to update the note copy */
@@ -138,6 +142,19 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
           onClick={finishCreatingNote}
         ></div>
       ) : null}
+      {selectedNoteIds.length > 0 && (
+        <div
+          style={{
+            width: '100%',
+            height: '100%',
+            top: 0,
+            left: 0,
+            position: 'fixed',
+            zIndex: 70,
+          }}
+          onClick={() => setSelectedNoteIds([])}
+        ></div>
+      )}
       <DrawingContainer />
       <TopBar setAuthenticated={setAuthenticated} editNotes={editNotes} />
       <Grid container item>

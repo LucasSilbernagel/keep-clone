@@ -52,7 +52,7 @@ const SelectedNotesBar = (props: SelectedNotesBarProps): JSX.Element => {
   }
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, zIndex: 80 }}>
       <AppBar position="static">
         <Toolbar
           sx={
