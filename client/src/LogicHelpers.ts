@@ -8,15 +8,18 @@ import { IExistingNote } from './types'
  * @param {Boolean} isDarkTheme - Whether or not the dark theme is being used
  * @param {Theme} theme - The MUI theme
  * @param {Boolean} isSelectedNote - Whether or not the note has been selected
+ * @param {Array} selectedNoteIds - Array of selected note IDs
  * @returns {Object} - Returns the styles for the Paper element of the note content
  */
 export const noteContentStyles = (
   open: boolean,
   isDarkTheme: boolean,
   theme: Theme,
-  isSelectedNote: boolean
+  isSelectedNote: boolean,
+  selectedNoteIds: string[]
 ) => {
   let styles = {}
+  const notesSelected = selectedNoteIds.length > 0
   if (open && isDarkTheme) {
     styles = {
       boxShadow: 4,
@@ -31,7 +34,7 @@ export const noteContentStyles = (
       '& .selectButton': {
         display: 'flex',
       },
-      zIndex: 0,
+      zIndex: notesSelected ? 80 : 0,
       backgroundColor: theme.palette.background,
       position: 'relative',
     }
@@ -49,7 +52,7 @@ export const noteContentStyles = (
       '& .selectButton': {
         display: 'flex',
       },
-      zIndex: 0,
+      zIndex: notesSelected ? 80 : 0,
     }
   } else if (!open && isDarkTheme) {
     styles = {
@@ -76,7 +79,7 @@ export const noteContentStyles = (
           visibility: 'unset',
         },
       },
-      zIndex: 0,
+      zIndex: notesSelected ? 80 : 0,
       backgroundColor: theme.palette.background,
       position: 'relative',
     }
@@ -105,12 +108,13 @@ export const noteContentStyles = (
           visibility: 'unset',
         },
       },
-      zIndex: 0,
+      zIndex: notesSelected ? 80 : 0,
       position: 'relative',
     }
   }
   return styles
 }
+
 /** Returns the styles for the Box element container of the note form
  * @param {Boolean} inModal - Whether or not the note form is being rendered inside the modal
  * @param {Boolean} isDarkTheme - Whether or not the dark theme is being used
