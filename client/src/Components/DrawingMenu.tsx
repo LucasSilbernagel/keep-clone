@@ -1,26 +1,27 @@
-import { useState, MouseEvent } from 'react'
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  IconButton,
-  Tooltip,
-  Grid,
-  Menu,
-  MenuItem,
-} from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import UndoIcon from '@mui/icons-material/Undo'
 import {
+  AppBar,
+  Box,
+  Grid,
+  IconButton,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Tooltip,
+} from '@mui/material'
+import { MouseEvent, useState } from 'react'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+
+import {
+  atomEditingID,
   atomIsDrawingActive,
   atomIsModalOpen,
   atomNewNote,
   atomNoteBeingEdited,
-  atomEditingID,
   atomViewportWidth,
 } from '../atoms'
-import { useSetRecoilState, useRecoilValue } from 'recoil'
 import { MAIN_BREAKPOINT } from '../Constants'
 import { IDrawingColor } from '../types'
 import DrawingTools from './DrawingTools'

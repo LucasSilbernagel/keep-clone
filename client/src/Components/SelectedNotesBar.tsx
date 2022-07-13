@@ -1,23 +1,24 @@
+import CloseIcon from '@mui/icons-material/Close'
+import DeleteIcon from '@mui/icons-material/Delete'
+import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined'
 import {
   AppBar,
   Box,
-  Toolbar,
-  IconButton,
-  Typography,
   Grid,
+  IconButton,
+  Toolbar,
   Tooltip,
+  Typography,
 } from '@mui/material'
-import DeleteIcon from '@mui/icons-material/Delete'
-import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined'
-import CloseIcon from '@mui/icons-material/Close'
+import axios from 'axios'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+
 import {
   atomIsDarkTheme,
   atomIsLoading,
   atomNotes,
   atomSelectedNoteIds,
 } from '../atoms'
-import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil'
-import axios from 'axios'
 import { getNotes } from '../LogicHelpers'
 
 interface SelectedNotesBarProps {

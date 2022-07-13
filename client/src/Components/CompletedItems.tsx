@@ -1,22 +1,23 @@
+import ClearIcon from '@mui/icons-material/Clear'
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import {
+  Checkbox,
   Grid,
+  IconButton,
   List,
   ListItem,
-  Checkbox,
-  IconButton,
   Tooltip,
   Typography,
 } from '@mui/material'
 import MuiAccordion, { AccordionProps } from '@mui/material/Accordion'
+import MuiAccordionDetails from '@mui/material/AccordionDetails'
 import MuiAccordionSummary, {
   AccordionSummaryProps,
 } from '@mui/material/AccordionSummary'
-import MuiAccordionDetails from '@mui/material/AccordionDetails'
 import { styled } from '@mui/material/styles'
 import { useRecoilValue } from 'recoil'
+
 import { atomNoteList } from '../atoms'
-import ClearIcon from '@mui/icons-material/Clear'
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 
 /** Accordino component that contains completed checklist items */
 const Accordion = styled((props: AccordionProps) => (

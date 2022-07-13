@@ -1,11 +1,12 @@
-import { ChangeEvent, useEffect, useState } from 'react'
-import { Grid, Typography, IconButton, Tooltip } from '@mui/material'
-import NoteTitleInput from './NoteTitleInput'
-import { useAudioRecorder } from 'lucas-silbernagel-react-audio-recorder'
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice'
 import StopIcon from '@mui/icons-material/Stop'
-import { atomNewNote, atomNoteBeingEdited, atomEditingID } from '../atoms'
+import { Grid, IconButton, Tooltip, Typography } from '@mui/material'
+import { useAudioRecorder } from 'lucas-silbernagel-react-audio-recorder'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
+
+import { atomEditingID, atomNewNote, atomNoteBeingEdited } from '../atoms'
+import NoteTitleInput from './NoteTitleInput'
 
 interface RecordingFormProps {
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
@@ -52,6 +53,7 @@ const RecordingForm = (props: RecordingFormProps) => {
 
   /** Function to convert a Blob to base64 format */
   const blobToBase64 = (blob: Blob) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return new Promise((resolve, _) => {
       const reader = new FileReader()
       reader.onloadend = () => resolve(reader.result)

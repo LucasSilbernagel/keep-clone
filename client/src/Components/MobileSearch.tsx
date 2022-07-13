@@ -1,10 +1,11 @@
-import { ChangeEvent } from 'react'
-import { styled } from '@mui/material/styles'
-import { IconButton, InputBase } from '@mui/material'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { atomIsSearching, atomSearchValue } from '../atoms'
-import CloseIcon from '@mui/icons-material/Close'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import CloseIcon from '@mui/icons-material/Close'
+import { IconButton, InputBase } from '@mui/material'
+import { styled } from '@mui/material/styles'
+import { ChangeEvent } from 'react'
+import { useRecoilState, useRecoilValue } from 'recoil'
+
+import { atomIsSearching, atomSearchValue } from '../atoms'
 
 /** The search bar */
 const Search = styled('div')(({ theme }) => ({

@@ -1,6 +1,7 @@
-import { AppBar, Box, Toolbar, Grid } from '@mui/material'
-import { atomViewportWidth } from '../atoms'
+import { AppBar, Box, Grid, Toolbar } from '@mui/material'
 import { useRecoilValue } from 'recoil'
+
+import { atomViewportWidth } from '../atoms'
 import { MAIN_BREAKPOINT } from '../Constants'
 import { IDrawingColor } from '../types'
 import DrawingTools from './DrawingTools'

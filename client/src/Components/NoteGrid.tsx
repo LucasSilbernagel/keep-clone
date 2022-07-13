@@ -1,9 +1,10 @@
-import { Grid } from '@mui/material'
 import Masonry from '@mui/lab/Masonry'
-import NoteContent from './NoteContent'
+import { Grid } from '@mui/material'
 import { useRecoilValue } from 'recoil'
+
 import { atomViewportWidth } from '../atoms'
 import { IExistingNote } from '../types'
+import NoteContent from './NoteContent'
 import PinnedLabel from './PinnedLabel'
 
 interface NoteGridProps {

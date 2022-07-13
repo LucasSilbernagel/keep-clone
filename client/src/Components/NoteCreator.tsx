@@ -1,28 +1,29 @@
-import { Dispatch, SetStateAction, useRef } from 'react'
+import BrushOutlinedIcon from '@mui/icons-material/BrushOutlined'
+import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined'
+import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined'
+import MicNoneOutlinedIcon from '@mui/icons-material/MicNoneOutlined'
 import {
-  useTheme,
-  Paper,
+  Box,
   Button,
   IconButton,
-  Box,
+  Paper,
   Tooltip,
+  useTheme,
 } from '@mui/material'
-import {
-  atomViewportWidth,
-  atomIsDarkTheme,
-  atomNoteType,
-  atomIsModalOpen,
-  atomIsDrawingActive,
-  atomNewNote,
-} from '../atoms'
+import { Dispatch, SetStateAction, useRef } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
-import NoteFormContainer from './NoteFormContainer'
-import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined'
-import BrushOutlinedIcon from '@mui/icons-material/BrushOutlined'
-import MicNoneOutlinedIcon from '@mui/icons-material/MicNoneOutlined'
-import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined'
-import PlusButton from './PlusButton'
+
+import {
+  atomIsDarkTheme,
+  atomIsDrawingActive,
+  atomIsModalOpen,
+  atomNewNote,
+  atomNoteType,
+  atomViewportWidth,
+} from '../atoms'
 import { MAIN_BREAKPOINT } from '../Constants'
+import NoteFormContainer from './NoteFormContainer'
+import PlusButton from './PlusButton'
 
 interface NoteCreatorProps {
   creatingNote: boolean

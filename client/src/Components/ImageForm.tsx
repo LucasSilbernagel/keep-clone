@@ -1,8 +1,9 @@
-import { ChangeEvent } from 'react'
 import { Grid } from '@mui/material'
-import NoteTitleInput from './NoteTitleInput'
-import { atomNewNote, atomNoteBeingEdited, atomEditingID } from '../atoms'
+import { ChangeEvent } from 'react'
 import { useRecoilValue } from 'recoil'
+
+import { atomEditingID, atomNewNote, atomNoteBeingEdited } from '../atoms'
+import NoteTitleInput from './NoteTitleInput'
 
 interface ImageFormProps {
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void

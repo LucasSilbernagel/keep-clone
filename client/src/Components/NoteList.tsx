@@ -1,6 +1,7 @@
 import { Grid } from '@mui/material'
-import NoteContent from './NoteContent'
+
 import { IExistingNote } from '../types'
+import NoteContent from './NoteContent'
 import PinnedLabel from './PinnedLabel'
 
 interface NoteListProps {

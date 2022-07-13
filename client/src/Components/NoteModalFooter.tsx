@@ -1,28 +1,29 @@
-import { useState, MouseEvent } from 'react'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
 import {
-  Typography,
+  Button,
   Grid,
   IconButton,
   Menu,
   MenuItem,
-  Button,
   Tooltip,
+  Typography,
 } from '@mui/material'
-import {
-  atomNewNote,
-  atomViewportWidth,
-  atomIsDarkTheme,
-  atomNoteBeingEdited,
-  atomNotes,
-  atomIsLoading,
-  atomNoteCopy,
-} from '../atoms'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import MoreVertIcon from '@mui/icons-material/MoreVert'
 import axios from 'axios'
-import { MAIN_BREAKPOINT } from '../Constants'
-import ReactTimeAgo from 'react-time-ago'
 import { nanoid } from 'nanoid'
+import { MouseEvent, useState } from 'react'
+import ReactTimeAgo from 'react-time-ago'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+
+import {
+  atomIsDarkTheme,
+  atomIsLoading,
+  atomNewNote,
+  atomNoteBeingEdited,
+  atomNoteCopy,
+  atomNotes,
+  atomViewportWidth,
+} from '../atoms'
+import { MAIN_BREAKPOINT } from '../Constants'
 import { getNotes } from '../LogicHelpers'
 
 interface NoteModalFooterProps {

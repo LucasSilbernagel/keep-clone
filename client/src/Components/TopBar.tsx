@@ -1,18 +1,19 @@
 import { ChangeEvent, Dispatch, SetStateAction } from 'react'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+
+import {
+  atomFilteredNotes,
+  atomIsLoading,
+  atomIsSearching,
+  atomNotes,
+  atomSearchValue,
+  atomSelectedNoteIds,
+  atomViewportWidth,
+} from '../atoms'
 import DesktopAppBar from '../Components/DesktopAppBar'
 import MobileAppBar from '../Components/MobileAppBar'
-import {
-  atomViewportWidth,
-  atomSearchValue,
-  atomIsSearching,
-  atomIsLoading,
-  atomNotes,
-  atomFilteredNotes,
-  atomSelectedNoteIds,
-} from '../atoms'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
-import { getNotes } from '../LogicHelpers'
 import { MAIN_BREAKPOINT } from '../Constants'
+import { getNotes } from '../LogicHelpers'
 import SelectedNotesBar from './SelectedNotesBar'
 
 interface TopBarProps {

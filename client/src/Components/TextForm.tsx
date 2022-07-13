@@ -1,6 +1,7 @@
+import { Grid, TextField } from '@mui/material'
 import { ChangeEvent, ChangeEventHandler } from 'react'
-import { TextField, Grid } from '@mui/material'
 import { useRecoilValue } from 'recoil'
+
 import {
   atomEditingID,
   atomNewNote,

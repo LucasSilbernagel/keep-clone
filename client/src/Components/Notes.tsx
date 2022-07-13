@@ -1,8 +1,9 @@
 import { Grid } from '@mui/material'
+import { useRecoilValue } from 'recoil'
+
+import { atomFilteredNotes, atomIsGridView, atomViewportWidth } from '../atoms'
 import NoteGrid from '../Components/NoteGrid'
 import NoteList from '../Components/NoteList'
-import { atomViewportWidth, atomIsGridView, atomFilteredNotes } from '../atoms'
-import { useRecoilValue } from 'recoil'
 import { MAIN_BREAKPOINT } from '../Constants'
 
 interface NotesProps {

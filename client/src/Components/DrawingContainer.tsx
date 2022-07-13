@@ -1,24 +1,25 @@
-import { useState, useRef, useEffect } from 'react'
 import { Box } from '@mui/material'
+import { useEffect, useRef, useState } from 'react'
+import CanvasDraw from 'react-canvas-draw'
+import { useRecoilState, useRecoilValue } from 'recoil'
+
 import {
+  atomEditingID,
   atomIsDrawingActive,
-  atomNoteType,
   atomIsModalOpen,
   atomNewNote,
-  atomEditingID,
   atomNoteBeingEdited,
-  atomViewportWidth,
+  atomNoteType,
   atomViewportHeight,
+  atomViewportWidth,
 } from '../atoms'
-import { useRecoilValue, useRecoilState } from 'recoil'
-import DrawingMenu from './DrawingMenu'
-import MobileDrawingMenu from './MobileDrawingMenu'
-import CanvasDraw from 'react-canvas-draw'
 import {
   FIRST_COLOR_OPTIONS,
   MAIN_BREAKPOINT,
   STROKE_OPTIONS,
 } from '../Constants'
+import DrawingMenu from './DrawingMenu'
+import MobileDrawingMenu from './MobileDrawingMenu'
 
 const DrawingContainer = () => {
   /** The type of the note that is being created or edited */
@@ -66,6 +67,7 @@ const DrawingContainer = () => {
         const editedNote = { ...prevNote }
         if (canvasRef) {
           editedNote.drawing = canvasRef.getSaveData()
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore: Unreachable code error
           editedNote.drawingImage = canvasRef.getDataURL()
         }
@@ -77,6 +79,7 @@ const DrawingContainer = () => {
         const editedNote = { ...prevNote }
         if (canvasRef) {
           editedNote.drawing = canvasRef.getSaveData()
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore: Unreachable code error
           editedNote.drawingImage = canvasRef.getDataURL()
         }

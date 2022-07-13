@@ -1,6 +1,7 @@
-import { MenuItem, Menu, ListItemText } from '@mui/material'
-import { atomIsDarkTheme } from '../atoms'
+import { ListItemText, Menu, MenuItem } from '@mui/material'
 import { useRecoilState } from 'recoil'
+
+import { atomIsDarkTheme } from '../atoms'
 
 interface SettingsMenuProps {
   settingsAnchorEl: null | HTMLElement

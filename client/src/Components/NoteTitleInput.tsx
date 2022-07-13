@@ -1,7 +1,8 @@
+import { Grid, TextField } from '@mui/material'
 import { ChangeEvent } from 'react'
-import { TextField, Grid } from '@mui/material'
 import { useRecoilValue } from 'recoil'
-import { atomNewNote, atomNoteBeingEdited, atomEditingID } from '../atoms'
+
+import { atomEditingID, atomNewNote, atomNoteBeingEdited } from '../atoms'
 
 interface NoteTitleInputProps {
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void

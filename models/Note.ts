@@ -1,9 +1,9 @@
-import { Schema as _Schema, model } from 'mongoose'
+import { model, Schema as _Schema } from 'mongoose'
 const Schema = _Schema
 
 const NoteListSchema = new Schema({
   text: String,
-  done: String,
+  done: Boolean,
   id: String,
 })
 

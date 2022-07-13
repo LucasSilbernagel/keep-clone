@@ -1,17 +1,18 @@
-import { MouseEvent, Dispatch, SetStateAction } from 'react'
-import { Grid, IconButton, Tooltip, Menu, MenuItem } from '@mui/material'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
-import { IExistingNote, INewNote } from '../types'
+import { Grid, IconButton, Menu, MenuItem, Tooltip } from '@mui/material'
 import axios from 'axios'
+import { Dispatch, MouseEvent, SetStateAction } from 'react'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+
 import {
-  atomViewportWidth,
   atomIsLoading,
   atomNotes,
   atomSelectedNoteIds,
+  atomViewportWidth,
 } from '../atoms'
-import { useSetRecoilState, useRecoilValue } from 'recoil'
-import { getNotes } from '../LogicHelpers'
 import { MAIN_BREAKPOINT } from '../Constants'
+import { getNotes } from '../LogicHelpers'
+import { IExistingNote, INewNote } from '../types'
 
 interface NoteContentFooterProps {
   note: IExistingNote

@@ -1,13 +1,14 @@
-import { useState, MouseEvent } from 'react'
-import { IconButton, Tooltip, Grid, Menu } from '@mui/material'
-import { styled } from '@mui/material/styles'
-import ClearIcon from '@mui/icons-material/Clear'
-import BrushSharpIcon from '@mui/icons-material/BrushSharp'
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh'
-import { FIRST_COLOR_OPTIONS, STROKE_OPTIONS } from '../Constants'
-import { IDrawingColor } from '../types'
+import BrushSharpIcon from '@mui/icons-material/BrushSharp'
+import ClearIcon from '@mui/icons-material/Clear'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
+import { Grid, IconButton, Menu, Tooltip } from '@mui/material'
+import { styled } from '@mui/material/styles'
+import { MouseEvent, useState } from 'react'
+
+import { FIRST_COLOR_OPTIONS, STROKE_OPTIONS } from '../Constants'
+import { IDrawingColor } from '../types'
 import MoreColors from './MoreColors'
 
 /** Color button */

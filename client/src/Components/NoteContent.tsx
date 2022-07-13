@@ -1,19 +1,20 @@
+import { Box, Grid, Paper, Typography, useTheme } from '@mui/material'
 import { useState } from 'react'
-import { Grid, Typography, Paper, useTheme, Box } from '@mui/material'
-import { IExistingNote } from '../types'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+
 import {
-  atomIsModalOpen,
-  atomViewportWidth,
-  atomIsGridView,
-  atomIsDarkTheme,
   atomEditingID,
-  atomNoteBeingEdited,
   atomFilteredNotes,
+  atomIsDarkTheme,
+  atomIsGridView,
+  atomIsModalOpen,
+  atomNoteBeingEdited,
   atomSelectedNoteIds,
+  atomViewportWidth,
 } from '../atoms'
-import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil'
-import { noteContentStyles } from '../LogicHelpers'
 import { BLANK_EXISTING_NOTE, MAIN_BREAKPOINT } from '../Constants'
+import { noteContentStyles } from '../LogicHelpers'
+import { IExistingNote } from '../types'
 import NoteContentChecklist from './NoteContentChecklist'
 import NoteContentFooter from './NoteContentFooter'
 import PinButton from './PinButton'
@@ -160,7 +161,7 @@ const NoteContent = (props: NoteContentProps) => {
                 triggerTime = new Date().getTime()
               }}
               onMouseUp={() => {
-                let thisMoment = new Date().getTime()
+                const thisMoment = new Date().getTime()
                 triggerTime = thisMoment - triggerTime
               }}
             >

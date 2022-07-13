@@ -1,7 +1,8 @@
-import { atom } from 'recoil'
-import { BLANK_NEW_NOTE, BLANK_EXISTING_NOTE } from './Constants'
-import { INewNote, NoteType, IListItem, IExistingNote } from './types'
 import { nanoid } from 'nanoid'
+import { atom } from 'recoil'
+
+import { BLANK_EXISTING_NOTE, BLANK_NEW_NOTE } from './Constants'
+import { IExistingNote, IListItem, INewNote, NoteType } from './types'
 
 /** The user's saved notes */
 export const atomNotes = atom<IExistingNote[]>({

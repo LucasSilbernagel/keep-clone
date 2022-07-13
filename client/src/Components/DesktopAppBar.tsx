@@ -1,32 +1,33 @@
-import { useState, MouseEvent, ChangeEvent } from 'react'
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  IconButton,
-  Typography,
-  Avatar,
-  Grid,
-  CircularProgress,
-  Tooltip,
-} from '@mui/material'
+import AccountCircle from '@mui/icons-material/AccountCircle'
+import GridViewIcon from '@mui/icons-material/GridView'
+import RefreshIcon from '@mui/icons-material/Refresh'
 import SettingsIcon from '@mui/icons-material/Settings'
 import SplitscreenIcon from '@mui/icons-material/Splitscreen'
-import RefreshIcon from '@mui/icons-material/Refresh'
-import AccountCircle from '@mui/icons-material/AccountCircle'
-import GoogleKeepLogo from '../assets/keep_icon.png'
-import ProfileMenu from './ProfileMenu'
-import DesktopSearch from './DesktopSearch'
 import {
-  atomIsLoading,
-  atomIsGridView,
+  AppBar,
+  Avatar,
+  Box,
+  CircularProgress,
+  Grid,
+  IconButton,
+  Toolbar,
+  Tooltip,
+  Typography,
+} from '@mui/material'
+import { ChangeEvent, MouseEvent, useState } from 'react'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+
+import GoogleKeepLogo from '../assets/keep_icon.png'
+import {
   atomIsDarkTheme,
+  atomIsGridView,
+  atomIsLoading,
   atomNotes,
 } from '../atoms'
-import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil'
-import GridViewIcon from '@mui/icons-material/GridView'
-import SettingsMenu from './SettingsMenu'
 import { getNotes } from '../LogicHelpers'
+import DesktopSearch from './DesktopSearch'
+import ProfileMenu from './ProfileMenu'
+import SettingsMenu from './SettingsMenu'
 
 interface DesktopAppBarProps {
   logOut: () => void

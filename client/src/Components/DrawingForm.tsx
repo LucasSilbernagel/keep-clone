@@ -1,12 +1,13 @@
+import { Box, Grid } from '@mui/material'
 import { ChangeEvent } from 'react'
-import { Grid, Box } from '@mui/material'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
+
 import {
-  atomNewNote,
-  atomNoteBeingEdited,
   atomEditingID,
   atomIsDrawingActive,
   atomIsModalOpen,
+  atomNewNote,
+  atomNoteBeingEdited,
 } from '../atoms'
 import NoteTitleInput from './NoteTitleInput'
 
