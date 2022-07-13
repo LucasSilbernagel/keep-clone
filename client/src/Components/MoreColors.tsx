@@ -1,13 +1,14 @@
-import { Tooltip, Grid } from '@mui/material'
+import { Grid, Tooltip } from '@mui/material'
 import { styled } from '@mui/material/styles'
+import { useRecoilValue } from 'recoil'
+
+import { atomViewportWidth } from '../atoms'
 import {
+  FOURTH_COLOR_OPTIONS,
   SECOND_COLOR_OPTIONS,
   THIRD_COLOR_OPTIONS,
-  FOURTH_COLOR_OPTIONS,
 } from '../Constants'
 import { IDrawingColor } from '../types'
-import { atomViewportWidth } from '../atoms'
-import { useRecoilValue } from 'recoil'
 
 /** Color button */
 const ColorButton = styled('button')(() => ({

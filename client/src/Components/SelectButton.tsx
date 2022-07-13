@@ -1,7 +1,8 @@
-import { Box, IconButton, Tooltip } from '@mui/material'
-import { atomSelectedNoteIds } from '../atoms'
-import { useRecoilState } from 'recoil'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import { Box, IconButton, Tooltip } from '@mui/material'
+import { useRecoilState } from 'recoil'
+
+import { atomSelectedNoteIds } from '../atoms'
 import { IExistingNote } from '../types'
 
 interface SelectButtonProps {

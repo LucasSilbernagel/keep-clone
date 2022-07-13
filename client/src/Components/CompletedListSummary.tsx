@@ -1,4 +1,5 @@
-import { Typography, Divider } from '@mui/material'
+import { Divider, Typography } from '@mui/material'
+
 import { IExistingNote } from '../types'
 
 interface CompletedListSummaryProps {

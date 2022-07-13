@@ -1,23 +1,24 @@
-import { useState, MouseEvent, ChangeEvent } from 'react'
-import { useTheme } from '@mui/material/styles'
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  IconButton,
-  Avatar,
-  Grid,
-  Button,
-} from '@mui/material'
+import AccountCircle from '@mui/icons-material/AccountCircle'
+import GridViewIcon from '@mui/icons-material/GridView'
 import SettingsIcon from '@mui/icons-material/Settings'
 import SplitscreenIcon from '@mui/icons-material/Splitscreen'
-import AccountCircle from '@mui/icons-material/AccountCircle'
-import ProfileMenu from './ProfileMenu'
-import { atomIsSearching } from '../atoms'
-import MobileSearch from './MobileSearch'
-import { atomIsGridView } from '../atoms'
+import {
+  AppBar,
+  Avatar,
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  Toolbar,
+} from '@mui/material'
+import { useTheme } from '@mui/material/styles'
+import { ChangeEvent, MouseEvent, useState } from 'react'
 import { useRecoilState } from 'recoil'
-import GridViewIcon from '@mui/icons-material/GridView'
+
+import { atomIsSearching } from '../atoms'
+import { atomIsGridView } from '../atoms'
+import MobileSearch from './MobileSearch'
+import ProfileMenu from './ProfileMenu'
 import SettingsMenu from './SettingsMenu'
 
 interface MobileAppBarProps {

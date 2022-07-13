@@ -1,6 +1,7 @@
 import { Theme } from '@mui/material'
 import axios from 'axios'
 import { SetterOrUpdater } from 'recoil'
+
 import { IExistingNote } from './types'
 
 /** Returns the styles for the Paper element of the note content

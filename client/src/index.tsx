@@ -1,10 +1,11 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
 import { GoogleOAuthProvider } from '@react-oauth/google'
-import App from './App'
-import { RecoilRoot } from 'recoil'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en.json'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { RecoilRoot } from 'recoil'
+
+import App from './App'
 TimeAgo.addDefaultLocale(en)
 
 ReactDOM.render(

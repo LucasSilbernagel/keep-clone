@@ -5,7 +5,7 @@ import Note from './models/Note'
 /** Return all notes for the authenticated user */
 router.get('/notes', async (req: Request, res: Response, next) => {
   await Note.find({ userGoogleId: req.query.userGoogleId })
-    .then((data: any) => res.json(data))
+    .then((data: unknown) => res.json(data))
     .catch(next)
 })
 
@@ -28,7 +28,7 @@ router.put('/notes/:id', async (req: Request, res: Response, next) => {
 /** Delete a note with a specific ID */
 router.delete('/notes/:id', async (req: Request, res: Response, next) => {
   await Note.findOneAndDelete({ _id: req.params.id })
-    .then((data: any) => res.json(data))
+    .then((data: unknown) => res.json(data))
     .catch(next)
 })
 
@@ -38,7 +38,7 @@ router.post('/notes/batchDelete', async (req: Request, res: Response, next) => {
   await Note.deleteMany({
     _id: { $in: ids },
   })
-    .then((data: any) => res.json(data))
+    .then((data: unknown) => res.json(data))
     .catch(next)
 })
 
@@ -51,7 +51,7 @@ router.post('/notes/:editField', async (req: Request, res: Response, next) => {
       { isPinned: false, _id: { $in: ids } },
       { $set: { isPinned: true } }
     )
-      .then((data: any) => res.json(data))
+      .then((data: unknown) => res.json(data))
       .catch(next)
   }
 })

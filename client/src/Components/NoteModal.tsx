@@ -1,34 +1,38 @@
-import { forwardRef, useEffect } from 'react'
-import { Dialog, Grid, IconButton, Slide, Box, useTheme } from '@mui/material'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import { Box, Dialog, Grid, IconButton, Slide, useTheme } from '@mui/material'
+import { TransitionProps } from '@mui/material/transitions'
+import axios from 'axios'
+import { nanoid } from 'nanoid'
+import { forwardRef, JSXElementConstructor, useEffect } from 'react'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+
 import {
+  atomEditingID,
+  atomIsDarkTheme,
+  atomIsLoading,
   atomIsModalOpen,
   atomNewNote,
-  atomViewportWidth,
-  atomIsDarkTheme,
   atomNoteBeingEdited,
-  atomEditingID,
-  atomIsLoading,
-  atomNotes,
   atomNoteList,
+  atomNotes,
+  atomViewportWidth,
 } from '../atoms'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import NoteFormContainer from './NoteFormContainer'
-import { TransitionProps } from '@mui/material/transitions'
-import NoteModalFooter from './NoteModalFooter'
-import axios from 'axios'
-import { getNotes } from '../LogicHelpers'
 import {
   BLANK_EXISTING_NOTE,
   BLANK_NEW_NOTE,
   MAIN_BREAKPOINT,
 } from '../Constants'
-import { nanoid } from 'nanoid'
+import { getNotes } from '../LogicHelpers'
+import NoteFormContainer from './NoteFormContainer'
+import NoteModalFooter from './NoteModalFooter'
 
 /** Transition for the note modal */
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
-    children: React.ReactElement<any, any>
+    children: React.ReactElement<
+      unknown,
+      string | JSXElementConstructor<unknown>
+    >
   },
   ref: React.Ref<unknown>
 ) {
@@ -82,7 +86,7 @@ const NoteModal = (props: NoteModalProps): JSX.Element => {
       saveNewNote()
     }
     // eslint-disable-next-line
-  }, [
+	}, [
     isModalOpen,
     newNote.drawing,
     newNote.recording,

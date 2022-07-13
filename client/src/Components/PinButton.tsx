@@ -1,16 +1,17 @@
+import PushPinIcon from '@mui/icons-material/PushPin'
+import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined'
 import { Box, IconButton, Tooltip } from '@mui/material'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+
 import {
-  atomNoteBeingEdited,
-  atomNewNote,
   atomIsLoading,
+  atomNewNote,
+  atomNoteBeingEdited,
   atomNotes,
   atomSelectedNoteIds,
 } from '../atoms'
-import { useSetRecoilState, useRecoilState, useRecoilValue } from 'recoil'
-import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined'
-import PushPinIcon from '@mui/icons-material/PushPin'
-import { IExistingNote } from '../types'
 import { pushNoteEdit } from '../LogicHelpers'
+import { IExistingNote } from '../types'
 
 interface PinButtonProps {
   className?: string

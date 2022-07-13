@@ -1,26 +1,27 @@
-import { ChangeEvent, useEffect } from 'react'
+import AddIcon from '@mui/icons-material/Add'
+import ClearIcon from '@mui/icons-material/Clear'
 import {
-  TextField,
-  Grid,
+  Checkbox,
   Divider,
+  Grid,
+  IconButton,
   List,
   ListItem,
-  Checkbox,
-  IconButton,
+  TextField,
   Tooltip,
 } from '@mui/material'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import {
-  atomNewNote,
-  atomNoteList,
-  atomNoteBeingEdited,
-  atomEditingID,
-} from '../atoms'
-import AddIcon from '@mui/icons-material/Add'
 import cloneDeep from 'lodash.clonedeep'
-import ClearIcon from '@mui/icons-material/Clear'
-import CompletedItems from './CompletedItems'
 import { nanoid } from 'nanoid'
+import { ChangeEvent, useEffect } from 'react'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+
+import {
+  atomEditingID,
+  atomNewNote,
+  atomNoteBeingEdited,
+  atomNoteList,
+} from '../atoms'
+import CompletedItems from './CompletedItems'
 import NoteTitleInput from './NoteTitleInput'
 
 interface ChecklistFormProps {

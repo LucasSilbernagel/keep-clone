@@ -1,4 +1,5 @@
-import { Grid, Typography, List, ListItem, Checkbox } from '@mui/material'
+import { Checkbox, Grid, List, ListItem, Typography } from '@mui/material'
+
 import { IExistingNote } from '../types'
 import CompletedListSummary from './CompletedListSummary'
 

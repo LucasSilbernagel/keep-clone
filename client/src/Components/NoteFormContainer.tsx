@@ -1,20 +1,21 @@
+import { Box, Button, Grid } from '@mui/material'
 import { ChangeEvent } from 'react'
-import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+
 import {
-  atomIsDarkTheme,
-  atomNoteType,
   atomEditingID,
-  atomNoteBeingEdited,
+  atomIsDarkTheme,
   atomNewNote,
+  atomNoteBeingEdited,
+  atomNoteType,
 } from '../atoms'
-import { Box, Grid, Button } from '@mui/material'
 import { noteFormStyles } from '../LogicHelpers'
 import ChecklistForm from './ChecklistForm'
-import TextForm from './TextForm'
 import DrawingForm from './DrawingForm'
-import RecordingForm from './RecordingForm'
 import ImageForm from './ImageForm'
 import PinButton from './PinButton'
+import RecordingForm from './RecordingForm'
+import TextForm from './TextForm'
 
 interface NoteFormContainerProps {
   finishCreatingNote: () => void

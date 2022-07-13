@@ -1,9 +1,10 @@
+import { CssBaseline, Grid } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
-import Home from './Views/Home'
-import { Grid, CssBaseline } from '@mui/material'
-import { lightTheme, darkTheme } from './themes'
-import { atomIsDarkTheme } from './atoms'
 import { useRecoilValue } from 'recoil'
+
+import { atomIsDarkTheme } from './atoms'
+import { darkTheme, lightTheme } from './themes'
+import Home from './Views/Home'
 
 const App = () => {
   const isDarkTheme = useRecoilValue(atomIsDarkTheme)

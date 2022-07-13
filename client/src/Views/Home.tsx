@@ -1,21 +1,22 @@
-import { useState, useEffect } from 'react'
 import axios from 'axios'
-import NoteView from './NoteView'
-import Login from './Login'
-import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil'
+import { useEffect, useState } from 'react'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+
 import {
-  atomNotes,
-  atomViewportWidth,
-  atomSearchValue,
-  atomIsLoading,
-  atomIsDarkTheme,
-  atomNoteBeingEdited,
-  atomNoteType,
-  atomFilteredNotes,
   atomEditingID,
+  atomFilteredNotes,
+  atomIsDarkTheme,
+  atomIsLoading,
+  atomNoteBeingEdited,
+  atomNotes,
+  atomNoteType,
+  atomSearchValue,
   atomViewportHeight,
+  atomViewportWidth,
 } from '../atoms'
 import { getNotes } from '../LogicHelpers'
+import Login from './Login'
+import NoteView from './NoteView'
 
 const Home = () => {
   /** Saved notes */
@@ -42,7 +43,7 @@ const Home = () => {
   /** State setter to determine whether notes are loading from the back end */
   const setIsLoading = useSetRecoilState(atomIsLoading)
   /** Application theme (dark/light), saved in localStorage */
-  let isDarkTheme = window.localStorage.getItem('keepCloneDarkTheme')
+  const isDarkTheme = window.localStorage.getItem('keepCloneDarkTheme')
   /** State setter to update the application theme (light/dark) */
   const setIsDarkTheme = useSetRecoilState(atomIsDarkTheme)
   /** State setter to update the note type that is being created or viewed */

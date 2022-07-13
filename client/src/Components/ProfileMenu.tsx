@@ -1,12 +1,12 @@
+import AccountCircle from '@mui/icons-material/AccountCircle'
 import {
-  Typography,
-  MenuItem,
-  Menu,
   Avatar,
   Grid,
   ListItemText,
+  Menu,
+  MenuItem,
+  Typography,
 } from '@mui/material'
-import AccountCircle from '@mui/icons-material/AccountCircle'
 
 interface ProfileMenuProps {
   profileAnchorEl: null | HTMLElement

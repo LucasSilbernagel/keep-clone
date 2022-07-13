@@ -1,8 +1,10 @@
-import express, { Express, Request, Response } from 'express'
 import bodyParser from 'body-parser'
+import express, { Express, Request, Response } from 'express'
 import mongoose from 'mongoose'
-import { noteRouter } from './endpoints'
 import path from 'path'
+
+import { noteRouter } from './endpoints'
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config()
 
 const app: Express = express()

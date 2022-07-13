@@ -1,24 +1,25 @@
-import { useState, useEffect, Dispatch, SetStateAction } from 'react'
 import { Grid } from '@mui/material'
+import axios from 'axios'
+import { nanoid } from 'nanoid'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+
 import {
-  atomNewNote,
-  atomNoteList,
-  atomIsLoading,
-  atomNotes,
-  atomNoteCopy,
   atomEditingID,
+  atomIsLoading,
+  atomNewNote,
   atomNoteBeingEdited,
+  atomNoteCopy,
+  atomNoteList,
+  atomNotes,
   atomSelectedNoteIds,
 } from '../atoms'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import axios from 'axios'
+import DrawingContainer from '../Components/DrawingContainer'
 import NoteCreator from '../Components/NoteCreator'
 import NoteModal from '../Components/NoteModal'
-import { nanoid } from 'nanoid'
-import { getNotes } from '../LogicHelpers'
-import DrawingContainer from '../Components/DrawingContainer'
 import Notes from '../Components/Notes'
 import TopBar from '../Components/TopBar'
+import { getNotes } from '../LogicHelpers'
 
 interface NoteViewProps {
   setAuthenticated: Dispatch<SetStateAction<boolean>>

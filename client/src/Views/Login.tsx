@@ -1,11 +1,12 @@
-import { Dispatch, SetStateAction } from 'react'
-import { Grid, Typography, Paper, useTheme } from '@mui/material'
-import keep_icon from '../assets/keep_icon.png'
 import GitHubIcon from '@mui/icons-material/GitHub'
+import { Grid, Paper, Typography, useTheme } from '@mui/material'
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google'
-import { getNotes } from '../LogicHelpers'
-import { atomNotes, atomIsLoading } from '../atoms'
+import { Dispatch, SetStateAction } from 'react'
 import { useSetRecoilState } from 'recoil'
+
+import keep_icon from '../assets/keep_icon.png'
+import { atomIsLoading, atomNotes } from '../atoms'
+import { getNotes } from '../LogicHelpers'
 
 interface LoginProps {
   setAuthenticated: Dispatch<SetStateAction<boolean>>
