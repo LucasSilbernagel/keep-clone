@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 import { Grid, Typography, IconButton, Tooltip } from '@mui/material'
 import NoteTitleInput from './NoteTitleInput'
-import { useAudioRecorder } from '@sarafhbk/react-audio-recorder'
+import { useAudioRecorder } from 'lucas-silbernagel-react-audio-recorder'
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice'
 import StopIcon from '@mui/icons-material/Stop'
 import { atomNewNote, atomNoteBeingEdited, atomEditingID } from '../atoms'
