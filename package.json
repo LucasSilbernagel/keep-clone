@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A clone of Google Keep built with MongoDB, Express, React, and Node.",
   "main": "server.ts",
+  "type": "commonjs",
   "scripts": {
     "start": "ts-node-dev server.ts",
     "start-watch": "nodemon server.ts --ignore client",
