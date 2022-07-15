@@ -127,10 +127,8 @@ export const noteContentStyles: (
  * @param {Boolean} isDarkTheme - Whether or not the dark theme is being used
  * @returns {Object} - Returns the styles for the Box element container of the note form
  */
-export const noteFormStyles: unknown = (
-  inModal: boolean,
-  isDarkTheme: boolean
-) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const noteFormStyles: any = (inModal: boolean, isDarkTheme: boolean) => {
   if (inModal && isDarkTheme) {
     return {
       backgroundColor: '#202123',
