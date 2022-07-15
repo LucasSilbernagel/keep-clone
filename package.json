@@ -31,7 +31,7 @@
     "babel-eslint": "^10.1.0",
     "concurrently": "^4.0.1",
     "eslint": "^8.19.0",
-    "eslint-config-lucas-silbernagel": "^1.1.0",
+    "eslint-config-lucas-silbernagel": "^1.1.1",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-jsx-a11y": "^6.6.0",
     "eslint-plugin-prettier": "^4.2.1",
