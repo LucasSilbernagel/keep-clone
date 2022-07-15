@@ -1,7 +1,7 @@
 import Masonry from '@mui/lab/Masonry'
 import { Grid } from '@mui/material'
 import { useRecoilValue } from 'recoil'
-
+import React from 'react'
 import { atomViewportWidth } from '../atoms'
 import { IExistingNote } from '../types'
 import NoteContent from './NoteContent'
@@ -13,7 +13,7 @@ interface NoteGridProps {
   pinnedStatus?: 'Pinned' | 'Others'
 }
 
-const NoteGrid = (props: NoteGridProps) => {
+const NoteGrid: React.FC<NoteGridProps> = (props: NoteGridProps) => {
   const { deleteNote, notes, pinnedStatus } = props
 
   /** The width of the viewport/window, in pixels */

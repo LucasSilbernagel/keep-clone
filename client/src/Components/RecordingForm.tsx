@@ -2,7 +2,7 @@ import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice'
 import StopIcon from '@mui/icons-material/Stop'
 import { Grid, IconButton, Tooltip, Typography } from '@mui/material'
 import { useAudioRecorder } from 'lucas-silbernagel-react-audio-recorder'
-import { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 
 import { atomEditingID, atomNewNote, atomNoteBeingEdited } from '../atoms'
@@ -12,7 +12,9 @@ interface RecordingFormProps {
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-const RecordingForm = (props: RecordingFormProps) => {
+const RecordingForm: React.FC<RecordingFormProps> = (
+  props: RecordingFormProps
+) => {
   const { handleNoteTitleChange } = props
 
   /** Methods from the audio recorder library */

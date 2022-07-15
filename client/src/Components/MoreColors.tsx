@@ -1,7 +1,7 @@
 import { Grid, Tooltip } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { useRecoilValue } from 'recoil'
-
+import React from 'react'
 import { atomViewportWidth } from '../atoms'
 import {
   FOURTH_COLOR_OPTIONS,
@@ -32,7 +32,7 @@ interface MoreColorsProps {
   updateColor: (color: IDrawingColor) => void
 }
 
-const MoreColors = (props: MoreColorsProps) => {
+const MoreColors: React.FC<MoreColorsProps> = (props: MoreColorsProps) => {
   const { selectedColor, showingMoreColors, updateColor } = props
 
   /** The width of the viewport, in pixels */

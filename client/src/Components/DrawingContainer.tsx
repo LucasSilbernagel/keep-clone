@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import CanvasDraw from 'react-canvas-draw'
 import { useRecoilState, useRecoilValue } from 'recoil'
 
@@ -21,7 +21,7 @@ import {
 import DrawingMenu from './DrawingMenu'
 import MobileDrawingMenu from './MobileDrawingMenu'
 
-const DrawingContainer = () => {
+const DrawingContainer: React.FC = () => {
   /** The type of the note that is being created or edited */
   const noteType = useRecoilValue(atomNoteType)
   /** The width of the window, in pixels */

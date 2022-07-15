@@ -1,5 +1,5 @@
 import { Grid, TextField } from '@mui/material'
-import { ChangeEvent, ChangeEventHandler } from 'react'
+import React, { ChangeEvent, ChangeEventHandler } from 'react'
 import { useRecoilValue } from 'recoil'
 
 import {
@@ -17,7 +17,7 @@ interface TextFormProps {
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-const TextForm = (props: TextFormProps) => {
+const TextForm: React.FC<TextFormProps> = (props: TextFormProps) => {
   const { handleNoteTextChange, handleNoteTitleChange } = props
 
   /** A new note */

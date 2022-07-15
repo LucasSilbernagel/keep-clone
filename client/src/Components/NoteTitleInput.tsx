@@ -1,5 +1,5 @@
 import { Grid, TextField } from '@mui/material'
-import { ChangeEvent } from 'react'
+import React, { ChangeEvent } from 'react'
 import { useRecoilValue } from 'recoil'
 
 import { atomEditingID, atomNewNote, atomNoteBeingEdited } from '../atoms'
@@ -8,7 +8,9 @@ interface NoteTitleInputProps {
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-const NoteTitleInput = (props: NoteTitleInputProps) => {
+const NoteTitleInput: React.FC<NoteTitleInputProps> = (
+  props: NoteTitleInputProps
+) => {
   const { handleNoteTitleChange } = props
 
   /** New note atom */

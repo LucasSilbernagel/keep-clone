@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 
 import {
@@ -18,7 +18,7 @@ import { getNotes } from '../LogicHelpers'
 import Login from './Login'
 import NoteView from './NoteView'
 
-const Home = () => {
+const Home: React.FC = () => {
   /** Saved notes */
   const [notes, setNotes] = useRecoilState(atomNotes)
   /** State setter to update the array of filtered notes */

@@ -1,7 +1,7 @@
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { Grid, IconButton, Menu, MenuItem, Tooltip } from '@mui/material'
 import axios from 'axios'
-import { Dispatch, MouseEvent, SetStateAction } from 'react'
+import React, { Dispatch, MouseEvent, SetStateAction } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 
 import {
@@ -22,7 +22,9 @@ interface NoteContentFooterProps {
   isMoreMenuOpen: boolean
 }
 
-const NoteContentFooter = (props: NoteContentFooterProps) => {
+const NoteContentFooter: React.FC<NoteContentFooterProps> = (
+  props: NoteContentFooterProps
+) => {
   const { note, deleteNote, moreAnchorEl, setMoreAnchorEl, isMoreMenuOpen } =
     props
 

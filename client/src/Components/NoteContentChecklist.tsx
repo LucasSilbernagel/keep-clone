@@ -1,5 +1,5 @@
 import { Checkbox, Grid, List, ListItem, Typography } from '@mui/material'
-
+import React from 'react'
 import { IExistingNote } from '../types'
 import CompletedListSummary from './CompletedListSummary'
 
@@ -7,7 +7,9 @@ interface NoteContentChecklistProps {
   note: IExistingNote
 }
 
-const NoteContentChecklist = (props: NoteContentChecklistProps) => {
+const NoteContentChecklist: React.FC<NoteContentChecklistProps> = (
+  props: NoteContentChecklistProps
+) => {
   const { note } = props
 
   return (

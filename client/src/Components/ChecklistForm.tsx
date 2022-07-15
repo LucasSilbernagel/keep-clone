@@ -12,7 +12,7 @@ import {
 } from '@mui/material'
 import cloneDeep from 'lodash.clonedeep'
 import { nanoid } from 'nanoid'
-import { ChangeEvent, useEffect } from 'react'
+import React, { ChangeEvent, useEffect } from 'react'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 
 import {
@@ -28,7 +28,9 @@ interface ChecklistFormProps {
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-const ChecklistForm = (props: ChecklistFormProps) => {
+const ChecklistForm: React.FC<ChecklistFormProps> = (
+  props: ChecklistFormProps
+) => {
   const { handleNoteTitleChange } = props
 
   /** State setter to update the new note atom */

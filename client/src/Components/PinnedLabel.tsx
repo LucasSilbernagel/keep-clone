@@ -1,10 +1,11 @@
 import { Grid, Typography } from '@mui/material'
+import React from 'react'
 
 interface PinnedLabelProps {
   pinnedStatus?: 'Pinned' | 'Others'
 }
 
-const PinnedLabel = (props: PinnedLabelProps) => {
+const PinnedLabel: React.FC<PinnedLabelProps> = (props: PinnedLabelProps) => {
   const { pinnedStatus } = props
 
   if (pinnedStatus) {

@@ -15,6 +15,7 @@ import MuiAccordionSummary, {
   AccordionSummaryProps,
 } from '@mui/material/AccordionSummary'
 import { styled } from '@mui/material/styles'
+import React from 'react'
 import { useRecoilValue } from 'recoil'
 
 import { atomNoteList } from '../atoms'
@@ -55,7 +56,9 @@ interface CompletedItemsProps {
   handleDeleteChecklistItem: (id: string) => void
 }
 
-const CompletedItems = (props: CompletedItemsProps) => {
+const CompletedItems: React.FC<CompletedItemsProps> = (
+  props: CompletedItemsProps
+) => {
   const { handleListCheckboxChange, handleDeleteChecklistItem } = props
 
   /** Array of checklist items for a note */

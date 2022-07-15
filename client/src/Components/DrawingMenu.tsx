@@ -11,7 +11,7 @@ import {
   Toolbar,
   Tooltip,
 } from '@mui/material'
-import { MouseEvent, useState } from 'react'
+import React, { MouseEvent, useState } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 
 import {
@@ -36,7 +36,7 @@ interface DrawingMenuProps {
   undo: () => void
 }
 
-const DrawingMenu = (props: DrawingMenuProps) => {
+const DrawingMenu: React.FC<DrawingMenuProps> = (props: DrawingMenuProps) => {
   const {
     selectedColor,
     setSelectedColor,

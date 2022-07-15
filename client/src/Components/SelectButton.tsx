@@ -1,7 +1,7 @@
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import { Box, IconButton, Tooltip } from '@mui/material'
 import { useRecoilState } from 'recoil'
-
+import React from 'react'
 import { atomSelectedNoteIds } from '../atoms'
 import { IExistingNote } from '../types'
 
@@ -10,7 +10,9 @@ interface SelectButtonProps {
   defaultHidden?: boolean
 }
 
-const SelectButton = (props: SelectButtonProps) => {
+const SelectButton: React.FC<SelectButtonProps> = (
+  props: SelectButtonProps
+) => {
   const { note, defaultHidden } = props
 
   /** State setter to update the array of selected note IDs */

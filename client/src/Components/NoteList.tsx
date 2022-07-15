@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material'
-
+import React from 'react'
 import { IExistingNote } from '../types'
 import NoteContent from './NoteContent'
 import PinnedLabel from './PinnedLabel'
@@ -10,7 +10,7 @@ interface NoteListProps {
   pinnedStatus?: 'Pinned' | 'Others'
 }
 
-const NoteList = (props: NoteListProps) => {
+const NoteList: React.FC<NoteListProps> = (props: NoteListProps) => {
   const { deleteNote, notes, pinnedStatus } = props
 
   /** Display filteredNotes if there are any saved */

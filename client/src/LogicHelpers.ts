@@ -12,7 +12,13 @@ import { IExistingNote } from './types'
  * @param {Array} selectedNoteIds - Array of selected note IDs
  * @returns {Object} - Returns the styles for the Paper element of the note content
  */
-export const noteContentStyles = (
+export const noteContentStyles: (
+  open: boolean,
+  isDarkTheme: boolean,
+  theme: Theme,
+  isSelectedNote: boolean,
+  selectedNoteIds: string[]
+) => Record<string, unknown> = (
   open: boolean,
   isDarkTheme: boolean,
   theme: Theme,
@@ -121,7 +127,10 @@ export const noteContentStyles = (
  * @param {Boolean} isDarkTheme - Whether or not the dark theme is being used
  * @returns {Object} - Returns the styles for the Box element container of the note form
  */
-export const noteFormStyles = (inModal: boolean, isDarkTheme: boolean) => {
+export const noteFormStyles: unknown = (
+  inModal: boolean,
+  isDarkTheme: boolean
+) => {
   if (inModal && isDarkTheme) {
     return {
       backgroundColor: '#202123',
@@ -149,7 +158,10 @@ export const noteFormStyles = (inModal: boolean, isDarkTheme: boolean) => {
  * @param {Function} setIsLoading - State setter that determines whether notes are being loaded from the back end
  * @param {Function} setNotes - State setter that updates the notes array
  */
-export const getNotes = (
+export const getNotes: (
+  setIsLoading: (boolean: boolean) => void,
+  setNotes: SetterOrUpdater<IExistingNote[]>
+) => void = (
   setIsLoading: (boolean: boolean) => void,
   setNotes: SetterOrUpdater<IExistingNote[]>
 ) => {
@@ -174,7 +186,11 @@ export const getNotes = (
  * @param {Function} setIsLoading - State setter that determines whether notes are being loaded from the back end
  * @param {Function} setNotes - State setter that updates the notes array
  */
-export const pushNoteEdit = (
+export const pushNoteEdit: (
+  noteBeingEdited: IExistingNote,
+  setIsLoading: (boolean: boolean) => void,
+  setNotes: SetterOrUpdater<IExistingNote[]>
+) => void = (
   noteBeingEdited: IExistingNote,
   setIsLoading: (boolean: boolean) => void,
   setNotes: SetterOrUpdater<IExistingNote[]>

@@ -2,6 +2,7 @@ import PushPinIcon from '@mui/icons-material/PushPin'
 import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined'
 import { Box, IconButton, Tooltip } from '@mui/material'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import React from 'react'
 
 import {
   atomIsLoading,
@@ -23,7 +24,7 @@ interface PinButtonProps {
   defaultHidden?: boolean
 }
 
-const PinButton = (props: PinButtonProps) => {
+const PinButton: React.FC<PinButtonProps> = (props: PinButtonProps) => {
   const {
     className,
     rightAlignment,

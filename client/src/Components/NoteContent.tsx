@@ -1,7 +1,6 @@
 import { Box, Grid, Paper, Typography, useTheme } from '@mui/material'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-
 import {
   atomEditingID,
   atomFilteredNotes,
@@ -25,7 +24,7 @@ interface NoteContentProps {
   deleteNote: (id: string) => void
 }
 
-const NoteContent = (props: NoteContentProps) => {
+const NoteContent: React.FC<NoteContentProps> = (props: NoteContentProps) => {
   const { note, deleteNote } = props
 
   /** The application theme */

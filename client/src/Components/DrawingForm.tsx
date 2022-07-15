@@ -1,5 +1,5 @@
 import { Box, Grid } from '@mui/material'
-import { ChangeEvent } from 'react'
+import React, { ChangeEvent } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 
 import {
@@ -15,7 +15,7 @@ interface DrawingFormProps {
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-const DrawingForm = (props: DrawingFormProps) => {
+const DrawingForm: React.FC<DrawingFormProps> = (props: DrawingFormProps) => {
   const { handleNoteTitleChange } = props
 
   /** New note atom */

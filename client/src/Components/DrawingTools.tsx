@@ -5,7 +5,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import { Grid, IconButton, Menu, Tooltip } from '@mui/material'
 import { styled } from '@mui/material/styles'
-import { MouseEvent, useState } from 'react'
+import React, { MouseEvent, useState } from 'react'
 
 import { FIRST_COLOR_OPTIONS, STROKE_OPTIONS } from '../Constants'
 import { IDrawingColor } from '../types'
@@ -54,7 +54,9 @@ interface DrawingToolsProps {
   clearCanvas: () => void
 }
 
-const DrawingTools = (props: DrawingToolsProps) => {
+const DrawingTools: React.FC<DrawingToolsProps> = (
+  props: DrawingToolsProps
+) => {
   const {
     selectedColor,
     setSelectedColor,

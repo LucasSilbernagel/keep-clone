@@ -1,6 +1,6 @@
 import { AppBar, Box, Grid, Toolbar } from '@mui/material'
 import { useRecoilValue } from 'recoil'
-
+import React from 'react'
 import { atomViewportWidth } from '../atoms'
 import { MAIN_BREAKPOINT } from '../Constants'
 import { IDrawingColor } from '../types'
@@ -14,7 +14,9 @@ interface MobileDrawingMenuProps {
   clearCanvas: () => void
 }
 
-const MobileDrawingMenu = (props: MobileDrawingMenuProps) => {
+const MobileDrawingMenu: React.FC<MobileDrawingMenuProps> = (
+  props: MobileDrawingMenuProps
+) => {
   const {
     selectedColor,
     setSelectedColor,

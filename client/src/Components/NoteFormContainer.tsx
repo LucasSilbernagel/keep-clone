@@ -1,5 +1,5 @@
 import { Box, Button, Grid } from '@mui/material'
-import { ChangeEvent } from 'react'
+import React, { ChangeEvent } from 'react'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 
 import {
@@ -22,7 +22,9 @@ interface NoteFormContainerProps {
   inModal: boolean
 }
 
-const NoteFormContainer = (props: NoteFormContainerProps) => {
+const NoteFormContainer: React.FC<NoteFormContainerProps> = (
+  props: NoteFormContainerProps
+) => {
   const { finishCreatingNote, inModal } = props
 
   /** Boolean that determines whether the dark (or light) theme is being used */

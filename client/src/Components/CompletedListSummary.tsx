@@ -1,4 +1,5 @@
 import { Divider, Typography } from '@mui/material'
+import React from 'react'
 
 import { IExistingNote } from '../types'
 
@@ -6,7 +7,9 @@ interface CompletedListSummaryProps {
   note: IExistingNote
 }
 
-const CompletedListSummary = (props: CompletedListSummaryProps) => {
+const CompletedListSummary: React.FC<CompletedListSummaryProps> = (
+  props: CompletedListSummaryProps
+) => {
   const { note } = props
   return (
     <>

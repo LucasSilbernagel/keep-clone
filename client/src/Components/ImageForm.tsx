@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material'
-import { ChangeEvent } from 'react'
+import React, { ChangeEvent } from 'react'
 import { useRecoilValue } from 'recoil'
 
 import { atomEditingID, atomNewNote, atomNoteBeingEdited } from '../atoms'
@@ -9,7 +9,7 @@ interface ImageFormProps {
   handleNoteTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-const ImageForm = (props: ImageFormProps) => {
+const ImageForm: React.FC<ImageFormProps> = (props: ImageFormProps) => {
   const { handleNoteTitleChange } = props
 
   /** The note that is being edited */
