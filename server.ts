@@ -1,4 +1,5 @@
-import bodyParser from 'body-parser'
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const bodyParser = require('body-parser')
 import express, { Express, Request, Response } from 'express'
 import mongoose from 'mongoose'
 import path from 'path'
