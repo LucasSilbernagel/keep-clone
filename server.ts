@@ -2,10 +2,12 @@ import bodyParser from 'body-parser'
 import express, { Express, Request, Response } from 'express'
 import mongoose from 'mongoose'
 import path from 'path'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import dotenv from 'dotenv'
+dotenv.config()
 
 import { noteRouter } from './endpoints'
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-require('dotenv').config()
 
 const app: Express = express()
 const port: string | number = process.env.PORT || 5001
