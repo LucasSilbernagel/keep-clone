@@ -33,12 +33,8 @@ const RecordingForm: React.FC<RecordingFormProps> = (
   /** Ask the user for microphone permissions if not already granted. */
   useEffect(() => {
     if (!editingID && navigator.mediaDevices.getUserMedia !== null) {
-      const options = {
-        video: false,
-        audio: true,
-      }
       navigator.mediaDevices
-        .getUserMedia(options)
+        .getUserMedia({ audio: true })
         .catch(() =>
           alert(
             'You must grant microphone permissions in your browser in order to use the recording feature.'
