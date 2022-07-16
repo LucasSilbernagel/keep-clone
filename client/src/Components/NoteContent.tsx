@@ -60,7 +60,7 @@ const NoteContent: React.FC<NoteContentProps> = (props: NoteContentProps) => {
     setIsModalOpen(true)
   }
 
-  /** Trigger time to detect the difference between a click and a long press */
+  /** Trigger time to detect the difference between a tap and a long press */
   let triggerTime: number
 
   /** Whether the note has been selected or not */
@@ -132,8 +132,7 @@ const NoteContent: React.FC<NoteContentProps> = (props: NoteContentProps) => {
                     }
               }
               onClick={() => {
-                if (triggerTime > 400) {
-                  /** Long press */
+                if (selectedNoteIds.length > 0) {
                   if (selectedNoteIds.includes(note._id)) {
                     setSelectedNoteIds(
                       selectedNoteIds.filter((id) => id !== note._id)
@@ -142,18 +141,7 @@ const NoteContent: React.FC<NoteContentProps> = (props: NoteContentProps) => {
                     setSelectedNoteIds([...selectedNoteIds, note._id])
                   }
                 } else {
-                  /** Normal click */
-                  if (selectedNoteIds.length > 0) {
-                    if (selectedNoteIds.includes(note._id)) {
-                      setSelectedNoteIds(
-                        selectedNoteIds.filter((id) => id !== note._id)
-                      )
-                    } else {
-                      setSelectedNoteIds([...selectedNoteIds, note._id])
-                    }
-                  } else {
-                    editNote(note._id)
-                  }
+                  editNote(note._id)
                 }
               }}
               onTouchStart={() => {
@@ -162,7 +150,7 @@ const NoteContent: React.FC<NoteContentProps> = (props: NoteContentProps) => {
               onTouchEnd={() => {
                 const thisMoment = new Date().getTime()
                 triggerTime = thisMoment - triggerTime
-                if (triggerTime > 400) {
+                if (triggerTime > 200) {
                   /** Long press */
                   if (selectedNoteIds.includes(note._id)) {
                     setSelectedNoteIds(
@@ -172,7 +160,7 @@ const NoteContent: React.FC<NoteContentProps> = (props: NoteContentProps) => {
                     setSelectedNoteIds([...selectedNoteIds, note._id])
                   }
                 } else {
-                  /** Normal click */
+                  /** Normal tap */
                   if (selectedNoteIds.length > 0) {
                     if (selectedNoteIds.includes(note._id)) {
                       setSelectedNoteIds(
@@ -185,13 +173,6 @@ const NoteContent: React.FC<NoteContentProps> = (props: NoteContentProps) => {
                     editNote(note._id)
                   }
                 }
-              }}
-              onMouseDown={() => {
-                triggerTime = new Date().getTime()
-              }}
-              onMouseUp={() => {
-                const thisMoment = new Date().getTime()
-                triggerTime = thisMoment - triggerTime
               }}
             >
               {note.title && (
