@@ -132,18 +132,16 @@ const NoteContent: React.FC<NoteContentProps> = (props: NoteContentProps) => {
                     }
               }
               onClick={() => {
-                if (viewportWidth > MAIN_BREAKPOINT) {
-                  if (selectedNoteIds.length > 0) {
-                    if (selectedNoteIds.includes(note._id)) {
-                      setSelectedNoteIds(
-                        selectedNoteIds.filter((id) => id !== note._id)
-                      )
-                    } else {
-                      setSelectedNoteIds([...selectedNoteIds, note._id])
-                    }
+                if (selectedNoteIds.length > 0) {
+                  if (selectedNoteIds.includes(note._id)) {
+                    setSelectedNoteIds(
+                      selectedNoteIds.filter((id) => id !== note._id)
+                    )
                   } else {
-                    editNote(note._id)
+                    setSelectedNoteIds([...selectedNoteIds, note._id])
                   }
+                } else {
+                  editNote(note._id)
                 }
               }}
               onTouchStart={() => {
@@ -152,7 +150,7 @@ const NoteContent: React.FC<NoteContentProps> = (props: NoteContentProps) => {
               onTouchEnd={() => {
                 const thisMoment = new Date().getTime()
                 triggerTime = thisMoment - triggerTime
-                if (triggerTime > 100) {
+                if (triggerTime > 500) {
                   /** Long press */
                   if (selectedNoteIds.includes(note._id)) {
                     setSelectedNoteIds(
