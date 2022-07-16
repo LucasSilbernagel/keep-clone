@@ -152,7 +152,6 @@ const NoteContent: React.FC<NoteContentProps> = (props: NoteContentProps) => {
                 triggerTime = thisMoment - triggerTime
                 if (triggerTime > 500) {
                   /** Long press */
-                  alert('long press')
                   if (selectedNoteIds.includes(note._id)) {
                     setSelectedNoteIds(
                       selectedNoteIds.filter((id) => id !== note._id)
@@ -160,21 +159,21 @@ const NoteContent: React.FC<NoteContentProps> = (props: NoteContentProps) => {
                   } else {
                     setSelectedNoteIds([...selectedNoteIds, note._id])
                   }
-                } else {
-                  /** Normal tap */
-                  alert('normal tap')
-                  if (selectedNoteIds.length > 0) {
-                    if (selectedNoteIds.includes(note._id)) {
-                      setSelectedNoteIds(
-                        selectedNoteIds.filter((id) => id !== note._id)
-                      )
-                    } else {
-                      setSelectedNoteIds([...selectedNoteIds, note._id])
-                    }
-                  } else {
-                    editNote(note._id)
-                  }
                 }
+                // else {
+                //   /** Normal tap */
+                //   if (selectedNoteIds.length > 0) {
+                //     if (selectedNoteIds.includes(note._id)) {
+                //       setSelectedNoteIds(
+                //         selectedNoteIds.filter((id) => id !== note._id)
+                //       )
+                //     } else {
+                //       setSelectedNoteIds([...selectedNoteIds, note._id])
+                //     }
+                //   } else {
+                //     editNote(note._id)
+                //   }
+                // }
               }}
             >
               {note.title && (
