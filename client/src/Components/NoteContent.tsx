@@ -61,7 +61,7 @@ const NoteContent: React.FC<NoteContentProps> = (props: NoteContentProps) => {
   }
 
   /** Trigger time to detect the difference between a tap and a long press */
-  let triggerTime: number
+  // let triggerTime: number
 
   /** Whether the note has been selected or not */
   const isSelectedNote = selectedNoteIds.includes(note._id)
@@ -144,22 +144,29 @@ const NoteContent: React.FC<NoteContentProps> = (props: NoteContentProps) => {
                   editNote(note._id)
                 }
               }}
-              onTouchStart={() => {
-                triggerTime = new Date().getTime()
-              }}
+              // onTouchStart={() => {
+              //   triggerTime = new Date().getTime()
+              // }}
               onTouchEnd={() => {
-                const thisMoment = new Date().getTime()
-                triggerTime = thisMoment - triggerTime
-                if (triggerTime > 200) {
-                  /** Long press */
-                  if (selectedNoteIds.includes(note._id)) {
-                    setSelectedNoteIds(
-                      selectedNoteIds.filter((id) => id !== note._id)
-                    )
-                  } else {
-                    setSelectedNoteIds([...selectedNoteIds, note._id])
-                  }
+                if (selectedNoteIds.includes(note._id)) {
+                  setSelectedNoteIds(
+                    selectedNoteIds.filter((id) => id !== note._id)
+                  )
+                } else {
+                  setSelectedNoteIds([...selectedNoteIds, note._id])
                 }
+                // const thisMoment = new Date().getTime()
+                // triggerTime = thisMoment - triggerTime
+                // if (triggerTime > 200) {
+                //   /** Long press */
+                //   if (selectedNoteIds.includes(note._id)) {
+                //     setSelectedNoteIds(
+                //       selectedNoteIds.filter((id) => id !== note._id)
+                //     )
+                //   } else {
+                //     setSelectedNoteIds([...selectedNoteIds, note._id])
+                //   }
+                // }
               }}
             >
               {note.title && (
