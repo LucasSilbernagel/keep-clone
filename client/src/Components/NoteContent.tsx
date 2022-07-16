@@ -152,6 +152,7 @@ const NoteContent: React.FC<NoteContentProps> = (props: NoteContentProps) => {
                 triggerTime = thisMoment - triggerTime
                 if (triggerTime > 500) {
                   /** Long press */
+                  alert('long press')
                   if (selectedNoteIds.includes(note._id)) {
                     setSelectedNoteIds(
                       selectedNoteIds.filter((id) => id !== note._id)
@@ -161,6 +162,7 @@ const NoteContent: React.FC<NoteContentProps> = (props: NoteContentProps) => {
                   }
                 } else {
                   /** Normal tap */
+                  alert('normal tap')
                   if (selectedNoteIds.length > 0) {
                     if (selectedNoteIds.includes(note._id)) {
                       setSelectedNoteIds(
