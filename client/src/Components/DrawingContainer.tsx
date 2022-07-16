@@ -52,7 +52,8 @@ const DrawingContainer: React.FC = () => {
   /** Ref for the container around the drawing canvas */
   const drawingContainerRef = useRef<HTMLDivElement>(null)
   /** Ref for the drawing canvas */
-  const [canvasRef, setCanvasRef] = useState<CanvasDraw>()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [canvasRef, setCanvasRef] = useState<any>()
 
   /** Reset to the default colour and stroke when the drawing editor opens */
   useEffect(() => {
@@ -132,7 +133,7 @@ const DrawingContainer: React.FC = () => {
           undo={undo}
         />
         <CanvasDraw
-          ref={(canvasDraw) => {
+          ref={(canvasDraw: null) => {
             if (canvasDraw !== null) {
               setCanvasRef(canvasDraw)
             }
