@@ -157,6 +157,11 @@ const NoteContent: React.FC<NoteContentProps> = (props: NoteContentProps) => {
                 }
               }}
               onTouchStart={() => {
+                triggerTime = new Date().getTime()
+              }}
+              onTouchEnd={() => {
+                const thisMoment = new Date().getTime()
+                triggerTime = thisMoment - triggerTime
                 if (triggerTime > 400) {
                   /** Long press */
                   if (selectedNoteIds.includes(note._id)) {
