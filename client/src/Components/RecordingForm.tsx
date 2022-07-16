@@ -34,7 +34,7 @@ const RecordingForm: React.FC<RecordingFormProps> = (
   useEffect(() => {
     if (!editingID && navigator.mediaDevices.getUserMedia !== null) {
       const options = {
-        video: true,
+        video: false,
         audio: true,
       }
       navigator.mediaDevices
