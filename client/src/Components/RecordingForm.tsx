@@ -34,16 +34,20 @@ const RecordingForm: React.FC<RecordingFormProps> = (
   useEffect(() => {
     if (!editingID && navigator.mediaDevices.getUserMedia !== null) {
       navigator.mediaDevices
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore: Unreachable code error
-        .getUserMedia({ audio: true }, (stream) => {
-          stream.getTracks().forEach((x: { stop: () => unknown }) => x.stop())
-        })
+        .getUserMedia({ audio: true })
         .catch(() =>
-          alert(
+          console.log(
             'You must grant microphone permissions in your browser in order to use the recording feature.'
           )
         )
+    }
+  }, [])
+
+  useEffect(() => {
+    if (window.isSecureContext) {
+      alert('secure, so it should work')
+    } else {
+      alert('not a secure context')
     }
   }, [])
 
