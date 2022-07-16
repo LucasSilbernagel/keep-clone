@@ -32,9 +32,13 @@ const RecordingForm: React.FC<RecordingFormProps> = (
 
   /** Ask the user for microphone permissions if not already granted. */
   useEffect(() => {
-    if (navigator.mediaDevices.getUserMedia !== null) {
+    if (!editingID && navigator.mediaDevices.getUserMedia !== null) {
       navigator.mediaDevices
-        .getUserMedia({ audio: true })
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore: Unreachable code error
+        .getUserMedia({ audio: true }, (stream) => {
+          stream.getTracks().forEach((x: { stop: () => unknown }) => x.stop())
+        })
         .catch(() =>
           alert(
             'You must grant microphone permissions in your browser in order to use the recording feature.'
