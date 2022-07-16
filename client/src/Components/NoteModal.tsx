@@ -3,7 +3,7 @@ import { Box, Dialog, Grid, IconButton, Slide, useTheme } from '@mui/material'
 import { TransitionProps } from '@mui/material/transitions'
 import axios from 'axios'
 import { nanoid } from 'nanoid'
-import { forwardRef, JSXElementConstructor, useEffect } from 'react'
+import { forwardRef, JSXElementConstructor, useEffect, useState } from 'react'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 
 import {
@@ -70,6 +70,10 @@ const NoteModal = (props: NoteModalProps): JSX.Element => {
   const setNotes = useSetRecoilState(atomNotes)
   /** State setter to update the array of checklist items for a note */
   const setNoteList = useSetRecoilState(atomNoteList)
+  /** The start position of a screen swipe */
+  const [touchStart, setTouchStart] = useState(null)
+  /** The end position of a screen swipe */
+  const [touchEnd, setTouchEnd] = useState(null)
 
   /** Save a new note when the modal is closed, if the newNote state has content. */
   useEffect(() => {
@@ -145,6 +149,26 @@ const NoteModal = (props: NoteModalProps): JSX.Element => {
     }
   }
 
+  /** The required distance between touchStart and touchEnd to be detected as a swipe */
+  const minSwipeDistance = 5
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onTouchStart = (e: any) => {
+    setTouchEnd(null) // otherwise the swipe is fired even with usual touch events
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onTouchMove = (e: any) => setTouchEnd(e.targetTouches[0].clientX)
+
+  /** Left swipe on mobile should work the same as tapping the Back button. */
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > minSwipeDistance
+    if (isLeftSwipe) handleBack()
+  }
+
   return (
     <Dialog
       onClose={handleCloseModal}
@@ -154,6 +178,7 @@ const NoteModal = (props: NoteModalProps): JSX.Element => {
       TransitionComponent={Transition}
     >
       <Box
+        component="div"
         sx={
           isDarkTheme
             ? {
@@ -164,6 +189,9 @@ const NoteModal = (props: NoteModalProps): JSX.Element => {
               }
             : {}
         }
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
       >
         <Grid container>
           {viewportWidth < MAIN_BREAKPOINT ? (
