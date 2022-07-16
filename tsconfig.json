@@ -1,12 +1,18 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "lib": ["Dom", "ES5"],
+    "lib": ["Dom", "ES5", "ES2018", "ESNext"],
     "allowJs": true,
+    "declaration": true,
+    "inlineSourceMap": true,
+    "inlineSources": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "module": "CommonJS",
@@ -19,5 +25,8 @@
     "noImplicitThis": true,
     "strictNullChecks": true
   },
-  "include": ["**/*"]
+  "include": ["/**/*.ts"],
+  "exclude": [
+    "node_modules",
+  ]
 }
