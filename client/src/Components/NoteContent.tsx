@@ -156,6 +156,31 @@ const NoteContent: React.FC<NoteContentProps> = (props: NoteContentProps) => {
                   }
                 }
               }}
+              onTouchStart={() => {
+                if (triggerTime > 400) {
+                  /** Long press */
+                  if (selectedNoteIds.includes(note._id)) {
+                    setSelectedNoteIds(
+                      selectedNoteIds.filter((id) => id !== note._id)
+                    )
+                  } else {
+                    setSelectedNoteIds([...selectedNoteIds, note._id])
+                  }
+                } else {
+                  /** Normal click */
+                  if (selectedNoteIds.length > 0) {
+                    if (selectedNoteIds.includes(note._id)) {
+                      setSelectedNoteIds(
+                        selectedNoteIds.filter((id) => id !== note._id)
+                      )
+                    } else {
+                      setSelectedNoteIds([...selectedNoteIds, note._id])
+                    }
+                  } else {
+                    editNote(note._id)
+                  }
+                }
+              }}
               onMouseDown={() => {
                 triggerTime = new Date().getTime()
               }}
