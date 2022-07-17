@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 import React, { useEffect, useRef, useState } from 'react'
-import CanvasDraw from 'react-canvas-draw'
+import CanvasDraw from 'lucas-silbernagel-react-canvas-draw'
 import { useRecoilState, useRecoilValue } from 'recoil'
 
 import {
@@ -149,6 +149,7 @@ const DrawingContainer: React.FC = () => {
           immediateLoading
           hideGrid
           hideInterface={viewportWidth <= MAIN_BREAKPOINT}
+          lazyRadius={0}
         />
         <MobileDrawingMenu
           selectedColor={selectedColor}

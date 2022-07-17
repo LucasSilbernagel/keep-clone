@@ -2,6 +2,6 @@
 
 declare module 'lodash.clonedeep'
 
-declare module 'react-canvas-draw'
+declare module 'lucas-silbernagel-react-canvas-draw'
 
 declare module 'react-dom'
