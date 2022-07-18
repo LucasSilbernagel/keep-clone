@@ -7,14 +7,22 @@ A clone of Google Keep built with the MERN stack. Replicates the web app on larg
 ## Features
 
 - Create, edit, copy, pin, and delete the following note types:
-  - Text notes, checklists, drawings, audio recordings, and images.
+  - Text notes
+  - Checklists
+  - Drawings
+  - Audio recordings
+  - Images
 - Batch select notes to copy or delete
-- Note editing modal displays when the note was last edited
+- Note editing modal indicates when the note was last edited
 - Search filter
 - Button to manually refresh the app
 - Toggle between grid view and list view
 - Toggle between dark theme and light theme
 - Google authentication, with Google account information displayed
+
+## Live Link
+
+[https://lucas-silbernagel-keep-clone.herokuapp.com/](https://lucas-silbernagel-keep-clone.herokuapp.com/)
 
 ## Tech Stack
 
@@ -38,6 +46,12 @@ A clone of Google Keep built with the MERN stack. Replicates the web app on larg
 - [Axios](https://www.npmjs.com/package/axios)
 - [javascript-time-ago](https://www.npmjs.com/package/javascript-time-ago)
 - [react-time-ago](https://www.npmjs.com/package/react-time-ago)
+- [lodash.clonedeep](https://www.npmjs.com/package/lodash.clonedeep)
+- [lucas-silbernagel-react-audio-recorder
+](https://www.npmjs.com/package/lucas-silbernagel-react-audio-recorder)
+- [lucas-silbernagel-react-canvas-draw
+](https://www.npmjs.com/package/lucas-silbernagel-react-canvas-draw)
+- [nanoid](https://www.npmjs.com/package/nanoid)
 
 ### State Management
 
@@ -46,6 +60,10 @@ A clone of Google Keep built with the MERN stack. Replicates the web app on larg
 ### Authentication
 
 - [@react-oauth/google](https://www.npmjs.com/package/@react-oauth/google)
+
+### Linting & Formatting
+
+- [eslint-config-lucas-silbernagel](https://www.npmjs.com/package/eslint-config-lucas-silbernagel)
 
 ## Run Locally
 
