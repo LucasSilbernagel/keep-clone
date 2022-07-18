@@ -1,8 +1,20 @@
 # Keep-Clone
 
-## Description
+A clone of Google Keep built with the MERN stack. Replicates the web app on larger screens and the mobile app on smaller screens.
 
-A clone of Google Keep.
+<img width="1421" alt="Screenshot of the Keep Clone app" src="https://user-images.githubusercontent.com/57023164/179433616-2da2d9be-536e-4f68-8e52-d395b52af4c4.png">
+
+## Features
+
+- Create, edit, copy, pin, and delete the following note types:
+  - Text notes, checklists, drawings, audio recordings, and images.
+- Batch select notes to copy or delete
+- Note editing modal displays when the note was last edited
+- Search filter
+- Button to manually refresh the app
+- Toggle between grid view and list view
+- Toggle between dark theme and light theme
+- Google authentication, with Google account information displayed
 
 ## Tech Stack
 
