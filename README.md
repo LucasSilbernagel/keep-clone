@@ -65,6 +65,10 @@ A clone of Google Keep built with the MERN stack. Replicates the web app on larg
 
 - [eslint-config-lucas-silbernagel](https://www.npmjs.com/package/eslint-config-lucas-silbernagel)
 
+### Code Analysis
+
+- [SonarCloud](https://sonarcloud.io/)
+
 ## Run Locally
 
 ### Prerequisites
