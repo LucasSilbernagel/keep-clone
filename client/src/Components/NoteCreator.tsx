@@ -121,6 +121,20 @@ const NoteCreator = (props: NoteCreatorProps): JSX.Element => {
     openModal()
   }
 
+  /** The styles for the note creator inner Box */
+  const noteCreatorBoxStyle = isDarkTheme
+    ? {
+        display: 'flex',
+        justifyContent: 'space-between',
+        backgroundColor: '#202123',
+        border: '1px solid #525355',
+        borderRadius: '10px',
+      }
+    : {
+        display: 'flex',
+        justifyContent: 'space-between',
+      }
+
   if (viewportWidth > MAIN_BREAKPOINT) {
     return (
       <Paper
@@ -147,22 +161,7 @@ const NoteCreator = (props: NoteCreatorProps): JSX.Element => {
             />
           </>
         ) : (
-          <Box
-            sx={
-              isDarkTheme
-                ? {
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    backgroundColor: '#202123',
-                    border: '1px solid #525355',
-                    borderRadius: '10px',
-                  }
-                : {
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                  }
-            }
-          >
+          <Box sx={noteCreatorBoxStyle}>
             <Button
               onClick={createTextNote}
               disableRipple
