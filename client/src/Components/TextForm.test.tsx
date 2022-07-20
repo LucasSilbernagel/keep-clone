@@ -1,4 +1,3 @@
-import 'jest'
 import { render, screen } from '@testing-library/react'
 import TextForm from './TextForm'
 import { RecoilRoot } from 'recoil'

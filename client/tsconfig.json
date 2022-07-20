@@ -23,6 +23,9 @@
     "noImplicitAny": true,
     "noImplicitThis": true,
     "strictNullChecks": true,
+    "types": [
+      "jest"
+    ],
   },
   "include": [
     "src/**/*"
