@@ -4,12 +4,14 @@
   "description": "A clone of Google Keep built with MongoDB, Express, React, and Node.",
   "main": "server.js",
   "scripts": {
+    "installDeps": "npm install && cd client && npm install",
     "start": "node server.js",
     "start-watch": "nodemon server.js --ignore client",
     "dev": "concurrently \"npm run start-watch\" \"cd client && npm start\"",
     "heroku-postbuild": "cd client && npm install && npm run build",
     "lint": "eslint --ext \".js,.jsx,.ts,.tsx\" --ignore-path .gitignore .",
-    "lint:fix": "eslint --fix --ext \".js,.jsx,.ts,.tsx\" --ignore-path .gitignore ."
+    "lint:fix": "eslint --fix --ext \".js,.jsx,.ts,.tsx\" --ignore-path .gitignore .",
+    "test": "cd client && npm test"
   },
   "author": "Lucas Silbernagel",
   "license": "MIT",

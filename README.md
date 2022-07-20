@@ -110,7 +110,7 @@ There should be no quotation marks or brackets in this file.
 
 ### Install dependencies
 
-Install all of the required dependencies for both the root folder and the client folder. `cd` into the client folder and run `npm install`. Then return to the root folder and run `npm install` again.
+To install all of the required dependencies, run `npm run installDeps`.
 
 ### Additional environment variables
 
