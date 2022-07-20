@@ -20,7 +20,7 @@ mongoose
   .catch((err) => console.log(`Error connecting to database: ${err}`))
 
 mongoose.Promise = global.Promise
-app.use((req, res, next) => {
+app.use((_req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')
   res.header(
     'Access-Control-Allow-Headers',
@@ -32,10 +32,10 @@ app.use(bodyParser.json({ limit: '50mb' }))
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }))
 app.use('/api', noteRouter)
 app.use(express.static(path.join(__dirname, 'client/build')))
-app.get('*', (req, res) => {
+app.get('*', (_req, res) => {
   res.sendFile(path.join(__dirname + '/client/build/index.html'))
 })
-app.use((err, req, res, next) => {
+app.use((err, _req, _res, next) => {
   console.error(err)
   next()
 })

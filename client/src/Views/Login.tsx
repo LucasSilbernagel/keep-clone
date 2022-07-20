@@ -35,7 +35,7 @@ const Login = (props: LoginProps): JSX.Element => {
   /** Function called when the user authenticates successfully */
   const googleSuccess = async (res: CredentialResponse) => {
     fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${res.credential}`)
-      .then((res) => res.json())
+      .then((data) => data.json())
       .then((response) => {
         const googleProfile = {
           imageUrl: response.picture,

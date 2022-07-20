@@ -48,6 +48,7 @@ const TextForm: React.FC<TextFormProps> = (props: TextFormProps) => {
       <NoteTitleInput handleNoteTitleChange={handleNoteTitleChange} />
       <Grid item xs={12}>
         <TextField
+          data-testid="text-input"
           autoFocus
           multiline
           placeholder={
