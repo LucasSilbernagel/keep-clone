@@ -7,8 +7,8 @@ describe('TextForm', () => {
     render(
       <RecoilRoot>
         <TextForm
-          handleNoteTitleChange={jest.fn()}
-          handleNoteTextChange={jest.fn()}
+          handleNoteTitleChange={() => null}
+          handleNoteTextChange={() => null}
         />
       </RecoilRoot>
     )

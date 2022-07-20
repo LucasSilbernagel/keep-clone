@@ -23,8 +23,6 @@
     "noImplicitAny": true,
     "noImplicitThis": true,
     "strictNullChecks": true,
-    "types": ["jest"],
-    "typeRoots": ["./src/types", "node_modules/@types"]
   },
   "include": [
     "src/**/*"
