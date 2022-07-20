@@ -83,8 +83,8 @@ const Home: React.FC = () => {
   useEffect(() => {
     if (searchValue) {
       setTimeout(() => {
-        setFilteredNotes((notes) =>
-          notes.filter((note) =>
+        setFilteredNotes((matchingNotes) =>
+          matchingNotes.filter((note) =>
             JSON.stringify({
               title: note.title,
               text: note.text,

@@ -48,19 +48,19 @@ const NoteContentFooter: React.FC<NoteContentFooterProps> = (
   }
 
   /** Function to copy a note */
-  const copyNote = (note: IExistingNote | INewNote) => {
+  const copyNote = (selectedNote: IExistingNote | INewNote) => {
     setMoreAnchorEl(null)
     const newNote = {
-      text: note.text,
-      title: note.title,
-      list: note.list,
-      drawing: note.drawing,
-      drawingImage: note.drawingImage,
-      recording: note.recording,
-      recordingDuration: note.recordingDuration,
-      image: note.image,
-      isPinned: note.isPinned,
-      userGoogleId: note.userGoogleId,
+      text: selectedNote.text,
+      title: selectedNote.title,
+      list: selectedNote.list,
+      drawing: selectedNote.drawing,
+      drawingImage: selectedNote.drawingImage,
+      recording: selectedNote.recording,
+      recordingDuration: selectedNote.recordingDuration,
+      image: selectedNote.image,
+      isPinned: selectedNote.isPinned,
+      userGoogleId: selectedNote.userGoogleId,
       lastEdited: Date.now(),
     }
     axios

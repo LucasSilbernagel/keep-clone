@@ -55,7 +55,8 @@ const NoteContent: React.FC<NoteContentProps> = (props: NoteContentProps) => {
   const editNote = (id: string) => {
     setEditingID(id)
     setNoteBeingEdited(
-      filteredNotes.find((note) => note._id === id) ?? BLANK_EXISTING_NOTE
+      filteredNotes.find((matchingNote) => matchingNote._id === id) ??
+        BLANK_EXISTING_NOTE
     )
     setIsModalOpen(true)
   }
