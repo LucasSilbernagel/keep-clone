@@ -1,3 +1,4 @@
+import 'jest'
 import { render, screen } from '@testing-library/react'
 import TextForm from './TextForm'
 import { RecoilRoot } from 'recoil'
@@ -7,8 +8,8 @@ describe('TextForm', () => {
     render(
       <RecoilRoot>
         <TextForm
-          handleNoteTitleChange={() => null}
-          handleNoteTextChange={() => null}
+          handleNoteTitleChange={jest.fn()}
+          handleNoteTextChange={jest.fn()}
         />
       </RecoilRoot>
     )
