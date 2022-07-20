@@ -27,10 +27,20 @@ export const noteContentStyles: (
 ) => {
   let styles = {}
   const notesSelected = selectedNoteIds.length > 0
+  const commonStyles = {
+    zIndex: notesSelected ? 80 : 0,
+  }
+  const commonDarkThemeStyles = {
+    border: isSelectedNote ? '1px solid #FFFFFF' : '1px solid #525355',
+  }
+  const commonLightThemeStyles = {
+    border: isSelectedNote ? '1px solid #000000' : '1px solid transparent',
+  }
   if (open && isDarkTheme) {
     styles = {
+      ...commonStyles,
+      ...commonDarkThemeStyles,
       boxShadow: 4,
-      border: isSelectedNote ? '1px solid #FFFFFF' : '1px solid #525355',
       paddingBottom: 'unset',
       '& .moreButton': {
         display: 'flex',
@@ -41,13 +51,13 @@ export const noteContentStyles: (
       '& .selectButton': {
         display: 'flex',
       },
-      zIndex: notesSelected ? 80 : 0,
       backgroundColor: theme.palette.background,
       position: 'relative',
     }
   } else if (open && !isDarkTheme) {
     styles = {
-      border: isSelectedNote ? '1px solid #000000' : '1px solid transparent',
+      ...commonStyles,
+      ...commonLightThemeStyles,
       boxShadow: 4,
       paddingBottom: 'unset',
       '& .moreButton': {
@@ -59,11 +69,11 @@ export const noteContentStyles: (
       '& .selectButton': {
         display: 'flex',
       },
-      zIndex: notesSelected ? 80 : 0,
     }
   } else if (!open && isDarkTheme) {
     styles = {
-      border: isSelectedNote ? '1px solid #FFFFFF' : '1px solid #525355',
+      ...commonStyles,
+      ...commonDarkThemeStyles,
       '& .moreButton': {
         visibility: 'hidden',
       },
@@ -86,13 +96,13 @@ export const noteContentStyles: (
           visibility: 'unset',
         },
       },
-      zIndex: notesSelected ? 80 : 0,
       backgroundColor: theme.palette.background,
       position: 'relative',
     }
   } else if (!open && !isDarkTheme) {
     styles = {
-      border: isSelectedNote ? '1px solid #000000' : '1px solid transparent',
+      ...commonStyles,
+      ...commonLightThemeStyles,
       '& .moreButton': {
         visibility: 'hidden',
       },
@@ -115,7 +125,6 @@ export const noteContentStyles: (
           visibility: 'unset',
         },
       },
-      zIndex: notesSelected ? 80 : 0,
       position: 'relative',
     }
   }

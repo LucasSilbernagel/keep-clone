@@ -105,23 +105,23 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
   /** Function to copy a note from inside the modal */
   const copyNoteFromModal = () => {
     if (
-      (noteBeingEdited.text && noteBeingEdited.text.length > 0) ||
-      (noteBeingEdited.title && noteBeingEdited.title.length > 0) ||
+      noteBeingEdited.text ||
+      noteBeingEdited.title ||
       noteBeingEdited.list.some((item) => item.text.length > 0) ||
-      (noteBeingEdited.drawing && noteBeingEdited.drawing.length > 0) ||
-      (noteBeingEdited.recording && noteBeingEdited.recording.length > 0) ||
-      (noteBeingEdited.image && noteBeingEdited.image.length > 0)
+      noteBeingEdited.drawing ||
+      noteBeingEdited.recording ||
+      noteBeingEdited.image
     ) {
       saveEditedNote()
       saveNoteCopy()
     }
     if (
-      (newNote.text && newNote.text.length > 0) ||
-      (newNote.title && newNote.title.length > 0) ||
+      newNote.text ||
+      newNote.title ||
       newNote.list.some((item) => item.text.length > 0) ||
-      (newNote.drawing && newNote.drawing.length > 0) ||
-      (newNote.recording && newNote.recording.length > 0) ||
-      (newNote.image && newNote.image.length > 0)
+      newNote.drawing ||
+      newNote.recording ||
+      newNote.image
     ) {
       saveNewNote()
     }
@@ -218,7 +218,7 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
   } else {
     return (
       <>
-        {noteBeingEdited.lastEdited === 0 ? null : (
+        {noteBeingEdited.lastEdited > 0 && (
           <Grid
             item
             container

@@ -19,6 +19,11 @@ const NoteGrid: React.FC<NoteGridProps> = (props: NoteGridProps) => {
   /** The width of the viewport/window, in pixels */
   const viewportWidth = useRecoilValue(atomViewportWidth)
 
+  /** Function to return the content for each note */
+  const getNoteContent = (note: IExistingNote) => {
+    return <NoteContent key={note._id} note={note} deleteNote={deleteNote} />
+  }
+
   /** Display filteredNotes if there are any saved */
   if (notes.length > 0) {
     if (notes.length < 3 && viewportWidth > 700) {
@@ -35,13 +40,7 @@ const NoteGrid: React.FC<NoteGridProps> = (props: NoteGridProps) => {
           <PinnedLabel pinnedStatus={pinnedStatus} />
           <Grid container item spacing={2}>
             {notes.map((note) => {
-              return (
-                <NoteContent
-                  key={note._id}
-                  note={note}
-                  deleteNote={deleteNote}
-                />
-              )
+              return getNoteContent(note)
             })}
           </Grid>
         </Grid>
@@ -60,13 +59,7 @@ const NoteGrid: React.FC<NoteGridProps> = (props: NoteGridProps) => {
           <PinnedLabel pinnedStatus={pinnedStatus} />
           <Masonry spacing={2} columns={{ lg: 3, md: 3, sm: 2, xs: 2 }}>
             {notes.map((note) => {
-              return (
-                <NoteContent
-                  key={note._id}
-                  note={note}
-                  deleteNote={deleteNote}
-                />
-              )
+              return getNoteContent(note)
             })}
           </Masonry>
         </Grid>
@@ -84,13 +77,7 @@ const NoteGrid: React.FC<NoteGridProps> = (props: NoteGridProps) => {
           <PinnedLabel pinnedStatus={pinnedStatus} />
           <Masonry spacing={2} columns={{ lg: 4 }}>
             {notes.map((note) => {
-              return (
-                <NoteContent
-                  key={note._id}
-                  note={note}
-                  deleteNote={deleteNote}
-                />
-              )
+              return getNoteContent(note)
             })}
           </Masonry>
         </Grid>
@@ -112,13 +99,7 @@ const NoteGrid: React.FC<NoteGridProps> = (props: NoteGridProps) => {
           <PinnedLabel pinnedStatus={pinnedStatus} />
           <Masonry spacing={2} columns={{ xs: 2, sm: 2, md: 3, lg: 4, xl: 5 }}>
             {notes.map((note) => {
-              return (
-                <NoteContent
-                  key={note._id}
-                  note={note}
-                  deleteNote={deleteNote}
-                />
-              )
+              return getNoteContent(note)
             })}
           </Masonry>
         </Grid>
