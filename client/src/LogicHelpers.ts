@@ -143,10 +143,6 @@ export const noteFormStyles: any = (inModal: boolean, isDarkTheme: boolean) => {
       backgroundColor: '#202123',
       width: '100%',
     }
-  } else if (inModal && !isDarkTheme) {
-    return {
-      width: '100%',
-    }
   } else if (!inModal && isDarkTheme) {
     return {
       backgroundColor: '#202123',
@@ -154,7 +150,7 @@ export const noteFormStyles: any = (inModal: boolean, isDarkTheme: boolean) => {
       border: '1px solid #525355',
       borderRadius: '10px',
     }
-  } else if (!inModal && !isDarkTheme) {
+  } else {
     return {
       width: '100%',
     }
