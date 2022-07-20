@@ -22,8 +22,9 @@
     "jsx": "react-jsx",
     "noImplicitAny": true,
     "noImplicitThis": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "types": ["jest"]
   },
-  "include": [ "src/**/*" ],
-  "exclude": ["**/*.test.tsx"]
+  "include": [ "src/**/*", "**/*.test.tsx" ],
+  // "exclude": ["**/*.test.tsx"]
 }
