@@ -23,12 +23,8 @@
     "noImplicitAny": true,
     "noImplicitThis": true,
     "strictNullChecks": true,
-    // "types": [
-    //   "reflect-metadata",
-    //   "jest",
-    //   "@types/jest",
-    //   "node"
-    // ],
+    "typeRoots": ["node_modules/@types"],
+    "types": ["jest", "node"]
   },
   "include": [
     "src/**/*"
