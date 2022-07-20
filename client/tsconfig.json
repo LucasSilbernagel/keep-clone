@@ -26,6 +26,7 @@
     "types": [
       "reflect-metadata",
       "jest",
+      "@types/jest",
       "node"
     ],
   },
