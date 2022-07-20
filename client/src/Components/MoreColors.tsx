@@ -26,6 +26,29 @@ const ColorButton = styled('button')(() => ({
   },
 }))
 
+/** Function to display a row of color button options */
+const displayColorOptions = (
+  color: IDrawingColor,
+  index: number,
+  updateColor: (color: IDrawingColor) => void,
+  selectedColor: IDrawingColor
+) => {
+  return (
+    <Grid item key={index}>
+      <Tooltip title={color.label}>
+        <ColorButton
+          style={{
+            backgroundColor: color.color,
+            border: color.label === 'White' ? '1px solid #000000' : '',
+            transform: color.label === selectedColor.label ? 'scale(1.3)' : '',
+          }}
+          onClick={() => updateColor(color)}
+        ></ColorButton>
+      </Tooltip>
+    </Grid>
+  )
+}
+
 interface MoreColorsProps {
   selectedColor: IDrawingColor
   showingMoreColors: boolean
@@ -57,22 +80,7 @@ const MoreColors: React.FC<MoreColorsProps> = (props: MoreColorsProps) => {
           sx={{ marginBottom: '0.8em', width: getMenuWidth() }}
         >
           {SECOND_COLOR_OPTIONS.map((color, index) => {
-            return (
-              <Grid item key={index}>
-                <Tooltip title={color.label}>
-                  <ColorButton
-                    style={{
-                      backgroundColor: color.color,
-                      border:
-                        color.label === 'White' ? '1px solid #000000' : '',
-                      transform:
-                        color.label === selectedColor.label ? 'scale(1.3)' : '',
-                    }}
-                    onClick={() => updateColor(color)}
-                  ></ColorButton>
-                </Tooltip>
-              </Grid>
-            )
+            return displayColorOptions(color, index, updateColor, selectedColor)
           })}
         </Grid>
         <Grid
@@ -82,20 +90,7 @@ const MoreColors: React.FC<MoreColorsProps> = (props: MoreColorsProps) => {
           sx={{ marginBottom: '0.8em', width: getMenuWidth() }}
         >
           {THIRD_COLOR_OPTIONS.map((color, index) => {
-            return (
-              <Grid item key={index}>
-                <Tooltip title={color.label}>
-                  <ColorButton
-                    style={{
-                      backgroundColor: color.color,
-                      transform:
-                        color.label === selectedColor.label ? 'scale(1.3)' : '',
-                    }}
-                    onClick={() => updateColor(color)}
-                  ></ColorButton>
-                </Tooltip>
-              </Grid>
-            )
+            return displayColorOptions(color, index, updateColor, selectedColor)
           })}
         </Grid>
         <Grid
@@ -105,20 +100,7 @@ const MoreColors: React.FC<MoreColorsProps> = (props: MoreColorsProps) => {
           sx={{ width: getMenuWidth() }}
         >
           {FOURTH_COLOR_OPTIONS.map((color, index) => {
-            return (
-              <Grid item key={index}>
-                <Tooltip title={color.label}>
-                  <ColorButton
-                    style={{
-                      backgroundColor: color.color,
-                      transform:
-                        color.label === selectedColor.label ? 'scale(1.3)' : '',
-                    }}
-                    onClick={() => updateColor(color)}
-                  ></ColorButton>
-                </Tooltip>
-              </Grid>
-            )
+            return displayColorOptions(color, index, updateColor, selectedColor)
           })}
         </Grid>
       </>
