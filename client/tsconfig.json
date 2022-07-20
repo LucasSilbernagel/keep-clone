@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "outDir": "./build",
     "lib": [
       "dom",
       "dom.iterable",
@@ -23,13 +22,8 @@
     "jsx": "react-jsx",
     "noImplicitAny": true,
     "noImplicitThis": true,
-    "strictNullChecks": true,
-    "types": [
-      "jest"
-    ],
+    "strictNullChecks": true
   },
-  "include": [
-    "src/**/*"
-, "tsconfig.build.json"  ],
-"exclude": ["node_modules"]
+  "include": [ "src/**/*" ],
+  "exclude": ["**/*.test.ts"]
 }
