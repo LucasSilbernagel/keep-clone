@@ -24,6 +24,9 @@
     "noImplicitThis": true,
     "strictNullChecks": true,
     // "types": ["jest", "node", "@testing-library/jest-dom"],
+    "types": [
+      "jest"
+    ],
     "typeRoots": ["node_modules/@types"]
   },
   "include": [ "src" ]
