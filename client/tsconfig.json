@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "outDir": "./build",
     "lib": [
       "dom",
       "dom.iterable",
@@ -22,10 +23,7 @@
     "jsx": "react-jsx",
     "noImplicitAny": true,
     "noImplicitThis": true,
-    "strictNullChecks": true,
-    "types": [
-      "@types/testing-library__jest-dom"
-    ]
+    "strictNullChecks": true
   },
   "include": [
     "src"
