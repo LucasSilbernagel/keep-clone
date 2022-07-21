@@ -23,7 +23,6 @@
     "noImplicitAny": true,
     "noImplicitThis": true,
     "strictNullChecks": true,
-    "types": ["node", "jest", "@testing-library/jest-dom"]
   },
   "include": [ "src" ],
   // "exclude": ["**/*.test.tsx"]
