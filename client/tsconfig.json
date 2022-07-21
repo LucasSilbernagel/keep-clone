@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "outDir": "./build",
     "lib": [
       "dom",
       "dom.iterable",
@@ -26,5 +27,6 @@
     "types": ["node", "jest", "@testing-library/jest-dom"]
   },
   "include": [ "src" ],
+  "exclude": ["node_modules"]
   // "exclude": ["**/*.test.tsx"]
 }
