@@ -23,7 +23,8 @@
     "jsx": "react-jsx",
     "noImplicitAny": true,
     "noImplicitThis": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "types": ["@types/testing-library__jest-dom"]
   },
   "include": [
     "src"
