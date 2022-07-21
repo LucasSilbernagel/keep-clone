@@ -24,7 +24,7 @@
     "noImplicitAny": true,
     "noImplicitThis": true,
     "strictNullChecks": true,
-    "types": ["@types/testing-library__jest-dom"]
+    "types": ["@testing-library/jest-dom"]
   },
   "include": [
     "src",

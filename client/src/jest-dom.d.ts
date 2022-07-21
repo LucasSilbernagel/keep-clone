@@ -1,1 +1,1 @@
-import 'jest-dom/extend-expect'
+import '@types/testing-library__jest-dom'
