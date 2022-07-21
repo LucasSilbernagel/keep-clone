@@ -27,7 +27,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "tsc tsconfig.build.json react-scripts build",
+    "build": "tsc -p tsconfig.build.json && react-scripts build",
     "test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!(nanoid)/)'",
     "eject": "react-scripts eject"
   },
