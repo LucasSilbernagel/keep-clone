@@ -24,9 +24,10 @@
     "noImplicitAny": true,
     "noImplicitThis": true,
     "strictNullChecks": true,
-    "types": ["@testing-library/jest-dom"]
+    "types": ["@testing-library/jest-dom", "node"]
   },
   "include": [
-    "src"
+    "src",
+    "**/*.d.ts"
   ]
 }
