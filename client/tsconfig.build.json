@@ -3,6 +3,7 @@
   "compilerOptions": {
     "noUnusedLocals": true,
     "skipLibCheck": true,
+    "types": ["jest", "node"]
   },
-"exclude": ["**/*.test.ts", "**/*.test.tsx", "node_modules"]
+"exclude": ["**/*.test.ts", "**/*.test.tsx"]
 }
