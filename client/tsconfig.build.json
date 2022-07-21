@@ -3,7 +3,6 @@
   "compilerOptions": {
     "noUnusedLocals": true,
     "skipLibCheck": true,
-    "types": ["@testing-library/jest-dom"]
   },
 "exclude": ["**/*.test.ts", "**/*.test.tsx"]
 }

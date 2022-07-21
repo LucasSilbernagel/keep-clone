@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import TextForm from './TextForm'
 import { RecoilRoot } from 'recoil'
-// import '@types/jest'
 
 describe('TextForm', () => {
   test('renders', () => {
