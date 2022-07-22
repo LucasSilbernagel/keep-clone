@@ -14,11 +14,11 @@ import {
   atomNotes,
   atomSelectedNoteIds,
 } from '../../atoms'
-import DrawingContainer from '../../Components/DrawingContainer'
-import NoteCreator from '../../Components/NoteCreator'
+import DrawingContainer from '../../Components/Forms/NoteFormContainer/Drawing/DrawingContainer'
+import NoteCreator from '../../Components/Menus/NoteCreator'
 import NoteModal from '../../Components/NoteModal'
-import Notes from '../../Components/Notes'
-import TopBar from '../../Components/TopBar'
+import Notes from '../../Components/DisplayedNotes/Notes'
+import TopBar from '../../Components/Menus/TopBar'
 import { getNotes } from '../../LogicHelpers'
 
 interface NoteViewProps {

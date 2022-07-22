@@ -23,8 +23,8 @@ import {
   MAIN_BREAKPOINT,
 } from '../../Constants'
 import { getNotes } from '../../LogicHelpers'
-import NoteFormContainer from '../NoteFormContainer'
-import NoteModalFooter from '../NoteModalFooter'
+import NoteFormContainer from '../Forms/NoteFormContainer'
+import NoteModalFooter from './NoteModalFooter'
 
 /** Transition for the note modal */
 const Transition = forwardRef(function Transition(
