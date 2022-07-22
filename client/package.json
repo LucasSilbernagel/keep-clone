@@ -45,5 +45,7 @@
     ]
   },
   "proxy": "http://localhost:5001",
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/react": "^18.0.15"
+  }
 }
