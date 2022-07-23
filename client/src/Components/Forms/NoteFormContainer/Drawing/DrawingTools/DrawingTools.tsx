@@ -114,6 +114,7 @@ const DrawingTools: React.FC<DrawingToolsProps> = (
             aria-label="clear page"
             color="info"
             onClick={clearCanvas}
+            data-testid="clear-page-button"
           >
             <ClearIcon />
           </IconButton>
@@ -128,6 +129,7 @@ const DrawingTools: React.FC<DrawingToolsProps> = (
             sx={{
               border: toolType === 'eraser' ? '1px solid #000000' : '',
             }}
+            data-testid="eraser-button"
           >
             <AutoFixHighIcon />
           </IconButton>
@@ -228,6 +230,7 @@ const DrawingTools: React.FC<DrawingToolsProps> = (
         <Tooltip title="Paintbrush">
           <IconButton
             id="paintbrush-button"
+            data-testid="paintbrush-button"
             aria-controls={isPaintbrushMenuOpen ? 'paintbrush-menu' : undefined}
             aria-haspopup="true"
             aria-expanded={isPaintbrushMenuOpen ? 'true' : undefined}

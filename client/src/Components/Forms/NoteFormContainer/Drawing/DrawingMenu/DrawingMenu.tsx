@@ -118,6 +118,7 @@ const DrawingMenu: React.FC<DrawingMenuProps> = (props: DrawingMenuProps) => {
                     aria-label="back"
                     color="info"
                     onClick={handleBackClick}
+                    data-testid="back-button"
                   >
                     <ArrowBackIcon />
                   </IconButton>
