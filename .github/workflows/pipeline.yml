@@ -37,10 +37,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-  codecov:
-    - name: Install dependencies
-      - run: npm run installDeps
-    - name: Run unit tests
-      - run: npm run test:unit
-    - name: Upload coverage to Codecov
-      - uses: codecov/codecov-action@v3
+          
