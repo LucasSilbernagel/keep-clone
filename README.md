@@ -125,3 +125,11 @@ DISABLE_ESLINT_PLUGIN = true
 ### Start up the app
 
 To start up the app, make sure you are in the root folder and then run `npm run dev` in your terminal. This should start both the app's server and the front end in a single terminal window, and launch the app in a new browser tab. You are now running the app locally!
+
+## Testing
+
+### Unit Tests
+
+Unit tests are written with [Jest](https://jestjs.io/) and [react-testing-library](https://testing-library.com/).
+
+Use `npm run test:unit` to run all unit tests, or `cd` into the client folder and use `npm test -- SomeFileToRun` to run a specific test file.
