@@ -48,6 +48,7 @@ const NoteTitleInput: React.FC<NoteTitleInputProps> = (
         }}
         inputProps={{ style: { fontSize: '1.2rem' }, maxLength: 1000 }}
         InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+        data-testid="title-input"
       />
     </Grid>
   )
