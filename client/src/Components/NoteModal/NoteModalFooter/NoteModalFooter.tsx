@@ -208,6 +208,7 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
               onClick={handleClickMoreMenu}
               color="secondary"
               className="moreButton"
+              data-testid="more-button"
             >
               <MoreVertIcon />
             </IconButton>
@@ -269,6 +270,7 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
                   onClick={handleClickMoreMenu}
                   color="secondary"
                   className="moreButton"
+                  data-testid="more-button"
                 >
                   <MoreVertIcon />
                 </IconButton>

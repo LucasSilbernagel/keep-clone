@@ -2,7 +2,11 @@ import AddBoxIcon from '@mui/icons-material/AddBox'
 import { Box, IconButton } from '@mui/material'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 
-import { atomIsDarkTheme, atomIsModalOpen, atomNoteType } from '../../../../atoms'
+import {
+  atomIsDarkTheme,
+  atomIsModalOpen,
+  atomNoteType,
+} from '../../../../atoms'
 
 const PlusButton = (): JSX.Element => {
   /** State setter to open/close the modal */
@@ -26,6 +30,7 @@ const PlusButton = (): JSX.Element => {
       color={isDarkTheme ? 'info' : 'primary'}
       sx={{ position: 'relative' }}
       onClick={createTextNote}
+      data-testid="plus-button"
     >
       <Box
         sx={{

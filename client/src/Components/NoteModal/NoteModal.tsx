@@ -176,6 +176,7 @@ const NoteModal = (props: NoteModalProps): JSX.Element => {
       fullScreen={viewportWidth < MAIN_BREAKPOINT}
       fullWidth={viewportWidth > MAIN_BREAKPOINT}
       TransitionComponent={Transition}
+      data-testid="modal"
     >
       <Box
         component="div"
@@ -200,6 +201,7 @@ const NoteModal = (props: NoteModalProps): JSX.Element => {
                 aria-label="Save or cancel"
                 color="secondary"
                 onClick={handleBack}
+                data-testid="back-button"
               >
                 <ArrowBackIcon />
               </IconButton>

@@ -74,6 +74,7 @@ const SelectedNotesBar = (props: SelectedNotesBarProps): JSX.Element => {
                     color="inherit"
                     aria-label="Clear selection"
                     onClick={() => setSelectedNoteIds([])}
+                    data-testid="clear-selection-button"
                   >
                     <CloseIcon />
                   </IconButton>
@@ -102,6 +103,7 @@ const SelectedNotesBar = (props: SelectedNotesBarProps): JSX.Element => {
                       editNotes('isPinned', selectedNoteIds)
                       setSelectedNoteIds([])
                     }}
+                    data-testid="pin-selection-button"
                   >
                     <PushPinOutlinedIcon />
                   </IconButton>
@@ -114,6 +116,7 @@ const SelectedNotesBar = (props: SelectedNotesBarProps): JSX.Element => {
                     color="inherit"
                     aria-label="Delete selection"
                     onClick={() => deleteNotes(selectedNoteIds)}
+                    data-testid="delete-selection-button"
                   >
                     <DeleteIcon />
                   </IconButton>

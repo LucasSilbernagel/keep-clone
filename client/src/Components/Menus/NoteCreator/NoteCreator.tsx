@@ -181,6 +181,7 @@ const NoteCreator = (props: NoteCreatorProps): JSX.Element => {
                   boxShadow: 4,
                 },
               }}
+              data-testid="text-note-button"
             >
               Take a note...
             </Button>
@@ -189,12 +190,17 @@ const NoteCreator = (props: NoteCreatorProps): JSX.Element => {
                 <IconButton
                   aria-label="new checklist"
                   onClick={createDesktopChecklist}
+                  data-testid="checklist-button"
                 >
                   <CheckBoxOutlinedIcon />
                 </IconButton>
               </Tooltip>
               <Tooltip title="New drawing">
-                <IconButton aria-label="new drawing" onClick={createDrawing}>
+                <IconButton
+                  data-testid="drawing-button"
+                  aria-label="new drawing"
+                  onClick={createDrawing}
+                >
                   <BrushOutlinedIcon />
                 </IconButton>
               </Tooltip>
@@ -202,6 +208,7 @@ const NoteCreator = (props: NoteCreatorProps): JSX.Element => {
                 <IconButton
                   aria-label="new recording"
                   onClick={createRecording}
+                  data-testid="recording-button"
                 >
                   <MicNoneOutlinedIcon />
                 </IconButton>
@@ -210,6 +217,7 @@ const NoteCreator = (props: NoteCreatorProps): JSX.Element => {
                 <>
                   <IconButton
                     aria-label="new image"
+                    data-testid="image-button"
                     onClick={handleFileInputWrapperClick}
                   >
                     <InsertPhotoOutlinedIcon />
@@ -265,17 +273,27 @@ const NoteCreator = (props: NoteCreatorProps): JSX.Element => {
           <IconButton
             aria-label="new checklist"
             onClick={createMobileChecklist}
+            data-testid="checklist-button"
           >
             <CheckBoxOutlinedIcon />
           </IconButton>
-          <IconButton aria-label="new drawing" onClick={createDrawing}>
+          <IconButton
+            data-testid="drawing-button"
+            aria-label="new drawing"
+            onClick={createDrawing}
+          >
             <BrushOutlinedIcon />
           </IconButton>
-          <IconButton aria-label="new recording" onClick={createRecording}>
+          <IconButton
+            data-testid="recording-button"
+            aria-label="new recording"
+            onClick={createRecording}
+          >
             <MicNoneOutlinedIcon />
           </IconButton>
           <IconButton
             aria-label="new image"
+            data-testid="image-button"
             onClick={handleFileInputWrapperClick}
           >
             <InsertPhotoOutlinedIcon />

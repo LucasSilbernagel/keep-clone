@@ -83,6 +83,7 @@ const DesktopSearch = (props: DesktopSearchProps): JSX.Element => {
         onChange={(e) => handleSearch(e)}
         onFocus={() => setIsSearching(true)}
         value={searchValue}
+        data-testid="search-field"
       />
       <CloseIconWrapper>
         {isSearching ? (
@@ -91,6 +92,7 @@ const DesktopSearch = (props: DesktopSearchProps): JSX.Element => {
               color="inherit"
               onClick={clearSearch}
               aria-label="clear search"
+              data-testid="clear-search-button"
             >
               <CloseIcon />
             </IconButton>
