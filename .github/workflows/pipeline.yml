@@ -33,7 +33,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Install dependencies
-        run: npm install
+        run: npm installDeps
       - name: Test and coverage
         run: npm run test
       - name: SonarCloud Scan
