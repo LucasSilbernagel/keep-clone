@@ -40,7 +40,7 @@ jobs:
         uses: SonarSource/sonarcloud-github-action@master
         with:
           args: >
-            -Dsonar.organization=LucasSilbernagel
+            -Dsonar.organization=lucassilbernagel
             -Dsonar.projectKey=LucasSilbernagel_keep-clone
             -Dsonar.sources=client/src
             -Dsonar.tests=client/src
