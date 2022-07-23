@@ -43,6 +43,7 @@ const SelectButton: React.FC<SelectButtonProps> = (
           size="large"
           color="inherit"
           aria-label="select note"
+          data-testid="select-note"
           onClick={handleSelectNote}
         >
           <CheckCircleIcon />
