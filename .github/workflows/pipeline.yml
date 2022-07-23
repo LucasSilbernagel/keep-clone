@@ -38,6 +38,13 @@ jobs:
         run: npm run test
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
+        with:
+          args: >
+            -Dsonar.organization=LucasSilbernagel
+            -Dsonar.projectKey=LucasSilbernagel_keep-clone
+            -Dsonar.sources=client/src
+            -Dsonar.tests=client/src
+            -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
