@@ -94,6 +94,7 @@ const PinButton: React.FC<PinButtonProps> = (props: PinButtonProps) => {
             aria-label="unpin"
             onClick={handlePinNote}
             disabled={selectedNoteIds.length > 0}
+            data-testid="pin-button"
           >
             <PushPinIcon />
           </IconButton>
@@ -106,6 +107,7 @@ const PinButton: React.FC<PinButtonProps> = (props: PinButtonProps) => {
             aria-label="pin"
             onClick={handlePinNote}
             disabled={selectedNoteIds.length > 0}
+            data-testid="pin-button"
           >
             <PushPinOutlinedIcon />
           </IconButton>

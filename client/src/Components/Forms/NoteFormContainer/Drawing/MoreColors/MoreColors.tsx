@@ -43,6 +43,7 @@ const displayColorOptions = (
             transform: color.label === selectedColor.label ? 'scale(1.3)' : '',
           }}
           onClick={() => updateColor(color)}
+          data-testid={color.label}
         ></ColorButton>
       </Tooltip>
     </Grid>

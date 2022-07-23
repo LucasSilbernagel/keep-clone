@@ -95,6 +95,7 @@ const NoteContentFooter: React.FC<NoteContentFooterProps> = (
           <Tooltip title="More">
             <IconButton
               id="more-button"
+              data-testid="more-button"
               aria-controls={isMoreMenuOpen ? 'more-menu' : undefined}
               aria-haspopup="true"
               aria-expanded={isMoreMenuOpen ? 'true' : undefined}

@@ -79,6 +79,7 @@ const MobileSearch = (props: MobileSearchProps): JSX.Element => {
         onChange={(e) => handleSearch(e)}
         onFocus={() => setIsSearching(true)}
         value={searchValue}
+        data-testid="search-field"
       />
       <CloseIconWrapper>
         {isSearching ? (
