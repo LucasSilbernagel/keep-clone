@@ -133,3 +133,9 @@ To start up the app, make sure you are in the root folder and then run `npm run 
 Unit tests are written with [Jest](https://jestjs.io/) and [react-testing-library](https://testing-library.com/).
 
 Use `npm run test:unit` to run all unit tests, or `cd` into the client folder and use `npm test -- SomeFileToRun` to run a specific test file.
+
+## Component Documentation
+
+Components are visually documented with [Storybook](https://storybook.js.org/).
+
+Use `npm run storybook` to launch Storybook.
