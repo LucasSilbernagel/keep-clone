@@ -11,7 +11,8 @@
     "heroku-postbuild": "cd client && npm install && npm run build",
     "lint": "eslint --ext \".js,.jsx,.ts,.tsx\" --ignore-path .gitignore .",
     "lint:fix": "eslint --fix --ext \".js,.jsx,.ts,.tsx\" --ignore-path .gitignore .",
-    "test:unit": "cd client && npm test"
+    "test:unit": "cd client && npm test",
+    "test:unitCoverage": "cd client && npm test:coverage"
   },
   "author": "Lucas Silbernagel",
   "license": "MIT",
