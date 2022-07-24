@@ -1,21 +1,3 @@
-export const mockNoteChecklist = {
-  _id: '1',
-  text: '',
-  title: '',
-  list: [
-    { text: 'first item', done: true, id: '123' },
-    { text: 'second item', done: false, id: '456' },
-  ],
-  drawing: '',
-  drawingImage: '',
-  recording: '',
-  recordingDuration: '',
-  image: '',
-  isPinned: false,
-  userGoogleId: '123',
-  lastEdited: 123,
-}
-
 export const mockNotes = [
   {
     _id: '2',
