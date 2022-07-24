@@ -12,7 +12,8 @@
     "lint": "eslint --ext \".js,.jsx,.ts,.tsx\" --ignore-path .gitignore .",
     "lint:fix": "eslint --fix --ext \".js,.jsx,.ts,.tsx\" --ignore-path .gitignore .",
     "test:unit": "cd client && npm test",
-    "test:unitCoverage": "cd client && npm test:coverage"
+    "test:unitCoverage": "cd client && npm test:coverage",
+    "storybook": "cd client && npm run storybook"
   },
   "author": "Lucas Silbernagel",
   "license": "MIT",

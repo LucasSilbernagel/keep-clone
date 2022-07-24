@@ -31,7 +31,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!(nanoid)/)'",
     "test:coverage": "CI=true npm test -- --env=jsdom --coverage > coverage/lcov.info",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "browserslist": {
     "production": [
@@ -47,8 +49,21 @@
   },
   "proxy": "http://localhost:5001",
   "devDependencies": {
+    "@storybook/addon-actions": "^6.5.9",
+    "@storybook/addon-essentials": "^6.5.9",
+    "@storybook/addon-interactions": "^6.5.9",
+    "@storybook/addon-links": "^6.5.9",
+    "@storybook/builder-webpack5": "^6.5.9",
+    "@storybook/manager-webpack5": "^6.5.9",
+    "@storybook/node-logger": "^6.5.9",
+    "@storybook/preset-create-react-app": "^4.1.2",
+    "@storybook/react": "^6.5.9",
+    "@storybook/testing-library": "^0.0.13",
     "@types/react": "^18.0.15",
+    "babel-plugin-named-exports-order": "^0.0.2",
     "import": "^0.0.6",
-    "jest-canvas-mock": "^2.4.0"
+    "jest-canvas-mock": "^2.4.0",
+    "prop-types": "^15.8.1",
+    "webpack": "^5.73.0"
   }
 }
