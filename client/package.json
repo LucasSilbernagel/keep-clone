@@ -30,6 +30,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!(nanoid)/)'",
+    "test:coverage": "CI=true npm test -- --env=jsdom --coverage > coverage/lcov.info",
     "eject": "react-scripts eject"
   },
   "browserslist": {
