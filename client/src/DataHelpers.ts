@@ -49,7 +49,7 @@ export const mockNotes = [
   {
     _id: '5',
     text: '',
-    title: '',
+    title: 'My recording',
     list: [],
     drawing: '',
     drawingImage: '',
@@ -63,7 +63,7 @@ export const mockNotes = [
   {
     _id: '6',
     text: '',
-    title: '',
+    title: 'My photo',
     list: [],
     drawing: '',
     drawingImage: '',
