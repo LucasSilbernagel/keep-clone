@@ -1,26 +1,25 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import Notes from '.'
-import { mockNotes } from '../../../DataHelpers'
+import MoreColors from '.'
 import { RecoilRoot } from 'recoil'
-import {
-  atomViewportWidth,
-  atomFilteredNotes,
-  atomIsGridView,
-} from '../../../atoms'
+import { atomViewportWidth } from '../../../../../atoms'
 
 export default {
-  title: 'Components/DisplayedNotes/Notes',
-  component: Notes,
+  title: 'Components/Forms/NoteFormContainer/Drawing/MoreColors',
+  component: MoreColors,
   argTypes: {
     backgroundColor: { control: 'color' },
   },
-} as ComponentMeta<typeof Notes>
+} as ComponentMeta<typeof MoreColors>
 
-const Template: ComponentStory<typeof Notes> = (args) => <Notes {...args} />
+const Template: ComponentStory<typeof MoreColors> = (args) => (
+  <MoreColors {...args} />
+)
 
 export const Default = Template.bind({})
 Default.args = {
-  deleteNote: () => null,
+  selectedColor: { label: 'Black', color: '#000000' },
+  showingMoreColors: true,
+  updateColor: () => null,
 }
 Default.decorators = [
   (Story) => (
@@ -28,8 +27,6 @@ Default.decorators = [
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       initializeState={(snap: any): any => {
         snap.set(atomViewportWidth, 1440)
-        snap.set(atomIsGridView, true)
-        snap.set(atomFilteredNotes, mockNotes)
       }}
     >
       <Story />
