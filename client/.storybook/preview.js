@@ -7,3 +7,10 @@ export const parameters = {
     },
   },
 }
+
+import React from "react"
+import { addDecorator } from "@storybook/react"
+import { ThemeProvider } from "@mui/material/styles"
+import { lightTheme } from "../src/themes"
+
+addDecorator((story) => <ThemeProvider theme={lightTheme}>{story()}</ThemeProvider>)
