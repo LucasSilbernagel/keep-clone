@@ -142,6 +142,20 @@ const Login = (props: LoginProps): JSX.Element => {
                 </Typography>
               </Grid>
             ) : null}
+            <Grid item>
+              <Typography>
+                The project components are also visually documented in{' '}
+                <a
+                  href="https://62de0039a0287437701c3efb-xuuvnppdcu.chromatic.com/?path=/story/about--page"
+                  style={{ color: theme.palette.secondary.main }}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  Storybook
+                </a>
+                .
+              </Typography>
+            </Grid>
           </Grid>
         </Paper>
       </Grid>

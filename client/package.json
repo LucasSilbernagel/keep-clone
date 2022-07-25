@@ -61,6 +61,7 @@
     "@storybook/testing-library": "^0.0.13",
     "@types/react": "^18.0.15",
     "babel-plugin-named-exports-order": "^0.0.2",
+    "chromatic": "^6.7.1",
     "import": "^0.0.6",
     "jest-canvas-mock": "^2.4.0",
     "prop-types": "^15.8.1",

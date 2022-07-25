@@ -13,9 +13,12 @@
     "lint:fix": "eslint --fix --ext \".js,.jsx,.ts,.tsx\" --ignore-path .gitignore .",
     "test:unit": "cd client && npm test",
     "test:unitCoverage": "cd client && npm test:coverage",
-    "storybook": "cd client && npm run storybook"
+    "storybook": "cd client && npm run storybook",
+    "build-storybook": "cd client && npm run build-storybook"
   },
-  "author": "Lucas Silbernagel",
+  "author": {
+    "name": "Lucas Silbernagel"
+  },
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.19.1",
@@ -35,5 +38,6 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "nodemon": "^2.0.19",
     "prettier": "^2.7.1"
-  }
+  },
+  "_id": "keep-clone@1.0.0"
 }
