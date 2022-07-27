@@ -12,7 +12,7 @@ import {
   atomViewportWidth,
 } from '../../../atoms'
 import { BLANK_EXISTING_NOTE, MAIN_BREAKPOINT } from '../../../Constants'
-import { noteContentStyles } from '../../../LogicHelpers'
+import { noteContentStyles } from '../../../Logic/LogicHelpers'
 import { IExistingNote } from '../../../types'
 import NoteContentChecklist from './NoteContentChecklist'
 import NoteContentFooter from './NoteContentFooter'

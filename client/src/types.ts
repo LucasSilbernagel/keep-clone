@@ -33,7 +33,7 @@ export interface INewNote {
   lastEdited: number
 }
 
-export type NoteType = 'text' | 'checklist' | 'drawing' | 'recording' | 'image'
+export type INoteType = 'text' | 'checklist' | 'drawing' | 'recording' | 'image'
 
 export interface IDrawingColor {
   label: string

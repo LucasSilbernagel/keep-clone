@@ -6,7 +6,7 @@ import { useSetRecoilState } from 'recoil'
 
 import keep_icon from '../../assets/keep_icon.png'
 import { atomIsLoading, atomNotes } from '../../atoms'
-import { getNotes } from '../../LogicHelpers'
+import { getNotes } from '../../Logic/LogicHelpers'
 
 interface LoginProps {
   setAuthenticated: Dispatch<SetStateAction<boolean>>

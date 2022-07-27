@@ -9,7 +9,7 @@ import {
   atomNoteBeingEdited,
   atomNoteType,
 } from '../../../atoms'
-import { noteFormStyles } from '../../../LogicHelpers'
+import { noteFormStyles } from '../../../Logic/LogicHelpers'
 import ChecklistForm from './Checklist/ChecklistForm'
 import DrawingForm from './Drawing/DrawingForm'
 import ImageForm from './ImageForm'

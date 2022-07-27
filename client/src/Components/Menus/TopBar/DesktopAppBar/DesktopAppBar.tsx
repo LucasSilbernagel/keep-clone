@@ -24,7 +24,7 @@ import {
   atomIsLoading,
   atomNotes,
 } from '../../../../atoms'
-import { getNotes } from '../../../../LogicHelpers'
+import { getNotes } from '../../../../Logic/LogicHelpers'
 import DesktopSearch from '../Search/DesktopSearch'
 import ProfileMenu from '../ProfileMenu'
 import SettingsMenu from '../SettingsMenu'

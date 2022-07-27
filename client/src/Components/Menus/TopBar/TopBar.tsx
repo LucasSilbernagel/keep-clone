@@ -13,7 +13,7 @@ import {
 import DesktopAppBar from './DesktopAppBar'
 import MobileAppBar from './MobileAppBar'
 import { MAIN_BREAKPOINT } from '../../../Constants'
-import { getNotes } from '../../../LogicHelpers'
+import { getNotes } from '../../../Logic/LogicHelpers'
 import SelectedNotesBar from './SelectedNotesBar'
 
 interface TopBarProps {

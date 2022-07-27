@@ -24,7 +24,7 @@ import {
   atomViewportWidth,
 } from '../../../atoms'
 import { MAIN_BREAKPOINT } from '../../../Constants'
-import { getNotes } from '../../../LogicHelpers'
+import { getNotes } from '../../../Logic/LogicHelpers'
 
 interface NoteModalFooterProps {
   handleCloseModal: () => void

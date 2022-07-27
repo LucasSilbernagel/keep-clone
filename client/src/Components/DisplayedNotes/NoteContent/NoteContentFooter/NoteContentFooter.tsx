@@ -11,7 +11,7 @@ import {
   atomViewportWidth,
 } from '../../../../atoms'
 import { MAIN_BREAKPOINT } from '../../../../Constants'
-import { getNotes } from '../../../../LogicHelpers'
+import { getNotes } from '../../../../Logic/LogicHelpers'
 import { IExistingNote, INewNote } from '../../../../types'
 
 interface NoteContentFooterProps {
