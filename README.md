@@ -52,6 +52,7 @@ A clone of Google Keep built with the MERN stack. Replicates the web app on larg
 - [lucas-silbernagel-react-canvas-draw
 ](https://www.npmjs.com/package/lucas-silbernagel-react-canvas-draw)
 - [nanoid](https://www.npmjs.com/package/nanoid)
+- [focus-trap-react](https://www.npmjs.com/package/focus-trap-react)
 
 ### State Management
 

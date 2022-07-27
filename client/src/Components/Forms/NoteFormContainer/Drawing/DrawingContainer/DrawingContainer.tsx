@@ -2,6 +2,7 @@ import { Box } from '@mui/material'
 import React, { useEffect, useRef, useState } from 'react'
 import CanvasDraw from 'lucas-silbernagel-react-canvas-draw'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import FocusTrap from 'focus-trap-react'
 
 import {
   atomEditingID,
@@ -111,54 +112,63 @@ const DrawingContainer: React.FC = () => {
 
   if (noteType === 'drawing' && isDrawingActive) {
     return (
-      <Box
-        sx={{
-          position: 'fixed',
-          top: 0,
-          bottom: 0,
-          left: 0,
-          right: 0,
-          backgroundColor: '#FFFFFF',
-          zIndex: 30,
+      <FocusTrap
+        focusTrapOptions={{
+          escapeDeactivates: false,
+          fallbackFocus: '#drawing-container',
         }}
-        ref={drawingContainerRef}
       >
-        <DrawingMenu
-          selectedColor={selectedColor}
-          setSelectedColor={setSelectedColor}
-          selectedStroke={selectedStroke}
-          setSelectedStroke={setSelectedStroke}
-          handleBackClick={handleBackClick}
-          clearCanvas={clearCanvas}
-          undo={undo}
-        />
-        <CanvasDraw
-          ref={(canvasDraw: null) => {
-            if (canvasDraw !== null) {
-              setCanvasRef(canvasDraw)
-            }
+        <Box
+          sx={{
+            position: 'fixed',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            backgroundColor: '#FFFFFF',
+            zIndex: 30,
           }}
-          canvasHeight={viewportHeight}
-          canvasWidth={viewportWidth}
-          brushColor={selectedColor.color}
-          brushRadius={selectedStroke}
-          style={{
-            paddingBottom: viewportWidth <= MAIN_BREAKPOINT ? '8em' : '',
-          }}
-          saveData={editingID ? noteBeingEdited.drawing : newNote.drawing}
-          immediateLoading
-          hideGrid
-          hideInterface={viewportWidth <= MAIN_BREAKPOINT}
-          lazyRadius={0}
-        />
-        <MobileDrawingMenu
-          selectedColor={selectedColor}
-          setSelectedColor={setSelectedColor}
-          selectedStroke={selectedStroke}
-          setSelectedStroke={setSelectedStroke}
-          clearCanvas={clearCanvas}
-        />
-      </Box>
+          ref={drawingContainerRef}
+          id="drawing-container"
+          tabIndex={-1}
+        >
+          <DrawingMenu
+            selectedColor={selectedColor}
+            setSelectedColor={setSelectedColor}
+            selectedStroke={selectedStroke}
+            setSelectedStroke={setSelectedStroke}
+            handleBackClick={handleBackClick}
+            clearCanvas={clearCanvas}
+            undo={undo}
+          />
+          <CanvasDraw
+            ref={(canvasDraw: null) => {
+              if (canvasDraw !== null) {
+                setCanvasRef(canvasDraw)
+              }
+            }}
+            canvasHeight={viewportHeight}
+            canvasWidth={viewportWidth}
+            brushColor={selectedColor.color}
+            brushRadius={selectedStroke}
+            style={{
+              paddingBottom: viewportWidth <= MAIN_BREAKPOINT ? '8em' : '',
+            }}
+            saveData={editingID ? noteBeingEdited.drawing : newNote.drawing}
+            immediateLoading
+            hideGrid
+            hideInterface={viewportWidth <= MAIN_BREAKPOINT}
+            lazyRadius={0}
+          />
+          <MobileDrawingMenu
+            selectedColor={selectedColor}
+            setSelectedColor={setSelectedColor}
+            selectedStroke={selectedStroke}
+            setSelectedStroke={setSelectedStroke}
+            clearCanvas={clearCanvas}
+          />
+        </Box>
+      </FocusTrap>
     )
   } else return null
 }
