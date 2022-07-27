@@ -112,7 +112,12 @@ const DrawingContainer: React.FC = () => {
 
   if (noteType === 'drawing' && isDrawingActive) {
     return (
-      <FocusTrap>
+      <FocusTrap
+        focusTrapOptions={{
+          escapeDeactivates: false,
+          fallbackFocus: '#drawing-container',
+        }}
+      >
         <Box
           sx={{
             position: 'fixed',
@@ -124,6 +129,8 @@ const DrawingContainer: React.FC = () => {
             zIndex: 30,
           }}
           ref={drawingContainerRef}
+          id="drawing-container"
+          tabIndex={-1}
         >
           <DrawingMenu
             selectedColor={selectedColor}
