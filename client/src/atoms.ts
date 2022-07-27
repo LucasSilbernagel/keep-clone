@@ -2,7 +2,7 @@ import { nanoid } from 'nanoid'
 import { atom } from 'recoil'
 
 import { BLANK_EXISTING_NOTE, BLANK_NEW_NOTE } from './Constants'
-import { IExistingNote, IListItem, INewNote, NoteType } from './types'
+import { IExistingNote, IListItem, INewNote, INoteType } from './types'
 
 /** The user's saved notes */
 export const atomNotes = atom<IExistingNote[]>({
@@ -65,7 +65,7 @@ export const atomIsDarkTheme = atom<boolean>({
 })
 
 /** The type of note that is being created, edited, or displayed */
-export const atomNoteType = atom<NoteType>({
+export const atomNoteType = atom<INoteType>({
   key: 'atomNoteType',
   default: 'text',
 })

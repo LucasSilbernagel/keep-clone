@@ -1,4 +1,4 @@
-import { noteFormStyles } from '../LogicHelpers'
+import { noteFormStyles } from '../Logic/LogicHelpers'
 
 test('noteFormStyles', () => {
   expect(noteFormStyles(true, true)).toStrictEqual({

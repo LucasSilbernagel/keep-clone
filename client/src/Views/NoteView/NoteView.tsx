@@ -19,7 +19,7 @@ import NoteCreator from '../../Components/Menus/NoteCreator'
 import NoteModal from '../../Components/NoteModal'
 import Notes from '../../Components/DisplayedNotes/Notes'
 import TopBar from '../../Components/Menus/TopBar'
-import { getNotes } from '../../LogicHelpers'
+import { getNotes } from '../../Logic/LogicHelpers'
 
 interface NoteViewProps {
   setAuthenticated: Dispatch<SetStateAction<boolean>>

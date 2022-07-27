@@ -14,7 +14,7 @@ import {
   atomViewportHeight,
   atomViewportWidth,
 } from '../../atoms'
-import { getNotes } from '../../LogicHelpers'
+import { getNotes } from '../../Logic/LogicHelpers'
 import Login from '../Login'
 import NoteView from '../NoteView'
 

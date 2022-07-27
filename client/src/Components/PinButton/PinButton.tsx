@@ -11,7 +11,7 @@ import {
   atomNotes,
   atomSelectedNoteIds,
 } from '../../atoms'
-import { pushNoteEdit } from '../../LogicHelpers'
+import { pushNoteEdit } from '../../Logic/LogicHelpers'
 import { IExistingNote } from '../../types'
 
 interface PinButtonProps {

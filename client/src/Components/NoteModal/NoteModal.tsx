@@ -22,7 +22,7 @@ import {
   BLANK_NEW_NOTE,
   MAIN_BREAKPOINT,
 } from '../../Constants'
-import { getNotes } from '../../LogicHelpers'
+import { getNotes } from '../../Logic/LogicHelpers'
 import NoteFormContainer from '../Forms/NoteFormContainer'
 import NoteModalFooter from './NoteModalFooter'
 

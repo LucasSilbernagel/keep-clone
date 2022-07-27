@@ -19,7 +19,7 @@ import {
   atomNotes,
   atomSelectedNoteIds,
 } from '../../../../atoms'
-import { getNotes } from '../../../../LogicHelpers'
+import { getNotes } from '../../../../Logic/LogicHelpers'
 
 interface SelectedNotesBarProps {
   editNotes: (editField: string, ids: string[]) => void
