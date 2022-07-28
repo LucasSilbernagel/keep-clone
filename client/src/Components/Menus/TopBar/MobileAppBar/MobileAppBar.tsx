@@ -94,6 +94,7 @@ const MobileAppBar = (props: MobileAppBarProps): JSX.Element => {
                     aria-controls={settingsMenuId}
                     aria-haspopup="true"
                     onClick={handleSettingsMenuOpen}
+                    data-testid="settings-button"
                   >
                     <SettingsIcon />
                   </IconButton>
@@ -128,6 +129,7 @@ const MobileAppBar = (props: MobileAppBarProps): JSX.Element => {
                       color="inherit"
                       aria-label="list view"
                       onClick={() => setIsGridView(false)}
+                      data-testid="list-toggle-button"
                     >
                       <SplitscreenIcon />
                     </IconButton>
@@ -137,6 +139,7 @@ const MobileAppBar = (props: MobileAppBarProps): JSX.Element => {
                       color="inherit"
                       aria-label="grid view"
                       onClick={() => setIsGridView(true)}
+                      data-testid="grid-toggle-button"
                     >
                       <GridViewIcon />
                     </IconButton>
@@ -151,6 +154,7 @@ const MobileAppBar = (props: MobileAppBarProps): JSX.Element => {
                     aria-haspopup="true"
                     onClick={handleProfileMenuOpen}
                     color="inherit"
+                    data-testid="profile-button"
                   >
                     {userProfile.imageUrl.length > 0 ? (
                       <Avatar

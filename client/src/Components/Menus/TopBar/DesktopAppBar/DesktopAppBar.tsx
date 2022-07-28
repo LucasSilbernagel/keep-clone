@@ -137,6 +137,7 @@ const DesktopAppBar = (props: DesktopAppBarProps): JSX.Element => {
                   color="inherit"
                   onClick={() => getNotes(setIsLoading, setNotes)}
                   aria-label="Refresh"
+                  data-testid="refresh-button"
                 >
                   <RefreshIcon />
                 </IconButton>
@@ -149,6 +150,7 @@ const DesktopAppBar = (props: DesktopAppBarProps): JSX.Element => {
                   color="inherit"
                   aria-label="List view"
                   onClick={() => setIsGridView(false)}
+                  data-testid="grid-toggle-button"
                 >
                   <SplitscreenIcon />
                 </IconButton>
