@@ -172,7 +172,8 @@ export const getNotes: (
   axios
     .get('/api/notes', {
       params: {
-        userGoogleId: JSON.parse(window.localStorage.userProfile).googleId,
+        userGoogleId: JSON.parse(localStorage.getItem('userProfile') || '')
+          .googleId,
       },
     })
     .then((res) => {

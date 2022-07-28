@@ -43,7 +43,7 @@ const Home: React.FC = () => {
   /** State setter to determine whether notes are loading from the back end */
   const setIsLoading = useSetRecoilState(atomIsLoading)
   /** Application theme (dark/light), saved in localStorage */
-  const isDarkTheme = window.localStorage.getItem('keepCloneDarkTheme')
+  const isDarkTheme = localStorage.getItem('keepCloneDarkTheme')
   /** State setter to update the application theme (light/dark) */
   const setIsDarkTheme = useSetRecoilState(atomIsDarkTheme)
   /** State setter to update the note type that is being created or viewed */
@@ -65,7 +65,7 @@ const Home: React.FC = () => {
 
   /** Keep user logged in on their device by default */
   useEffect(() => {
-    if (window.localStorage.userProfile?.length > 0) {
+    if (localStorage.userProfile?.length > 0) {
       setAuthenticated(true)
     }
   }, [])

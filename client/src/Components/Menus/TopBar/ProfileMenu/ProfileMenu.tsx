@@ -26,7 +26,7 @@ const ProfileMenu = (props: ProfileMenuProps): JSX.Element => {
   } = props
 
   /** User profile data, returned from localStorage */
-  const userProfile = JSON.parse(window.localStorage.userProfile)
+  const userProfile = JSON.parse(localStorage.getItem('userProfile') || '')
 
   return (
     <Menu

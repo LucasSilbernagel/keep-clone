@@ -32,7 +32,7 @@ const MobileAppBar = (props: MobileAppBarProps): JSX.Element => {
   /** The application theme */
   const theme = useTheme()
   /** The user's profile data, returned from localStorage */
-  const userProfile = JSON.parse(window.localStorage.userProfile)
+  const userProfile = JSON.parse(localStorage.getItem('userProfile') || '')
   /** Anchor element for the profile menu */
   const [profileAnchorEl, setProfileAnchorEl] = useState<null | HTMLElement>(
     null

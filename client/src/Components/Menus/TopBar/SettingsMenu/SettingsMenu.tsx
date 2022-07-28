@@ -23,13 +23,13 @@ const SettingsMenu = (props: SettingsMenuProps): JSX.Element => {
 
   /** Function to turn off the dark theme */
   const turnOffDarkTheme = () => {
-    window.localStorage.setItem('keepCloneDarkTheme', 'false')
+    localStorage.setItem('keepCloneDarkTheme', 'false')
     setIsDarkTheme(false)
   }
 
   /** Function to turn on the dark theme */
   const turnOnDarkTheme = () => {
-    window.localStorage.setItem('keepCloneDarkTheme', 'true')
+    localStorage.setItem('keepCloneDarkTheme', 'true')
     setIsDarkTheme(true)
   }
 

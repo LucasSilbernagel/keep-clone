@@ -39,7 +39,7 @@ const DesktopAppBar = (props: DesktopAppBarProps): JSX.Element => {
   const { logOut, handleSearch, clearSearch } = props
 
   /** User profile data, returned from localStorage */
-  const userProfile = JSON.parse(window.localStorage.userProfile)
+  const userProfile = JSON.parse(localStorage.getItem('userProfile') || '')
   /** Anchor element for the profile menu */
   const [profileAnchorEl, setProfileAnchorEl] = useState<null | HTMLElement>(
     null

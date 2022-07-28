@@ -86,7 +86,7 @@ const DrawingContainer: React.FC = () => {
           editedNote.drawingImage = canvasRef.getDataURL()
         }
         editedNote.userGoogleId = JSON.parse(
-          window.localStorage.userProfile
+          localStorage.getItem('userProfile') || ''
         ).googleId
         editedNote.lastEdited = Date.now()
         return editedNote
