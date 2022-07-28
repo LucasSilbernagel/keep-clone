@@ -175,6 +175,7 @@ const DesktopAppBar = (props: DesktopAppBarProps): JSX.Element => {
                 aria-controls={settingsMenuId}
                 aria-haspopup="true"
                 onClick={handleSettingsMenuOpen}
+                data-testid="settings-button"
               >
                 <SettingsIcon />
               </IconButton>
@@ -189,6 +190,7 @@ const DesktopAppBar = (props: DesktopAppBarProps): JSX.Element => {
                 onClick={handleProfileMenuOpen}
                 color="inherit"
                 sx={{ marginLeft: '1em' }}
+                data-testid="profile-button"
               >
                 {userProfile.imageUrl.length > 0 ? (
                   <Avatar
