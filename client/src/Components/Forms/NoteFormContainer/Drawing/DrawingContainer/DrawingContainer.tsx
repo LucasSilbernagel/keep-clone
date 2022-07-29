@@ -116,6 +116,7 @@ const DrawingContainer: React.FC = () => {
         focusTrapOptions={{
           escapeDeactivates: false,
           fallbackFocus: '#drawing-container',
+          allowOutsideClick: true,
         }}
       >
         <Box
