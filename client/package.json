@@ -14,7 +14,6 @@
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.4",
-    "focus-trap-react": "^9.0.2",
     "javascript-time-ago": "^2.5.4",
     "lodash.clonedeep": "^4.5.0",
     "lucas-silbernagel-react-audio-recorder": "^1.0.2",

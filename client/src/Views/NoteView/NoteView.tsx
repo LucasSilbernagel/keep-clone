@@ -13,6 +13,7 @@ import {
   atomNoteList,
   atomNotes,
   atomSelectedNoteIds,
+  atomIsDrawingActive,
 } from '../../atoms'
 import DrawingContainer from '../../Components/Forms/NoteFormContainer/Drawing/DrawingContainer'
 import NoteCreator from '../../Components/Menus/NoteCreator'
@@ -41,6 +42,8 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
   const setNotes = useSetRecoilState(atomNotes)
   /** The ID of the note being edited */
   const editingID = useRecoilValue(atomEditingID)
+  /** Boolean to determine whether the drawing container is open */
+  const isDrawingActive = useRecoilValue(atomIsDrawingActive)
   /** Array of selected note IDs */
   const [selectedNoteIds, setSelectedNoteIds] =
     useRecoilState(atomSelectedNoteIds)
@@ -159,30 +162,34 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
         ></div>
       )}
       <DrawingContainer />
-      <TopBar setAuthenticated={setAuthenticated} editNotes={editNotes} />
-      <Grid container item>
-        <Grid container item lg={12} justifyContent="center">
-          <Grid
-            item
-            xs={10}
-            sm={8}
-            md={7}
-            lg={5}
-            xl={4}
-            sx={{
-              marginBottom: '2em',
-              zIndex: 20,
-            }}
-          >
-            <NoteCreator
-              creatingNote={creatingNote}
-              setCreatingNote={setCreatingNote}
-              finishCreatingNote={finishCreatingNote}
-            />
+      {!isDrawingActive && (
+        <>
+          <TopBar setAuthenticated={setAuthenticated} editNotes={editNotes} />
+          <Grid container item>
+            <Grid container item lg={12} justifyContent="center">
+              <Grid
+                item
+                xs={10}
+                sm={8}
+                md={7}
+                lg={5}
+                xl={4}
+                sx={{
+                  marginBottom: '2em',
+                  zIndex: 20,
+                }}
+              >
+                <NoteCreator
+                  creatingNote={creatingNote}
+                  setCreatingNote={setCreatingNote}
+                  finishCreatingNote={finishCreatingNote}
+                />
+              </Grid>
+            </Grid>
+            <Notes deleteNote={deleteNote} />
           </Grid>
-        </Grid>
-        <Notes deleteNote={deleteNote} />
-      </Grid>
+        </>
+      )}
     </>
   )
 }
