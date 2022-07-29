@@ -77,7 +77,7 @@ const NoteCreator = (props: NoteCreatorProps): JSX.Element => {
             editedNote.image = base64.target?.result
           }
           editedNote.userGoogleId = JSON.parse(
-            window.localStorage.userProfile
+            localStorage.getItem('userProfile') || ''
           ).googleId
           editedNote.lastEdited = Date.now()
           return editedNote

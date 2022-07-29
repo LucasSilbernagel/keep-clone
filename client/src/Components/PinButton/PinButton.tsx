@@ -67,7 +67,7 @@ const PinButton: React.FC<PinButtonProps> = (props: PinButtonProps) => {
         const editedNote = { ...prevNote }
         editedNote.isPinned = !newNote.isPinned
         editedNote.userGoogleId = JSON.parse(
-          window.localStorage.userProfile
+          localStorage.getItem('userProfile') || ''
         ).googleId
         editedNote.lastEdited = Date.now()
         return editedNote

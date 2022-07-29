@@ -55,7 +55,7 @@ const NoteFormContainer: React.FC<NoteFormContainerProps> = (
         editedNote.text = prevNote.text
         editedNote.lastEdited = Date.now()
         editedNote.userGoogleId = JSON.parse(
-          window.localStorage.userProfile
+          localStorage.getItem('userProfile') || ''
         ).googleId
         return editedNote
       })
@@ -78,7 +78,7 @@ const NoteFormContainer: React.FC<NoteFormContainerProps> = (
         editedNote.title = prevNote.title
         editedNote.lastEdited = Date.now()
         editedNote.userGoogleId = JSON.parse(
-          window.localStorage.userProfile
+          localStorage.getItem('userProfile') || ''
         ).googleId
         return editedNote
       })

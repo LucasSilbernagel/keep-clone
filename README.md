@@ -139,4 +139,4 @@ Use `npm run test:unit` to run all unit tests, or `cd` into the client folder an
 
 Components are visually documented with [Storybook](https://storybook.js.org/).
 
-Use `npm run storybook` to launch Storybook locally, or [visit this link](https://62de0039a0287437701c3efb-xuuvnppdcu.chromatic.com/?path=/story/about--page) to view the published Storybook page.
+Use `npm run storybook` to launch Storybook locally, or [visit this link](https://62de0039a0287437701c3efb-bgjbpvpnod.chromatic.com/?path=/story/about--page) to view the published Storybook page.

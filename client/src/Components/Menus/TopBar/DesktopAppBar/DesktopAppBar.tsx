@@ -39,7 +39,7 @@ const DesktopAppBar = (props: DesktopAppBarProps): JSX.Element => {
   const { logOut, handleSearch, clearSearch } = props
 
   /** User profile data, returned from localStorage */
-  const userProfile = JSON.parse(window.localStorage.userProfile)
+  const userProfile = JSON.parse(localStorage.getItem('userProfile') || '')
   /** Anchor element for the profile menu */
   const [profileAnchorEl, setProfileAnchorEl] = useState<null | HTMLElement>(
     null
@@ -137,6 +137,7 @@ const DesktopAppBar = (props: DesktopAppBarProps): JSX.Element => {
                   color="inherit"
                   onClick={() => getNotes(setIsLoading, setNotes)}
                   aria-label="Refresh"
+                  data-testid="refresh-button"
                 >
                   <RefreshIcon />
                 </IconButton>
@@ -149,6 +150,7 @@ const DesktopAppBar = (props: DesktopAppBarProps): JSX.Element => {
                   color="inherit"
                   aria-label="List view"
                   onClick={() => setIsGridView(false)}
+                  data-testid="grid-toggle-button"
                 >
                   <SplitscreenIcon />
                 </IconButton>
@@ -173,6 +175,7 @@ const DesktopAppBar = (props: DesktopAppBarProps): JSX.Element => {
                 aria-controls={settingsMenuId}
                 aria-haspopup="true"
                 onClick={handleSettingsMenuOpen}
+                data-testid="settings-button"
               >
                 <SettingsIcon />
               </IconButton>
@@ -187,6 +190,7 @@ const DesktopAppBar = (props: DesktopAppBarProps): JSX.Element => {
                 onClick={handleProfileMenuOpen}
                 color="inherit"
                 sx={{ marginLeft: '1em' }}
+                data-testid="profile-button"
               >
                 {userProfile.imageUrl.length > 0 ? (
                   <Avatar

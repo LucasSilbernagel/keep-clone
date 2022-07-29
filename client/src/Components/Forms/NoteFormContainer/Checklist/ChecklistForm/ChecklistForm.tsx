@@ -66,7 +66,7 @@ const ChecklistForm: React.FC<ChecklistFormProps> = (
         const editedNote = { ...prevNote }
         editedNote.list = noteList
         editedNote.userGoogleId = JSON.parse(
-          window.localStorage.userProfile
+          localStorage.getItem('userProfile') || ''
         ).googleId
         editedNote.lastEdited = Date.now()
         return editedNote
@@ -150,6 +150,7 @@ const ChecklistForm: React.FC<ChecklistFormProps> = (
                         <Checkbox
                           checked={item.done}
                           onClick={() => handleListCheckboxChange(item.id)}
+                          data-testid="list-checkbox"
                         />
                       </Grid>
                     ) : (
@@ -192,6 +193,7 @@ const ChecklistForm: React.FC<ChecklistFormProps> = (
                         <IconButton
                           onClick={() => handleDeleteChecklistItem(item.id)}
                           aria-label="delete"
+                          data-testid="delete-list-item"
                         >
                           <ClearIcon />
                         </IconButton>
