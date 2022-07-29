@@ -1,6 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+import { Schema as _Schema, model } from 'mongoose'
+const Schema = _Schema
 
 const NoteListSchema = new Schema({
   text: String,
@@ -33,6 +32,6 @@ const NoteSchema = new Schema({
   },
 })
 
-const Note = mongoose.model('Note', NoteSchema)
+const Note = model('Note', NoteSchema)
 
-module.exports = Note
+export default Note
