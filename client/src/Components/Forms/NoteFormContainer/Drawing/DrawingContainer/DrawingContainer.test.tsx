@@ -19,5 +19,7 @@ describe('DrawingContainer', () => {
     expect(screen.getByTestId('clear-page-button')).toBeInTheDocument()
     expect(screen.getByTestId('eraser-button')).toBeInTheDocument()
     expect(screen.getByTestId('paintbrush-button')).toBeInTheDocument()
+    expect(screen.getByTestId('undo-drawing-button')).toBeInTheDocument()
+    expect(screen.getByTestId('more-drawing-button')).toBeInTheDocument()
   })
 })

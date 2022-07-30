@@ -30,7 +30,7 @@ describe('DesktopAppBar', () => {
     expect(screen.getByAltText('Google Keep')).toBeInTheDocument()
     expect(screen.getByText('Keep')).toBeInTheDocument()
     expect(screen.getByTestId('refresh-button')).toBeInTheDocument()
-    expect(screen.getByTestId('grid-toggle-button')).toBeInTheDocument()
+    expect(screen.getByTestId('list-toggle-button')).toBeInTheDocument()
     expect(screen.getByTestId('settings-button')).toBeInTheDocument()
     expect(screen.getByTestId('profile-button')).toBeInTheDocument()
   })

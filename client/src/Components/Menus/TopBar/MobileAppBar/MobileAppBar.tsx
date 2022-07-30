@@ -109,6 +109,7 @@ const MobileAppBar = (props: MobileAppBarProps): JSX.Element => {
                       justifyContent: 'flex-start',
                       marginLeft: '1em',
                     }}
+                    data-testid="mobile-search-button"
                   >
                     Search your notes
                   </Button>

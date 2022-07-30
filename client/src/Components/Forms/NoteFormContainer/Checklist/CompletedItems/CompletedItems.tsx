@@ -135,6 +135,7 @@ const CompletedItems: React.FC<CompletedItemsProps> = (
                             <IconButton
                               onClick={() => handleDeleteChecklistItem(item.id)}
                               aria-label="delete"
+                              data-testid="delete-list-item-button"
                             >
                               <ClearIcon />
                             </IconButton>

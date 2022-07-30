@@ -83,7 +83,7 @@ const ProfileMenu = (props: ProfileMenuProps): JSX.Element => {
           <Typography variant="subtitle2">{userProfile.email}</Typography>
         </Grid>
       </Grid>
-      <MenuItem onClick={logOut}>
+      <MenuItem onClick={logOut} data-testid="sign-out-button">
         <ListItemText sx={{ textAlign: 'center' }}>Sign out</ListItemText>
       </MenuItem>
     </Menu>

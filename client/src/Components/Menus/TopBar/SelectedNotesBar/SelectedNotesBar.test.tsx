@@ -1,17 +1,28 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import SelectedNotesBar from '.'
 import { RecoilRoot } from 'recoil'
+import { atomNotes, atomSelectedNoteIds } from '../../../../atoms'
+import { mockNotes } from '../../../../DataHelpers'
 
 describe('SelectedNotesBar', () => {
+  const editNotes = jest.fn()
   test('renders', () => {
     render(
-      <RecoilRoot>
-        <SelectedNotesBar editNotes={jest.fn()} />
+      <RecoilRoot
+        initializeState={(snap) => {
+          snap.set(atomNotes, mockNotes)
+          snap.set(atomSelectedNoteIds, ['1', '2'])
+        }}
+      >
+        <SelectedNotesBar editNotes={editNotes} />
       </RecoilRoot>
     )
-    expect(screen.getByText('0 selected')).toBeInTheDocument()
+    const pinButton = screen.getByTestId('pin-selection-button')
+    expect(screen.getByText('2 selected')).toBeInTheDocument()
     expect(screen.getByTestId('clear-selection-button')).toBeInTheDocument()
-    expect(screen.getByTestId('pin-selection-button')).toBeInTheDocument()
+    expect(pinButton).toBeInTheDocument()
     expect(screen.getByTestId('delete-selection-button')).toBeInTheDocument()
+    fireEvent.click(pinButton)
+    expect(editNotes).toHaveBeenCalledTimes(1)
   })
 })

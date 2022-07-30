@@ -10,12 +10,15 @@ describe('NoteGrid', () => {
         <NoteGrid deleteNote={jest.fn()} notes={mockNotes} />
       </RecoilRoot>
     )
-    expect(screen.getByText('Note title')).toBeInTheDocument()
     expect(screen.getByText('Note text')).toBeInTheDocument()
+    expect(screen.getByText('Note title')).toBeInTheDocument()
     expect(screen.getByText('second item')).toBeInTheDocument()
     expect(screen.getByText('+ 1 Completed item')).toBeInTheDocument()
+    expect(screen.getByText('My drawing')).toBeInTheDocument()
     expect(screen.getByAltText('my drawing')).toBeInTheDocument()
+    expect(screen.getByText('My recording')).toBeInTheDocument()
     expect(screen.getByText('0:0:12')).toBeInTheDocument()
+    expect(screen.getByText('My photo')).toBeInTheDocument()
     expect(screen.getByAltText('my upload')).toBeInTheDocument()
   })
 })

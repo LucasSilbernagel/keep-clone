@@ -87,7 +87,10 @@ const NoteContentFooter: React.FC<NoteContentFooterProps> = (
               disablePadding: true,
             }}
           >
-            <MenuItem onClick={() => deleteNote(note._id)}>
+            <MenuItem
+              data-testid="delete-note-button"
+              onClick={() => deleteNote(note._id)}
+            >
               Delete note
             </MenuItem>
             <MenuItem onClick={() => copyNote(note)}>Make a copy</MenuItem>

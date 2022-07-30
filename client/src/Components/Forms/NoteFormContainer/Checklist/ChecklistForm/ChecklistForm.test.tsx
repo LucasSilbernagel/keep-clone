@@ -25,5 +25,6 @@ describe('ChecklistForm', () => {
     )
     expect(screen.getByTestId('title-input')).toBeInTheDocument()
     expect(screen.getByTestId('AddIcon')).toBeInTheDocument()
+    expect(screen.getByPlaceholderText('List item')).toBeInTheDocument()
   })
 })

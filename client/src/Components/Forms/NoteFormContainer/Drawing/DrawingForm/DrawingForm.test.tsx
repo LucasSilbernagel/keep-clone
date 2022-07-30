@@ -16,6 +16,7 @@ describe('DrawingForm', () => {
         <DrawingForm handleNoteTitleChange={jest.fn()} />
       </RecoilRoot>
     )
+    expect(screen.getByText('My drawing')).toBeInTheDocument()
     expect(screen.getByAltText('drawing')).toBeInTheDocument()
   })
 })

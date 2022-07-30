@@ -129,6 +129,7 @@ const NoteFormContainer: React.FC<NoteFormContainerProps> = (
             onClick={finishCreatingNote}
             color="inherit"
             sx={{ textTransform: 'initial', fontWeight: 'bold' }}
+            data-testid="close-button"
           >
             Close
           </Button>

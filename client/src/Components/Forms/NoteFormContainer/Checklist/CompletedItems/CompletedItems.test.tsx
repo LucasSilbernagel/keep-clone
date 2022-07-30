@@ -16,6 +16,8 @@ describe('CompletedItems', () => {
         />
       </RecoilRoot>
     )
+    expect(screen.getByText('1 Completed item')).toBeInTheDocument()
     expect(screen.getByText('first item')).toBeInTheDocument()
+    expect(screen.getByTestId('delete-list-item-button')).toBeInTheDocument()
   })
 })

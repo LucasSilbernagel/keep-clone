@@ -143,7 +143,11 @@ const DrawingMenu: React.FC<DrawingMenuProps> = (props: DrawingMenuProps) => {
               lg={1}
             >
               <Tooltip title="Undo">
-                <IconButton onClick={undo} color="info">
+                <IconButton
+                  onClick={undo}
+                  color="info"
+                  data-testid="undo-drawing-button"
+                >
                   <UndoIcon />
                 </IconButton>
               </Tooltip>
@@ -169,6 +173,7 @@ const DrawingMenu: React.FC<DrawingMenuProps> = (props: DrawingMenuProps) => {
                   aria-expanded={isMoreMenuOpen ? 'true' : undefined}
                   onClick={handleClickMoreMenu}
                   color="info"
+                  data-testid="more-drawing-button"
                 >
                   <MoreVertIcon />
                 </IconButton>

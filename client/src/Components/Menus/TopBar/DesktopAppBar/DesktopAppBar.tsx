@@ -128,7 +128,11 @@ const DesktopAppBar = (props: DesktopAppBarProps): JSX.Element => {
                   paddingRight: '1em',
                 }}
               >
-                <CircularProgress color="inherit" size={18} />
+                <CircularProgress
+                  color="inherit"
+                  size={18}
+                  data-testid="loading-spinner"
+                />
               </Box>
             ) : (
               <Tooltip title="Refresh">
@@ -150,7 +154,7 @@ const DesktopAppBar = (props: DesktopAppBarProps): JSX.Element => {
                   color="inherit"
                   aria-label="List view"
                   onClick={() => setIsGridView(false)}
-                  data-testid="grid-toggle-button"
+                  data-testid="list-toggle-button"
                 >
                   <SplitscreenIcon />
                 </IconButton>
@@ -162,6 +166,7 @@ const DesktopAppBar = (props: DesktopAppBarProps): JSX.Element => {
                   color="inherit"
                   aria-label="Grid view"
                   onClick={() => setIsGridView(true)}
+                  data-testid="grid-toggle-button"
                 >
                   <GridViewIcon />
                 </IconButton>
