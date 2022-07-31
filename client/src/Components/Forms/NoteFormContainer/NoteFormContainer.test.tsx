@@ -11,15 +11,44 @@ import { mockNotes } from '../../../DataHelpers'
 describe('NoteFormContainer', () => {
   const finishCreatingNote = jest.fn()
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const initTextFormState = (snap: any) => {
+    snap.set(atomNoteBeingEdited, mockNotes[0])
+    snap.set(atomEditingID, mockNotes[0]._id)
+    snap.set(atomNoteType, 'text')
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const initChecklistFormState = (snap: any) => {
+    snap.set(atomNoteBeingEdited, mockNotes[1])
+    snap.set(atomEditingID, mockNotes[1]._id)
+    snap.set(atomNoteType, 'checklist')
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const initDrawingFormState = (snap: any) => {
+    snap.set(atomNoteBeingEdited, mockNotes[2])
+    snap.set(atomEditingID, mockNotes[2]._id)
+    snap.set(atomNoteType, 'drawing')
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const initRecordingFormState = (snap: any) => {
+    snap.set(atomNoteBeingEdited, mockNotes[3])
+    snap.set(atomEditingID, mockNotes[3]._id)
+    snap.set(atomNoteType, 'recording')
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const initImageFormState = (snap: any) => {
+    snap.set(atomNoteBeingEdited, mockNotes[4])
+    snap.set(atomEditingID, mockNotes[4]._id)
+    snap.set(atomNoteType, 'image')
+  }
+
   test('renders text form outside modal', () => {
     render(
-      <RecoilRoot
-        initializeState={(snap) => {
-          snap.set(atomNoteBeingEdited, mockNotes[0])
-          snap.set(atomEditingID, mockNotes[0]._id)
-          snap.set(atomNoteType, 'text')
-        }}
-      >
+      <RecoilRoot initializeState={(snap) => initTextFormState(snap)}>
         <NoteFormContainer
           finishCreatingNote={finishCreatingNote}
           inModal={false}
@@ -38,13 +67,7 @@ describe('NoteFormContainer', () => {
 
   test('renders text form in modal', () => {
     render(
-      <RecoilRoot
-        initializeState={(snap) => {
-          snap.set(atomNoteBeingEdited, mockNotes[0])
-          snap.set(atomEditingID, mockNotes[0]._id)
-          snap.set(atomNoteType, 'text')
-        }}
-      >
+      <RecoilRoot initializeState={(snap) => initTextFormState(snap)}>
         <NoteFormContainer
           finishCreatingNote={finishCreatingNote}
           inModal={true}
@@ -59,13 +82,7 @@ describe('NoteFormContainer', () => {
 
   test('renders checklist form outside modal', () => {
     render(
-      <RecoilRoot
-        initializeState={(snap) => {
-          snap.set(atomNoteBeingEdited, mockNotes[1])
-          snap.set(atomEditingID, mockNotes[1]._id)
-          snap.set(atomNoteType, 'checklist')
-        }}
-      >
+      <RecoilRoot initializeState={(snap) => initChecklistFormState(snap)}>
         <NoteFormContainer
           finishCreatingNote={finishCreatingNote}
           inModal={false}
@@ -85,13 +102,7 @@ describe('NoteFormContainer', () => {
 
   test('renders checklist form in modal', () => {
     render(
-      <RecoilRoot
-        initializeState={(snap) => {
-          snap.set(atomNoteBeingEdited, mockNotes[1])
-          snap.set(atomEditingID, mockNotes[1]._id)
-          snap.set(atomNoteType, 'checklist')
-        }}
-      >
+      <RecoilRoot initializeState={(snap) => initChecklistFormState(snap)}>
         <NoteFormContainer
           finishCreatingNote={finishCreatingNote}
           inModal={true}
@@ -107,13 +118,7 @@ describe('NoteFormContainer', () => {
 
   test('renders drawing form outside modal', () => {
     render(
-      <RecoilRoot
-        initializeState={(snap) => {
-          snap.set(atomNoteBeingEdited, mockNotes[2])
-          snap.set(atomEditingID, mockNotes[2]._id)
-          snap.set(atomNoteType, 'drawing')
-        }}
-      >
+      <RecoilRoot initializeState={(snap) => initDrawingFormState(snap)}>
         <NoteFormContainer
           finishCreatingNote={finishCreatingNote}
           inModal={false}
@@ -132,13 +137,7 @@ describe('NoteFormContainer', () => {
 
   test('renders drawing form in modal', () => {
     render(
-      <RecoilRoot
-        initializeState={(snap) => {
-          snap.set(atomNoteBeingEdited, mockNotes[2])
-          snap.set(atomEditingID, mockNotes[2]._id)
-          snap.set(atomNoteType, 'drawing')
-        }}
-      >
+      <RecoilRoot initializeState={(snap) => initDrawingFormState(snap)}>
         <NoteFormContainer
           finishCreatingNote={finishCreatingNote}
           inModal={true}
@@ -153,13 +152,7 @@ describe('NoteFormContainer', () => {
 
   test('renders recording form outside modal', () => {
     render(
-      <RecoilRoot
-        initializeState={(snap) => {
-          snap.set(atomNoteBeingEdited, mockNotes[3])
-          snap.set(atomEditingID, mockNotes[3]._id)
-          snap.set(atomNoteType, 'recording')
-        }}
-      >
+      <RecoilRoot initializeState={(snap) => initRecordingFormState(snap)}>
         <NoteFormContainer
           finishCreatingNote={finishCreatingNote}
           inModal={false}
@@ -178,13 +171,7 @@ describe('NoteFormContainer', () => {
 
   test('renders recording form in modal', () => {
     render(
-      <RecoilRoot
-        initializeState={(snap) => {
-          snap.set(atomNoteBeingEdited, mockNotes[3])
-          snap.set(atomEditingID, mockNotes[3]._id)
-          snap.set(atomNoteType, 'recording')
-        }}
-      >
+      <RecoilRoot initializeState={(snap) => initRecordingFormState(snap)}>
         <NoteFormContainer
           finishCreatingNote={finishCreatingNote}
           inModal={true}
@@ -199,13 +186,7 @@ describe('NoteFormContainer', () => {
 
   test('renders image form outside modal', () => {
     render(
-      <RecoilRoot
-        initializeState={(snap) => {
-          snap.set(atomNoteBeingEdited, mockNotes[4])
-          snap.set(atomEditingID, mockNotes[4]._id)
-          snap.set(atomNoteType, 'image')
-        }}
-      >
+      <RecoilRoot initializeState={(snap) => initImageFormState(snap)}>
         <NoteFormContainer
           finishCreatingNote={finishCreatingNote}
           inModal={false}
@@ -224,13 +205,7 @@ describe('NoteFormContainer', () => {
 
   test('renders image form in modal', () => {
     render(
-      <RecoilRoot
-        initializeState={(snap) => {
-          snap.set(atomNoteBeingEdited, mockNotes[4])
-          snap.set(atomEditingID, mockNotes[4]._id)
-          snap.set(atomNoteType, 'image')
-        }}
-      >
+      <RecoilRoot initializeState={(snap) => initImageFormState(snap)}>
         <NoteFormContainer
           finishCreatingNote={finishCreatingNote}
           inModal={true}
