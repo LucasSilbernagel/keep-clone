@@ -2,10 +2,11 @@ import GitHubIcon from '@mui/icons-material/GitHub'
 import { Grid, Paper, Typography, useTheme } from '@mui/material'
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google'
 import { Dispatch, SetStateAction } from 'react'
-import { useSetRecoilState } from 'recoil'
+import { useSetRecoilState, useRecoilValue } from 'recoil'
 
 import keep_icon from '../../assets/keep_icon.png'
-import { atomIsLoading, atomNotes } from '../../atoms'
+import { atomIsLoading, atomNotes, atomViewportWidth } from '../../atoms'
+import { MAIN_BREAKPOINT } from '../../Constants'
 import { getNotes } from '../../Logic/LogicHelpers'
 
 interface LoginProps {
@@ -31,6 +32,8 @@ const Login = (props: LoginProps): JSX.Element => {
   const setIsLoading = useSetRecoilState(atomIsLoading)
   /** State setter to update the notes array */
   const setNotes = useSetRecoilState(atomNotes)
+  /** The width of the viewport/screen, in pixels */
+  const viewportWidth = useRecoilValue(atomViewportWidth)
 
   /** Function called when the user authenticates successfully */
   const googleSuccess = async (res: CredentialResponse) => {
@@ -163,10 +166,14 @@ const Login = (props: LoginProps): JSX.Element => {
       <Grid
         item
         container
-        direction="column"
-        alignItems="center"
-        sx={{ marginTop: '2em' }}
-        spacing={2}
+        justifyContent="space-between"
+        direction={viewportWidth > MAIN_BREAKPOINT ? 'row' : 'column'}
+        alignItems={viewportWidth > MAIN_BREAKPOINT ? 'left' : 'center'}
+        sx={{ margin: '2em auto' }}
+        spacing={viewportWidth > MAIN_BREAKPOINT ? 0 : 2}
+        xs={12}
+        sm={6}
+        xl={4}
       >
         <Grid
           item
@@ -210,6 +217,23 @@ const Login = (props: LoginProps): JSX.Element => {
               rel="noreferrer noopener"
             >
               Lucas Silbernagel
+            </a>
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography
+            sx={{
+              '& a': {
+                color: theme.palette.secondary.main,
+              },
+            }}
+          >
+            <a
+              href="https://www.termsfeed.com/live/6bd381d4-79ef-48cd-b701-0b3c0f56b170"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              Privacy policy
             </a>
           </Typography>
         </Grid>
