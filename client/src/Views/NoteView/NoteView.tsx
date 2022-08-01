@@ -58,7 +58,7 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
     // eslint-disable-next-line
   }, [])
 
-  /** Create a copy of the note that is being created or edited */
+  /** Save a copy of the note that is being created or edited */
   useEffect(() => {
     if (editingID) {
       setNoteCopy(noteBeingEdited)
@@ -131,7 +131,7 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
         deleteNote={deleteNote}
         creatingNote={creatingNote}
       />
-      {creatingNote ? (
+      {creatingNote && (
         /** Invisible background rendered when the desktop NoteCreator is being used. */
         /** Triggers the finishCreatingNote function when clicked. */
         <div
@@ -145,7 +145,7 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
           }}
           onClick={finishCreatingNote}
         ></div>
-      ) : null}
+      )}
       {selectedNoteIds.length > 0 && (
         /** Invisible background rendered when the note multi-select feature is being used. */
         /** Empties the selected notes array when clicked. */

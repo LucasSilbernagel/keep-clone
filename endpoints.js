@@ -45,6 +45,21 @@ router.put('/notes/:id', async (req, res, next) => {
     )
 })
 
+/** Edit multiple notes by ID */
+router.post('/notes/:editField', async (req, res, next) => {
+  const { ids } = req.body
+  const sanitizedIds = ids.map((id) => id.toString())
+  const editField = req.params.editField
+  if (editField === 'isPinned') {
+    await Note.updateMany(
+      { isPinned: false, _id: { $in: sanitizedIds } },
+      { $set: { isPinned: true } }
+    )
+      .then((data) => res.json(data))
+      .catch(next)
+  }
+})
+
 /** Delete a note with a specific ID */
 router.delete('/notes/:id', async (req, res, next) => {
   await Note.findOneAndDelete({ _id: req.params.id })
@@ -61,21 +76,6 @@ router.post('/notes/batchDelete', async (req, res, next) => {
   })
     .then((data) => res.json(data))
     .catch(next)
-})
-
-/** Edit multiple notes by ID */
-router.post('/notes/:editField', async (req, res, next) => {
-  const { ids } = req.body
-  const sanitizedIds = ids.map((id) => id.toString())
-  const editField = req.params.editField
-  if (editField === 'isPinned') {
-    await Note.updateMany(
-      { isPinned: false, _id: { $in: sanitizedIds } },
-      { $set: { isPinned: true } }
-    )
-      .then((data) => res.json(data))
-      .catch(next)
-  }
 })
 
 module.exports = router

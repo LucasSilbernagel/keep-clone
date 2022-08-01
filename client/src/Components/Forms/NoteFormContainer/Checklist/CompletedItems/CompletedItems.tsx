@@ -20,7 +20,7 @@ import { useRecoilValue } from 'recoil'
 
 import { atomNoteList } from '../../../../../atoms'
 
-/** Accordino component that contains completed checklist items */
+/** Accordion component that contains completed checklist items */
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion
     disableGutters

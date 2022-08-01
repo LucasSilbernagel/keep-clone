@@ -118,7 +118,8 @@ const Login = (props: LoginProps): JSX.Element => {
                 >
                   Node.js
                 </a>
-                ).
+                ). It replicates the web app on larger screens and the mobile
+                app on smaller screens.
               </Typography>
             </Grid>
             <Grid item>

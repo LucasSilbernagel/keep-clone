@@ -1,7 +1,7 @@
 {
   "name": "keep-clone",
   "version": "1.0.0",
-  "description": "A clone of Google Keep built with MongoDB, Express, React, and Node.",
+  "description": "A clone of Google Keep built with the MERN stack. Replicates the web app on larger screens and the mobile app on smaller screens.",
   "main": "server.js",
   "scripts": {
     "installDeps": "npm install && cd client && npm install",

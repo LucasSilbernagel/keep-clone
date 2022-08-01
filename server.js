@@ -8,7 +8,7 @@ require('dotenv').config()
 const app = express()
 const port = process.env.PORT || 5001
 
-//connect to the database
+// connect to the database
 mongoose
   .connect(process.env.DB, {
     useNewUrlParser: true,
@@ -17,7 +17,7 @@ mongoose
     useCreateIndex: true,
   })
   .then(() => console.log(`Database connected successfully`))
-  .catch((err) => console.log(`Error connecting to database: ${err}`))
+  .catch((err) => console.error(`Error connecting to database: ${err}`))
 
 mongoose.Promise = global.Promise
 app.use((_req, res, next) => {
