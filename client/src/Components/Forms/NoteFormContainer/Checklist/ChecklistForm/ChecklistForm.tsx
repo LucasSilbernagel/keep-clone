@@ -12,7 +12,7 @@ import {
 } from '@mui/material'
 import cloneDeep from 'lodash.clonedeep'
 import { nanoid } from 'nanoid'
-import React, { ChangeEvent, useEffect } from 'react'
+import React, { ChangeEvent, useRef, useEffect, KeyboardEvent } from 'react'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 
 import {
@@ -42,6 +42,8 @@ const ChecklistForm: React.FC<ChecklistFormProps> = (
   /** The note that is being edited */
   const [noteBeingEdited, setNoteBeingEdited] =
     useRecoilState(atomNoteBeingEdited)
+  /** Refs for the checklist text inputs */
+  const inputRefs = useRef<HTMLDivElement[]>([])
 
   /** When all checklist items have text, a new blank checklist item should be added to the list. */
   useEffect(() => {
@@ -127,6 +129,19 @@ const ChecklistForm: React.FC<ChecklistFormProps> = (
     })
   }
 
+  /** When the enter key is pressed on the checklist, focus should move to the next item. */
+  const handleKeyDown = (
+    e: KeyboardEvent<HTMLDivElement>,
+    targetElem: { focus: () => void }
+  ) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      if (targetElem) {
+        targetElem.focus()
+      }
+    }
+  }
+
   return (
     <Grid container>
       <NoteTitleInput handleNoteTitleChange={handleNoteTitleChange} />
@@ -135,7 +150,7 @@ const ChecklistForm: React.FC<ChecklistFormProps> = (
           <Divider />
           {noteList
             .filter((item) => !item.done)
-            .map((item) => {
+            .map((item, index) => {
               return (
                 <ListItem key={item.id} divider>
                   <Grid
@@ -162,6 +177,18 @@ const ChecklistForm: React.FC<ChecklistFormProps> = (
                   <Grid item xs={10}>
                     <TextField
                       autoFocus={noteList.length === 1}
+                      onKeyDown={(e) =>
+                        handleKeyDown(
+                          e,
+                          inputRefs.current[
+                            index ===
+                            noteList.filter((item) => !item.done).length - 1
+                              ? 0
+                              : index + 1
+                          ]
+                        )
+                      }
+                      inputRef={(el) => (inputRefs.current[index] = el)}
                       multiline
                       placeholder="List item"
                       size="small"
