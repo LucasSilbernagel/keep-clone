@@ -182,7 +182,9 @@ const ChecklistForm: React.FC<ChecklistFormProps> = (
                           e,
                           inputRefs.current[
                             index ===
-                            noteList.filter((item) => !item.done).length - 1
+                            noteList.filter((listItem) => !listItem.done)
+                              .length -
+                              1
                               ? 0
                               : index + 1
                           ]
