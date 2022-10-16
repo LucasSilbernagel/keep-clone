@@ -48,7 +48,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://outrageous-sari-deer.cyclic.app/",
+  "proxy": "http://localhost:5001",
   "devDependencies": {
     "@storybook/addon-actions": "^6.5.9",
     "@storybook/addon-essentials": "^6.5.9",
