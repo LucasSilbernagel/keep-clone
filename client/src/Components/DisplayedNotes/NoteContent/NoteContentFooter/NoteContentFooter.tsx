@@ -64,7 +64,7 @@ const NoteContentFooter: React.FC<NoteContentFooterProps> = (
       lastEdited: Date.now(),
     }
     axios
-      .post('/api/notes', newNote)
+      .post(`${process.env.REACT_APP_API}/api/notes`, newNote)
       .then((res) => {
         if (res.data) {
           getNotes(setIsLoading, setNotes)

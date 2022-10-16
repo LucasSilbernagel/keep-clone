@@ -170,7 +170,7 @@ export const getNotes: (
 ) => {
   setIsLoading(true)
   axios
-    .get('/api/notes', {
+    .get(`${process.env.REACT_APP_API}/api/notes`, {
       params: {
         userGoogleId: JSON.parse(localStorage.getItem('userProfile') || '')
           .googleId,
@@ -200,7 +200,10 @@ export const pushNoteEdit: (
   setNotes: SetterOrUpdater<IExistingNote[]>
 ) => {
   axios
-    .put(`/api/notes/${noteBeingEdited._id}`, noteBeingEdited)
+    .put(
+      `${process.env.REACT_APP_API}/api/notes/${noteBeingEdited._id}`,
+      noteBeingEdited
+    )
     .then((res) => {
       if (res.data) {
         getNotes(setIsLoading, setNotes)

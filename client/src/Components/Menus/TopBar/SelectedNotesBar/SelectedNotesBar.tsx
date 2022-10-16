@@ -40,7 +40,7 @@ const SelectedNotesBar = (props: SelectedNotesBarProps): JSX.Element => {
   /** Delete selected notes */
   const deleteNotes = (ids: string[]) => {
     axios({
-      url: '/api/notes/batchDelete',
+      url: `${process.env.REACT_APP_API}/api/notes/batchDelete`,
       method: 'post',
       data: { ids },
     })

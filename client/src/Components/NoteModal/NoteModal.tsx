@@ -111,7 +111,10 @@ const NoteModal = (props: NoteModalProps): JSX.Element => {
       (noteBeingEdited.image && noteBeingEdited.image.length > 0)
     ) {
       axios
-        .put(`/api/notes/${noteBeingEdited._id}`, noteBeingEdited)
+        .put(
+          `${process.env.REACT_APP_API}/api/notes/${noteBeingEdited._id}`,
+          noteBeingEdited
+        )
         .then((res) => {
           if (res.data) {
             getNotes(setIsLoading, setNotes)

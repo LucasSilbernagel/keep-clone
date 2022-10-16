@@ -78,7 +78,7 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
       newNote.image
     ) {
       axios
-        .post('/api/notes', newNote)
+        .post(`${process.env.REACT_APP_API}/api/notes`, newNote)
         .then((res) => {
           if (res.data) {
             getNotes(setIsLoading, setNotes)
@@ -105,7 +105,7 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
   /** Edit selected notes */
   const editNotes = (editField: string, ids: string[]) => {
     axios({
-      url: `/api/notes/${editField}`,
+      url: `${process.env.REACT_APP_API}/api/notes/${editField}`,
       method: 'post',
       data: { ids },
     })

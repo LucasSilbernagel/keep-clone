@@ -128,7 +128,7 @@ const Home: React.FC = () => {
   /** Delete a note with a specific ID */
   const deleteNote = (id: string) => {
     axios
-      .delete(`/api/notes/${id}`)
+      .delete(`${process.env.REACT_APP_API}/api/notes/${id}`)
       .then((res) => {
         if (res.data) {
           getNotes(setIsLoading, setNotes)

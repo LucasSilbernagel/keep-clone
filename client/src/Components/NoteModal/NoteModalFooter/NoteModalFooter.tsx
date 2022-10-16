@@ -68,7 +68,7 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
   /** Post the duplicate note to the database */
   const saveNoteCopy = () => {
     axios
-      .post('/api/notes', {
+      .post(`${process.env.REACT_APP_API}/api/notes`, {
         text: noteCopy.text,
         title: noteCopy.title,
         list: noteCopy.list,
