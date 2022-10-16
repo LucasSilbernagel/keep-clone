@@ -31,7 +31,7 @@ app.use((_req, res, next) => {
 app.use(bodyParser.json({ limit: '50mb' }))
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }))
 app.use('/api', noteRouter)
-app.use(express.static(path.join(__dirname, 'client/build')))
+// app.use(express.static(path.join(__dirname, 'client/build')))
 app.get('*', (_req, res) => res.send('Server running'))
 app.use((err, _req, _res, next) => {
   console.error(err)
