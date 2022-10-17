@@ -22,7 +22,7 @@ A clone of Google Keep built with the MERN stack. Replicates the web app on larg
 
 ## Live Link
 
-[https://lucas-silbernagel-keep-clone.herokuapp.com/](https://lucas-silbernagel-keep-clone.herokuapp.com/)
+[https://glowing-moonbeam-f2cd62.netlify.app/](https://glowing-moonbeam-f2cd62.netlify.app/)
 
 ## Tech Stack
 
@@ -120,6 +120,12 @@ A custom ESLint configuration has been added to the root folder of the app rathe
 SKIP_PREFLIGHT_CHECK = true
 
 DISABLE_ESLINT_PLUGIN = true
+```
+
+To the same file, add the following key and value to connect the React front end with the server:
+
+```
+REACT_APP_API = http://localhost:5001
 ```
 
 ### Start up the app
