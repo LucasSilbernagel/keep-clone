@@ -96,19 +96,21 @@ const NoteContentFooter: React.FC<NoteContentFooterProps> = (
             <MenuItem onClick={() => copyNote(note)}>Make a copy</MenuItem>
           </Menu>
           <Tooltip title="More">
-            <IconButton
-              id="more-button"
-              data-testid="more-button"
-              aria-controls={isMoreMenuOpen ? 'more-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={isMoreMenuOpen ? 'true' : undefined}
-              onClick={handleClickMoreMenu}
-              color="inherit"
-              className="moreButton"
-              disabled={selectedNoteIds.length > 0}
-            >
-              <MoreVertIcon />
-            </IconButton>
+            <span>
+              <IconButton
+                id="more-button"
+                data-testid="more-button"
+                aria-controls={isMoreMenuOpen ? 'more-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={isMoreMenuOpen ? 'true' : undefined}
+                onClick={handleClickMoreMenu}
+                color="inherit"
+                className="moreButton"
+                disabled={selectedNoteIds.length > 0}
+              >
+                <MoreVertIcon />
+              </IconButton>
+            </span>
           </Tooltip>
         </Grid>
       </Grid>

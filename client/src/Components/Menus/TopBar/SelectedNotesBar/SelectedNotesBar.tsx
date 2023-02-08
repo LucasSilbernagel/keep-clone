@@ -69,15 +69,17 @@ const SelectedNotesBar = (props: SelectedNotesBarProps): JSX.Element => {
             <Grid item container xs={6} alignItems="center">
               <Grid item>
                 <Tooltip title="Clear selection">
-                  <IconButton
-                    size="large"
-                    color="inherit"
-                    aria-label="Clear selection"
-                    onClick={() => setSelectedNoteIds([])}
-                    data-testid="clear-selection-button"
-                  >
-                    <CloseIcon />
-                  </IconButton>
+                  <span>
+                    <IconButton
+                      size="large"
+                      color="inherit"
+                      aria-label="Clear selection"
+                      onClick={() => setSelectedNoteIds([])}
+                      data-testid="clear-selection-button"
+                    >
+                      <CloseIcon />
+                    </IconButton>
+                  </span>
                 </Tooltip>
               </Grid>
               <Grid item>
@@ -95,31 +97,35 @@ const SelectedNotesBar = (props: SelectedNotesBarProps): JSX.Element => {
             >
               <Grid item>
                 <Tooltip title="Pin selection">
-                  <IconButton
-                    size="large"
-                    color="inherit"
-                    aria-label="Pin selection"
-                    onClick={() => {
-                      editNotes('isPinned', selectedNoteIds)
-                      setSelectedNoteIds([])
-                    }}
-                    data-testid="pin-selection-button"
-                  >
-                    <PushPinOutlinedIcon />
-                  </IconButton>
+                  <span>
+                    <IconButton
+                      size="large"
+                      color="inherit"
+                      aria-label="Pin selection"
+                      onClick={() => {
+                        editNotes('isPinned', selectedNoteIds)
+                        setSelectedNoteIds([])
+                      }}
+                      data-testid="pin-selection-button"
+                    >
+                      <PushPinOutlinedIcon />
+                    </IconButton>
+                  </span>
                 </Tooltip>
               </Grid>
               <Grid item>
                 <Tooltip title="Delete selection">
-                  <IconButton
-                    size="large"
-                    color="inherit"
-                    aria-label="Delete selection"
-                    onClick={() => deleteNotes(selectedNoteIds)}
-                    data-testid="delete-selection-button"
-                  >
-                    <DeleteIcon />
-                  </IconButton>
+                  <span>
+                    <IconButton
+                      size="large"
+                      color="inherit"
+                      aria-label="Delete selection"
+                      onClick={() => deleteNotes(selectedNoteIds)}
+                      data-testid="delete-selection-button"
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </span>
                 </Tooltip>
               </Grid>
             </Grid>

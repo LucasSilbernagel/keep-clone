@@ -132,13 +132,17 @@ const CompletedItems: React.FC<CompletedItemsProps> = (
                       <Grid item xs={1}>
                         {item.text.length > 0 && (
                           <Tooltip title="Delete">
-                            <IconButton
-                              onClick={() => handleDeleteChecklistItem(item.id)}
-                              aria-label="delete"
-                              data-testid="delete-list-item-button"
-                            >
-                              <ClearIcon />
-                            </IconButton>
+                            <span>
+                              <IconButton
+                                onClick={() =>
+                                  handleDeleteChecklistItem(item.id)
+                                }
+                                aria-label="delete"
+                                data-testid="delete-list-item-button"
+                              >
+                                <ClearIcon />
+                              </IconButton>
+                            </span>
                           </Tooltip>
                         )}
                       </Grid>

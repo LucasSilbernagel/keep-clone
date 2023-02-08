@@ -88,29 +88,33 @@ const PinButton: React.FC<PinButtonProps> = (props: PinButtonProps) => {
     >
       {(note && note.isPinned) || (!note && newNote.isPinned) ? (
         <Tooltip title="Unpin">
-          <IconButton
-            size="large"
-            color="inherit"
-            aria-label="unpin"
-            onClick={handlePinNote}
-            disabled={selectedNoteIds.length > 0}
-            data-testid="pin-button"
-          >
-            <PushPinIcon />
-          </IconButton>
+          <span>
+            <IconButton
+              size="large"
+              color="inherit"
+              aria-label="unpin"
+              onClick={handlePinNote}
+              disabled={selectedNoteIds.length > 0}
+              data-testid="pin-button"
+            >
+              <PushPinIcon />
+            </IconButton>
+          </span>
         </Tooltip>
       ) : (
         <Tooltip title="Pin">
-          <IconButton
-            size="large"
-            color="inherit"
-            aria-label="pin"
-            onClick={handlePinNote}
-            disabled={selectedNoteIds.length > 0}
-            data-testid="pin-button"
-          >
-            <PushPinOutlinedIcon />
-          </IconButton>
+          <span>
+            <IconButton
+              size="large"
+              color="inherit"
+              aria-label="pin"
+              onClick={handlePinNote}
+              disabled={selectedNoteIds.length > 0}
+              data-testid="pin-button"
+            >
+              <PushPinOutlinedIcon />
+            </IconButton>
+          </span>
         </Tooltip>
       )}
     </Box>

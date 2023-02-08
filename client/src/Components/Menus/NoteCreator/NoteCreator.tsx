@@ -187,31 +187,37 @@ const NoteCreator = (props: NoteCreatorProps): JSX.Element => {
             </Button>
             <Box>
               <Tooltip title="New checklist">
-                <IconButton
-                  aria-label="new checklist"
-                  onClick={createDesktopChecklist}
-                  data-testid="checklist-button"
-                >
-                  <CheckBoxOutlinedIcon />
-                </IconButton>
+                <span>
+                  <IconButton
+                    aria-label="new checklist"
+                    onClick={createDesktopChecklist}
+                    data-testid="checklist-button"
+                  >
+                    <CheckBoxOutlinedIcon />
+                  </IconButton>
+                </span>
               </Tooltip>
               <Tooltip title="New drawing">
-                <IconButton
-                  data-testid="drawing-button"
-                  aria-label="new drawing"
-                  onClick={createDrawing}
-                >
-                  <BrushOutlinedIcon />
-                </IconButton>
+                <span>
+                  <IconButton
+                    data-testid="drawing-button"
+                    aria-label="new drawing"
+                    onClick={createDrawing}
+                  >
+                    <BrushOutlinedIcon />
+                  </IconButton>
+                </span>
               </Tooltip>
               <Tooltip title="New recording">
-                <IconButton
-                  aria-label="new recording"
-                  onClick={createRecording}
-                  data-testid="recording-button"
-                >
-                  <MicNoneOutlinedIcon />
-                </IconButton>
+                <span>
+                  <IconButton
+                    aria-label="new recording"
+                    onClick={createRecording}
+                    data-testid="recording-button"
+                  >
+                    <MicNoneOutlinedIcon />
+                  </IconButton>
+                </span>
               </Tooltip>
               <Tooltip title="New image">
                 <>

@@ -200,18 +200,20 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
         </Grid>
         <Grid item>
           <Tooltip title="More">
-            <IconButton
-              id="more-button"
-              aria-controls={open ? 'more-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? 'true' : undefined}
-              onClick={handleClickMoreMenu}
-              color="secondary"
-              className="moreButton"
-              data-testid="more-button"
-            >
-              <MoreVertIcon />
-            </IconButton>
+            <span>
+              <IconButton
+                id="more-button"
+                aria-controls={open ? 'more-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+                onClick={handleClickMoreMenu}
+                color="secondary"
+                className="moreButton"
+                data-testid="more-button"
+              >
+                <MoreVertIcon />
+              </IconButton>
+            </span>
           </Tooltip>
         </Grid>
       </Grid>
@@ -262,18 +264,20 @@ const NoteModalFooter = (props: NoteModalFooterProps): JSX.Element => {
             </Grid>
             <Grid item>
               <Tooltip title="More">
-                <IconButton
-                  id="more-button"
-                  aria-controls={open ? 'more-menu' : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? 'true' : undefined}
-                  onClick={handleClickMoreMenu}
-                  color="secondary"
-                  className="moreButton"
-                  data-testid="more-button"
-                >
-                  <MoreVertIcon />
-                </IconButton>
+                <span>
+                  <IconButton
+                    id="more-button"
+                    aria-controls={open ? 'more-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? 'true' : undefined}
+                    onClick={handleClickMoreMenu}
+                    color="secondary"
+                    className="moreButton"
+                    data-testid="more-button"
+                  >
+                    <MoreVertIcon />
+                  </IconButton>
+                </span>
               </Tooltip>
             </Grid>
           </Grid>

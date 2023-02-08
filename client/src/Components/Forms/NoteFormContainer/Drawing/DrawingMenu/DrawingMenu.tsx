@@ -114,14 +114,16 @@ const DrawingMenu: React.FC<DrawingMenuProps> = (props: DrawingMenuProps) => {
             >
               <Grid item>
                 <Tooltip title="Back">
-                  <IconButton
-                    aria-label="back"
-                    color="info"
-                    onClick={handleBackClick}
-                    data-testid="back-button"
-                  >
-                    <ArrowBackIcon />
-                  </IconButton>
+                  <span>
+                    <IconButton
+                      aria-label="back"
+                      color="info"
+                      onClick={handleBackClick}
+                      data-testid="back-button"
+                    >
+                      <ArrowBackIcon />
+                    </IconButton>
+                  </span>
                 </Tooltip>
               </Grid>
               {viewportWidth > MAIN_BREAKPOINT && (
@@ -143,13 +145,15 @@ const DrawingMenu: React.FC<DrawingMenuProps> = (props: DrawingMenuProps) => {
               lg={1}
             >
               <Tooltip title="Undo">
-                <IconButton
-                  onClick={undo}
-                  color="info"
-                  data-testid="undo-drawing-button"
-                >
-                  <UndoIcon />
-                </IconButton>
+                <span>
+                  <IconButton
+                    onClick={undo}
+                    color="info"
+                    data-testid="undo-drawing-button"
+                  >
+                    <UndoIcon />
+                  </IconButton>
+                </span>
               </Tooltip>
               <Menu
                 id="more-menu"
@@ -166,17 +170,19 @@ const DrawingMenu: React.FC<DrawingMenuProps> = (props: DrawingMenuProps) => {
                 </MenuItem>
               </Menu>
               <Tooltip title="More">
-                <IconButton
-                  id="more-button"
-                  aria-controls={isMoreMenuOpen ? 'more-menu' : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={isMoreMenuOpen ? 'true' : undefined}
-                  onClick={handleClickMoreMenu}
-                  color="info"
-                  data-testid="more-drawing-button"
-                >
-                  <MoreVertIcon />
-                </IconButton>
+                <span>
+                  <IconButton
+                    id="more-button"
+                    aria-controls={isMoreMenuOpen ? 'more-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={isMoreMenuOpen ? 'true' : undefined}
+                    onClick={handleClickMoreMenu}
+                    color="info"
+                    data-testid="more-drawing-button"
+                  >
+                    <MoreVertIcon />
+                  </IconButton>
+                </span>
               </Tooltip>
             </Grid>
           </Grid>

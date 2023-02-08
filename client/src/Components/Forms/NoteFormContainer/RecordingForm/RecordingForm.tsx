@@ -133,23 +133,27 @@ const RecordingForm: React.FC<RecordingFormProps> = (
           <Grid item>
             {status !== 'recording' ? (
               <Tooltip title="Record">
-                <IconButton
-                  onClick={startRecording}
-                  aria-label="record"
-                  color="success"
-                >
-                  <KeyboardVoiceIcon sx={{ fontSize: '3rem' }} />
-                </IconButton>
+                <span>
+                  <IconButton
+                    onClick={startRecording}
+                    aria-label="record"
+                    color="success"
+                  >
+                    <KeyboardVoiceIcon sx={{ fontSize: '3rem' }} />
+                  </IconButton>
+                </span>
               </Tooltip>
             ) : (
               <Tooltip title="Stop">
-                <IconButton
-                  onClick={handleStopRecording}
-                  aria-label="stop recording"
-                  color="error"
-                >
-                  <StopIcon sx={{ fontSize: '3rem' }} />
-                </IconButton>
+                <span>
+                  <IconButton
+                    onClick={handleStopRecording}
+                    aria-label="stop recording"
+                    color="error"
+                  >
+                    <StopIcon sx={{ fontSize: '3rem' }} />
+                  </IconButton>
+                </span>
               </Tooltip>
             )}
           </Grid>

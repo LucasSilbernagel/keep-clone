@@ -110,29 +110,33 @@ const DrawingTools: React.FC<DrawingToolsProps> = (
     <>
       <Grid item>
         <Tooltip title="Clear Page">
-          <IconButton
-            aria-label="clear page"
-            color="info"
-            onClick={clearCanvas}
-            data-testid="clear-page-button"
-          >
-            <ClearIcon />
-          </IconButton>
+          <span>
+            <IconButton
+              aria-label="clear page"
+              color="info"
+              onClick={clearCanvas}
+              data-testid="clear-page-button"
+            >
+              <ClearIcon />
+            </IconButton>
+          </span>
         </Tooltip>
       </Grid>
       <Grid item>
         <Tooltip title="Eraser">
-          <IconButton
-            aria-label="eraser"
-            color="info"
-            onClick={useEraser}
-            sx={{
-              border: toolType === 'eraser' ? '1px solid #000000' : '',
-            }}
-            data-testid="eraser-button"
-          >
-            <AutoFixHighIcon />
-          </IconButton>
+          <span>
+            <IconButton
+              aria-label="eraser"
+              color="info"
+              onClick={useEraser}
+              sx={{
+                border: toolType === 'eraser' ? '1px solid #000000' : '',
+              }}
+              data-testid="eraser-button"
+            >
+              <AutoFixHighIcon />
+            </IconButton>
+          </span>
         </Tooltip>
       </Grid>
       <Grid item>
@@ -178,19 +182,21 @@ const DrawingTools: React.FC<DrawingToolsProps> = (
                     showingMoreColors ? 'Hide More Colours' : 'More Colours'
                   }
                 >
-                  <IconButton
-                    onClick={() => setShowingMoreColors(!showingMoreColors)}
-                    aria-label={
-                      showingMoreColors ? 'hide more colours' : 'more colours'
-                    }
-                    color="info"
-                  >
-                    {showingMoreColors ? (
-                      <KeyboardArrowUpIcon />
-                    ) : (
-                      <KeyboardArrowDownIcon />
-                    )}
-                  </IconButton>
+                  <span>
+                    <IconButton
+                      onClick={() => setShowingMoreColors(!showingMoreColors)}
+                      aria-label={
+                        showingMoreColors ? 'hide more colours' : 'more colours'
+                      }
+                      color="info"
+                    >
+                      {showingMoreColors ? (
+                        <KeyboardArrowUpIcon />
+                      ) : (
+                        <KeyboardArrowDownIcon />
+                      )}
+                    </IconButton>
+                  </span>
                 </Tooltip>
               </Grid>
               <MoreColors
@@ -228,20 +234,24 @@ const DrawingTools: React.FC<DrawingToolsProps> = (
           </Grid>
         </Menu>
         <Tooltip title="Paintbrush">
-          <IconButton
-            id="paintbrush-button"
-            data-testid="paintbrush-button"
-            aria-controls={isPaintbrushMenuOpen ? 'paintbrush-menu' : undefined}
-            aria-haspopup="true"
-            aria-expanded={isPaintbrushMenuOpen ? 'true' : undefined}
-            onClick={openPaintbrushMenu}
-            color="info"
-            sx={{
-              border: toolType === 'paintbrush' ? '1px solid #000000' : '',
-            }}
-          >
-            <BrushSharpIcon />
-          </IconButton>
+          <span>
+            <IconButton
+              id="paintbrush-button"
+              data-testid="paintbrush-button"
+              aria-controls={
+                isPaintbrushMenuOpen ? 'paintbrush-menu' : undefined
+              }
+              aria-haspopup="true"
+              aria-expanded={isPaintbrushMenuOpen ? 'true' : undefined}
+              onClick={openPaintbrushMenu}
+              color="info"
+              sx={{
+                border: toolType === 'paintbrush' ? '1px solid #000000' : '',
+              }}
+            >
+              <BrushSharpIcon />
+            </IconButton>
+          </span>
         </Tooltip>
       </Grid>
     </>

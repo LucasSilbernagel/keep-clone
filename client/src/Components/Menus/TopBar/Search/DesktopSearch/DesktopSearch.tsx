@@ -88,14 +88,16 @@ const DesktopSearch = (props: DesktopSearchProps): JSX.Element => {
       <CloseIconWrapper>
         {isSearching ? (
           <Tooltip title="Clear search">
-            <IconButton
-              color="inherit"
-              onClick={clearSearch}
-              aria-label="clear search"
-              data-testid="clear-search-button"
-            >
-              <CloseIcon />
-            </IconButton>
+            <span>
+              <IconButton
+                color="inherit"
+                onClick={clearSearch}
+                aria-label="clear search"
+                data-testid="clear-search-button"
+              >
+                <CloseIcon />
+              </IconButton>
+            </span>
           </Tooltip>
         ) : null}
       </CloseIconWrapper>

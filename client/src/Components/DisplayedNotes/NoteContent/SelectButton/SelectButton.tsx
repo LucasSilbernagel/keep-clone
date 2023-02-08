@@ -39,15 +39,17 @@ const SelectButton: React.FC<SelectButtonProps> = (
       className="selectButton"
     >
       <Tooltip title="Select note">
-        <IconButton
-          size="large"
-          color="inherit"
-          aria-label="select note"
-          data-testid="select-note"
-          onClick={handleSelectNote}
-        >
-          <CheckCircleIcon />
-        </IconButton>
+        <span>
+          <IconButton
+            size="large"
+            color="inherit"
+            aria-label="select note"
+            data-testid="select-note"
+            onClick={handleSelectNote}
+          >
+            <CheckCircleIcon />
+          </IconButton>
+        </span>
       </Tooltip>
     </Box>
   )

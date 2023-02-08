@@ -136,77 +136,87 @@ const DesktopAppBar = (props: DesktopAppBarProps): JSX.Element => {
               </Box>
             ) : (
               <Tooltip title="Refresh">
-                <IconButton
-                  size="large"
-                  color="inherit"
-                  onClick={() => getNotes(setIsLoading, setNotes)}
-                  aria-label="Refresh"
-                  data-testid="refresh-button"
-                >
-                  <RefreshIcon />
-                </IconButton>
+                <span>
+                  <IconButton
+                    size="large"
+                    color="inherit"
+                    onClick={() => getNotes(setIsLoading, setNotes)}
+                    aria-label="Refresh"
+                    data-testid="refresh-button"
+                  >
+                    <RefreshIcon />
+                  </IconButton>
+                </span>
               </Tooltip>
             )}
             {isGridView ? (
               <Tooltip title="List view">
-                <IconButton
-                  size="large"
-                  color="inherit"
-                  aria-label="List view"
-                  onClick={() => setIsGridView(false)}
-                  data-testid="list-toggle-button"
-                >
-                  <SplitscreenIcon />
-                </IconButton>
+                <span>
+                  <IconButton
+                    size="large"
+                    color="inherit"
+                    aria-label="List view"
+                    onClick={() => setIsGridView(false)}
+                    data-testid="list-toggle-button"
+                  >
+                    <SplitscreenIcon />
+                  </IconButton>
+                </span>
               </Tooltip>
             ) : (
               <Tooltip title="Grid view">
-                <IconButton
-                  size="large"
-                  color="inherit"
-                  aria-label="Grid view"
-                  onClick={() => setIsGridView(true)}
-                  data-testid="grid-toggle-button"
-                >
-                  <GridViewIcon />
-                </IconButton>
+                <span>
+                  <IconButton
+                    size="large"
+                    color="inherit"
+                    aria-label="Grid view"
+                    onClick={() => setIsGridView(true)}
+                    data-testid="grid-toggle-button"
+                  >
+                    <GridViewIcon />
+                  </IconButton>
+                </span>
               </Tooltip>
             )}
             <Tooltip title="Settings">
-              <IconButton
-                size="large"
-                color="inherit"
-                aria-label="Settings"
-                aria-controls={settingsMenuId}
-                aria-haspopup="true"
-                onClick={handleSettingsMenuOpen}
-                data-testid="settings-button"
-              >
-                <SettingsIcon />
-              </IconButton>
+              <span>
+                <IconButton
+                  size="large"
+                  color="inherit"
+                  aria-label="Settings"
+                  aria-controls={settingsMenuId}
+                  aria-haspopup="true"
+                  onClick={handleSettingsMenuOpen}
+                  data-testid="settings-button"
+                >
+                  <SettingsIcon />
+                </IconButton>
+              </span>
             </Tooltip>
             <Tooltip title="Account">
-              <IconButton
-                size="large"
-                edge="end"
-                aria-label="account"
-                aria-controls={profileMenuId}
-                aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
-                color="inherit"
-                sx={{ marginLeft: '1em' }}
-                data-testid="profile-button"
-              >
-                {userProfile.imageUrl.length > 0 ? (
-                  <Avatar
-                    alt={userProfile.name}
-                    src={userProfile.imageUrl}
-                    sx={{ width: '35px', height: '35px' }}
-                  />
-                ) : (
-                  <AccountCircle fontSize="large" />
-                )}
-              </IconButton>
+              <span>
+                <IconButton
+                  size="large"
+                  edge="end"
+                  aria-label="account"
+                  aria-controls={profileMenuId}
+                  aria-haspopup="true"
+                  onClick={handleProfileMenuOpen}
+                  color="inherit"
+                  sx={{ marginLeft: '1em' }}
+                  data-testid="profile-button"
+                >
+                  {userProfile.imageUrl.length > 0 ? (
+                    <Avatar
+                      alt={userProfile.name}
+                      src={userProfile.imageUrl}
+                      sx={{ width: '35px', height: '35px' }}
+                    />
+                  ) : (
+                    <AccountCircle fontSize="large" />
+                  )}
+                </IconButton>
+              </span>
             </Tooltip>
           </Box>
         </Toolbar>
