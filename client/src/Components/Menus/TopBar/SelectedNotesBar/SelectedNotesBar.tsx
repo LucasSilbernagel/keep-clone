@@ -41,17 +41,16 @@ const SelectedNotesBar = (props: SelectedNotesBarProps): JSX.Element => {
 
   /** Delete selected notes */
   const deleteNotes = (ids: string[]) => {
-    axios({
-      url: `${process.env.REACT_APP_API}/api/notes/batchDelete`,
-      method: 'post',
-      data: { ids },
+    ids.forEach((id: string) => {
+      axios
+        .delete(`${process.env.REACT_APP_API}/api/notes/${id}`)
+        .then((res) => {
+          if (res.data) {
+            getNotes(setIsLoading, setNotes)
+          }
+        })
+        .catch((err) => console.error(err))
     })
-      .then((res) => {
-        if (res.data) {
-          getNotes(setIsLoading, setNotes)
-        }
-      })
-      .catch((err) => console.error(err))
   }
 
   const getPinnedLabel = (notes: IExistingNote[]) => {

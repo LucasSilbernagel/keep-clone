@@ -50,7 +50,7 @@ router.post('/notes/:editField', async (req, res, next) => {
   const { selectedNotes } = req.body
   const editField = req.params.editField
   if (editField === 'isPinned') {
-    selectedNotes.map((note) => {
+    selectedNotes.forEach((note) => {
       Note.updateOne({ _id: note._id }, { isPinned: !note.isPinned })
         .then((data) => res.json(data))
         .catch(next)
@@ -61,17 +61,6 @@ router.post('/notes/:editField', async (req, res, next) => {
 /** Delete a note with a specific ID */
 router.delete('/notes/:id', async (req, res, next) => {
   await Note.findOneAndDelete({ _id: req.params.id })
-    .then((data) => res.json(data))
-    .catch(next)
-})
-
-/** Delete multiple notes by ID */
-router.post('/notes/batchDelete', async (req, res, next) => {
-  const { ids } = req.body
-  const sanitizedIds = ids.map((id) => id.toString())
-  await Note.deleteMany({
-    _id: { $in: sanitizedIds },
-  })
     .then((data) => res.json(data))
     .catch(next)
 })
