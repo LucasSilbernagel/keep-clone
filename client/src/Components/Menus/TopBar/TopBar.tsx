@@ -15,10 +15,11 @@ import MobileAppBar from './MobileAppBar'
 import { MAIN_BREAKPOINT } from '../../../Constants'
 import { getNotes } from '../../../Logic/LogicHelpers'
 import SelectedNotesBar from './SelectedNotesBar'
+import { IExistingNote } from '../../../types'
 
 interface TopBarProps {
   setAuthenticated: Dispatch<SetStateAction<boolean>>
-  editNotes: (editField: string, ids: string[]) => void
+  editNotes: (editField: string, selectedNotes: IExistingNote[]) => void
 }
 
 const TopBar = (props: TopBarProps): JSX.Element => {

@@ -21,6 +21,7 @@ import NoteModal from '../../Components/NoteModal'
 import Notes from '../../Components/DisplayedNotes/Notes'
 import TopBar from '../../Components/Menus/TopBar'
 import { getNotes } from '../../Logic/LogicHelpers'
+import { IExistingNote } from '../../types'
 
 interface NoteViewProps {
   setAuthenticated: Dispatch<SetStateAction<boolean>>
@@ -103,11 +104,11 @@ const NoteView = (props: NoteViewProps): JSX.Element => {
   }
 
   /** Edit selected notes */
-  const editNotes = (editField: string, ids: string[]) => {
+  const editNotes = (editField: string, selectedNotes: IExistingNote[]) => {
     axios({
       url: `${process.env.REACT_APP_API}/api/notes/${editField}`,
       method: 'post',
-      data: { ids },
+      data: { selectedNotes },
     })
       .then((res) => {
         if (res.data) {

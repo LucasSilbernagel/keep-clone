@@ -1,5 +1,6 @@
 import CloseIcon from '@mui/icons-material/Close'
 import DeleteIcon from '@mui/icons-material/Delete'
+import PushPinIcon from '@mui/icons-material/PushPin'
 import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined'
 import {
   AppBar,
@@ -20,9 +21,10 @@ import {
   atomSelectedNoteIds,
 } from '../../../../atoms'
 import { getNotes } from '../../../../Logic/LogicHelpers'
+import { IExistingNote } from '../../../../types'
 
 interface SelectedNotesBarProps {
-  editNotes: (editField: string, ids: string[]) => void
+  editNotes: (editField: string, selectedNotes: IExistingNote[]) => void
 }
 
 const SelectedNotesBar = (props: SelectedNotesBarProps): JSX.Element => {
@@ -32,7 +34,7 @@ const SelectedNotesBar = (props: SelectedNotesBarProps): JSX.Element => {
   /** State setter to update loading state */
   const setIsLoading = useSetRecoilState(atomIsLoading)
   /** State setter to update the notes array */
-  const setNotes = useSetRecoilState(atomNotes)
+  const [notes, setNotes] = useRecoilState(atomNotes)
   /** Array of selected note IDs */
   const [selectedNoteIds, setSelectedNoteIds] =
     useRecoilState(atomSelectedNoteIds)
@@ -50,6 +52,14 @@ const SelectedNotesBar = (props: SelectedNotesBarProps): JSX.Element => {
         }
       })
       .catch((err) => console.error(err))
+  }
+
+  const getPinnedLabel = (notes: IExistingNote[]) => {
+    return notes
+      .filter((note) => selectedNoteIds.includes(note._id))
+      .every((note) => note.isPinned)
+      ? 'Unpin selection'
+      : 'Pin selection'
   }
 
   return (
@@ -96,19 +106,30 @@ const SelectedNotesBar = (props: SelectedNotesBarProps): JSX.Element => {
               justifyContent="flex-end"
             >
               <Grid item>
-                <Tooltip title="Pin selection">
+                <Tooltip title={getPinnedLabel(notes)}>
                   <span>
                     <IconButton
                       size="large"
                       color="inherit"
-                      aria-label="Pin selection"
+                      aria-label={getPinnedLabel(notes)}
                       onClick={() => {
-                        editNotes('isPinned', selectedNoteIds)
+                        editNotes(
+                          'isPinned',
+                          notes.filter((note) =>
+                            selectedNoteIds.includes(note._id)
+                          )
+                        )
                         setSelectedNoteIds([])
                       }}
                       data-testid="pin-selection-button"
                     >
-                      <PushPinOutlinedIcon />
+                      {notes
+                        .filter((note) => selectedNoteIds.includes(note._id))
+                        .every((note) => note.isPinned) ? (
+                        <PushPinIcon />
+                      ) : (
+                        <PushPinOutlinedIcon />
+                      )}
                     </IconButton>
                   </span>
                 </Tooltip>
